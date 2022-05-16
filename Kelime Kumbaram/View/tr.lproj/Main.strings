@@ -1,0 +1,117 @@
+
+/* Class = "UILabel"; text = "11/23"; ObjectID = "1dJ-Io-bCx"; */
+"1dJ-Io-bCx.text" = "11/23";
+
+/* Class = "UIBarButtonItem"; title = "Geri"; ObjectID = "4c7-CE-yY1"; */
+"4c7-CE-yY1.title" = "Geri";
+
+/* Class = "UISegmentedControl"; 53N-om-BeN.segmentTitles[0] = "İngilizce - Türkçe"; ObjectID = "53N-om-BeN"; */
+"53N-om-BeN.segmentTitles[0]" = "İngilizce - Türkçe";
+
+/* Class = "UISegmentedControl"; 53N-om-BeN.segmentTitles[1] = "Türkçe - İngilizce"; ObjectID = "53N-om-BeN"; */
+"53N-om-BeN.segmentTitles[1]" = "Türkçe - İngilizce";
+
+/* Class = "UIButton"; normalTitle = "Twenty Three"; ObjectID = "7nI-ZM-cwT"; */
+"7nI-ZM-cwT.normalTitle" = "Twenty Three";
+
+/* Class = "UILabel"; text = "11"; ObjectID = "8mr-hc-FgC"; */
+"8mr-hc-FgC.text" = "11";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "BI0-OM-3Fg"; */
+"BI0-OM-3Fg.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "answer1"; ObjectID = "Ccv-Rg-O7t"; */
+"Ccv-Rg-O7t.normalTitle" = "answer1";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Cfy-VY-zG6"; */
+"Cfy-VY-zG6.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Zor Kelimeler"; ObjectID = "Gjq-DL-7fV"; */
+"Gjq-DL-7fV.normalTitle" = "Zor Kelimeler";
+
+/* Class = "UIButton"; normalTitle = "answer1"; ObjectID = "Jq4-jm-pxN"; */
+"Jq4-jm-pxN.normalTitle" = "answer1";
+
+/* Class = "UIButton"; normalTitle = "Ekle"; ObjectID = "MKv-3T-Bcg"; */
+"MKv-3T-Bcg.normalTitle" = "Ekle";
+
+/* Class = "UILabel"; text = "yeni puan"; ObjectID = "P0a-zn-MXf"; */
+"P0a-zn-MXf.text" = "yeni puan";
+
+/* Class = "UILabel"; text = "Twenty Three"; ObjectID = "RIJ-f1-6nB"; */
+"RIJ-f1-6nB.text" = "Twenty Three";
+
+/* Class = "UISegmentedControl"; Sg1-uc-qll.segmentTitles[0] = "İngilizce - Türkçe"; ObjectID = "Sg1-uc-qll"; */
+"Sg1-uc-qll.segmentTitles[0]" = "İngilizce - Türkçe";
+
+/* Class = "UISegmentedControl"; Sg1-uc-qll.segmentTitles[1] = "Türkçe - İngilizce"; ObjectID = "Sg1-uc-qll"; */
+"Sg1-uc-qll.segmentTitles[1]" = "Türkçe - İngilizce";
+
+/* Class = "UILabel"; text = "11/23"; ObjectID = "UNa-9p-Mxi"; */
+"UNa-9p-Mxi.text" = "11/23";
+
+/* Class = "UIButton"; normalTitle = "BAŞLA"; ObjectID = "UaY-5e-Lxw"; */
+"UaY-5e-Lxw.normalTitle" = "BAŞLA";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "V8N-2x-XqX"; */
+"V8N-2x-XqX.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "label"; ObjectID = "VnR-ov-4mZ"; */
+"VnR-ov-4mZ.text" = "label";
+
+/* Class = "UILabel"; text = "11"; ObjectID = "X6B-A1-Pcg"; */
+"X6B-A1-Pcg.text" = "11";
+
+/* Class = "UITextField"; placeholder = "İngilizce"; ObjectID = "XOJ-Bg-lce"; */
+"XOJ-Bg-lce.placeholder" = "İngilizce";
+
+/* Class = "UIBarButtonItem"; title = "Geri"; ObjectID = "bZS-kS-GtQ"; */
+"bZS-kS-GtQ.title" = "Geri";
+
+/* Class = "UILabel"; text = "11"; ObjectID = "bzl-xN-lSY"; */
+"bzl-xN-lSY.text" = "11";
+
+/* Class = "UIButton"; normalTitle = "Twenty Three"; ObjectID = "d10-we-tXn"; */
+"d10-we-tXn.normalTitle" = "Twenty Three";
+
+/* Class = "UIButton"; normalTitle = "BAŞLA"; ObjectID = "doj-2d-6WP"; */
+"doj-2d-6WP.normalTitle" = "BAŞLA";
+
+/* Class = "UIBarButtonItem"; title = "Geri"; ObjectID = "ekA-Cb-6lt"; */
+"ekA-Cb-6lt.title" = "Geri";
+
+/* Class = "UIButton"; normalTitle = "answer1"; ObjectID = "fte-Sc-ngW"; */
+"fte-Sc-ngW.normalTitle" = "answer1";
+
+/* Class = "UIButton"; normalTitle = "Devam et"; ObjectID = "lFH-jJ-tk1"; */
+"lFH-jJ-tk1.normalTitle" = "Devam et";
+
+/* Class = "UILabel"; text = "New Level"; ObjectID = "mRP-LD-An6"; */
+"mRP-LD-An6.text" = "New Level";
+
+/* Class = "UIButton"; normalTitle = "Quiz"; ObjectID = "nLx-0o-rj7"; */
+"nLx-0o-rj7.normalTitle" = "Quiz";
+
+/* Class = "UIButton"; normalTitle = "Devam et"; ObjectID = "q1c-hG-mGC"; */
+"q1c-hG-mGC.normalTitle" = "Devam et";
+
+/* Class = "UILabel"; text = "Kelimeye ulaştınız!"; ObjectID = "qqd-tA-IDx"; */
+"qqd-tA-IDx.text" = "Kelimeye ulaştınız!";
+
+/* Class = "UIButton"; normalTitle = "Kelimelerim"; ObjectID = "thM-G9-AS5"; */
+"thM-G9-AS5.normalTitle" = "Kelimelerim";
+
+/* Class = "UIButton"; normalTitle = "k"; ObjectID = "vXy-6w-Igl"; */
+"vXy-6w-Igl.normalTitle" = "k";
+
+/* Class = "UIButton"; normalTitle = "answer1"; ObjectID = "wUc-6p-wTQ"; */
+"wUc-6p-wTQ.normalTitle" = "answer1";
+
+/* Class = "UIButton"; normalTitle = "Kelimeleri Göster"; ObjectID = "wbW-fW-3JH"; */
+"wbW-fW-3JH.normalTitle" = "Kelimeleri Göster";
+
+/* Class = "UILabel"; text = "Level"; ObjectID = "yem-b2-Gcc"; */
+"yem-b2-Gcc.text" = "Level";
+
+/* Class = "UITextField"; placeholder = "Türkçe"; ObjectID = "zok-d5-c6C"; */
+"zok-d5-c6C.placeholder" = "Türkçe";

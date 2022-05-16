@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AddedList" representedClassName="AddedList" syncable="YES" codeGenerationType="class">
+        <attribute name="add" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="addedMyWords" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="falseCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="trueCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="HardItem" representedClassName="HardItem" syncable="YES" codeGenerationType="class">
+        <attribute name="correctNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="eng" attributeType="String"/>
+        <attribute name="originalindex" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="originalList" optional="YES" attributeType="String"/>
+        <attribute name="tr" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Item" representedClassName=".Item" syncable="YES" codeGenerationType="class">
+        <attribute name="add" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="correctNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="eng" attributeType="String"/>
+        <attribute name="falseCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isCreatedFromUser" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="quizIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tr" attributeType="String"/>
+        <attribute name="trueCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="AddedList" positionX="-63" positionY="27" width="128" height="89"/>
+        <element name="HardItem" positionX="-63" positionY="9" width="128" height="134"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="179"/>
+    </elements>
+</model>
