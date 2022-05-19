@@ -72,8 +72,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     var rightOnceBool = [Bool]()
     var arrayForResultViewUserAnswer = [String]()
     
-    var failsDictionary =  [Int:Int]()
-    var sortedFailsDictionary = Array<(key: Int, value: Int)>()
+    
 
     let lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
     let lastHour = UserDefaults.standard.integer(forKey: "lastHour")
@@ -82,114 +81,33 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     var HardItemArray = [HardItem]()
     var isWordAddedToHardWords = 0
     
+    var wordBrain = WordBrain()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = " "
         getHour()
         
-        hourButton.isHidden = true
-        
         textField.delegate = self
-        
         whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
         
-        if whichStartPressed == 1 {
-            textFieldStackView.isHidden = true
-            progressBar2.isHidden = true
- 
-            soundButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 40, height: 40)).image { _ in
-                UIImage(named: "soundLeft")?.draw(in: CGRect(x: 0, y: 0, width: 40, height: 40)) }, for: .normal)
-        } else {
-            answerStackView.isHidden = true
-            
-            soundButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 35, height: 35)).image { _ in
-                UIImage(named: "question")?.draw(in: CGRect(x: 0, y: 0, width: 35, height: 35)) }, for: .normal)
-            
-            textField.attributedPlaceholder = NSAttributedString(string: whichStartPressed == 2 ? "İngilizcesi..." : "Yazılışı...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
-            
-            let newConstraint = wordViewConstrait.constraintWithMultiplier(4)
-            wordViewConstrait.isActive = false
-            view.addConstraint(newConstraint)
-            view.layoutIfNeeded()
-            wordViewConstrait = newConstraint
-        }
-        
-        if whichStartPressed == 3 {
-            questionLabel.isHidden = true
-            hourButton.isHidden = false
-
-        }
-        
-        // 1 is false, 0 is true
-        if UserDefaults.standard.integer(forKey: "playSound") == 1 {
-            switchPlaySound.isOn = false
-        } else {
-            switchPlaySound.isOn = true
-        }
-        soundSpeed = UserDefaults.standard.float(forKey: "soundSpeed")
-        segmentedControl.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
-        
+        setupView()
+       
         loadItemsToHardItemArray()
-        
-        pointButton.layer.cornerRadius = 12
-        
-        pointButton.setTitle(String(UserDefaults.standard.integer(forKey: "lastPoint").withCommas()), for: UIControl.State.normal)
-        
-        
-        progressBar.progress = 0
-        progressBar2.progress = 0
-        questionLabel.numberOfLines = 6
-        questionLabel.adjustsFontSizeToFitWidth = true
-        
-        answer1Button.titleLabel?.numberOfLines = 3
-        answer2Button.titleLabel?.numberOfLines = 3
-        answer1Button.titleEdgeInsets = UIEdgeInsets(top: 30,left: 15,bottom: 30,right: 15)
-        answer2Button.titleEdgeInsets = UIEdgeInsets(top: 30,left: 15,bottom: 30,right: 15)
-        
-        answer1Button.backgroundColor = .clear
-        answer1Button.layer.cornerRadius = 18
-        answer1Button.layer.borderWidth = 5
-        answer1Button.layer.borderColor = UIColor(red: 0.28, green: 0.40, blue: 0.56, alpha: 1.00).cgColor
-        
-        answer2Button.backgroundColor = .clear
-        answer2Button.layer.cornerRadius = 18
-        answer2Button.layer.borderWidth = 5
-        answer2Button.layer.borderColor = UIColor(red: 0.28, green: 0.40, blue: 0.56, alpha: 1.00).cgColor
-        
-        let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
-        questionLabel.font = questionLabel.font.withSize(textSize)
-        answer1Button.titleLabel?.font =  answer1Button.titleLabel?.font.withSize(textSize)
-        answer2Button.titleLabel?.font =  answer2Button.titleLabel?.font.withSize(textSize)
-        pointButton.titleLabel?.font =  pointButton.titleLabel?.font.withSize(textSize)
-        
-        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
         
         for i in 0...itemArray.count-1 {
             questionNumbers.append(i)
         }
         
-        firstArrowButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
-            UIImage(named: "arrowLeft")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30)) }, for: .normal)
-        
-        optionView.isHidden = true
-        
-        showOptions = 0
-
         updateUI()
         
-        for i in 0..<itemArray.count {
-            let j = itemArray[i].falseCount - itemArray[i].trueCount
-            failsDictionary.updateValue(Int(j), forKey: i)
-        }
-
-         sortedFailsDictionary = failsDictionary.sorted {
-            return $0.value > $1.value
-        }
+        wordBrain.sortFails()
         
         
         // None of our movies should interrupt system music playback.
             _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
     }
+
     
 
     override func viewWillAppear(_ animated: Bool) { 
@@ -199,7 +117,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
 
 
   
-    //MARK: - answerPressed
+    //MARK: - user did something
     @IBAction func answerPressed(_ sender: UIButton) {
         checkAnswerQ(sender,sender.currentTitle!)
     }
@@ -212,7 +130,6 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     @IBAction func arrowButtonPressed(_ sender: UIButton) {
         
         arrowButtonsPressed()
-        
     }
     
     func arrowButtonsPressed() {
@@ -256,23 +173,30 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
         UserDefaults.standard.set(sender.selectedSegmentIndex, forKey: "selectedSegmentIndex")
+        selectedSegmentIndex = sender.selectedSegmentIndex
         updateUI()
     }
     
     
     
     func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
-            if rightOnceBool.count == rightOnce.count-1 { //prevent out of range
-                checkAnswerQ(nil,textField.text!)
-                textField.text = ""
-                hourButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 0, height: 0)).image { _ in
-                    UIImage(named: "empty")?.draw(in: CGRect(x: 0, y: 0, width: 0, height: 0)) }, for: .normal)
-                answerFalse()
-            }
+        getLetter()
         print("rightOnceBool.count-\(rightOnceBool.count)")
         print("rightOnce.count-\(rightOnce.count)")
             return true
         }
+    
+    
+    @IBAction func textChanged(_ sender: UITextField) {
+        print(answerForStart23)
+        if answerForStart23.lowercased() == sender.text!.lowercased() {
+            checkAnswerQ(nil,sender.text!)
+            textField.text = ""
+            hourButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 0, height: 0)).image { _ in
+                UIImage(named: "empty")?.draw(in: CGRect(x: 0, y: 0, width: 0, height: 0)) }, for: .normal)
+            wordBrain.answerTrue()
+        }
+    }
     
     @IBAction func soundButtonPressed(_ sender: UIButton) {
         
@@ -291,59 +215,100 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    //MARK: - getLetter
-    func getLetter(){
-        
-        
-        
-        let str = getAnswer()
-        
-        if letterCounter < str.count {
-            hint = "\(hint+str[letterCounter])"
-            
-            letterCounter += 1
-            
-            let number = str.count-letterCounter
-            var hintSpace = ""
-            
-            for _ in 0..<number {
-                hintSpace = "\(hintSpace) _"
-            }
-            hintLabel.text = "\(hint+hintSpace)"
-            decreaseOnePoint()
-            playMP3("beep")
-        } else {
-            hintLabel.textColor = UIColor(named: "greenColorSingle")
-            hintLabel.flash()
-            Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(changeLabelColor), userInfo: nil, repeats: false)
-        }
-        
-    }
-    
-    @objc func changeLabelColor() {
-        hintLabel.textColor = UIColor(named: "d6d6d6")
-
-    }
     
     @IBAction func hourButtonPressed(_ sender: UIButton) {
         hourButton.flash()
         playSound(answerForStart23, "en-US")
     }
     
-    
-    @IBAction func textChanged(_ sender: UITextField) {
-        print(answerForStart23)
-        if answerForStart23.lowercased() == sender.text!.lowercased() {
-            checkAnswerQ(nil,sender.text!)
-            textField.text = ""
-            hourButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 0, height: 0)).image { _ in
-                UIImage(named: "empty")?.draw(in: CGRect(x: 0, y: 0, width: 0, height: 0)) }, for: .normal)
-            answerTrue()
-        }
+    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
+        self.navigationController?.popViewController(animated: true)
+
     }
     
+    //MARK: - setup
     
-    //MARK: - updateUI
+    func setupView(){
+        
+        hourButton.isHidden = true
+        
+        if whichStartPressed == 1 {
+            textFieldStackView.isHidden = true
+            progressBar2.isHidden = true
+ 
+            soundButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 40, height: 40)).image { _ in
+                UIImage(named: "soundLeft")?.draw(in: CGRect(x: 0, y: 0, width: 40, height: 40)) }, for: .normal)
+        } else {
+            answerStackView.isHidden = true
+            
+            soundButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 35, height: 35)).image { _ in
+                UIImage(named: "question")?.draw(in: CGRect(x: 0, y: 0, width: 35, height: 35)) }, for: .normal)
+            
+            textField.attributedPlaceholder = NSAttributedString(string: whichStartPressed == 2 ? "İngilizcesi..." : "Yazılışı...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
+            
+            let newConstraint = wordViewConstrait.constraintWithMultiplier(4)
+            wordViewConstrait.isActive = false
+            view.addConstraint(newConstraint)
+            view.layoutIfNeeded()
+            wordViewConstrait = newConstraint
+        }
+        
+        if whichStartPressed == 3 {
+            questionLabel.isHidden = true
+            hourButton.isHidden = false
+
+        }
+        
+        // 1 is false, 0 is true
+        if UserDefaults.standard.integer(forKey: "playSound") == 1 {
+            switchPlaySound.isOn = false
+        } else {
+            switchPlaySound.isOn = true
+        }
+        soundSpeed = UserDefaults.standard.float(forKey: "soundSpeed")
+        segmentedControl.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
+        
+        let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
+        questionLabel.font = questionLabel.font.withSize(textSize)
+        answer1Button.titleLabel?.font =  answer1Button.titleLabel?.font.withSize(textSize)
+        answer2Button.titleLabel?.font =  answer2Button.titleLabel?.font.withSize(textSize)
+        pointButton.titleLabel?.font =  pointButton.titleLabel?.font.withSize(textSize)
+        
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
+        
+        pointButton.layer.cornerRadius = 12
+        
+        pointButton.setTitle(String(UserDefaults.standard.integer(forKey: "lastPoint").withCommas()), for: UIControl.State.normal)
+        
+        
+        progressBar.progress = 0
+        progressBar2.progress = 0
+        questionLabel.numberOfLines = 6
+        questionLabel.adjustsFontSizeToFitWidth = true
+        
+        answer1Button.titleLabel?.numberOfLines = 3
+        answer2Button.titleLabel?.numberOfLines = 3
+        answer1Button.titleEdgeInsets = UIEdgeInsets(top: 30,left: 15,bottom: 30,right: 15)
+        answer2Button.titleEdgeInsets = UIEdgeInsets(top: 30,left: 15,bottom: 30,right: 15)
+        
+        answer1Button.backgroundColor = .clear
+        answer1Button.layer.cornerRadius = 18
+        answer1Button.layer.borderWidth = 5
+        answer1Button.layer.borderColor = UIColor(red: 0.28, green: 0.40, blue: 0.56, alpha: 1.00).cgColor
+        
+        answer2Button.backgroundColor = .clear
+        answer2Button.layer.cornerRadius = 18
+        answer2Button.layer.borderWidth = 5
+        answer2Button.layer.borderColor = UIColor(red: 0.28, green: 0.40, blue: 0.56, alpha: 1.00).cgColor
+        
+        firstArrowButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
+            UIImage(named: "arrowLeft")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30)) }, for: .normal)
+        
+        optionView.isHidden = true
+        
+        showOptions = 0
+    }//setupView
+    
     @objc func updateUI() {
         
         letterCounter = 0
@@ -375,8 +340,9 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         failNumber =  UserDefaults.standard.array(forKey: "failNumber") as? [Int] ?? [Int]()
         failIndex =  UserDefaults.standard.array(forKey: "failIndex") as? [Int] ?? [Int]()
             
-        questionText = getQuestionText(twenty_three)
-        answerForStart23 = getAnswer()
+            
+            questionText = wordBrain.getQuestionText(selectedSegmentIndex,twenty_three, whichStartPressed)
+            answerForStart23 = wordBrain.getAnswer()
         questionLabel.text = questionText
 
             questionNumbersCopy = questionNumbers
@@ -416,8 +382,8 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         answer1Button.isEnabled = true
         answer2Button.isEnabled = true
 
-        answer1Button.setTitle(getAnswer(0), for: .normal)
-        answer2Button.setTitle(getAnswer(1), for: .normal)
+            answer1Button.setTitle(wordBrain.getAnswer(0), for: .normal)
+            answer2Button.setTitle(wordBrain.getAnswer(1), for: .normal)
                    
         answer1Button.backgroundColor = UIColor.clear
         answer2Button.backgroundColor = UIColor.clear
@@ -429,9 +395,45 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
             twenty_three = 0
             performSegue(withIdentifier: "goToResult", sender: self)
         }
+    }//updateUI
+    
+    func getLetter(){
+        
+        
+        
+        let str = wordBrain.getAnswer()
+        
+        if letterCounter < str.count {
+            hint = "\(hint+str[letterCounter])"
+            
+            letterCounter += 1
+            
+            let number = str.count-letterCounter
+            var hintSpace = ""
+            
+            for _ in 0..<number {
+                hintSpace = "\(hintSpace) _"
+            }
+            hintLabel.text = "\(hint+hintSpace)"
+            decreaseOnePoint()
+            playMP3("beep")
+        } else {
+            hintLabel.textColor = UIColor(named: "greenColorSingle")
+            hintLabel.flash()
+            Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(changeLabelColor), userInfo: nil, repeats: false)
+        }
+        
     }
     
-    //MARK: - updateImg
+    @objc func changeLabelColor() {
+        hintLabel.textColor = UIColor(named: "d6d6d6")
+
+    }
+    
+
+    
+
+    
     @objc func updateImg(_ timer: Timer){
         let imgName = timer.userInfo!
         let imagePath:String? = Bundle.main.path(forResource: (imgName as! String), ofType: "png")
@@ -439,14 +441,12 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         hourButton.setBackgroundImage(image, for: UIControl.State.normal)
     }
 
-    //MARK: - getHour
     func getHour() {
         UserDefaults.standard.set(Calendar.current.component(.hour, from: Date()), forKey: "lastHour")
         UserDefaults.standard.synchronize()
 
     }
     
-    //MARK: - playSound
     func playSound(_ soundName: String, _ language: String)
     {
 
@@ -473,35 +473,17 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         
     }
 
-    //MARK: - prepare 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToResult" {
-            let destinationVC = segue.destination as! ResultViewController
-            destinationVC.itemArray = itemArray
-            destinationVC.option = "my"
-            destinationVC.isWordAddedToHardWords = isWordAddedToHardWords
-        }
-    }
 
-    func loadItemsToHardItemArray(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
-        do {
-           // request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: false)]
-            HardItemArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-    }
+
+
     
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        self.navigationController?.popViewController(animated: true)
 
-    }
     
     
     func checkAnswerQ(_ sender: UIButton? = nil, _ userAnswer: String){
         getHour()
         twenty_three += 1
-        let progrs = getProgress()
+        let progrs = wordBrain.getProgress()
         progressBar.progress = progrs
         progressBar2.progress = progrs
         
@@ -510,7 +492,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         var userGotItRight = true
         
         if whichStartPressed == 1 {
-            userGotItRight = checkAnswer(userAnswer: userAnswer)
+            userGotItRight = wordBrain.checkAnswer(userAnswer: userAnswer)
         } else {
             userGotItRight = answerForStart23.lowercased() == userAnswer.lowercased() ? true : false
         }
@@ -555,7 +537,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
                 
                 playMP3("true")
                 
-                updateTrueCountMyWords()
+                wordBrain.updateTrueCountMyWords()
                 
                 sender?.backgroundColor = UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00)
                 hourButton.setTitleColor(UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00), for: .normal)
@@ -579,7 +561,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
                 
                 playMP3("false")
                 
-                userGotItWrong()
+                wordBrain.userGotItWrong()
                 
                
                 sender?.backgroundColor = UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00)
@@ -602,7 +584,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
             }
             UserDefaults.standard.synchronize()
       
-            nextQuestion()
+        wordBrain.nextQuestion()
             
             Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
     }
@@ -639,191 +621,28 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    //MARK: - loadItems
+    func loadItemsToHardItemArray(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
+        do {
+           // request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: false)]
+            HardItemArray = try context.fetch(request)
+        } catch {
+           print("Error fetching data from context \(error)")
+        }
+    }
+    
+    
+    //MARK: - prepare
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToResult" {
+            let destinationVC = segue.destination as! ResultViewController
+            destinationVC.itemArray = itemArray
+            destinationVC.option = "my"
+            destinationVC.isWordAddedToHardWords = isWordAddedToHardWords
+        }
+    }
   
-}
-
-//MARK: -  same functions in WordBrain
-extension MyQuizViewController {
-    
-    
-    func getQuestionText(_ whichQuestion: Int) -> String {
-        
-        print("sortedFailsDictionary\(sortedFailsDictionary)")
-        
-        
-        
-        if itemArray.count > 200 {
-            switch whichQuestion {
-            case 0...9:
-                questionNumber = Int.random(in: 100..<itemArray.count)
-                break
-            case 9...19:
-                questionNumber = Int.random(in: 0...100)
-                break
-            case 20:
-                questionNumber = sortedFailsDictionary[0].key
-                break
-            case 21:
-                questionNumber = sortedFailsDictionary[1].key
-                break
-            case 22:
-                questionNumber = sortedFailsDictionary[2].key
-                break
-            case 23:
-                questionNumber = sortedFailsDictionary[3].key
-                break
-            case 24:
-                questionNumber = sortedFailsDictionary[4].key
-                break
-            default:
-                print("nothing")
-            }
-            
-        } else {
-            switch whichQuestion {
-            case 0...22:
-                questionNumber = Int.random(in: 0..<itemArray.count)
-                break
-            case 23:
-                questionNumber = sortedFailsDictionary[0].key
-                break
-            case 24:
-                questionNumber = sortedFailsDictionary[1].key
-                break
-
-            default:
-                print("nothing")
-            }
-        }
-                
-        changedQuestionNumber = questionNumber + Int.random(in: 0...9)
-     
-        let startPressed = UserDefaults.standard.integer(forKey: "startPressed")
-        selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
-        
-        //when == 1 it will update in checkAnswer
-        if startPressed != 1 {
-            rightOnce.append(questionNumber)
-            UserDefaults.standard.set(rightOnce, forKey: "rightOnce")
-        }
-        
-        
-        return startPressed == 1 ? selectedSegmentIndex == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr! : itemArray[questionNumber].tr!
-   }
-    
-    
-    func getAnswer() -> String {
-        return itemArray[questionNumber].eng!
-    }
-    
-    func nextQuestion() {
-       if questionNumber + 1 < itemArray.count {
-           questionNumber += 1
-       } else {
-           questionNumber = 0
-       }
-   }
-    
-    func getProgress() -> Float {
-        onlyHereNumber += 1
-        return Float(onlyHereNumber) / 25.0
-    }
-    
-    func checkAnswer(userAnswer: String) -> Bool
-    {
-        rightOnce.append(questionNumber)
-        UserDefaults.standard.set(rightOnce, forKey: "rightOnce")
-        
-        let trueAnswer = selectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
-        
-        if userAnswer == trueAnswer {
-            //need for result view
-            rightOnceBool.append(true)
-            UserDefaults.standard.set(rightOnceBool, forKey: "rightOnceBool")
-            UserDefaults.standard.synchronize()
-            return true
-        } else {
-            //need for result view
-            rightOnceBool.append(false)
-            UserDefaults.standard.set(rightOnceBool, forKey: "rightOnceBool")
-            UserDefaults.standard.synchronize()
-            return false
-        }
-    }
-    
-    func answerTrue() {
-        rightOnceBool.append(true)
-        UserDefaults.standard.set(rightOnceBool, forKey: "rightOnceBool")
-        UserDefaults.standard.synchronize()
-    }
-    
-    func answerFalse() {
-        rightOnceBool.append(false)
-        UserDefaults.standard.set(rightOnceBool, forKey: "rightOnceBool")
-        UserDefaults.standard.synchronize()
-    }
-    
-    func updateTrueCountMyWords(){
-        
-        
-            itemArray[questionNumber].trueCount += 1
- 
-        
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
-    }
-    
-    func userGotItWrong() {
-        
-        itemArray[questionNumber].falseCount += 1
-        
-        //print("MyQuizFALSE\(itemArray[questionNumber].falseCount)")
-        
-        // if word didn't added to hard words
-        if itemArray[questionNumber].add == false{
-            let newItem = HardItem(context: context)
-            newItem.eng = itemArray[questionNumber].eng
-            newItem.tr = itemArray[questionNumber].tr
-            newItem.uuid = itemArray[questionNumber].uuid
-            newItem.originalindex = Int32(questionNumber)
-            newItem.originalList = "MyWords"
-            newItem.date = Date()
-            newItem.correctNumber = 5
-            HardItemArray.append(newItem)
-            
-            isWordAddedToHardWords = isWordAddedToHardWords + 1
-            
-            // the word ADD to hard words
-            itemArray[questionNumber].add = true
-            let lastCount = UserDefaults.standard.integer(forKey: "hardWordsCount")
-            UserDefaults.standard.set(lastCount+1, forKey: "hardWordsCount")
-
-        }
-        
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
-    }
-    
-    
-    //MARK: - getAnswer
-    func getAnswer(_ sender: Int) -> String {
-        if changedQuestionNumber % 2 == sender {
-            return selectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
-        } else {
-            answer = Int.random(in: 0..<questionNumbersCopy.count)
-            let temp = questionNumbersCopy[answer]
-            questionNumbersCopy.remove(at: answer)
-            return selectedSegmentIndex == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
-        }
-        
-    }
-
 }
 
 

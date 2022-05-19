@@ -50,7 +50,6 @@ class myWordsViewController: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var itemArray = [Item]()
     var HardItemArray = [HardItem]()
-    var quizCoreDataArray = [AddedList]()
     
     let pageStatistic = ["Kumbaradaki kelime sayısı: \(UserDefaults.standard.integer(forKey: "userWordCount"))" ,
                          "Yapılan alıştırma sayısı: \(UserDefaults.standard.integer(forKey: "blueExerciseCount"))",
@@ -62,8 +61,58 @@ class myWordsViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Kumbaram"
+        
+        searchBar.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
+        tableView.tableFooterView = UIView()
+        
         loadItems()
+        setupView()
+        hideKeyboardWhenTappedAround()
+        changeSearchBarPlaceholder()
+        
+    }
+    
+    
 
+    override func viewWillAppear(_ animated: Bool) {
+        selectedSegmentIndex = 0
+        UserDefaults.standard.set(0, forKey: "selectedSegmentIndex")
+        
+        // DETECT LİGHT MODE OR DARK MODE
+                switch traitCollection.userInterfaceStyle {
+                case .light, .unspecified:
+                    expandIconName = "expand"
+                    notExpandIconName = "notExpand"
+                    break
+                case .dark:
+                    expandIconName = "expandLight"
+                    notExpandIconName = "notExpandLight"
+                    break
+                default:
+                print("nothing")
+                }
+        
+        showWords = 0
+        expandButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 35, height: 25)).image { _ in
+            UIImage(named: expandIconName)?.draw(in: CGRect(x: 0, y: 0, width: 35, height: 25)) }, for: .normal)
+        searchBar.isHidden = true
+        
+        if goAddPage == 1 {
+            showWords = 1
+            updateView()
+            performSegue(withIdentifier: "goAdd", sender: self)
+        }
+        tableView.reloadData()
+    }
+
+
+    
+    
+    //MARK: - setup
+    func setupView(){
         
         let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
         
@@ -122,24 +171,12 @@ class myWordsViewController: UIViewController {
         backButton.title = "Geri"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         
-        searchBar.delegate = self
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
-        
-        tableView.tableFooterView = UIView()
-        
         let gradient = CAGradientLayer()
 
         gradient.frame = view.bounds
         gradient.colors = [UIColor(named: "bblueColor")!.cgColor, UIColor(named: "bblueColorBottom")!.cgColor]
 
         mainView.layer.insertSublayer(gradient, at: 0)
-        
-        hideKeyboardWhenTappedAround()
-        
-        
-        changeSearchBarPlaceholder()
         
         startButton.layer.cornerRadius = 10
         startButton2.layer.cornerRadius = 10
@@ -152,53 +189,7 @@ class myWordsViewController: UIViewController {
         searchBar.clipsToBounds = true
         searchBar.layer.cornerRadius = 10
         searchBar.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        selectedSegmentIndex = 0
-        UserDefaults.standard.set(0, forKey: "selectedSegmentIndex")
-        
-        // DETECT LİGHT MODE OR DARK MODE
-                switch traitCollection.userInterfaceStyle {
-                case .light, .unspecified:
-                    expandIconName = "expand"
-                    notExpandIconName = "notExpand"
-                    break
-                case .dark:
-                    expandIconName = "expandLight"
-                    notExpandIconName = "notExpandLight"
-                    break
-                default:
-                print("nothing")
-                }
-        
-        showWords = 0
-        expandButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 35, height: 25)).image { _ in
-            UIImage(named: expandIconName)?.draw(in: CGRect(x: 0, y: 0, width: 35, height: 25)) }, for: .normal)
-        searchBar.isHidden = true
-        
-        
-        if goAddPage == 1 {
-            showWords = 1
-            updateView()
-            performSegue(withIdentifier: "goAdd", sender: self)
-        }
-        tableView.reloadData()
-    }
-
-    @IBAction func expandButtonPressed(_ sender: UIButton) {
-        
-        if showWords == 0 {
-            showWords = 1
-        } else {
-            showWords = 0
-        }
-        updateView()
-        print("<showWords>\(showWords)")
-        tableView.reloadData()
-        
-    }
+    }//setupView
     
     func updateView(){
         
@@ -261,8 +252,23 @@ class myWordsViewController: UIViewController {
 
             tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         }
-    }
+    }//updateView
     
+    
+    //MARK: - user did something
+    
+    @IBAction func expandButtonPressed(_ sender: UIButton) {
+        
+        if showWords == 0 {
+            showWords = 1
+        } else {
+            showWords = 0
+        }
+        updateView()
+        print("<showWords>\(showWords)")
+        tableView.reloadData()
+        
+    }
     
     @IBAction func addBarButtonPressed(_ sender: UIBarButtonItem) {
         goAdd()
@@ -273,7 +279,6 @@ class myWordsViewController: UIViewController {
       
         if showWords == 0 {
             showWords = 1
-            
             tableView.reloadData()
             updateView()
         }
@@ -307,7 +312,6 @@ class myWordsViewController: UIViewController {
             present(alert, animated: true, completion: nil)
         }
     }
-    
     
     @IBAction func startPressed4(_ sender: UIButton) {
         UserDefaults.standard.set(4, forKey: "startPressed")
@@ -358,6 +362,32 @@ class myWordsViewController: UIViewController {
         
     }
     
+    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
+        
+        switch sender.direction {
+        case .right:
+            self.navigationController?.popToRootViewController(animated: true)
+            break
+        case .left:
+            performSegue(withIdentifier: "goAdd", sender: self)
+            if showWords == 0 {
+                showWords = 1
+                updateView()
+                tableView.reloadData()
+            }
+            break
+        case .down:
+            if showWords == 0 {
+                showWords = 1
+                updateView()
+                tableView.reloadData()
+            }
+            break
+        default:
+            print("nothing#swipeGesture")
+        }
+    }
+    
     //MARK: - findUserPoint
     func findUserPoint(){ //using after delete a word
         
@@ -404,15 +434,7 @@ class myWordsViewController: UIViewController {
         }
         self.tableView.reloadData()
     }
-    
-    func loadsQuizCoreDataArray(with request: NSFetchRequest<AddedList> = AddedList.fetchRequest()){
-       do {
-          // request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: false)]
-           quizCoreDataArray = try context.fetch(request)
-       } catch {
-          print("Error fetching data from context \(error)")
-       }
-   }
+
     
     //MARK: - prepare
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -452,31 +474,7 @@ class myWordsViewController: UIViewController {
 
     }
   
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        
-        switch sender.direction {
-        case .right:
-            self.navigationController?.popToRootViewController(animated: true)
-            break
-        case .left:
-            performSegue(withIdentifier: "goAdd", sender: self)
-            if showWords == 0 {
-                showWords = 1
-                updateView()
-                tableView.reloadData()
-            }
-            break
-        case .down:
-            if showWords == 0 {
-                showWords = 1
-                updateView()
-                tableView.reloadData()
-            }
-            break
-        default:
-            print("nothing")
-        }
-    }
+
 }
 
 //MARK: - searchbar
@@ -486,17 +484,9 @@ extension myWordsViewController: UISearchBarDelegate {
         if searchBar.text!.count > 0 {
             let request : NSFetchRequest<Item> = Item.fetchRequest()
             
-            if UserDefaults.standard.integer(forKey: "selectedSegmentIndex") == 0 {
-                request.predicate = NSPredicate(format: "eng CONTAINS[cd] %@", searchBar.text!)
-            }
-            else
-            {
-                request.predicate = NSPredicate(format: "tr CONTAINS[cd] %@", searchBar.text!)
-            }
-            
+            request.predicate = NSPredicate(format: "eng CONTAINS[cd] %@", searchBar.text!)
             request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: true)]
            
-            
             loadItems(with: request)
         }
         else {
@@ -606,9 +596,6 @@ extension myWordsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
     {
-        
-        
-        self.loadsQuizCoreDataArray()
         
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 

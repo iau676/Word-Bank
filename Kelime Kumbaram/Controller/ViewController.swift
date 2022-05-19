@@ -52,7 +52,6 @@ class ViewController: UIViewController {
     var goAddPage = 0
 
     var wordBrain = WordBrain()
-    var quizCoreDataArray = [AddedList]()
     var itemArray = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -67,10 +66,54 @@ class ViewController: UIViewController {
         } catch {
             assertionFailure("Failed to configure `AVAAudioSession`: \(error.localizedDescription)")
         }
+        setupFirstLaunch()
+        getHour()
+        check2xTime()
+        print("hour>\(UserDefaults.standard.integer(forKey: "lastHour"))")
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
         
-        //loadItemsQuiz()
+        setupView()
+
+    }
+    
+    override func viewDidLayoutSubviews() {
+        cp.center =  CGPoint(x: super.view.center.x, y:  levelView.center.y)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    
+
+    
+    //MARK: - setup
+    func setupFirstLaunch(){
         
-        if UserDefaults.standard.integer(forKey: "quizCoreDataArrayCount") < wordBrain.quiz.count {
+        notificationCenter.requestAuthorization(options: [.alert, .sound]) {
+            (permissionGranted, error) in
+            if(!permissionGranted)
+            {
+                print("Permission Denied")
+            }
+        }
+        
+        if UserDefaults.standard.object(forKey: "2xTime") == nil {
+            //assign two day ago
+            let calendar = Calendar.current
+            let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())
+            UserDefaults.standard.set(twoDaysAgo, forKey: "2xTime")
+            UserDefaults.standard.set(23, forKey: "userSelectedHour")
+            UserDefaults.standard.set("empty", forKey: "lastEditLabel")
+        }
+        
+        if UserDefaults.standard.integer(forKey: "textSize") < wordBrain.defaultWords.count {
             Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateCoreData), userInfo: nil, repeats: false)
         }
         
@@ -83,124 +126,12 @@ class ViewController: UIViewController {
         if UserDefaults.standard.integer(forKey: "textSize") < 9 {
             UserDefaults.standard.set(15, forKey: "textSize")
         }
-        
-        notificationCenter.requestAuthorization(options: [.alert, .sound]) {
-            (permissionGranted, error) in
-            if(!permissionGranted)
-            {
-                print("Permission Denied")
-            }
-        }
-        
-        
-        if UserDefaults.standard.object(forKey: "2xTime") == nil {
-            //assign two day ago
-            let calendar = Calendar.current
-            let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())
-            UserDefaults.standard.set(twoDaysAgo, forKey: "2xTime")
-            UserDefaults.standard.set(23, forKey: "userSelectedHour")
-            UserDefaults.standard.set("empty", forKey: "lastEditLabel")
-        }
-        
-        
-        
-       // print("SELECTED>>>\(UserDefaults.standard.integer(forKey: "userSelectedHour"))")
-        
-        settingsButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 23, height: 23)).image { _ in
-            UIImage(named: "settingsImage")?.draw(in: CGRect(x: 0, y: 0, width: 23, height: 23)) }, for: .normal)
-        
-        blueButton.backgroundColor = UIColor(red: 0.11, green: 0.73, blue: 0.92, alpha: 1.00)
-        
-        greenButton.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
-        
-        yellowButton.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00)
-        
-        firstLabelConstraint.constant = 60
-
-        print("hour>\(UserDefaults.standard.integer(forKey: "lastHour"))")
-        getHour()
-        check2xTime()
-        
-    }//viewdidload
+    }//setupFirstLaunch
     
-    func setNotification(){
-            
-            DispatchQueue.main.async
-            {
-                let title = "2x Saatijjjjj 🎉"
-                let message = "Bir saat boyunca her doğru cevap için 2x puan kazanacaksınız!"
-                
-             
-                    let content = UNMutableNotificationContent()
-                    content.title = title
-                    content.body = message
-                    
-                    let date = DateComponents(hour: 23, minute: 44)
-                    let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
-                    
-                    let id = UUID().uuidString
-                    
-                    let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-                    
-                    
-                    self.notificationCenter.removeAllPendingNotificationRequests()
-                    
-                    self.notificationCenter.add(request) { (error) in
-                        if(error != nil)
-                        {
-                            print("Error " + error.debugDescription)
-                            return
-                        }
-                    }
-                    
-                    print("id>>\(id)")
-                    print("selected new date")
-            }
-    }
-    
-    func check2xTime(){
-        if UserDefaults.standard.integer(forKey: "lastHour") == UserDefaults.standard.integer(forKey: "userSelectedHour") {
-            x2view.isHidden = false
-            x2button.pulstatex2()
-        } else {
-            x2view.isHidden = true
-        }
+    func setupView(){
         
-    }
-    
-    func getHour() {
-        UserDefaults.standard.set(Calendar.current.component(.hour, from: Date()), forKey: "lastHour")
-        UserDefaults.standard.synchronize()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     
-        
-        if segue.identifier == "goSettings" {
-            if segue.destination is SettingsViewController {
-                (segue.destination as? SettingsViewController)?.onViewWillDisappear = {
-                    self.check2xTime()
-                }
-            }
-        }
-        
-        
-        if segue.identifier == "goMyWords" {
-            let destinationVC = segue.destination as! myWordsViewController
-            destinationVC.goAddPage = goAddPage
-        }
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        
-        loadItemsQuiz()
-
         progressValue = wordBrain.calculateLevel()
         levelLabel.text = UserDefaults.standard.string(forKey: "level")
-        
         
         cp.trackColor = UIColor.white
         cp.progressColor = UIColor(red: 252.0/255.0, green: 141.0/255.0, blue: 165.0/255.0, alpha: 1.0)
@@ -256,87 +187,108 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0.11, green: 0.11, blue: 0.11, alpha: 1.00)
         
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(red: 0.11, green: 0.11, blue: 0.11, alpha: 1.00)]
-
+        
+        settingsButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 23, height: 23)).image { _ in
+            UIImage(named: "settingsImage")?.draw(in: CGRect(x: 0, y: 0, width: 23, height: 23)) }, for: .normal)
+        
+        blueButton.backgroundColor = UIColor(red: 0.11, green: 0.73, blue: 0.92, alpha: 1.00)
+        greenButton.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
+        yellowButton.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00)
+        firstLabelConstraint.constant = 60
+        
         //delete navigation bar background
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController?.navigationBar.isTranslucent = true
+    }//setupView
+    
+    @objc func updateCoreData() {
         
-    } //viewWillAppear
-    
+   
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        loadItems()
+        
+        for index in 0..<wordBrain.defaultWords.count {
+            _ = index // noneed
+            let newItem = Item(context: context)
+            newItem.eng = "\(wordBrain.defaultWords[index].eng)"
+            newItem.tr = "\(wordBrain.defaultWords[index].tr)"
+            itemArray.append(newItem)
+            print("(((-####-->\(index)")
+        }
+        
+        UserDefaults.standard.set(wordBrain.defaultWords.count, forKey: "userWordCount")
 
-    override func viewDidLayoutSubviews() {
-        cp.center =  CGPoint(x: super.view.center.x, y:  levelView.center.y)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
         do {
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-          itemArray = try context.fetch(request)
+          try context.save()
         } catch {
-           print("Error fetching data from context \(error)")
+           print("Error saving context \(error)")
+        }
+     } //updateCoreData
+    
+    func setNotification(){
+            
+            DispatchQueue.main.async
+            {
+                let title = "2x Saati 🎉"
+                let message = "Bir saat boyunca her doğru cevap için 2x puan kazanacaksınız!"
+                
+                    let content = UNMutableNotificationContent()
+                    content.title = title
+                    content.body = message
+                    
+                    let date = DateComponents(hour: 23, minute: 44)
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+                    
+                    let id = UUID().uuidString
+                    
+                    let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+                    
+                    
+                    self.notificationCenter.removeAllPendingNotificationRequests()
+                    
+                    self.notificationCenter.add(request) { (error) in
+                        if(error != nil)
+                        {
+                            print("Error " + error.debugDescription)
+                            return
+                        }
+                    }
+                    
+                    print("id>>\(id)")
+                    print("selected new date")
+            }
+    }
+    
+    func check2xTime(){
+        if UserDefaults.standard.integer(forKey: "lastHour") == UserDefaults.standard.integer(forKey: "userSelectedHour") {
+            x2view.isHidden = false
+            x2button.pulstatex2()
+        } else {
+            x2view.isHidden = true
         }
     }
     
-     func loadItemsQuiz(with request: NSFetchRequest<AddedList> = AddedList.fetchRequest()){
-        do {
-           // request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: false)]
-            quizCoreDataArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
+    func getHour() {
+        UserDefaults.standard.set(Calendar.current.component(.hour, from: Date()), forKey: "lastHour")
+        UserDefaults.standard.synchronize()
     }
+
     
+    
+   
+    //MARK: - user did something
     @IBAction func greenButtonPressed(_ sender: UIButton) {
-        UserDefaults.standard.set("green", forKey: "whichButton")
         UserDefaults.standard.set(1, forKey: "startPressed")
+        UserDefaults.standard.set("blue", forKey: "whichButton")
+        goAddPage = 1
         greenButton.pulstate()
-        
+        viewDidLayoutSubviews()
         let when = DispatchTime.now() + 0.1
         
-        viewDidLayoutSubviews()
-        if UserDefaults.standard.integer(forKey: "newWord") == 1 {
-            UserDefaults.standard.set("blue", forKey: "whichButton")
-            goAddPage = 1
-            DispatchQueue.main.asyncAfter(deadline: when){ self.performSegue(withIdentifier: "goMyWords", sender: self) }
-        } else {
-            var fiveIndex: [Int] = []
-            var i = 0
-            var firstFalseIndex = -1
-            while i < quizCoreDataArray.count {
-                //print(">->\(quizCoreDataArray[i].addedMyWords)---\(wordBrain.quiz.count)---\(quizCoreDataArray.count)--\(i)")
-                if quizCoreDataArray[i].addedMyWords == false {
-                    firstFalseIndex = i
-                    i = quizCoreDataArray.count
-                }
-                i += 1
-            }
-            
-            //print("=>>>\(fiveIndex)>>>\(firstFalseIndex)")
-            
-            if firstFalseIndex >= 0 {
-                for i in 0..<5 {
-                    fiveIndex.append(firstFalseIndex+i)
-                }
-                UserDefaults.standard.set(fiveIndex, forKey: "fiveIndex")
-            }
-            
-            if firstFalseIndex == -1 || firstFalseIndex+4 > quizCoreDataArray.count {
-                UserDefaults.standard.set("blue", forKey: "whichButton")
-                goAddPage = 1
-                DispatchQueue.main.asyncAfter(deadline: when){ self.performSegue(withIdentifier: "goMyWords", sender: self) }
-                
-            } else {
-                DispatchQueue.main.asyncAfter(deadline: when){ self.performSegue(withIdentifier: "goToQuiz", sender: self) }
-                
-            }
-        }
-     
+        DispatchQueue.main.asyncAfter(deadline: when){ self.performSegue(withIdentifier: "goMyWords", sender: self) }
+ 
     }
     
     @IBAction func yellowButtonPressed(_ sender: UIButton) {
@@ -352,7 +304,6 @@ class ViewController: UIViewController {
     @IBAction func blueButtonPressed(_ sender: UIButton) {
         UserDefaults.standard.set("blue", forKey: "whichButton")
         goAddPage = 0
-        
         blueButton.pulstate()
         
         let when = DispatchTime.now() + 0.1
@@ -360,94 +311,64 @@ class ViewController: UIViewController {
             self.performSegue(withIdentifier: "goMyWords", sender: self)
         }
     }
-    
-    @IBAction func x2ButtonPressed(_ sender: UIButton) {
-    }
-    
-    
+
     @IBAction func setNotificationFirstTime(_ sender: UIButton) {
-        
+        //works after any button pressed
         if UserDefaults.standard.integer(forKey: "setNotificationFirstTime") == 0 {
             setNotification()
             UserDefaults.standard.set(1, forKey: "setNotificationFirstTime")
-
             print("SET NOTİFİCATİON<<")
         }
-        
     }
-    
-    
     
     @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        
         performSegue(withIdentifier: "goSettings", sender: self)
-
     }
     
-    
-        @objc func checkAction(sender : UITapGestureRecognizer) {
-            let vc = CustomModalViewController()
-            vc.modalPresentationStyle = .overCurrentContext
-            self.present(vc, animated: false)
-        }
-    
-   @objc func updateCoreData() {
-       
-       loadItemsQuiz()
-       
-        for index in quizCoreDataArray.count..<wordBrain.quiz.count {
-            _ = index // noneed
-            let newItem = AddedList(context: context)
-            newItem.add = false
-            newItem.addedMyWords = false
-            quizCoreDataArray.append(newItem)
-           
-            //print("(((-####-->\(index)")
-        }
-       
-       
-       let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-       
-       loadItems()
-
-       do {
-         try context.save()
-       } catch {
-          print("Error saving context \(error)")
-       }
-        UserDefaults.standard.set(quizCoreDataArray.count, forKey: "quizCoreDataArrayCount")
-    } //updateCoreData
-    
-    func downsample(imageAt imageURL: URL,
-                    to pointSize: CGSize,
-                    scale: CGFloat = UIScreen.main.scale) -> UIImage? {
-
-        // Create an CGImageSource that represent an image
-        let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
-        guard let imageSource = CGImageSourceCreateWithURL(imageURL as CFURL, imageSourceOptions) else {
-            return nil
-        }
-        
-        // Calculate the desired dimension
-        let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
-        
-        // Perform downsampling
-        let downsampleOptions = [
-            kCGImageSourceCreateThumbnailFromImageAlways: true,
-            kCGImageSourceShouldCacheImmediately: true,
-            kCGImageSourceCreateThumbnailWithTransform: true,
-            kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels
-        ] as CFDictionary
-        guard let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions) else {
-            return nil
-        }
-        
-        // Return the downsampled image as UIImage
-        return UIImage(cgImage: downsampledImage)
+    @objc func checkAction(sender : UITapGestureRecognizer) {
+        let vc = CustomModalViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false)
     }
     
+
+    
+    
+    //MARK: - loadItems
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+        do {
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+          itemArray = try context.fetch(request)
+        } catch {
+           print("Error fetching data from context \(error)")
+        }
+    }
+
+    
+    //MARK: - prepare
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     
+        if segue.identifier == "goSettings" {
+            if segue.destination is SettingsViewController {
+                (segue.destination as? SettingsViewController)?.onViewWillDisappear = {
+                    self.check2xTime()
+                }
+            }
+        }
+        
+        
+        if segue.identifier == "goMyWords" {
+            let destinationVC = segue.destination as! myWordsViewController
+            destinationVC.goAddPage = goAddPage
+        }
+        
+    }
 
 }
+
+
+
+//MARK: - extensions
 
 extension Int {
     func withCommas() -> String {

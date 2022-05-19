@@ -49,12 +49,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var x2time: UILabel!
     
     
-    @IBOutlet weak var newWordView: UIView!
-    
-    @IBOutlet weak var newWordText: UILabel!
-    
-    @IBOutlet weak var switchNewWord: UISwitch!
-    
     
     @IBOutlet weak var settingsText: UILabel!
     
@@ -100,6 +94,11 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     var soundImageName = ""
     
     override func viewDidLoad() {
+        setupView()
+    }
+    //MARK: - setup
+    func setupView(){
+        
         
         // DETECT LİGHT MODE OR DARK MODE
                 switch traitCollection.userInterfaceStyle {
@@ -119,7 +118,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         x2view.layer.cornerRadius = 8
         appSoundView.layer.cornerRadius = 8
         soundSpeedView.layer.cornerRadius = 8
-        newWordView.layer.cornerRadius = 8
         
         settingsView.clipsToBounds = true
         settingsView.layer.cornerRadius = 16
@@ -141,13 +139,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         } else {
             switchAppSound.isOn = true
         }
-        
-        // 1 is false, 0 is true
-        if UserDefaults.standard.integer(forKey: "newWord") == 1 {
-            switchNewWord.isOn = false
-        } else {
-            switchNewWord.isOn = true
-        }
+
         
         if UserDefaults.standard.integer(forKey: "textSize") == 0 {
             UserDefaults.standard.set(15, forKey: "textSize")
@@ -209,31 +201,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         soundSpeedButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
             UIImage(named: soundImageName)?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30)) }, for: .normal)
         
-       
-    }
+    }//setupView
+    
     
 
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     
-        
-        if segue.identifier == "goPicker" {
-         
-            if segue.destination is X2ViewController {
-                (segue.destination as? X2ViewController)?.onViewWillDisappear = { (id) -> Void in
-                    self.x2time.text = self.hours[id]
-                    self.onViewWillDisappear?()// trigger function in ViewController
-                }
-            }
-            
-        }
-        
-    }
+    //MARK: - user did something
 
-    
     @IBAction func playSoundChanged(_ sender: UISwitch) {
         
-    print("gogogogo")
         if sender.isOn {
             UserDefaults.standard.set(0, forKey: "playSound")
             UIView.transition(with: soundSpeedView, duration: 0.4,
@@ -272,16 +248,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             UserDefaults.standard.set(1, forKey: "playAppSound")
         }
     }
-    
-    
-    @IBAction func newWordChanged(_ sender: UISwitch) {
-        if sender.isOn {
-            UserDefaults.standard.set(0, forKey: "newWord")
-        } else {
-            UserDefaults.standard.set(1, forKey: "newWord")
-        }
-    }
-    
+
     
     @IBAction func soundSpeedChanged(_ sender: UISegmentedControl) {
         
@@ -313,16 +280,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         playSound()
     }
     
-    func playSound()
-    {
-        let u = AVSpeechUtterance(string: "how are you?")
-            u.voice = AVSpeechSynthesisVoice(language: "en-US")
-            //        u.voice = AVSpeechSynthesisVoice(language: "en-GB")
-        u.rate = Float(selectedSpeed)
-        SettingsViewController.synth.speak(u)
-        
-    }
-    
     @IBAction func textSizeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -343,38 +300,11 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         case 5:
             UserDefaults.standard.set(19, forKey: "textSize")
             break
-        case 6:
-            UserDefaults.standard.set(21, forKey: "textSize")
-            break
         default:
-            print("nothing")
+            UserDefaults.standard.set(21, forKey: "textSize")
         }
-        //onViewWillDisappear?()
         updateTextSize()
-        
     }
-    
-    
-    func updateTextSize(){
-
-        let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
-        
-        settingsText.font = settingsText.font.withSize(textSize)
-        
-        playSoundText.font = playSoundText.font.withSize(textSize)
-        sizeText.font = sizeText.font.withSize(textSize)
-        x2text.font = x2text.font.withSize(textSize)
-        x2time.font = x2time.font.withSize(textSize)
-        appSoundText.font = appSoundText.font.withSize(textSize)
-        soundSpeedText.font = soundSpeedText.font.withSize(textSize)
-        newWordText.font = newWordText.font.withSize(textSize)
-  
-        textSegmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "cellTextColor")!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
-        soundSpeedSegmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "cellTextColor")!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
-        
-
-    }
-    
     
     @IBAction func topViewPressed(_ sender: UIButton) {
         checkAction()
@@ -388,6 +318,26 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         checkAction()
     }
     
+
+    
+
+    
+    func updateTextSize(){
+        let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
+        
+        settingsText.font = settingsText.font.withSize(textSize)
+        
+        playSoundText.font = playSoundText.font.withSize(textSize)
+        sizeText.font = sizeText.font.withSize(textSize)
+        x2text.font = x2text.font.withSize(textSize)
+        x2time.font = x2time.font.withSize(textSize)
+        appSoundText.font = appSoundText.font.withSize(textSize)
+        soundSpeedText.font = soundSpeedText.font.withSize(textSize)
+  
+        textSegmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "cellTextColor")!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
+        soundSpeedSegmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "cellTextColor")!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
+    }
+    
     func checkAction(){
         self.dismiss(animated: true, completion: nil)
     }
@@ -395,5 +345,28 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     override func updateViewConstraints() {
                 self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
                 super.updateViewConstraints()
+    }
+    
+    func playSound(){
+        let u = AVSpeechUtterance(string: "how are you?")
+            u.voice = AVSpeechSynthesisVoice(language: "en-US")
+            //        u.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        u.rate = Float(selectedSpeed)
+        SettingsViewController.synth.speak(u)
+    }
+    
+    
+    //MARK: - prepare
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     
+        if segue.identifier == "goPicker" {
+         
+            if segue.destination is X2ViewController {
+                (segue.destination as? X2ViewController)?.onViewWillDisappear = { (id) -> Void in
+                    self.x2time.text = self.hours[id]
+                    self.onViewWillDisappear?()// trigger function in ViewController
+                }
+            }
+        }
     }
 }

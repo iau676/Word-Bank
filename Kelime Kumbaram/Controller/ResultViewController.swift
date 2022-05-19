@@ -105,10 +105,7 @@ class ResultViewController: UIViewController {
             }
         }
         UserDefaults.standard.set(0, forKey: "goLevelUp")
-        if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-            
-            saveWordsToMyWords()
-        }
+     
         
         if newLevel - lastLevel > 0 {
             performSegue(withIdentifier: "goLevelUp", sender: self)
@@ -157,9 +154,7 @@ class ResultViewController: UIViewController {
         } else {
             refreshButton.isHidden = false
         }
-        if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-            findFiveIndex()
-        }
+      
         
         print("whichStartPressed>>\(whichStartPressed)")
         
@@ -207,37 +202,7 @@ class ResultViewController: UIViewController {
         }
         
     }
-    
-    
-    func findFiveIndex() {
-        loadsQuizCoreDataArray()
-        var fiveIndex: [Int] = []
-        var i = 0
-        var firstFalseIndex = -1
-        while i < quizCoreDataArray.count {
-            //print(">->\(quizCoreDataArray[i].addedMyWords)---\(wordBrain.quiz.count)---\(quizCoreDataArray.count)--\(i)")
-            if quizCoreDataArray[i].addedMyWords == false {
-                firstFalseIndex = i
-                i = quizCoreDataArray.count
-            }
-            i += 1
-        }
-        
-       // print("=>>>\(fiveIndex)>>>\(firstFalseIndex)")
-        
-        if firstFalseIndex >= 0 {
-            for i in 0..<5 {
-                fiveIndex.append(firstFalseIndex+i)
-            }
-            UserDefaults.standard.set(fiveIndex, forKey: "fiveIndex")
-        }
-        
-        if firstFalseIndex == -1 || firstFalseIndex+4 > quizCoreDataArray.count {
-            refreshButton.isHidden = true
-        } else {
-            refreshButton.isHidden = false
-        }
-    }
+
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -246,36 +211,6 @@ class ResultViewController: UIViewController {
         removePlayer()
     }
 
-    
-    func saveWordsToMyWords(){
-        loadsQuizCoreDataArray()
-        print("fiveIndex>++>\(fiveIndex)")
-        for i in 0...4 {
-            
-            let newItem = Item(context: self.context)
-            newItem.eng = self.wordBrain.quiz[fiveIndex[i]].eng
-            newItem.tr = self.wordBrain.quiz[fiveIndex[i]].tr
-            newItem.quizIndex = Int16(fiveIndex[i])
-            newItem.date = Date()
-            newItem.uuid = UUID().uuidString
-            self.itemArray.append(newItem)
-            
-            self.quizCoreDataArray[fiveIndex[i]].addedMyWords = true
-
-        }
-        do {
-            try self.context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
-        
-        print("itemmmm>>\(itemArray)")
-        
-        let userWordCount = UserDefaults.standard.integer(forKey: "userWordCount")
-        UserDefaults.standard.set(userWordCount+5, forKey: "userWordCount")
-        
-        findUserPoint()
-    }
     
     //MARK: - findUserPoint
     func findUserPoint(){ //using after delete a word
@@ -497,15 +432,7 @@ extension ResultViewController: UITableViewDataSource {
         
         cell.engLabel.textColor = UIColor(red: 0.17, green: 0.17, blue: 0.18, alpha: 1.00)
         cell.trLabel.textColor = UIColor(red: 0.17, green: 0.17, blue: 0.18, alpha: 1.00)
-        
-        if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-            cell.trView.backgroundColor = UIColor(red: 0.44, green: 0.86, blue: 0.73, alpha: 1.00)
-            cell.engView.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
-            print("<!>\(fiveIndex)")
-            cell.engLabel.text = wordBrain.quiz[fiveIndex[indexPath.row]].eng
-            cell.trLabel.text = wordBrain.quiz[fiveIndex[indexPath.row]].tr
-            
-        } else {
+
             let i = arrayOfIndex[indexPath.row]
             
             if whichStartPressed != 1 {
@@ -523,16 +450,7 @@ extension ResultViewController: UITableViewDataSource {
                 }
                 
             } else {
-                if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-                    if selectedSegmentIndex == 0 {
-                        cell.engLabel.text = wordBrain.quiz[i].eng
-                        cell.trLabel.text = wordBrain.quiz[i].tr
-                    } else {
-                        cell.engLabel.text = wordBrain.quiz[i].tr
-                        cell.trLabel.text = wordBrain.quiz[i].eng
-                    }
-                    
-                } else {
+           
                     if selectedSegmentIndex == 0 {
                         cell.engLabel.text = arrayForResultViewENG[indexPath.row]
                         cell.trLabel.text = arrayForResultViewTR[indexPath.row]
@@ -540,7 +458,6 @@ extension ResultViewController: UITableViewDataSource {
                         cell.engLabel.text = arrayForResultViewTR[indexPath.row]
                         cell.trLabel.text = arrayForResultViewENG[indexPath.row]
                     }
-                }
             }
             
             
@@ -551,12 +468,8 @@ extension ResultViewController: UITableViewDataSource {
                 if option == "my" {
                     cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[indexPath.row].strikeThrough(), (selectedSegmentIndex==0 ? itemArray[i].tr : itemArray[i].eng) ?? "empty")
                 } else {
-                    if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-                        cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[indexPath.row].strikeThrough(), selectedSegmentIndex == 0 ? wordBrain.quiz[i].tr : wordBrain.quiz[i].eng)
-                        
-                    } else {
+                    
                         cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[indexPath.row].strikeThrough(), selectedSegmentIndex == 0 ? arrayForResultViewTR[indexPath.row] : arrayForResultViewENG[indexPath.row])
-                    }
                     
                 }
                 
@@ -578,7 +491,6 @@ extension ResultViewController: UITableViewDataSource {
                 cell.engView.isHidden = true
                 cell.trLabel.textAlignment = .center
             }
-        }
   
         return cell
     }
@@ -638,14 +550,11 @@ extension ResultViewController: UITableViewDelegate {
             case "blue":
                 soundName = itemArray[arrayOfIndex[indexPath.row]].eng ?? "empty"
                 break
-            case "green":
-                soundName = wordBrain.quiz[arrayOfIndex[indexPath.row]].eng
-                break
             case "yellow":
                 soundName =  arrayForResultViewENG[indexPath.row]
                 break
             default:
-                print("nothing")
+                print("nothing#tableView")
             }
 
             

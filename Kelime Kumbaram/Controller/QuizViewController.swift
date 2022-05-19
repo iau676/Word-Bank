@@ -61,19 +61,14 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
     var player: AVAudioPlayer!
     
     var wordBrain = WordBrain()
-    var twenty_three = 0
     
     var timer = Timer()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var quizCoreDataArray = [AddedList]()
     var arrayForResultView = [HardItem]()
     
     var arrayForResultViewUserAnswer = [String]()
-    
-    var failsDictionary =  [Int:Int]()
-    var sortedFailsDictionary = Array<(key: Int, value: Int)>()
-    var sortedFailsDictionaryKey = [Int]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,21 +76,121 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
         
         getHour()
         hourButton.isHidden = true
-        
+    
         textField.delegate = self
-        
-        if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-            optionView.isHidden = true
-            firstArrowButton.isHidden = true
-            totalQuestionNumber = 30
-            whichStartPressed = 1
-        } else {
-            whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
-            totalQuestionNumber = 25
-        }
-        
+        selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
+        whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
+        totalQuestionNumber = 25
+        setupView()
         updateByWhichStartPressed()
+        updateUI()
         
+        // None of our movies should interrupt system music playback.
+            _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
+        
+    } //viewdidload
+    
+    
+    //MARK: - user did something
+    func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
+            getLetter()
+            return true
+    }
+
+    @IBAction func soundButtonPressed(_ sender: UIButton) {
+      
+        soundButton.flash()
+
+        if whichStartPressed == 1 || whichStartPressed == 0 {
+            if selectedSegmentIndex == 0 {
+                playSound(text, "en-US")
+            } else {
+                //playSound(text, "tr-TR")
+            }
+        } else {
+            //playSound(text, "en-US")
+            getLetter()
+        }
+    }
+    
+    @IBAction func firstArrowButtonPressed(_ sender: UIButton) {
+        arrowButtonsPressed()
+    }
+    
+    @IBAction func arrowButtonPressed(_ sender: UIButton) {
+        arrowButtonsPressed()
+    }
+    
+    func arrowButtonsPressed() {
+        if showOptions == 0 {
+            showOptions = 1
+            firstArrowButton.isHidden = true
+            arrowButton.isHidden = false
+            UIView.transition(with: optionStackView, duration: 0.6,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                                self.optionView.isHidden = false
+                          })
+            arrowButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
+                UIImage(named: "arrowRight")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30)) }, for: .normal)
+        } else {
+            showOptions = 0
+            firstArrowButton.isHidden = false
+            arrowButton.isHidden = true
+            UIView.transition(with: optionStackView, duration: 0.6,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                                self.optionView.isHidden = true
+                          })
+            
+            arrowButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
+                UIImage(named: "arrowLeft")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30)) }, for: .normal)
+        }
+    }
+    
+    @IBAction func switchPressed(_ sender: UISwitch) {
+        if sender.isOn {
+            UserDefaults.standard.set(0, forKey: "playSound")
+        } else {
+            UserDefaults.standard.set(1, forKey: "playSound")
+        }
+    }
+    
+    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
+        UserDefaults.standard.set(sender.selectedSegmentIndex, forKey: "selectedSegmentIndex")
+        selectedSegmentIndex = sender.selectedSegmentIndex
+        updateUI()
+    }
+    
+    @IBAction func textChanged(_ sender: UITextField) {
+        print(answerForStart23)
+        if answerForStart23.lowercased() == sender.text!.lowercased() {
+            checkAnswer(nil,sender.text!)
+            textField.text = ""
+            hourButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 0, height: 0)).image { _ in
+                UIImage(named: "empty")?.draw(in: CGRect(x: 0, y: 0, width: 0, height: 0)) }, for: .normal)
+            wordBrain.answerTrue()
+            if whichStartPressed == 2 {
+                playSound(answerForStart23, "en-US")
+            }
+        }
+    }
+    
+    @IBAction func hourButtonPressed(_ sender: UIButton) {
+        hourButton.flash()
+        playSound(text, "en-US")
+    }
+    
+    @IBAction func answerPressed(_ sender: UIButton) {
+        checkAnswer(sender, sender.currentTitle!)
+    }
+    
+    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK: - setup
+    func setupView(){
         // 1 is false, 0 is true
         if UserDefaults.standard.integer(forKey: "playSound") == 1 {
             switchPlaySound.isOn = false
@@ -142,181 +237,10 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
             UIImage(named: "arrowLeft")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30)) }, for: .normal)
         
         optionView.isHidden = true
-        
-                
+            
         showOptions = 0
-        updateUI()
-        loadsQuizCoreDataArray()
-        
-        selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
-        
-        
-        // None of our movies should interrupt system music playback.
-            _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
-        
-    } //viewdidload
-    
-    func loadsQuizCoreDataArray(with request: NSFetchRequest<AddedList> = AddedList.fetchRequest()){
-        do {
-            quizCoreDataArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-    }
-    
-    func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
-        
-        if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-            getLetter()
-        } else {
-            if wordBrain.rightOnceBool.count == wordBrain.rightOnce.count-1 { // prevent out of range
-                self.checkAnswer(nil,self.textField.text!)
-                self.textField.text = ""
-                self.hourButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 0, height: 0)).image { _ in
-                    UIImage(named: "empty")?.draw(in: CGRect(x: 0, y: 0, width: 0, height: 0)) }, for: .normal)
-                self.wordBrain.answerFalse()
-                print("self.wordBrain.answerFalse()")
-            }
-        }
-        
-            return true
-        }
+    }//setupView
 
-    
-
-    @IBAction func soundButtonPressed(_ sender: UIButton) {
-      
-        soundButton.flash()
-
-        if whichStartPressed == 1 || whichStartPressed == 0 {
-            if selectedSegmentIndex == 0 {
-                playSound(text, "en-US")
-            } else {
-                //playSound(text, "tr-TR")
-            }
-        } else {
-            //playSound(text, "en-US")
-            getLetter()
-        }
-    }
-    
-    //MARK: - getLetter
-    func getLetter(){
-        
-        
-        
-        let str = wordBrain.getAnswer()
-        
-        if letterCounter < str.count {
-            hint = "\(hint+str[letterCounter])"
-            
-            letterCounter += 1
-            
-            let number = str.count-letterCounter
-            var hintSpace = ""
-            
-            for _ in 0..<number {
-                hintSpace = "\(hintSpace) _"
-            }
-            hintLabel.text = "\(hint+hintSpace)"
-            decreaseOnePoint()
-            playMP3("beep")
-        } else {
-            hintLabel.textColor =  UIColor(named: "greenColorSingle")
-            hintLabel.flash()
-            Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(changeLabelColor), userInfo: nil, repeats: false)
-        }
-        
-    }
-    
-    @objc func changeLabelColor() {
-        hintLabel.textColor = UIColor(named: "d6d6d6")
-    }
-    
-    
-    @IBAction func firstArrowButtonPressed(_ sender: UIButton) {
-        arrowButtonsPressed()
-    }
-    
-
-    @IBAction func arrowButtonPressed(_ sender: UIButton) {
-        arrowButtonsPressed()
-    }
-    
-    func arrowButtonsPressed() {
-        if showOptions == 0 {
-            showOptions = 1
-            firstArrowButton.isHidden = true
-            arrowButton.isHidden = false
-            UIView.transition(with: optionStackView, duration: 0.6,
-                              options: .transitionCrossDissolve,
-                              animations: {
-                                self.optionView.isHidden = false
-                          })
-            arrowButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
-                UIImage(named: "arrowRight")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30)) }, for: .normal)
-        } else {
-            showOptions = 0
-            firstArrowButton.isHidden = false
-            arrowButton.isHidden = true
-            UIView.transition(with: optionStackView, duration: 0.6,
-                              options: .transitionCrossDissolve,
-                              animations: {
-                                self.optionView.isHidden = true
-                          })
-            
-            arrowButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
-                UIImage(named: "arrowLeft")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30)) }, for: .normal)
-        }
-    }
-    
-    
-    @IBAction func switchPressed(_ sender: UISwitch) {
-
-        if sender.isOn {
-            UserDefaults.standard.set(0, forKey: "playSound")
-            //soundButton.isHidden = false
-        } else {
-            UserDefaults.standard.set(1, forKey: "playSound")
-            //soundButton.isHidden = true
-        }
-        
-    }
-    
-    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
-        
-        UserDefaults.standard.set(sender.selectedSegmentIndex, forKey: "selectedSegmentIndex")
-        selectedSegmentIndex = sender.selectedSegmentIndex
-        updateUI()
-
-    }
-    
-    
-    @IBAction func textChanged(_ sender: UITextField) {
-        print(answerForStart23)
-        if answerForStart23.lowercased() == sender.text!.lowercased() {
-            checkAnswer(nil,sender.text!)
-            textField.text = ""
-            hourButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 0, height: 0)).image { _ in
-                UIImage(named: "empty")?.draw(in: CGRect(x: 0, y: 0, width: 0, height: 0)) }, for: .normal)
-            wordBrain.answerTrue()
-            if whichStartPressed == 2 {
-                playSound(answerForStart23, "en-US")
-            }
-        }
-    }
-    
-    
-    @IBAction func hourButtonPressed(_ sender: UIButton) {
-        hourButton.flash()
-        playSound(text, "en-US")
-    }
-    
-    
-    @IBAction func answerPressed(_ sender: UIButton) {
-        checkAnswer(sender, sender.currentTitle!)
-    }
-    
     
     func updateByWhichStartPressed() {
         
@@ -326,13 +250,11 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
             answerStackView.isHidden = false
             questionLabel.isHidden = false
             
-            
             let newConstraint = wordViewConstrait.constraintWithMultiplier(2)
             wordViewConstrait.isActive = false
             view.addConstraint(newConstraint)
             view.layoutIfNeeded()
             wordViewConstrait = newConstraint
-            
             
             soundButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 40, height: 40)).image { _ in
                 UIImage(named: "soundLeft")?.draw(in: CGRect(x: 0, y: 0, width: 40, height: 40)) }, for: .normal)
@@ -363,55 +285,25 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
         
         if whichStartPressed == 0 {
             answerStackView.isHidden = false
-            //soundButton.isHidden = false
             textFieldStackView.isHidden = true
             progrssBar2.isHidden = true
             soundButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 40, height: 40)).image { _ in
                 UIImage(named: "soundLeft")?.draw(in: CGRect(x: 0, y: 0, width: 40, height: 40)) }, for: .normal)
         }
-    }
+    }//updateByWhichStartPressed
     
-    //MARK: - updateUI
     @objc func updateUI() {
         
         letterCounter = 0
         hint = ""
         hintLabel.text = ""
         
-        if twenty_three < totalQuestionNumber {
-            
-            if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-                switch twenty_three {
-                case 0...4:
-                            //whichStartPressed = 0
-                    whichStartPressed = 0
-                            break
-                case 5...9:
-                            whichStartPressed = 1
-                            break
-                case 10...14:
-                            whichStartPressed = 2
-                            break
-                case 15...19:
-                            whichStartPressed = 3
-                            break
-                case 20...24:
-                            view.endEditing(true)
-                            selectedSegmentIndex = 1
-                            whichStartPressed = 1
-                case 25...29:
-                            selectedSegmentIndex = 0
-                            whichStartPressed = 1
-                            break
-                        default:
-                            print("errror")
-                }
-            }
-            
+        if questionNumber < totalQuestionNumber {
+    
            updateByWhichStartPressed()
             
             //it can change textField size if use in the other option
-            if  whichStartPressed == 1 && twenty_three > 0{
+            if  whichStartPressed == 1 && questionNumber > 0{
                 UIView.transition(with: optionStackView, duration: 0.4,
                                   options: .transitionCrossDissolve,
                                   animations: {
@@ -419,7 +311,6 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
                                     self.firstArrowButton.isHidden = true
                               })
             }
-            
 
             if whichStartPressed == 3 {
                             hourButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 66, height: 66)).image { _ in
@@ -428,12 +319,9 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
                             hourButton.isHidden=true
             }
  
-            
-            text = wordBrain.getQuestionText(selectedSegmentIndex,twenty_three, whichStartPressed)
+            text = wordBrain.getQuestionText(selectedSegmentIndex, questionNumber, whichStartPressed)
             answerForStart23 = wordBrain.getAnswer()
             questionLabel.text = text
-            
-            
             
                 switch whichStartPressed {
                 case 0,1:
@@ -459,19 +347,13 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
                     print("nothing")
                 }
 
-            
- 
             answer1Button.isEnabled = true
             answer2Button.isEnabled = true
             
-            if whichStartPressed == 0 {
-                answer1Button.setTitle(wordBrain.getAnswerTR(), for: .normal)
-                answer2Button.isHidden = true
-            } else {
+            
                 answer2Button.isHidden = false
                 answer1Button.setTitle(wordBrain.getAnswer(0), for: .normal)
                 answer2Button.setTitle(wordBrain.getAnswer(1), for: .normal)
-            }
             
             answer1Button.backgroundColor = UIColor.clear
             answer2Button.backgroundColor = UIColor.clear
@@ -479,10 +361,10 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
             hourButton.setBackgroundImage(nil, for: UIControl.State.normal)
         }
         else {
-            twenty_three = 0
+            questionNumber = 0
             performSegue(withIdentifier: "goToResult", sender: self)
         }
-    }
+    }//updateUI
     
     @objc func updateImg(_ timer: Timer){
         let imgName = timer.userInfo!
@@ -498,7 +380,6 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
     
     func playSound(_ soundName: String, _ language: String)
     {
-
         let u = AVSpeechUtterance(string: soundName)
             u.voice = AVSpeechSynthesisVoice(language: language)
             //        u.voice = AVSpeechSynthesisVoice(language: "en-GB")
@@ -519,59 +400,69 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
                }
             player.play()
         }
+    }
+    
+    func getLetter(){
+        
+        let str = wordBrain.getAnswer()
+        
+        if letterCounter < str.count {
+            hint = "\(hint+str[letterCounter])"
+            
+            letterCounter += 1
+            
+            let number = str.count-letterCounter
+            var hintSpace = ""
+            
+            for _ in 0..<number {
+                hintSpace = "\(hintSpace) _"
+            }
+            hintLabel.text = "\(hint+hintSpace)"
+            decreaseOnePoint()
+            playMP3("beep")
+        } else {
+            hintLabel.textColor =  UIColor(named: "greenColorSingle")
+            hintLabel.flash()
+            Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(changeLabelColor), userInfo: nil, repeats: false)
+        }
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToResult" {
-            let destinationVC = segue.destination as! ResultViewController
-            destinationVC.isWordAddedToHardWords = wordBrain.getIsWordAddedToHardWords()
-        }
+    @objc func changeLabelColor() {
+        hintLabel.textColor = UIColor(named: "d6d6d6")
     }
-    
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    
     
     func checkAnswer(_ sender: UIButton? = nil, _ userAnswer: String){
         
         getHour()
         selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
-
+        questionNumber += 1
+        
         var userPoint = 0
         var userGotItRight = true
 
         userPoint = UserDefaults.standard.integer(forKey: "pointForMyWords")
         
         switch whichStartPressed {
-        case 0:
-                    userPoint = 1
-                    break
-        case 2:
-                    userPoint += 10
-                    break
-        case 3:
-                    userPoint += 20
-                    break
-                default:
-                    print("errror")
+            case 2:
+                        userPoint += 10
+                        break
+            case 3:
+                        userPoint += 20
+                        break
+            default:
+                        print("nothing#checkAnswer")
         }
         
         if UserDefaults.standard.integer(forKey: "lastHour") == UserDefaults.standard.integer(forKey: "userSelectedHour") {
             userPoint = userPoint * 2
         }
         
-        
-        twenty_three += 1
-        
         if UserDefaults.standard.string(forKey: "whichButton") == "yellow" {
             let progrs = wordBrain.getProgress() // should work one time
             progressBar.progress = progrs
             progrssBar2.progress = progrs
         }
-        
         
         if whichStartPressed == 1 {
             userGotItRight = wordBrain.checkAnswer(userAnswer: userAnswer)
@@ -583,7 +474,6 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
         }
 
         if whichStartPressed == 0 { userGotItRight = true }
-
         
         arrayForResultViewUserAnswer.append(userAnswer)
         UserDefaults.standard.set(arrayForResultViewUserAnswer, forKey: "arrayForResultViewUserAnswer")
@@ -593,8 +483,7 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
         answer1Button.isEnabled = false
         answer2Button.isEnabled = false
         hourButton.isHidden = false
-            
-            questionLabel.text = ""
+        questionLabel.text = ""
             
             if userGotItRight {
                 
@@ -602,19 +491,17 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
                 
                 if UserDefaults.standard.string(forKey: "whichButton") == "yellow" {
                     if wordBrain.userGotItRight() {
-                        twenty_three = totalQuestionNumber
+                        questionNumber = totalQuestionNumber
                     }
                 } else {
-                    wordBrain.updateTrueCountWords()
+                   // wordBrain.updateTrueCountMyWords()
                 }
-                
                 
                 sender?.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
                 hourButton.setTitleColor(UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00), for: .normal)
                        
                 pointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
                 hourButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
-                
                 
                 timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateImg(_:)), userInfo: "greenBubble", repeats: false)
                 
@@ -625,27 +512,12 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
                 timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(updateImg(_:)), userInfo: "greenBubble4", repeats: false)
                 
                 UserDefaults.standard.set(lastPoint+userPoint, forKey: "lastPoint")
-                
-                if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-                    wordBrain.nextQuestion()
-                    Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
-                    let progrs = wordBrain.getProgress() // should work one time
-                    progressBar.progress = progrs
-                    progrssBar2.progress = progrs
-                }
-
+  
             } else {
                 
                 playMP3("false")
                 
-                // add word to hard words
-                if UserDefaults.standard.string(forKey: "whichButton") == "green" {
-                    //wordBrain.userGotItWrong()
-                    twenty_three -= 1
-
-                } else {
-                    wordBrain.updateFalseCountHardWords()
-                }
+                wordBrain.updateFalseCountHardWords()
                 
                 sender?.backgroundColor = UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00)
                 hourButton.setTitleColor(UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00), for: .normal)
@@ -665,22 +537,17 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
             }
             UserDefaults.standard.synchronize()
         
-        if UserDefaults.standard.string(forKey: "whichButton") == "yellow" {
             wordBrain.nextQuestion()
             Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
-        } else {
-            Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(updateCheckColors), userInfo: nil, repeats: false)
-        }
-      
-            
-    }
+        
+    }//checkAnswer
     
    @objc func updateCheckColors(){
         answer1Button.isEnabled = true
         answer2Button.isEnabled = true
         answer1Button.backgroundColor = UIColor.clear
         answer2Button.backgroundColor = UIColor.clear
-       questionLabel.text = text
+        questionLabel.text = text
         hourButton.isHidden = false
         hourButton.setTitle(" ", for: UIControl.State.normal)
         hourButton.setBackgroundImage(nil, for: UIControl.State.normal)
@@ -718,4 +585,16 @@ class QuizViewController: UIViewController, UITextFieldDelegate {
             questionLabel.isHidden = false
         }
     }
+    
+    //MARK: - prepare
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToResult" {
+            let destinationVC = segue.destination as! ResultViewController
+            destinationVC.isWordAddedToHardWords = wordBrain.getIsWordAddedToHardWords()
+        }
+    }
+    
+    
+    
+
 }

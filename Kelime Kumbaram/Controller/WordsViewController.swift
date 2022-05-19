@@ -40,7 +40,108 @@ class WordsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
+        tableView.tableFooterView = UIView()
 
+        setupView()
+        
+        loadItems() //load hard items
+        numberForAlert = HardItemArray.count
+
+        //it will run when user reopen the app after pressing home button
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTable), name: UIApplication.didBecomeActiveNotification, object: nil)
+       
+    }
+    
+  
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        selectedSegmentIndex = 0
+        UserDefaults.standard.set(0, forKey: "selectedSegmentIndex")
+        
+        // DETECT LİGHT MODE OR DARK MODE
+                switch traitCollection.userInterfaceStyle {
+                case .light, .unspecified:
+                    expandIconName = "expand"
+                    notExpandIconName = "notExpand"
+                    break
+                case .dark:
+                    expandIconName = "expandLight"
+                    notExpandIconName = "notExpandLight"
+                    break
+                default:
+                print("nothing#viewWillAppear")
+                }
+        
+        
+        loadItems()
+        loadItemsToItemArray()
+ 
+        if UserDefaults.standard.string(forKey: "whichButton") == "yellow" {
+            showAlert(HardItemArray.count)
+            showWords = 1
+            expandButton.isHidden = true
+            startButton4.isHidden = true
+            updateView()
+        } else {
+            showWords = 0
+            expandButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 35, height: 25)).image { _ in
+                UIImage(named: expandIconName)?.draw(in: CGRect(x: 0, y: 0, width: 35, height: 25)) }, for: .normal)
+            
+        }
+        
+        tableView.reloadData()
+    }
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "goNewPoint" {
+                let destinationVC = segue.destination as! NewPointViewController
+                destinationVC.textForLabel = textForLabel
+                destinationVC.userWordCount = userWordCount
+            }
+        
+            if segue.identifier == "goCard" {
+                let destinationVC = segue.destination as! CardViewController
+                destinationVC.quizCoreDataArray = quizCoreDataArray
+            }
+        }
+    
+    
+
+    
+    //MARK: - loadItems
+    func loadItems(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
+        do {
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+            HardItemArray = try context.fetch(request)
+        } catch {
+           print("Error fetching data from context \(error)")
+        }
+       // self.tableView.reloadData()
+    }
+    
+    func loadItemsToItemArray(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+        do {
+           // request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: false)]
+            itemArray = try context.fetch(request)
+        } catch {
+           print("Error fetching data from context \(error)")
+        }
+    }
+    
+    //MARK: - setup
+    func setupView(){
+        title = "Zor Kelimeler"
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor(named: "yellowColor")!.cgColor, UIColor(named: "yellowColorBottom")!.cgColor]
+        mainView.layer.insertSublayer(gradient, at: 0)
+        
         let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
         
         startButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 30+textSize, height: 15+textSize)).image { _ in
@@ -84,18 +185,7 @@ class WordsViewController: UIViewController {
         startButton4.layer.masksToBounds = false
         startButton4.layer.cornerRadius = 20.0
 
-        loadsQuizCoreDataArray()
         
-        let backButton = UIBarButtonItem()
-        backButton.title = "Geri"
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
-        
-        tableView.tableFooterView = UIView()
-
         startButton.layer.cornerRadius = 10
         startButton2.layer.cornerRadius = 10
         startButton3.layer.cornerRadius = 10
@@ -103,87 +193,10 @@ class WordsViewController: UIViewController {
         expandButton.layer.cornerRadius = 10
         tableView.layer.cornerRadius = 10
         
-        loadItems() //load hard items
-        numberForAlert = HardItemArray.count
-
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        
-        title = "Zor Kelimeler"
-        gradient.colors = [UIColor(named: "yellowColor")!.cgColor, UIColor(named: "yellowColorBottom")!.cgColor]
-        
-        mainView.layer.insertSublayer(gradient, at: 0)
-
-        //it will run when user reopen the app after pressing home button
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTable), name: UIApplication.didBecomeActiveNotification, object: nil)
-       
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        selectedSegmentIndex = 0
-        UserDefaults.standard.set(0, forKey: "selectedSegmentIndex")
-        
-        // DETECT LİGHT MODE OR DARK MODE
-                switch traitCollection.userInterfaceStyle {
-                case .light, .unspecified:
-                    expandIconName = "expand"
-                    notExpandIconName = "notExpand"
-                    break
-                case .dark:
-                    expandIconName = "expandLight"
-                    notExpandIconName = "notExpandLight"
-                    break
-                default:
-                print("nothing")
-                }
-        
-        
-        loadItems()
-        loadItemsToItemArray()
- 
-        if UserDefaults.standard.string(forKey: "whichButton") == "yellow" {
-            showAlert(HardItemArray.count)
-            showWords = 1
-            expandButton.isHidden = true
-            startButton4.isHidden = true
-            updateView()
-        } else {
-            showWords = 0
-            expandButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 35, height: 25)).image { _ in
-                UIImage(named: expandIconName)?.draw(in: CGRect(x: 0, y: 0, width: 35, height: 25)) }, for: .normal)
-            
-        }
-        
-        tableView.reloadData()
-    }
-
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "goNewPoint" {
-                let destinationVC = segue.destination as! NewPointViewController
-                destinationVC.textForLabel = textForLabel
-                destinationVC.userWordCount = userWordCount
-            }
-        
-            if segue.identifier == "goCard" {
-                let destinationVC = segue.destination as! CardViewController
-                destinationVC.quizCoreDataArray = quizCoreDataArray
-            }
-        }
-    
-    
-    @IBAction func expandButtonPressed(_ sender: UIButton) {
-        
-        if showWords == 0 {
-            showWords = 1
-        } else {
-            showWords = 0
-        }
-        updateView()
-        tableView.reloadData()
-       
-    }
+        let backButton = UIBarButtonItem()
+        backButton.title = "Geri"
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+    }//setupView
     
     @objc func updateTable(){
         updateView()
@@ -195,8 +208,6 @@ class WordsViewController: UIViewController {
             
             expandButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 35, height: 25)).image { _ in
                 UIImage(named: expandIconName)?.draw(in: CGRect(x: 0, y: 0, width: 35, height: 25)) }, for: .normal)
-            
-            
             
             UIView.transition(with: emptyView, duration: 0.6,
                               options: .transitionCrossDissolve,
@@ -238,7 +249,19 @@ class WordsViewController: UIViewController {
 
     }
     
+    //MARK: - user did something
     
+    @IBAction func expandButtonPressed(_ sender: UIButton) {
+        
+        if showWords == 0 {
+            showWords = 1
+        } else {
+            showWords = 0
+        }
+        updateView()
+        tableView.reloadData()
+       
+    }
     
     @IBAction func startPressed(_ sender: UIButton) {
         UserDefaults.standard.set(1, forKey: "startPressed")
@@ -260,7 +283,6 @@ class WordsViewController: UIViewController {
         
         //0 is true, 1 is false
         if UserDefaults.standard.integer(forKey: "playSound") == 0 {
-            
             check2Items()
         } else {
             let alert = UIAlertController(title: "Bu alıştırmayı başlatmak için \"Kelime dinle\" özelliğini aktif etmeniz gerekir.", message: "", preferredStyle: .alert)
@@ -311,36 +333,6 @@ class WordsViewController: UIViewController {
         }
     }
     
-    
-    
-    func loadItems(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
-        do {
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-            HardItemArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-       // self.tableView.reloadData()
-    }
-    
-    func loadItemsToItemArray(with request: NSFetchRequest<Item> = Item.fetchRequest()){
-        do {
-           // request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: false)]
-            itemArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-    }
-    
-     func loadsQuizCoreDataArray(with request: NSFetchRequest<AddedList> = AddedList.fetchRequest()){
-        do {
-           // request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: false)]
-            quizCoreDataArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-          self.tableView.reloadData()
-    }
 
 
     @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
@@ -359,9 +351,6 @@ class WordsViewController: UIViewController {
             print("nothing")
         }
     }
-    
-
-
     
 }
 //MARK: - show words
@@ -391,17 +380,14 @@ extension WordsViewController: UITableViewDataSource {
             tableView.isScrollEnabled = true
             
             if selectedSegmentIndex == 0 {
-               
                 showAlert(HardItemArray.count)
                 cell.engLabel.text = HardItemArray[indexPath.row].eng
                 cell.trLabel.text = HardItemArray[indexPath.row].tr
                 
             } else {
-                
                 showAlert(HardItemArray.count)
                 cell.trLabel.text = HardItemArray[indexPath.row].eng
                 cell.engLabel.text = HardItemArray[indexPath.row].tr
-           
             }
             
         } else {
@@ -410,7 +396,6 @@ extension WordsViewController: UITableViewDataSource {
             cell.trLabel.text = wordBrain.pageStatistic[indexPath.row]
             cell.numberLabel.text = ""
             
-
             tableView.backgroundColor = UIColor.clear
             tableView.rowHeight = 66
             tableView.isScrollEnabled = false
@@ -418,8 +403,6 @@ extension WordsViewController: UITableViewDataSource {
             tableView.frame = CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.size.width, height: CGFloat(66*wordBrain.pageStatistic.count-1));
         }
 
-
-        
         return cell
     }
     
@@ -435,95 +418,6 @@ extension WordsViewController: UITableViewDataSource {
             present(alert, animated: true, completion: nil)
         } 
     }
-}
-
-//MARK: - when cell swipe
-extension WordsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //print(indexPath.row)
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    func tableView(_ tableView: UITableView,
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-    {
-
-        
-        let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            
-                let newItem = Item(context: self.context)
-                newItem.eng = self.wordBrain.quiz[indexPath.row].eng
-                newItem.tr = self.wordBrain.quiz[indexPath.row].tr
-                newItem.quizIndex = Int16(indexPath.row)
-                newItem.date = Date()
-                newItem.uuid = UUID().uuidString
-                self.itemArray.append(newItem)
-                
-                self.quizCoreDataArray[indexPath.row].addedMyWords = true
-                
-                let userWordCount = UserDefaults.standard.integer(forKey: "userWordCount")
-                UserDefaults.standard.set(userWordCount+1, forKey: "userWordCount")
-
-                do {
-                    try self.context.save()
-                } catch {
-                   print("Error saving context \(error)")
-                }
-                
-                self.loadsQuizCoreDataArray()
-                
-                let alert = UIAlertController(title: "Kelimelerim sayfasına eklendi", message: "", preferredStyle: .alert)
-                // dismiss alert after 1 second
-                let when = DispatchTime.now() + 1
-                DispatchQueue.main.asyncAfter(deadline: when){
-                  alert.dismiss(animated: true, completion: nil)
-                }
-                self.present(alert, animated: true, completion: nil)
-                self.tableView.reloadData()
-
-
-            Timer.scheduledTimer(timeInterval: 1.1, target: self, selector: #selector(self.goVideo), userInfo: nil, repeats: false)
-            
-            success(true)
-        })
-        addAction.image = UIGraphicsImageRenderer(size: CGSize(width: 25, height: 25)).image { _ in
-            UIImage(named: "plus")?.draw(in: CGRect(x: 0, y: 0, width: 25, height: 25)) }
-        addAction.backgroundColor = UIColor(red: 0.34, green: 0.75, blue: 0.55, alpha: 1.00)
-
-        return UISwipeActionsConfiguration()
-       
-    }
- 
-    
-    @objc func goVideo(){
-        var lastPoint = UserDefaults.standard.integer(forKey: "pointForMyWords")
-        if UserDefaults.standard.integer(forKey: "userWordCount") >= 100 {
-           
-           let newPoint = UserDefaults.standard.integer(forKey: "userWordCount")/100*2 + 23
-
-            if newPoint - lastPoint > 0 {
-                textForLabel = "Her doğru cevap için\n \(newPoint) puan alacaksınız."
-                userWordCount = String(UserDefaults.standard.integer(forKey: "userWordCount")/100*100)
-                UserDefaults.standard.set(newPoint, forKey: "pointForMyWords")
-                performSegue(withIdentifier: "goNewPoint", sender: self)
-            }
-        } else {
-          if  UserDefaults.standard.integer(forKey: "userWordCount") == 10 ||
-                UserDefaults.standard.integer(forKey: "userWordCount") == 50{
-              lastPoint = lastPoint+1
-              textForLabel = "Her doğru cevap için\n \(lastPoint) puan alacaksınız."
-              userWordCount = String(UserDefaults.standard.integer(forKey: "userWordCount"))
-              performSegue(withIdentifier: "goNewPoint", sender: self)
-          }
-            UserDefaults.standard.set(lastPoint, forKey: "pointForMyWords")
-        }
-        
-    }
-
 }
 
 

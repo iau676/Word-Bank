@@ -57,7 +57,6 @@ class CardViewController: UIViewController {
         } else {
             UserDefaults.standard.set(lastPoint, forKey: "lastPoint")
         }
-        //print("cardCounter##\(cardCounter)")
        
     }
     
@@ -120,10 +119,8 @@ extension CardViewController: UITableViewDataSource {
      
         let combination = NSMutableAttributedString()
             
-    
             combination.append(partOne)
             combination.append(partTwo)
-      
         
         return combination
         

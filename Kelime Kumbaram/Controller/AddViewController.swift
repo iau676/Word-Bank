@@ -86,8 +86,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         userWordCountIntVariable = UserDefaults.standard.integer(forKey: "userWordCount")
     }
     
-    
-
     override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(animated)
             onViewWillDisappear?()
@@ -104,7 +102,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func addButtonPressed(_ sender: Any) {
-        
         
             if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
                 
@@ -280,8 +277,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                }
             player.play()
         }
-        
     }
-  
 }
 

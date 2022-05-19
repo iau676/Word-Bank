@@ -17,6 +17,7 @@
 		7027F691275B9B84001F6068 /* myWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* myWordsViewController.swift */; };
 		702A978327EB378A00AEECF7 /* X2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A978227EB378A00AEECF7 /* X2ViewController.swift */; };
 		7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7039B87927A6A04700519D39 /* CircularProgressView.swift */; };
+		704B055528364098006C7F96 /* word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* word.swift */; };
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
 		7060437627EC83AE00D0D953 /* X2TimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060437527EC83AE00D0D953 /* X2TimeViewController.swift */; };
 		706A9A24275A6FF800E64ECC /* greenBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A20275A6FF800E64ECC /* greenBubble.png */; };
@@ -32,7 +33,6 @@
 		706CBAC227592F8E008B4773 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 706CBAC027592F8E008B4773 /* LaunchScreen.storyboard */; };
 		706CBACB275930E9008B4773 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBACA275930E9008B4773 /* WordsViewController.swift */; };
 		706CBACF27593331008B4773 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBACE27593331008B4773 /* QuizViewController.swift */; };
-		706CBAD227593551008B4773 /* word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAD127593551008B4773 /* word.swift */; };
 		706CBAD627593993008B4773 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAD427593993008B4773 /* WordCell.swift */; };
 		706CBAD727593993008B4773 /* WordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706CBAD527593993008B4773 /* WordCell.xib */; };
 		707106EF275A1E42005532D0 /* redBubble3.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EB275A1E41005532D0 /* redBubble3.png */; };
@@ -60,6 +60,7 @@
 		7027F690275B9B84001F6068 /* myWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myWordsViewController.swift; sourceTree = "<group>"; };
 		702A978227EB378A00AEECF7 /* X2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2ViewController.swift; sourceTree = "<group>"; };
 		7039B87927A6A04700519D39 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
+		704B055428364098006C7F96 /* word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = word.swift; sourceTree = "<group>"; };
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
 		7060437527EC83AE00D0D953 /* X2TimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2TimeViewController.swift; sourceTree = "<group>"; };
 		706A9A20275A6FF800E64ECC /* greenBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble.png; sourceTree = "<group>"; };
@@ -77,7 +78,6 @@
 		706CBAC327592F8E008B4773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		706CBACA275930E9008B4773 /* WordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
 		706CBACE27593331008B4773 /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
-		706CBAD127593551008B4773 /* word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = word.swift; sourceTree = "<group>"; };
 		706CBAD427593993008B4773 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		706CBAD527593993008B4773 /* WordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordCell.xib; sourceTree = "<group>"; };
 		707106EB275A1E41005532D0 /* redBubble3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble3.png; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 		70209B1F27595DF200D527D3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				706CBAD127593551008B4773 /* word.swift */,
+				704B055428364098006C7F96 /* word.swift */,
 				70209B2A2759613900D527D3 /* WordBrain.swift */,
 				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
 				706CBABB27592F8D008B4773 /* _3.xcdatamodeld */,
@@ -310,12 +310,12 @@
 				70209B2B2759613900D527D3 /* WordBrain.swift in Sources */,
 				7060437627EC83AE00D0D953 /* X2TimeViewController.swift in Sources */,
 				706CBACB275930E9008B4773 /* WordsViewController.swift in Sources */,
-				706CBAD227593551008B4773 /* word.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,
 				7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */,
 				708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */,
 				702A978327EB378A00AEECF7 /* X2ViewController.swift in Sources */,
 				701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */,
+				704B055528364098006C7F96 /* word.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

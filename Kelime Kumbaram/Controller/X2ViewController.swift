@@ -142,7 +142,7 @@ class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
                         
                         self.setNotification()
                     }
-          
+             
                     self.dismiss(animated: true, completion: nil)
                 }
                 let actionCancel = UIAlertAction(title: "İptal", style: UIAlertAction.Style.cancel) { (action) in
