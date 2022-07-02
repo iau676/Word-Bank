@@ -2071,13 +2071,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bxa-Hf-EJc" userLabel="bottomView">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="176.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="129.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qGb-Zd-csl">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="176.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="129.5"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <connections>
-                                                    <action selector="bottomViewPressed:" destination="7xT-ax-mw9" eventType="touchUpInside" id="Edd-3V-e3S"/>
+                                                    <action selector="topViewPressed:" destination="7xT-ax-mw9" eventType="touchUpInside" id="OWH-3O-HWP"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -2090,27 +2090,27 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GGM-c6-7n4" userLabel="centerView">
-                                        <rect key="frame" x="0.0" y="176.5" width="375" height="353"/>
+                                        <rect key="frame" x="0.0" y="129.5" width="375" height="453"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PnV-lk-5Ao">
-                                                <rect key="frame" x="16" y="0.0" width="343" height="353"/>
+                                                <rect key="frame" x="16" y="0.0" width="343" height="453"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="uyd-Yq-c7X">
-                                                        <rect key="frame" x="16" y="16" width="311" height="321"/>
+                                                        <rect key="frame" x="16" y="16" width="311" height="421"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ayarlar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lN4-y1-qly">
-                                                                <rect key="frame" x="0.0" y="0.0" width="311" height="16"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lN4-y1-qly">
+                                                                <rect key="frame" x="0.0" y="0.0" width="311" height="22.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" name="cellTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hgi-ou-lv9">
-                                                                <rect key="frame" x="0.0" y="32" width="311" height="32"/>
+                                                                <rect key="frame" x="0.0" y="38.5" width="311" height="45.5"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="X2X-q5-MgI">
-                                                                        <rect key="frame" x="16" y="7" width="279" height="18"/>
+                                                                        <rect key="frame" x="16" y="14" width="279" height="18"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2x saati" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G5n-SO-dDt">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2x Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G5n-SO-dDt">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="139.5" height="18"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                 <color key="textColor" name="cellTextColor"/>
@@ -2125,7 +2125,7 @@
                                                                         </subviews>
                                                                     </stackView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n41-ZJ-o5O">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="311" height="32"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="311" height="45.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                         <state key="normal">
@@ -2149,18 +2149,18 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VP5-uz-Kuo">
-                                                                <rect key="frame" x="0.0" y="80" width="311" height="32.5"/>
+                                                                <rect key="frame" x="0.0" y="100" width="311" height="45.5"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uygulama sesi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PfO-Ek-QLf">
-                                                                        <rect key="frame" x="16" y="7" width="279" height="18"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PfO-Ek-QLf">
+                                                                        <rect key="frame" x="16" y="14" width="279" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" name="cellTextColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nno-sD-FqS">
-                                                                        <rect key="frame" x="246" y="0.5" width="51" height="31"/>
+                                                                        <rect key="frame" x="246" y="7.5" width="51" height="31"/>
                                                                         <connections>
-                                                                            <action selector="playAppSoundChanged:" destination="7xT-ax-mw9" eventType="valueChanged" id="cW6-Ff-syN"/>
+                                                                            <action selector="appSoundChanged:" destination="7xT-ax-mw9" eventType="valueChanged" id="Wfx-Dn-OQ2"/>
                                                                         </connections>
                                                                     </switch>
                                                                 </subviews>
@@ -2174,18 +2174,18 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5KS-22-kkb">
-                                                                <rect key="frame" x="0.0" y="128.5" width="311" height="32"/>
+                                                                <rect key="frame" x="0.0" y="161.5" width="311" height="45.5"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kelime dinle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOv-70-WEp">
-                                                                        <rect key="frame" x="16" y="7" width="279" height="18"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOv-70-WEp">
+                                                                        <rect key="frame" x="16" y="14" width="279" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" name="cellTextColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Buk-Rz-vU6">
-                                                                        <rect key="frame" x="246" y="0.5" width="51" height="31"/>
+                                                                        <rect key="frame" x="246" y="7.5" width="51" height="31"/>
                                                                         <connections>
-                                                                            <action selector="playSoundChanged:" destination="7xT-ax-mw9" eventType="valueChanged" id="IEp-hn-9BH"/>
+                                                                            <action selector="wordSoundChanged:" destination="7xT-ax-mw9" eventType="valueChanged" id="Enq-cB-Re5"/>
                                                                         </connections>
                                                                     </switch>
                                                                 </subviews>
@@ -2199,31 +2199,31 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eGq-EP-bT1">
-                                                                <rect key="frame" x="0.0" y="176.5" width="311" height="64"/>
+                                                                <rect key="frame" x="0.0" y="223" width="311" height="91"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-80-d5w">
-                                                                        <rect key="frame" x="16" y="8" width="279" height="48"/>
+                                                                        <rect key="frame" x="16" y="8" width="279" height="75"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="utr-mY-b5Z">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="279" height="22.5"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="279" height="36"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ses hızı" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efi-oW-p98">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="138.5" height="22.5"/>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sound Speed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efi-oW-p98">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="138.5" height="36"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                         <color key="textColor" name="cellTextColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jco-2U-nW2">
-                                                                                        <rect key="frame" x="140.5" y="0.0" width="138.5" height="22.5"/>
+                                                                                        <rect key="frame" x="140.5" y="0.0" width="138.5" height="36"/>
                                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                         <connections>
-                                                                                            <action selector="soundSpeedButtonPressed:" destination="7xT-ax-mw9" eventType="touchUpInside" id="jfV-TS-cCQ"/>
+                                                                                            <action selector="speakerButtonPressed:" destination="7xT-ax-mw9" eventType="touchUpInside" id="qoa-Im-M8I"/>
                                                                                         </connections>
                                                                                     </button>
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4hi-nq-lMd">
-                                                                                <rect key="frame" x="0.0" y="25.5" width="279" height="23.5"/>
+                                                                                <rect key="frame" x="0.0" y="39" width="279" height="37"/>
                                                                                 <segments>
                                                                                     <segment title="0.5"/>
                                                                                     <segment title="1"/>
@@ -2250,16 +2250,16 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OIe-uj-nov">
-                                                                <rect key="frame" x="0.0" y="256.5" width="311" height="64.5"/>
+                                                                <rect key="frame" x="0.0" y="330" width="311" height="91"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="7Ka-vk-Ejy">
-                                                                        <rect key="frame" x="16" y="8" width="279" height="48.5"/>
+                                                                        <rect key="frame" x="16" y="8" width="279" height="75"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Jqn-1k-v57">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="279" height="22.5"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="279" height="36"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yazı boyutu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oyb-sI-Yyd">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="279" height="22.5"/>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oyb-sI-Yyd">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="279" height="36"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                         <color key="textColor" name="cellTextColor"/>
                                                                                         <nil key="highlightedColor"/>
@@ -2267,7 +2267,7 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="guT-vz-cLZ">
-                                                                                <rect key="frame" x="0.0" y="25.5" width="279" height="24"/>
+                                                                                <rect key="frame" x="0.0" y="39" width="279" height="37"/>
                                                                                 <segments>
                                                                                     <segment title="9"/>
                                                                                     <segment title="11"/>
@@ -2329,14 +2329,11 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rk5-7k-rUz" userLabel="bottomView">
-                                        <rect key="frame" x="0.0" y="529.5" width="375" height="117.5"/>
+                                        <rect key="frame" x="0.0" y="582.5" width="375" height="64.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Yc-bv-vOa">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="117.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="64.5"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <connections>
-                                                    <action selector="bottomViewPressed:" destination="7xT-ax-mw9" eventType="touchUpInside" id="D45-uf-97I"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" name="rightCelerColor"/>
@@ -2349,8 +2346,8 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="GGM-c6-7n4" firstAttribute="height" secondItem="Rk5-7k-rUz" secondAttribute="height" multiplier="3" id="5fj-fb-E5T"/>
-                                    <constraint firstItem="Bxa-Hf-EJc" firstAttribute="height" secondItem="Rk5-7k-rUz" secondAttribute="height" multiplier="1.5" id="RMR-em-eLW"/>
+                                    <constraint firstItem="GGM-c6-7n4" firstAttribute="height" secondItem="Rk5-7k-rUz" secondAttribute="height" multiplier="7" id="5fj-fb-E5T"/>
+                                    <constraint firstItem="Bxa-Hf-EJc" firstAttribute="height" secondItem="Rk5-7k-rUz" secondAttribute="height" multiplier="2" id="RMR-em-eLW"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -2376,7 +2373,6 @@
                         <outlet property="appSoundText" destination="PfO-Ek-QLf" id="DOC-xi-uqM"/>
                         <outlet property="appSoundView" destination="VP5-uz-Kuo" id="XRV-rp-YGP"/>
                         <outlet property="fontView" destination="OIe-uj-nov" id="oJ4-Of-GuP"/>
-                        <outlet property="playSoundText" destination="IOv-70-WEp" id="Y7j-Fb-7mW"/>
                         <outlet property="playSoundView" destination="5KS-22-kkb" id="NDo-Gt-JPl"/>
                         <outlet property="settingsText" destination="lN4-y1-qly" id="dIy-Dl-hnM"/>
                         <outlet property="settingsView" destination="GGM-c6-7n4" id="XnG-Cc-JWb"/>
@@ -2386,9 +2382,10 @@
                         <outlet property="soundSpeedText" destination="efi-oW-p98" id="E8u-AY-kT2"/>
                         <outlet property="soundSpeedView" destination="eGq-EP-bT1" id="2Hp-cj-2uf"/>
                         <outlet property="switchAppSound" destination="nno-sD-FqS" id="s7K-Te-vmq"/>
-                        <outlet property="switchPlaySound" destination="Buk-Rz-vU6" id="s4r-9s-0T1"/>
+                        <outlet property="switchWordSound" destination="Buk-Rz-vU6" id="s4r-9s-0T1"/>
                         <outlet property="textSegmentedControl" destination="guT-vz-cLZ" id="1UX-31-gms"/>
                         <outlet property="viewConstraint" destination="5fj-fb-E5T" id="j74-vO-ZvE"/>
+                        <outlet property="wordSoundText" destination="IOv-70-WEp" id="Y7j-Fb-7mW"/>
                         <outlet property="x2button" destination="n41-ZJ-o5O" id="Flf-BI-0Wr"/>
                         <outlet property="x2text" destination="G5n-SO-dDt" id="45F-o5-yDt"/>
                         <outlet property="x2time" destination="gC9-kd-aH2" id="XUq-nH-tgY"/>

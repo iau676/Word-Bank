@@ -9,61 +9,45 @@ import UIKit
 import AVFoundation
 import CoreData
 
-
 class SettingsViewController: UIViewController, UITextFieldDelegate {
     
-    
-    static let synth = AVSpeechSynthesizer()
+    //MARK: - IBOutlet
     
     @IBOutlet weak var settingsView: UIView!
-    
     @IBOutlet weak var playSoundView: UIView!
-    
     @IBOutlet weak var fontView: UIView!
-    
     @IBOutlet weak var appSoundView: UIView!
-    
     @IBOutlet weak var appSoundText: UILabel!
-    
-    @IBOutlet weak var switchAppSound: UISwitch!
-    
-    
-    
     @IBOutlet weak var soundSpeedView: UIView!
-    
-    @IBOutlet weak var soundSpeedText: UILabel!
-    
-    @IBOutlet weak var soundSpeedButton: UIButton!
-    
-    @IBOutlet weak var soundSpeedSegmentedControl: UISegmentedControl!
-    var selectedSpeed = 0.0
-    
-    
-    
     @IBOutlet weak var x2view: UIView!
     
-    @IBOutlet weak var x2button: UIButton!
-    
     @IBOutlet weak var x2text: UILabel!
-    
     @IBOutlet weak var x2time: UILabel!
-    
-    
-    
     @IBOutlet weak var settingsText: UILabel!
-    
-    @IBOutlet weak var playSoundText: UILabel!
-    
+    @IBOutlet weak var wordSoundText: UILabel!
+    @IBOutlet weak var soundSpeedText: UILabel!
     @IBOutlet weak var sizeText: UILabel!
     
-    
-    @IBOutlet weak var switchPlaySound: UISwitch!
+    @IBOutlet weak var switchWordSound: UISwitch!
+    @IBOutlet weak var switchAppSound: UISwitch!
     
     @IBOutlet weak var textSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var soundSpeedSegmentedControl: UISegmentedControl!
     
+    @IBOutlet weak var x2button: UIButton!
+    @IBOutlet weak var soundSpeedButton: UIButton!
     
     @IBOutlet weak var viewConstraint: NSLayoutConstraint!
     
+    //MARK: - Variable
+    
+    var selectedSpeed = 0.0
+    var onViewWillDisappear: (()->())?
+    var soundImageName = ""
+    var soundImageSize = 30
+    var textSize : CGFloat = 0.0
+    
+    static let synth = AVSpeechSynthesizer()
     
     let hours = ["00:00 - 01:00",
                  "01:00 - 02:00",
@@ -89,166 +73,49 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                  "21:00 - 22:00",
                  "22:00 - 23:00",
                  "23:00 - 00:00"]
-    var onViewWillDisappear: (()->())?
     
-    var soundImageName = ""
+    //MARK: - Life Cycle
     
     override func viewDidLoad() {
         setupView()
     }
-    //MARK: - setup
-    func setupView(){
-        
-        
-        // DETECT LİGHT MODE OR DARK MODE
-                switch traitCollection.userInterfaceStyle {
-                case .light, .unspecified:
-                    soundImageName = "soundBlack"
-                    break
-                case .dark:
-                    soundImageName = "soundLeft"
-                    break
-                default:
-                    print("success")
+    
+    //MARK: - prepare
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goPicker" {
+            if segue.destination is X2ViewController {
+                (segue.destination as? X2ViewController)?.onViewWillDisappear = { (id) -> Void in
+                    self.x2time.text = self.hours[id]
+                    self.onViewWillDisappear?()// trigger function in ViewController
                 }
-        
-        
-        playSoundView.layer.cornerRadius = 8
-        fontView.layer.cornerRadius = 8
-        x2view.layer.cornerRadius = 8
-        appSoundView.layer.cornerRadius = 8
-        soundSpeedView.layer.cornerRadius = 8
-        
-        settingsView.clipsToBounds = true
-        settingsView.layer.cornerRadius = 16
-        settingsView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        // 1 is false, 0 is true
-        if UserDefaults.standard.integer(forKey: "playSound") == 1 {
-            switchPlaySound.isOn = false
-            soundSpeedView.isHidden = true
-            updateMultiplier(3)
-        } else {
-            switchPlaySound.isOn = true
-            soundSpeedView.isHidden = false
-            updateMultiplier(5)
+            }
         }
-        
-        // 1 is false, 0 is true
-        if UserDefaults.standard.integer(forKey: "playAppSound") == 1 {
-            switchAppSound.isOn = false
-        } else {
-            switchAppSound.isOn = true
-        }
-
-        
-        if UserDefaults.standard.integer(forKey: "textSize") == 0 {
-            UserDefaults.standard.set(15, forKey: "textSize")
-        }
-        
-        if UserDefaults.standard.double(forKey: "soundSpeed") < 0.3 {
-            UserDefaults.standard.set(0.3, forKey: "soundSpeed")
-        }
-        
-        x2time.text = hours[UserDefaults.standard.integer(forKey: "userSelectedHour")]
-
-        selectedSpeed = UserDefaults.standard.double(forKey: "soundSpeed")
-        
-        
-        switch selectedSpeed {
-        case 0.3:
-            soundSpeedSegmentedControl.selectedSegmentIndex = 0
-            break
-        case 0.5:
-            soundSpeedSegmentedControl.selectedSegmentIndex = 1
-            break
-        case 0.7:
-            soundSpeedSegmentedControl.selectedSegmentIndex = 2
-            break
-
-        default:
-            print("nothing")
-        }
-        
-        switch UserDefaults.standard.integer(forKey: "textSize") {
-        case 9:
-            textSegmentedControl.selectedSegmentIndex = 0
-            break
-        case 11:
-            textSegmentedControl.selectedSegmentIndex = 1
-            break
-        case 13:
-            textSegmentedControl.selectedSegmentIndex = 2
-            break
-        case 15:
-            textSegmentedControl.selectedSegmentIndex = 3
-            break
-        case 17:
-            textSegmentedControl.selectedSegmentIndex = 4
-            break
-        case 19:
-            textSegmentedControl.selectedSegmentIndex = 5
-            break
-        case 21:
-            textSegmentedControl.selectedSegmentIndex = 6
-            break
-        default:
-            print("nothing")
-        }
-        
-        updateTextSize()
-        
-        
-        soundSpeedButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
-            UIImage(named: soundImageName)?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30)) }, for: .normal)
-        
-    }//setupView
+    }
     
-    
+    //MARK: - IBAction
 
-    
-    //MARK: - user did something
+    @IBAction func wordSoundChanged(_ sender: UISwitch) {
 
-    @IBAction func playSoundChanged(_ sender: UISwitch) {
-        
         if sender.isOn {
             UserDefaults.standard.set(0, forKey: "playSound")
-            UIView.transition(with: soundSpeedView, duration: 0.4,
-                              options: .transitionCrossDissolve,
-                              animations: {
-                                self.soundSpeedView.isHidden = false
-                          })
-            
-            updateMultiplier(5)
-            
+            changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
         } else {
             UserDefaults.standard.set(1, forKey: "playSound")
-            UIView.transition(with: soundSpeedView, duration: 0.4,
-                              options: .transitionCrossDissolve,
-                              animations: {
-                                self.soundSpeedView.isHidden = true
-                          })
-            updateMultiplier(3)
+            changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
         }
         
     }
     
-    func updateMultiplier(_ value:Double){
-        let newConstraint = viewConstraint.constraintWithMultiplier(value)
-        viewConstraint.isActive = false
-        view.addConstraint(newConstraint)
-        view.layoutIfNeeded()
-        viewConstraint = newConstraint
-    }
-    
-    
-    @IBAction func playAppSoundChanged(_ sender: UISwitch) {
+    @IBAction func appSoundChanged(_ sender: UISwitch) {
+        
         if sender.isOn {
             UserDefaults.standard.set(0, forKey: "playAppSound")
         } else {
             UserDefaults.standard.set(1, forKey: "playAppSound")
         }
+        
     }
-
     
     @IBAction func soundSpeedChanged(_ sender: UISegmentedControl) {
         
@@ -265,17 +132,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             UserDefaults.standard.set(0.7, forKey: "soundSpeed")
             selectedSpeed = 0.7
             break
-        default:
-            print("nothing")
+        default: break
         }
+        
         soundSpeedButton.flash()
         playSound()
     }
     
     
-    
-    
-    @IBAction func soundSpeedButtonPressed(_ sender: UIButton) {
+    @IBAction func speakerButtonPressed(_ sender: UIButton) {
         soundSpeedButton.flash()
         playSound()
     }
@@ -307,66 +172,165 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func topViewPressed(_ sender: UIButton) {
-        checkAction()
-    }
-    
-    @IBAction func bottomViewPressed(_ sender: UIButton) {
-        //checkAction()
+        dismissView()
     }
     
     @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        checkAction()
+        dismissView()
     }
     
-
+    //MARK: - Other Functions
     
-
+    func setupView(){
+        
+        switch traitCollection.userInterfaceStyle {
+        case .light, .unspecified:
+            soundImageName = "soundBlack"
+            break
+        case .dark:
+            soundImageName = "soundLeft"
+            break
+        default: break
+        }
+        
+        updateTextSize()
+        
+        setupCornerRadius()
+        setupDefaults()
+        setupButton(soundSpeedButton)
+    }
     
+    func setupButton(_ button: UIButton){
+        
+        button.setImage(UIGraphicsImageRenderer(size: CGSize(width: soundImageSize, height: soundImageSize)).image { _ in
+            UIImage(named: soundImageName)?.draw(in: CGRect(x: 0, y: 0, width: soundImageSize, height: soundImageSize)) }, for: .normal)
+    }
+    
+    func setupCornerRadius(){
+        
+        playSoundView.layer.cornerRadius = 8
+        fontView.layer.cornerRadius = 8
+        x2view.layer.cornerRadius = 8
+        appSoundView.layer.cornerRadius = 8
+        soundSpeedView.layer.cornerRadius = 8
+        
+        settingsView.clipsToBounds = true
+        settingsView.layer.cornerRadius = 16
+        settingsView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+    }
+    
+    func setupDefaults(){
+        
+        if UserDefaults.standard.integer(forKey: "playSound") == 1 {
+            switchWordSound.isOn = false
+            changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
+        } else {
+            switchWordSound.isOn = true
+            changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
+        }
+        
+        if UserDefaults.standard.integer(forKey: "playAppSound") == 1 {
+            switchAppSound.isOn = false
+        } else {
+            switchAppSound.isOn = true
+        }
+        
+        if UserDefaults.standard.integer(forKey: "textSize") == 0 {
+            UserDefaults.standard.set(15, forKey: "textSize")
+            UserDefaults.standard.set(0.3, forKey: "soundSpeed")
+        }
+        
+        x2time.text = hours[UserDefaults.standard.integer(forKey: "userSelectedHour")]
+        
+        selectedSpeed = UserDefaults.standard.double(forKey: "soundSpeed")
+        switch selectedSpeed {
+        case 0.3:
+            soundSpeedSegmentedControl.selectedSegmentIndex = 0
+            break
+        case 0.5:
+            soundSpeedSegmentedControl.selectedSegmentIndex = 1
+            break
+        case 0.7:
+            soundSpeedSegmentedControl.selectedSegmentIndex = 2
+            break
+        default: break
+        }
+        
+        switch UserDefaults.standard.integer(forKey: "textSize") {
+        case 9:
+            textSegmentedControl.selectedSegmentIndex = 0
+            break
+        case 11:
+            textSegmentedControl.selectedSegmentIndex = 1
+            break
+        case 13:
+            textSegmentedControl.selectedSegmentIndex = 2
+            break
+        case 15:
+            textSegmentedControl.selectedSegmentIndex = 3
+            break
+        case 17:
+            textSegmentedControl.selectedSegmentIndex = 4
+            break
+        case 19:
+            textSegmentedControl.selectedSegmentIndex = 5
+            break
+        case 21:
+            textSegmentedControl.selectedSegmentIndex = 6
+            break
+        default: break
+        }
+    }
+
     func updateTextSize(){
-        let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
         
-        settingsText.font = settingsText.font.withSize(textSize)
+        textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
         
-        playSoundText.font = playSoundText.font.withSize(textSize)
-        sizeText.font = sizeText.font.withSize(textSize)
-        x2text.font = x2text.font.withSize(textSize)
-        x2time.font = x2time.font.withSize(textSize)
-        appSoundText.font = appSoundText.font.withSize(textSize)
-        soundSpeedText.font = soundSpeedText.font.withSize(textSize)
+        updateLabelTextSize(settingsText)
+        updateLabelTextSize(wordSoundText)
+        updateLabelTextSize(sizeText)
+        updateLabelTextSize(x2text)
+        updateLabelTextSize(x2time)
+        updateLabelTextSize(appSoundText)
+        updateLabelTextSize(soundSpeedText)
   
-        textSegmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "cellTextColor")!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
-        soundSpeedSegmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "cellTextColor")!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
+        updateSegmentedControlTextSize(textSegmentedControl)
+        updateSegmentedControlTextSize(soundSpeedSegmentedControl)
     }
     
-    func checkAction(){
+    func updateSegmentedControlTextSize(_ segmentedControl: UISegmentedControl){
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "cellTextColor")!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
+    }
+    
+    func updateLabelTextSize(_ label: UILabel){
+        label.font = label.font.withSize(textSize)
+    }
+    
+    func dismissView(){
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    override func updateViewConstraints() {
-                self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
-                super.updateViewConstraints()
     }
     
     func playSound(){
         let u = AVSpeechUtterance(string: "how are you?")
-            u.voice = AVSpeechSynthesisVoice(language: "en-US")
-            //        u.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        u.voice = AVSpeechSynthesisVoice(language: "en-US")
         u.rate = Float(selectedSpeed)
         SettingsViewController.synth.speak(u)
     }
     
-    
-    //MARK: - prepare
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     
-        if segue.identifier == "goPicker" {
-         
-            if segue.destination is X2ViewController {
-                (segue.destination as? X2ViewController)?.onViewWillDisappear = { (id) -> Void in
-                    self.x2time.text = self.hours[id]
-                    self.onViewWillDisappear?()// trigger function in ViewController
-                }
-            }
-        }
+    func changeViewState(_ uiview: UIView, alpha a: CGFloat, isUserInteraction bool: Bool){
+        
+        UIView.transition(with: uiview, duration: 0.4,
+                          options: (a < 1 ? .transitionFlipFromTop : .transitionFlipFromBottom),
+                          animations: {
+            uiview.isUserInteractionEnabled = bool
+            uiview.alpha = a
+        })
+        
     }
+    
+    override func updateViewConstraints() {
+        self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
+        super.updateViewConstraints()
+    }
+
 }
