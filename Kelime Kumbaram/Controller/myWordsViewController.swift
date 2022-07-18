@@ -10,47 +10,29 @@ import CoreData
 
 
 class myWordsViewController: UIViewController {
+    
     @IBOutlet var mainView: UIView!
-    
     @IBOutlet weak var startButton: UIButton!
-    
     @IBOutlet weak var startButton2: UIButton!
-    
     @IBOutlet weak var startButton3: UIButton!
-    
     @IBOutlet weak var startButton4: UIButton!
-    
-    
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var searchBar: UISearchBar!
-    
-    
-    
     @IBOutlet weak var emptyView: UIView!
-    
-    
     @IBOutlet weak var emptyViewConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var tableViewConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var expandButton: UIButton!
-    
     
     var selectedSegmentIndex = 0
     var goEdit = 0
     var editIndex = 0
-    
     var goAddPage = 0
-
     var showWords = 0
     var expandIconName = ""
     var notExpandIconName = ""
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var itemArray = [Item]()
     var HardItemArray = [HardItem]()
-    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let pageStatistic = ["Kumbaradaki kelime sayısı: \(UserDefaults.standard.integer(forKey: "userWordCount"))" ,
                          "Yapılan alıştırma sayısı: \(UserDefaults.standard.integer(forKey: "blueExerciseCount"))",
                          
@@ -72,11 +54,8 @@ class myWordsViewController: UIViewController {
         setupView()
         hideKeyboardWhenTappedAround()
         changeSearchBarPlaceholder()
-        
     }
     
-    
-
     override func viewWillAppear(_ animated: Bool) {
         selectedSegmentIndex = 0
         UserDefaults.standard.set(0, forKey: "selectedSegmentIndex")
@@ -107,9 +86,6 @@ class myWordsViewController: UIViewController {
         }
         tableView.reloadData()
     }
-
-
-    
     
     //MARK: - setup
     func setupView(){
@@ -249,7 +225,6 @@ class myWordsViewController: UIViewController {
                                 self.view.layoutIfNeeded()
                                 self.tableViewConstraint = newConstraint2
                           })
-
             tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         }
     }//updateView
@@ -328,8 +303,7 @@ class myWordsViewController: UIViewController {
             }
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
-        }
-        else{
+        } else {
             let when = DispatchTime.now() + 0.1
             DispatchQueue.main.asyncAfter(deadline: when){
                 self.performSegue(withIdentifier: "goCard", sender: self)
@@ -338,7 +312,6 @@ class myWordsViewController: UIViewController {
     }
    
     func check2Items(){
-        
         if itemArray.count < 2 {
             let alert = UIAlertController(title: "En az iki kelime gereklidir", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
@@ -350,16 +323,12 @@ class myWordsViewController: UIViewController {
             }
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
-        }
-        else{
+        } else {
             let when = DispatchTime.now() + 0.1
             DispatchQueue.main.asyncAfter(deadline: when){
                 self.performSegue(withIdentifier: "goToMyQuiz2", sender: self)
             }
         }
-        
-        
-        
     }
     
     @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
@@ -441,13 +410,12 @@ class myWordsViewController: UIViewController {
         if segue.identifier == "goToMyQuiz2" {
             let destinationVC = segue.destination as! MyQuizViewController
             destinationVC.itemArray = itemArray
-            
         }
         
-        if segue.identifier == "goCard" {
-            let destinationVC = segue.destination as! CardViewController
-            destinationVC.itemArray = itemArray
-        }
+//        if segue.identifier == "goCard" {
+//            let destinationVC = segue.destination as! CardViewController
+//            destinationVC.itemArray = itemArray
+//        }
         
         if segue.identifier == "goAdd" {
             let destinationVC = segue.destination as! AddViewController
@@ -469,12 +437,8 @@ class myWordsViewController: UIViewController {
                 destinationVC.goEdit = 1
                 destinationVC.editIndex = editIndex
             }
-            
         }
-
     }
-  
-
 }
 
 //MARK: - searchbar
@@ -483,13 +447,10 @@ extension myWordsViewController: UISearchBarDelegate {
         
         if searchBar.text!.count > 0 {
             let request : NSFetchRequest<Item> = Item.fetchRequest()
-            
             request.predicate = NSPredicate(format: "eng CONTAINS[cd] %@", searchBar.text!)
             request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: true)]
-           
             loadItems(with: request)
-        }
-        else {
+        } else {
             loadItems()
         }
     }
@@ -497,7 +458,6 @@ extension myWordsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             loadItems()
-            
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
@@ -507,8 +467,7 @@ extension myWordsViewController: UISearchBarDelegate {
     func changeSearchBarPlaceholder(){
         if itemArray.count > 0 {
             searchBar.placeholder = "\(itemArray.count) kelime içerisinde ara"
-        }
-        else{
+        } else {
             searchBar.placeholder = "Henüz kelime eklemediniz"
         }
     }
@@ -517,7 +476,6 @@ extension myWordsViewController: UISearchBarDelegate {
 //MARK: - show words
 extension myWordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("jojojo*****\(showWords)")
         return (showWords == 1 ?  itemArray.count == 0 ? 1 : itemArray.count  : pageStatistic.count)
     }
     
@@ -529,24 +487,18 @@ extension myWordsViewController: UITableViewDataSource {
         if showWords == 1 {
             
             tableView.rowHeight = UITableView.automaticDimension
-            
+            tableView.isScrollEnabled = true
             cell.engView.isHidden = false
             cell.trView.isHidden = false
-            tableView.isScrollEnabled = true
             
-            
-            if itemArray.count > 0
-            {
-                
+            if itemArray.count > 0 {
                 cell.engLabel.text = itemArray[indexPath.row].eng
                 cell.trLabel.text = itemArray[indexPath.row].tr
             } else {
                 cell.trView.isHidden = true
                 cell.engLabel.text = ""
                 tableView.separatorStyle = .none
-
             }
-
         } else {
             cell.engView.isHidden = true
             cell.trView.isHidden = false
@@ -558,44 +510,32 @@ extension myWordsViewController: UITableViewDataSource {
             }
             
             cell.numberLabel.text = ""
-            
-
             tableView.backgroundColor = UIColor.clear
             tableView.rowHeight = 66
             tableView.isScrollEnabled = false
-
             // tableView contentSize
             tableView.frame = CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.size.width, height: CGFloat(66*pageStatistic.count-1));
         }
         
-        
-        
         cell.engLabel.font = cell.engLabel.font.withSize(CGFloat(UserDefaults.standard.integer(forKey: "textSize")))
-        
         cell.trLabel.font = cell.trLabel.font.withSize(CGFloat(UserDefaults.standard.integer(forKey: "textSize")))
-        
-        
         return cell
     }
-    
 }
 
 
 //MARK: - when swipe cell
 extension myWordsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //print(indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-       
         return true
     }
 
     func tableView(_ tableView: UITableView,
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-    {
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 
@@ -654,8 +594,6 @@ extension myWordsViewController: UITableViewDelegate {
             UserDefaults.standard.set(engEdit, forKey: "engEdit")
             UserDefaults.standard.set(trEdit, forKey: "trEdit")
             self.performSegue(withIdentifier: "goAdd", sender: self)
-            
-            
             success(true)
         })
         editAction.image = UIGraphicsImageRenderer(size: CGSize(width: 25, height: 25)).image { _ in
@@ -664,8 +602,7 @@ extension myWordsViewController: UITableViewDelegate {
         
         let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             
-     
-            if self.itemArray[indexPath.row].add == false {
+            if self.itemArray[indexPath.row].addedHardWords == false {
                 let newItem = HardItem(context: self.context)
                 newItem.eng = self.itemArray[indexPath.row].eng
                 newItem.tr = self.itemArray[indexPath.row].tr
@@ -676,8 +613,7 @@ extension myWordsViewController: UITableViewDelegate {
                 newItem.correctNumber = 5
                 self.HardItemArray.append(newItem)
                 
-                // the word ADD to hard words
-                self.itemArray[indexPath.row].add = true
+                self.itemArray[indexPath.row].addedHardWords = true
                 let lastCount = UserDefaults.standard.integer(forKey: "hardWordsCount")
                 UserDefaults.standard.set(lastCount+1, forKey: "hardWordsCount")
 
@@ -690,7 +626,6 @@ extension myWordsViewController: UITableViewDelegate {
                 self.loadItems()
                 
                 let alert = UIAlertController(title: "Zor kelimeler sayfasına eklendi", message: "", preferredStyle: .alert)
-                // dismiss alert after 1 second
                 let when = DispatchTime.now() + 1
                 DispatchQueue.main.asyncAfter(deadline: when){
                   alert.dismiss(animated: true, completion: nil)
@@ -714,10 +649,8 @@ extension myWordsViewController: UITableViewDelegate {
             UIImage(named: "plus")?.draw(in: CGRect(x: 0, y: 0, width: 25, height: 25)) }
         addAction.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00)
         
-
-        
         if showWords == 1 {
-            if self.itemArray[indexPath.row].add == true {
+            if self.itemArray[indexPath.row].addedHardWords == true {
                 return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
             }
             
@@ -729,10 +662,7 @@ extension myWordsViewController: UITableViewDelegate {
         } else {
             return UISwipeActionsConfiguration()
         }
-        
-        
     }
-
 }
 
 //dismiss keyboard when user tap around

@@ -29,7 +29,7 @@ struct WordBrain {
     
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var HardItemArray = [HardItem]()
+    var hardItemArray = [HardItem]()
     var quizCoreDataArray = [AddedList]()
     
     var itemArray = [Item]()
@@ -61,8 +61,8 @@ struct WordBrain {
         
         questionNumbers.removeAll()
         
-        loadItems()
-        loadItemsMyQuiz()
+        loadHardItemArray()
+        loadItemArray()
 
         // these will be return a function
                 if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
@@ -117,8 +117,8 @@ struct WordBrain {
                     }
                 } else {
                     //print("<*>\(HardItemArray)")
-                    questionNumber = Int.random(in: 0..<HardItemArray.count)
-                    for i in 0..<HardItemArray.count {
+                    questionNumber = Int.random(in: 0..<hardItemArray.count)
+                    for i in 0..<hardItemArray.count {
                         questionNumbers.append(i)
                     }
                  
@@ -144,10 +144,10 @@ struct WordBrain {
             
         } else {
             if startPressed == 1 {
-                return selectedSegmentIndex == 0 ? HardItemArray[questionNumber].eng! : HardItemArray[questionNumber].tr!
+                return selectedSegmentIndex == 0 ? hardItemArray[questionNumber].eng! : hardItemArray[questionNumber].tr!
                 
             } else {
-                return  startPressed == 2 ? HardItemArray[questionNumber].tr! : HardItemArray[questionNumber].eng!
+                return  startPressed == 2 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             }
             
         }
@@ -158,7 +158,7 @@ struct WordBrain {
         if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
             return itemArray[questionNumber].eng!
         } else {
-            return HardItemArray[questionNumber].eng!
+            return hardItemArray[questionNumber].eng!
         }
     }
     
@@ -167,7 +167,7 @@ struct WordBrain {
     }
 
     func getOriginalList() -> String {
-        return HardItemArray[questionNumber].originalList!
+        return hardItemArray[questionNumber].originalList!
     }
     
     func getQuestionTextForSegment() -> String
@@ -175,7 +175,7 @@ struct WordBrain {
         if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
             return itemArray[questionNumber].eng!
         } else {
-            return HardItemArray[questionNumber].eng!
+            return hardItemArray[questionNumber].eng!
         }
     }
     
@@ -196,7 +196,7 @@ struct WordBrain {
             if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
                 return selectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
             } else {
-                return selectedSegmentIndex == 0 ? HardItemArray[questionNumber].tr! : HardItemArray[questionNumber].eng!
+                return selectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             }
             
         } else {
@@ -206,7 +206,7 @@ struct WordBrain {
             if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
                 return selectedSegmentIndex == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
             } else {
-                return selectedSegmentIndex == 0 ? HardItemArray[temp].tr! : HardItemArray[temp].eng!
+                return selectedSegmentIndex == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
             }
             
             
@@ -221,7 +221,7 @@ struct WordBrain {
                 questionNumber = 0
             }
         } else {
-            if questionNumber + 1 < HardItemArray.count {
+            if questionNumber + 1 < hardItemArray.count {
                 questionNumber += 1
             } else {
                 questionNumber = 0
@@ -236,12 +236,12 @@ struct WordBrain {
         if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
              trueAnswer = selectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
         } else {
-             trueAnswer = selectedSegmentIndex == 0 ? HardItemArray[questionNumber].tr! : HardItemArray[questionNumber].eng!
+             trueAnswer = selectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             
-            arrayForResultViewENG.append(HardItemArray[questionNumber].eng ?? "empty")
+            arrayForResultViewENG.append(hardItemArray[questionNumber].eng ?? "empty")
             UserDefaults.standard.set(arrayForResultViewENG, forKey: "arrayForResultViewENG")
             
-            arrayForResultViewTR.append(HardItemArray[questionNumber].tr ?? "empty")
+            arrayForResultViewTR.append(hardItemArray[questionNumber].tr ?? "empty")
             UserDefaults.standard.set(arrayForResultViewTR, forKey: "arrayForResultViewTR")
            
         }
@@ -262,10 +262,10 @@ struct WordBrain {
     }
     
     mutating func arrayForResultView(){
-        arrayForResultViewENG.append(HardItemArray[questionNumber].eng ?? "empty")
+        arrayForResultViewENG.append(hardItemArray[questionNumber].eng ?? "empty")
         UserDefaults.standard.set(arrayForResultViewENG, forKey: "arrayForResultViewENG")
         
-        arrayForResultViewTR.append(HardItemArray[questionNumber].tr ?? "empty")
+        arrayForResultViewTR.append(hardItemArray[questionNumber].tr ?? "empty")
         UserDefaults.standard.set(arrayForResultViewTR, forKey: "arrayForResultViewTR")
     }
     
@@ -282,106 +282,72 @@ struct WordBrain {
     }
     
     
-    mutating func addHardWords(_ number: Int) {
+    mutating func addHardWords(_ index: Int) {
  
-            loadItemsMyQuiz()
+            loadItemArray()
             
-            if itemArray[number].add == false{
                 let newItem = HardItem(context: context)
-                newItem.eng = itemArray[number].eng
-                newItem.tr = itemArray[number].tr
-                newItem.uuid = itemArray[number].uuid
-                newItem.originalindex = Int32(number)
-                newItem.originalList = "MyWords"
+                newItem.eng = itemArray[index].eng
+                newItem.tr = itemArray[index].tr
+                newItem.uuid = itemArray[index].uuid
+                newItem.originalindex = Int32(index)
                 newItem.date = Date()
                 newItem.correctNumber = 5
-                HardItemArray.append(newItem)
-                // the word ADD to hard words
-                itemArray[questionNumber].add = true
-                let lastCount = UserDefaults.standard.integer(forKey: "hardWordsCount")
-                UserDefaults.standard.set(lastCount+1, forKey: "hardWordsCount")
-
-            }
-
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
+                hardItemArray.append(newItem)
+                itemArray[index].addedHardWords = true
+                let hardWordsCount = UserDefaults.standard.integer(forKey: "hardWordsCount")
+                UserDefaults.standard.set(hardWordsCount+1, forKey: "hardWordsCount")
         
+        
+            saveWord()
     }
     
     mutating func userGotItRight() -> Bool {
                 
-        var i = HardItemArray[questionNumber].correctNumber
-        i = i - 1
-        HardItemArray[questionNumber].correctNumber = i
+        let i = hardItemArray[questionNumber].correctNumber
+        hardItemArray[questionNumber].correctNumber = i - 1
         
-        let originalindex = HardItemArray[questionNumber].originalindex
+        let originalindex = hardItemArray[questionNumber].originalindex
 
-        if let itemm = itemArray.first(where: {$0.uuid == HardItemArray[questionNumber].uuid}) {
+        if let itemm = itemArray.first(where: {$0.uuid == hardItemArray[questionNumber].uuid}) {
             itemm.trueCount += 1
         } else {
            // item could not be found
         }
             
-        if HardItemArray[questionNumber].correctNumber <= 0 {
+        if hardItemArray[questionNumber].correctNumber <= 0 {
             
-            // the word DELETE from hard words
-            if HardItemArray[questionNumber].originalList == "Words" {
-                print("delete quiz item")
-                quizCoreDataArray[Int(originalindex)].add = false
-            } else {
-                
-                if itemArray.count > Int(originalindex) {
-
-                    if let itemm = itemArray.first(where: {$0.uuid == HardItemArray[questionNumber].uuid}) {
-                        itemm.add = false
-                    } else {
-                       // item could not be found
-                    }
+            if itemArray.count > Int(originalindex) {
+                if let itemm = itemArray.first(where: {$0.uuid == hardItemArray[questionNumber].uuid}) {
+                    itemm.addedHardWords = false
+                } else {
+                   // item could not be found
                 }
             }
             
-            context.delete(HardItemArray[questionNumber])
-            HardItemArray.remove(at: questionNumber)
+            context.delete(hardItemArray[questionNumber])
+            hardItemArray.remove(at: questionNumber)
             
-            
-            let lastCount = UserDefaults.standard.integer(forKey: "hardWordsCount")
-            UserDefaults.standard.set(lastCount-1, forKey: "hardWordsCount")
-    
+            let hardWordsCount = UserDefaults.standard.integer(forKey: "hardWordsCount")
+            UserDefaults.standard.set(hardWordsCount-1, forKey: "hardWordsCount")
         }
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
-        return HardItemArray.count < 2 ? true : false
+        saveWord()
+        return hardItemArray.count < 2 ? true : false
     }
     
     func updateFalseCountHardWords(){
 
-        if let itemm = itemArray.first(where: {$0.uuid == HardItemArray[questionNumber].uuid}) {
+        if let itemm = itemArray.first(where: {$0.uuid == hardItemArray[questionNumber].uuid}) {
             itemm.falseCount += 1
         } else {
            // item could not be found
         }
-        
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
+        saveWord()
     }
     
     func updateTrueCountMyWords(){
         itemArray[questionNumber].trueCount += 1
- 
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
+        saveWord()
     }
     
     mutating func userGotItWrong() {
@@ -391,7 +357,7 @@ struct WordBrain {
         itemArray[questionNumber].falseCount += 1
         
         // if word didn't added to hard words
-        if itemArray[questionNumber].add == false{
+        if itemArray[questionNumber].addedHardWords == false{
             let newItem = HardItem(context: context)
             newItem.eng = itemArray[questionNumber].eng
             newItem.tr = itemArray[questionNumber].tr
@@ -400,38 +366,28 @@ struct WordBrain {
             newItem.originalList = "MyWords"
             newItem.date = Date()
             newItem.correctNumber = 5
-            HardItemArray.append(newItem)
+            hardItemArray.append(newItem)
             
             isWordAddedToHardWords = isWordAddedToHardWords + 1
             
             // the word ADD to hard words
-            itemArray[questionNumber].add = true
+            itemArray[questionNumber].addedHardWords = true
             let lastCount = UserDefaults.standard.integer(forKey: "hardWordsCount")
             UserDefaults.standard.set(lastCount+1, forKey: "hardWordsCount")
-
         }
-        
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
-        
+        saveWord()
     }
 
-
-    
-    mutating func loadItems(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
+    mutating func loadHardItemArray(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-            HardItemArray = try context.fetch(request)
+            hardItemArray = try context.fetch(request)
         } catch {
            print("Error fetching data from context \(error)")
         }
     }
 
-    
-    mutating func loadItemsMyQuiz(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    mutating func loadItemArray(with request: NSFetchRequest<Item> = Item.fetchRequest()){
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
             itemArray = try context.fetch(request)
@@ -439,7 +395,14 @@ struct WordBrain {
            print("Error fetching data from context \(error)")
         }
     }
-
+    
+    func saveWord() {
+        do {
+          try context.save()
+        } catch {
+           print("Error saving context \(error)")
+        }
+    }
     
     func calculateLevel() -> Float {
         let lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")

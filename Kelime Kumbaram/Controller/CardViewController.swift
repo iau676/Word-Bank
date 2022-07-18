@@ -10,23 +10,23 @@ import CoreData
 
 class CardViewController: UIViewController {
     
+    //MARK: - IBOutlet
+    
     @IBOutlet var mainView: UIView!
-    
-    
     @IBOutlet weak var tableView: UITableView!
+    
+    //MARK: - Variables
+    
     var wordBrain = WordBrain()
-    
     var quizCoreDataArray = [AddedList]()
-    var itemArray = [Item]()
-    
+    var itemArray: [Item] { return wordBrain.itemArray }
     var cardCounter = 0
     var questionNumber = 0
+    var lastPoint = 0
     var questionENG = ""
     var questionTR = ""
     
-    var whichButton = ""
-    var lastPoint = 0
-    
+    //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,42 +35,15 @@ class CardViewController: UIViewController {
         tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
         tableView.tableFooterView = UIView()
         lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
-        whichButton = UserDefaults.standard.string(forKey: "whichButton")!
-        //delete navigation bar background
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            self.navigationController?.navigationBar.shadowImage = UIImage()
-            self.navigationController?.navigationBar.isTranslucent = true
-       
-        updateText()
-        tableView.reloadData()
-    }
-    
-    func updateText(){
-
-        questionNumber = Int.random(in: 0..<itemArray.count)
-        questionENG = itemArray[questionNumber].eng ?? "empty"
-        questionTR = itemArray[questionNumber].tr ?? "empty"
-        cardCounter += 1
-        lastPoint += 1
-        if cardCounter == 26 {
-            performSegue(withIdentifier: "goToResult", sender: self)
-        } else {
-            UserDefaults.standard.set(lastPoint, forKey: "lastPoint")
-        }
-       
-    }
-    
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
         
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        wordBrain.loadItemArray()
         updateText()
-        tableView.isHidden = true
-        UIView.transition(with: tableView, duration: 1.0,
-                          options: .transitionCurlUp,
-                          animations: {
-                            self.tableView.isHidden = false
-                      })
-        tableView.reloadData()
     }
+    
+    //MARK: - prepare
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToResult" {
@@ -81,9 +54,71 @@ class CardViewController: UIViewController {
         }
     }
     
+    //MARK: - IBAction
+    
+    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
+        updateText()
+        swipeAnimation()
+        tableView.reloadData()
+    }
+    
+    //MARK: - Other Functions
+    
+    func updateText(){
+        questionNumber = Int.random(in: 0..<itemArray.count)
+        questionENG = itemArray[questionNumber].eng ?? "empty"
+        questionTR = itemArray[questionNumber].tr ?? "empty"
+        cardCounter += 1
+        lastPoint += 1
+        if cardCounter == 26 {
+            performSegue(withIdentifier: "goToResult", sender: self)
+        } else {
+            UserDefaults.standard.set(lastPoint, forKey: "lastPoint")
+        }
+        self.swipeAnimation()
+        self.tableView.reloadData()
+    }
+
+    func showAlertForAlreadyAdded(){
+        let alert = UIAlertController(title: "Zaten mevcut", message: "", preferredStyle: .alert)
+        let when = DispatchTime.now() + 0.3
+        DispatchQueue.main.asyncAfter(deadline: when){
+            alert.dismiss(animated: true, completion: nil)
+            self.updateText()
+        }
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showAlertForAdded() {
+        let alert = UIAlertController(title: "Zor kelimeler sayfasına eklendi", message: "", preferredStyle: .alert)
+        
+        let when = DispatchTime.now() + 0.5
+        DispatchQueue.main.asyncAfter(deadline: when){
+            alert.dismiss(animated: true, completion: nil)
+            self.updateText()
+        }
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func imageRenderer(imageName: String) -> UIImage {
+        let imageSize = 25
+        return UIGraphicsImageRenderer(size: CGSize(width: imageSize, height: imageSize)).image { _ in
+            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: imageSize, height: imageSize)) }
+    }
+    
+    func swipeAnimation() {
+        tableView.isHidden = true
+        UIView.transition(with: tableView, duration: 1.0,
+                          options: .transitionCurlUp,
+                          animations: {
+                            self.tableView.isHidden = false
+                      })
+    }
+    
 }
 
-//MARK: - show words
+    //MARK: - Show Words
+
 extension CardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -101,35 +136,34 @@ extension CardViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height
     }
     
     func writeAnswerCell(_ eng: String, _ tr: String) -> NSMutableAttributedString{
         
-        let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: CGFloat(UserDefaults.standard.integer(forKey: "textSize")+12))]
-        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "d6d6d6"), NSAttributedString.Key.font: UIFont.systemFont(ofSize: CGFloat(UserDefaults.standard.integer(forKey: "textSize")))]
+        let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
         
-        let partOne = NSMutableAttributedString(string: "\(eng)\n\n", attributes: boldFontAttributes as [NSAttributedString.Key : Any])
+        let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size:textSize+12)]
+        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "d6d6d6"), NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
         
-        let partTwo =  NSMutableAttributedString(string: "\(tr)\n", attributes: normalFontAttributes as [NSAttributedString.Key : Any])
-      
-       
+        let english = NSMutableAttributedString(string: "\(eng)\n\n", attributes: boldFontAttributes as [NSAttributedString.Key : Any])
+        
+        let meaning =  NSMutableAttributedString(string: "\(tr)\n", attributes: normalFontAttributes as [NSAttributedString.Key : Any])
      
         let combination = NSMutableAttributedString()
             
-            combination.append(partOne)
-            combination.append(partTwo)
+            combination.append(english)
+            combination.append(meaning)
         
         return combination
-        
     }
-
 }
 
-//MARK: - when cell swipe
+    //MARK: - Swipe Cell
+
 extension CardViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -141,54 +175,19 @@ extension CardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
     {
-
         let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            
-            
-            let alert = UIAlertController(title: "Zor kelimeler sayfasına eklendi", message: "", preferredStyle: .alert)
-            // dismiss alert after 1 second
-            let when = DispatchTime.now() + 0.5
-            DispatchQueue.main.asyncAfter(deadline: when){
-              alert.dismiss(animated: true, completion: nil)
-                
-                self.wordBrain.addHardWords(self.questionNumber)
-                
-                self.updateText()
-                
-                tableView.isHidden = true
-                UIView.transition(with: tableView, duration: 1.0,
-                                  options: .transitionCurlUp,
-                                  animations: {
-                                    self.tableView.isHidden = false
-                              })
-                
-                tableView.reloadData()
-            }
-            self.present(alert, animated: true, completion: nil)
-
+            self.showAlertForAdded()
+            self.wordBrain.addHardWords(self.questionNumber)
             success(true)
         })
-        addAction.image = UIGraphicsImageRenderer(size: CGSize(width: 25, height: 25)).image { _ in
-            UIImage(named: "plus")?.draw(in: CGRect(x: 0, y: 0, width: 25, height: 25)) }
+        addAction.image = imageRenderer(imageName: "plus")
         addAction.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00)
-
-            if itemArray[questionNumber].add == true {
-                showAlert()
-                return UISwipeActionsConfiguration()
-            }
-    
-        return UISwipeActionsConfiguration(actions: [addAction])
-
-    }
-    
-    func showAlert(){
-        let alert = UIAlertController(title: "Zaten mevcut", message: "", preferredStyle: .alert)
-        // dismiss alert after 1 second
-        let when = DispatchTime.now() + 0.3
-        DispatchQueue.main.asyncAfter(deadline: when){
-          alert.dismiss(animated: true, completion: nil)
+        
+        if itemArray[questionNumber].addedHardWords == true {
+            showAlertForAlreadyAdded()
+            return UISwipeActionsConfiguration()
         }
-        self.present(alert, animated: true, completion: nil)
+        
+        return UISwipeActionsConfiguration(actions: [addAction])
     }
-
 }

@@ -130,6 +130,7 @@
 		70209B1D27595DDE00D527D3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
 				706CBAD427593993008B4773 /* WordCell.swift */,
 				706CBAD527593993008B4773 /* WordCell.xib */,
 				706CBAB827592F8D008B4773 /* Main.storyboard */,
@@ -142,7 +143,6 @@
 			children = (
 				704B055428364098006C7F96 /* word.swift */,
 				70209B2A2759613900D527D3 /* WordBrain.swift */,
-				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
 				706CBABB27592F8D008B4773 /* _3.xcdatamodeld */,
 			);
 			path = Model;

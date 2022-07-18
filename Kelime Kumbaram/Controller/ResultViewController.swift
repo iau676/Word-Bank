@@ -300,7 +300,7 @@ class ResultViewController: UIViewController {
             if UserDefaults.standard.string(forKey: "whichButton") == "green" {
                 destinationVC.quizCoreDataArray = quizCoreDataArray
             } else {
-                destinationVC.itemArray = itemArray
+               // destinationVC.itemArray = itemArray
             }
         }
         

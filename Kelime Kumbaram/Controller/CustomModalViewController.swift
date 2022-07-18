@@ -22,7 +22,7 @@ class CustomModalViewController: UIViewController {
     
     lazy var notesLabel: UILabel = {
         let label = UILabel()
-        label.text = "\n\n\n\nKumbaram - Kelimelerinizi buraya ekleyebilirsiniz.\nBu sayfadaki alıştırmaları yaparak puan kazanabilirsiniz.\nAlıştırmalarda son eklediğiniz ve zorlandığınız kelimelerle daha sık karşılaşacaksınız.\nKelime sayınız arttıkça her kelimeden kazandığınız puan da artacaktır.\nHer gün bir saat süren 2x puan etkinliğiyle daha fazla puan kazanabilirsiniz. Ayarlar sayfasından kendinize uygun olan saati seçebilirsiniz.\n\nZor Kelimeler - Kumbaram sayfasındaki alıştırmalarda bir kelimeyi yanlış cevapladığınızda o kelime bu sayfaya eklenir. Kelimenin bu sayfadan silinmesi için 5 defa doğru cevaplanması gerekir."
+        label.text = ""
         label.font = .systemFont(ofSize: 15)
         label.textColor = UIColor(named: "cellTextColor")
         label.numberOfLines = 0
