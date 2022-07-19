@@ -42,6 +42,8 @@
 		7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081AB0127CCD15700E2996A /* NewPointViewController.swift */; };
 		7081AB0527CCD3CB00E2996A /* newpoint.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0427CCD3CB00E2996A /* newpoint.mp4 */; };
 		7081AB0727CCFA4300E2996A /* dog.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0627CCFA4300E2996A /* dog.mp4 */; };
+		708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD87288719D300E09AE1 /* Date+Extensions.swift */; };
+		708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD89288719F900E09AE1 /* UIView+Extensions.swift */; };
 		708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C0E1327A8894F00E9105F /* AddViewController.swift */; };
 		708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */; };
 		709D3548276331FF001C3E56 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 709D3547276331FF001C3E56 /* sounds */; };
@@ -87,6 +89,8 @@
 		7081AB0127CCD15700E2996A /* NewPointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPointViewController.swift; sourceTree = "<group>"; };
 		7081AB0427CCD3CB00E2996A /* newpoint.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = newpoint.mp4; sourceTree = "<group>"; };
 		7081AB0627CCFA4300E2996A /* dog.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dog.mp4; sourceTree = "<group>"; };
+		708AFD87288719D300E09AE1 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		708AFD89288719F900E09AE1 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		708C0E1327A8894F00E9105F /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		709D3547276331FF001C3E56 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 				709D3547276331FF001C3E56 /* sounds */,
 				70C9132B27608E5800DE413E /* images */,
 				706CBAB427592F8D008B4773 /* SceneDelegate.swift */,
+				708AFD86288719BA00E09AE1 /* Extensions */,
 				70209B1F27595DF200D527D3 /* Model */,
 				70209B1D27595DDE00D527D3 /* View */,
 				70209B1C27595DD000D527D3 /* Controller */,
@@ -185,6 +190,15 @@
 				706CBAC327592F8E008B4773 /* Info.plist */,
 			);
 			path = "Kelime Kumbaram";
+			sourceTree = "<group>";
+		};
+		708AFD86288719BA00E09AE1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				708AFD87288719D300E09AE1 /* Date+Extensions.swift */,
+				708AFD89288719F900E09AE1 /* UIView+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		70C9132B27608E5800DE413E /* images */ = {
@@ -296,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				706CBAB727592F8D008B4773 /* ViewController.swift in Sources */,
+				708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */,
 				7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */,
 				706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */,
 				70175BC427E71F170053CBDB /* CardViewController.swift in Sources */,
@@ -307,6 +322,7 @@
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,
 				70FC7F38275BD1DE00F138E7 /* MyQuizViewController.swift in Sources */,
 				706CBAD627593993008B4773 /* WordCell.swift in Sources */,
+				708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */,
 				70209B2B2759613900D527D3 /* WordBrain.swift in Sources */,
 				7060437627EC83AE00D0D953 /* X2TimeViewController.swift in Sources */,
 				706CBACB275930E9008B4773 /* WordsViewController.swift in Sources */,

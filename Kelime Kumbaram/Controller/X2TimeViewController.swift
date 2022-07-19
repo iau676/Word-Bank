@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class X2TimeViewController: UIViewController {
     
     
@@ -19,13 +18,11 @@ class X2TimeViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 0.99, green: 0.55, blue: 0.65, alpha: 1.00)
     }
     
-    
     override func updateViewConstraints() {
                 self.view.frame.size.height = UIScreen.main.bounds.height - (UIScreen.main.bounds.height/2-44)
                 self.view.frame.origin.y =  UIScreen.main.bounds.height/2-44
                 self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
                 super.updateViewConstraints()
     }
-    
 }
 
