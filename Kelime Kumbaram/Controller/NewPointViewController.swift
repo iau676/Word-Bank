@@ -10,37 +10,34 @@ import AVFoundation
 import Combine
 
 class NewPointViewController: UIViewController {
-
+    
+    //MARK: - IBOutlet
     
     @IBOutlet weak var darkView: UIView!
-    
     @IBOutlet weak var levelLabel: UILabel!
-        
     @IBOutlet weak var newPointLabel: UILabel!
-    
     @IBOutlet weak var continueButton: UIButton!
+    
+    //MARK: - Variables
     
     var textForLabel = ""
     var userWordCount = ""
-
-    
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
     private let notificationCenter = NotificationCenter.default
     private var appEventSubscribers = [AnyCancellable]()
     
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-
         levelLabel.text = userWordCount
         newPointLabel.text = textForLabel
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         navigationController?.setNavigationBarHidden(true, animated: animated)
         observeAppEvents()
         setupPlayerIfNeeded()
@@ -54,6 +51,8 @@ class NewPointViewController: UIViewController {
         removePlayer()
     }
     
+    //MARK: - IBAction
+    
     @IBAction func continuePressed(_ sender: UIButton) {
         continueButton.pulstate()
         
@@ -62,15 +61,14 @@ class NewPointViewController: UIViewController {
         if UserDefaults.standard.integer(forKey: "goLevelUp") == 1 {
             UserDefaults.standard.set(2, forKey: "goLevelUp")
             performSegue(withIdentifier: "goLevelUp", sender: self)
-
         } else {
             DispatchQueue.main.asyncAfter(deadline: when){
                 self.dismiss(animated: true, completion: nil)
             }
         }
-      
     }
-
+    
+    //MARK: - Other Functions
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
