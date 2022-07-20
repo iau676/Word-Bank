@@ -48,6 +48,7 @@
 		708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */; };
 		709D3548276331FF001C3E56 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 709D3547276331FF001C3E56 /* sounds */; };
 		70C357E528882DFC00F3AD86 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E428882DFC00F3AD86 /* Player.swift */; };
+		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
 		70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FC6A4A27E26DD500C31481 /* CloudKit.framework */; };
 		70FC7F38275BD1DE00F138E7 /* MyQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC7F37275BD1DE00F138E7 /* MyQuizViewController.swift */; };
 /* End PBXBuildFile section */
@@ -96,6 +97,7 @@
 		708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		709D3547276331FF001C3E56 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		70C357E428882DFC00F3AD86 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		70C357E72888638300F3AD86 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		70FC6A4A27E26DD500C31481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		70FC7F37275BD1DE00F138E7 /* MyQuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQuizViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,8 +151,8 @@
 			children = (
 				704B055428364098006C7F96 /* Word.swift */,
 				70209B2A2759613900D527D3 /* WordBrain.swift */,
-				706CBABB27592F8D008B4773 /* _3.xcdatamodeld */,
 				70C357E428882DFC00F3AD86 /* Player.swift */,
+				706CBABB27592F8D008B4773 /* _3.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -198,6 +200,7 @@
 			children = (
 				708AFD87288719D300E09AE1 /* Date+Extensions.swift */,
 				708AFD89288719F900E09AE1 /* UIView+Extensions.swift */,
+				70C357E72888638300F3AD86 /* UIButton+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,
 				70FC7F38275BD1DE00F138E7 /* MyQuizViewController.swift in Sources */,
+				70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */,
 				706CBAD627593993008B4773 /* WordCell.swift in Sources */,
 				708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */,
 				70209B2B2759613900D527D3 /* WordBrain.swift in Sources */,
