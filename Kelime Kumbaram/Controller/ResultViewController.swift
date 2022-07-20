@@ -66,10 +66,7 @@ class ResultViewController: UIViewController {
     var textSize = CGFloat()
     var soundSpeed = Float()
     
-    private var player: AVPlayer?
-    private var playerLayer: AVPlayerLayer?
-    private let notificationCenter = NotificationCenter.default
-    private var appEventSubscribers = [AnyCancellable]()
+    let player = Player()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -166,34 +163,26 @@ class ResultViewController: UIViewController {
             
             updateHardWordText()
             loadsQuizCoreDataArray()
-            
             scoreLabel.text = "\(numberOfTrue)/\(arrayOfBool.count)"
-            
             scoreLabelText = "Hepsi doğru!"
             
             if UserDefaults.standard.string(forKey: "whichButton") == "green" {
                 numberOfTrue = arrayOfBool.count
                 scoreLabelText = "5 yeni \nkelime öğrendiniz"
             }
-           
             
-        } // whichStartPressed == 4
+        }
         
         
         if numberOfTrue == arrayOfBool.count {
             showWordsButton.isHidden = false
             tableView.backgroundColor = .clear
             showTable = 0
-            observeAppEvents()
-            setupPlayerIfNeeded()
-            restartVideo()
+            player.observeAppEvents()
+            player.setupPlayerIfNeeded(view: view, videoName: "newpoint")
+            player.restartVideo()
             confettiButton.isHidden = true
             scoreLabel.text = scoreLabelText
-            
-//                let when = DispatchTime.now() + 26
-//                                    DispatchQueue.main.asyncAfter(deadline: when){
-//                                        self.pauseVideo()
-//                                    }
         }
         
         if whichStartPressed == 4 {
@@ -207,8 +196,17 @@ class ResultViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        removeAppEventsSubscribers()
-        removePlayer()
+        player.removeAppEventsSubscribers()
+        player.removePlayer()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        player.playerLayer?.frame = view.bounds
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
 
     
@@ -311,90 +309,12 @@ class ResultViewController: UIViewController {
         }
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        playerLayer?.frame = view.bounds
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
     
     private func setupViews() {
 
     }
     
-    private func buildPlayer() -> AVPlayer? {
-        guard let filePath = Bundle.main.path(forResource: "newpoint", ofType: "mp4") else { return nil }
-        let url = URL(fileURLWithPath: filePath)
-        let player = AVPlayer(url: url)
-        player.actionAtItemEnd = .none
-        player.isMuted = true
-        // None of our movies should interrupt system music playback.
-            _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
-        return player
-    }
-    
-    private func buildPlayerLayer() -> AVPlayerLayer? {
-        let layer = AVPlayerLayer(player: player)
-        layer.videoGravity = .resizeAspectFill
-        return layer
-    }
-    
-    private func playVideo() {
-        player?.play()
-    }
-    
-    private func restartVideo() {
-        player?.seek(to: .zero)
-        playVideo()
-    }
-    
-    private func pauseVideo() {
-        player?.pause()
-    }
-    
-    private func setupPlayerIfNeeded() {
-        player = buildPlayer()
-        playerLayer = buildPlayerLayer()
-        
-        if let layer = self.playerLayer,
-            view.layer.sublayers?.contains(layer) == false {
-            view.layer.insertSublayer(layer, at: 0)
-        }
-    }
-    
-    private func removePlayer() {
-        player?.pause()
-        player = nil
-        playerLayer?.removeFromSuperlayer()
-        playerLayer = nil
-    }
-    
-    private func observeAppEvents() {
-        
-        notificationCenter.publisher(for: .AVPlayerItemDidPlayToEndTime).sink { [weak self] _ in
-            self?.restartVideo()
-        }.store(in: &appEventSubscribers)
-        
-        notificationCenter.publisher(for: UIApplication.willResignActiveNotification).sink { [weak self] _ in
-            self?.pauseVideo()
-        }.store(in: &appEventSubscribers)
-        
-        notificationCenter.publisher(for: UIApplication.didBecomeActiveNotification).sink { [weak self] _ in
-            self?.playVideo()
-        }.store(in: &appEventSubscribers)
-    }
-    
-    private func removeAppEventsSubscribers() {
-        appEventSubscribers.forEach { subscriber in
-            subscriber.cancel()
-        }
-    }
-    
-    
-    func playMP3(_ soundName: String)
-    {
+    func playMP3(_ soundName: String){
         if UserDefaults.standard.integer(forKey: "playAppSound") == 0 {
             let url = Bundle.main.url(forResource: "/sounds/\(soundName)", withExtension: "mp3")
             playerMP3 = try! AVAudioPlayer(contentsOf: url!)
