@@ -408,8 +408,8 @@ class myWordsViewController: UIViewController {
     //MARK: - prepare
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToMyQuiz2" {
-            let destinationVC = segue.destination as! MyQuizViewController
-            destinationVC.itemArray = itemArray
+          //  let destinationVC = segue.destination as! MyQuizViewController
+           // destinationVC.itemArray = itemArray
         }
         
 //        if segue.identifier == "goCard" {

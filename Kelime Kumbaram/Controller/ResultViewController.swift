@@ -27,7 +27,7 @@ class ResultViewController: UIViewController {
     
     var playerMP3: AVAudioPlayer!
     
-    var itemArray = [Item]()
+    var itemArray: [Item] { return wordBrain.itemArray }
     var HardItemArray = [HardItem]()
     var quizCoreDataArray = [AddedList]()
     var isWordAddedToHardWords = 0
@@ -70,6 +70,8 @@ class ResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        wordBrain.loadItemArray()
         
         whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
         
@@ -271,24 +273,19 @@ class ResultViewController: UIViewController {
         if option == "my"
         {
             performSegue(withIdentifier: "goToMyQuiz", sender: self)
-        }
-        else
-        {
-
+        } else {
             if whichStartPressed == 4 {
                 performSegue(withIdentifier: "goCard", sender: self)
             } else {
                 performSegue(withIdentifier: "goToQuiz", sender: self)
             }
-            
-            
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToMyQuiz" {
-            let destinationVC = segue.destination as! MyQuizViewController
-            destinationVC.itemArray = itemArray
+//            let destinationVC = segue.destination as! MyQuizViewController
+//            destinationVC.itemArray = itemArray
         }
         
         

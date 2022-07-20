@@ -386,6 +386,8 @@ struct WordBrain {
            print("Error fetching data from context \(error)")
         }
     }
+    
+    
 
     mutating func loadItemArray(with request: NSFetchRequest<Item> = Item.fetchRequest()){
         do {
