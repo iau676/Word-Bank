@@ -11,6 +11,7 @@
 		7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7014743527AAB4EE005E1854 /* LevelUpController.swift */; };
 		701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701581BC27DE80D800796ADE /* SettingsViewController.swift */; };
 		70175BC427E71F170053CBDB /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175BC327E71F170053CBDB /* CardViewController.swift */; };
+		702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */; };
 		70209B2B2759613900D527D3 /* WordBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70209B2A2759613900D527D3 /* WordBrain.swift */; };
 		702577DC280748DD0009FF65 /* kumbaram.png in Resources */ = {isa = PBXBuildFile; fileRef = 702577DB280748DD0009FF65 /* kumbaram.png */; };
 		702577DE280748E50009FF65 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 702577DD280748E50009FF65 /* launch.png */; };
@@ -58,6 +59,7 @@
 		7014743527AAB4EE005E1854 /* LevelUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpController.swift; sourceTree = "<group>"; };
 		701581BC27DE80D800796ADE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		70175BC327E71F170053CBDB /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extensions.swift"; sourceTree = "<group>"; };
 		70209B2A2759613900D527D3 /* WordBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBrain.swift; sourceTree = "<group>"; };
 		702577DB280748DD0009FF65 /* kumbaram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kumbaram.png; sourceTree = "<group>"; };
 		702577DD280748E50009FF65 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				708AFD87288719D300E09AE1 /* Date+Extensions.swift */,
 				708AFD89288719F900E09AE1 /* UIView+Extensions.swift */,
 				70C357E72888638300F3AD86 /* UIButton+Extensions.swift */,
+				702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				706CBAD627593993008B4773 /* WordCell.swift in Sources */,
 				708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */,
 				70209B2B2759613900D527D3 /* WordBrain.swift in Sources */,
+				702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */,
 				7060437627EC83AE00D0D953 /* X2TimeViewController.swift in Sources */,
 				706CBACB275930E9008B4773 /* WordsViewController.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,

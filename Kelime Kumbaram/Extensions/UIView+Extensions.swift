@@ -14,4 +14,17 @@ extension UIView {
         mask.path = path.cgPath
         layer.mask = mask
     }
+    
+    func setViewCornerRadius(_ number: Int) {
+        self.layer.cornerRadius = CGFloat(number)
+    }
+    
+    func updateViewVisibility(_ bool: Bool){
+        UIView.transition(with: self, duration: 0.6,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            self.isHidden = bool
+                      })
+    }
+    
  }
