@@ -31,20 +31,21 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var answerStackView: UIStackView!
     @IBOutlet weak var wordViewConstrait: NSLayoutConstraint!
     //only first question
-    @IBOutlet weak var firstArrowButton: UIButton!
-    @IBOutlet weak var arrowButton: UIButton!
+    @IBOutlet weak var arrowButtonAtAnswerView: UIButton!
+    @IBOutlet weak var arrowButtonAtOptionView: UIButton!
     @IBOutlet weak var labelPlaySound: UILabel!
     @IBOutlet weak var switchPlaySound: UISwitch!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var optionView: UIView!
     @IBOutlet weak var optionStackView: UIStackView!
     
+    //MARK: - Variables
+    
     var hint = ""
     var letterCounter = 0
     var showOptions = 0
     var failNumber: [Int] = []
     var failIndex: [Int] = []
-    //var itemArray = [Item]()
     var itemArray: [Item] { return wordBrain.itemArray }
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var questionNumbers: [Int] = []
@@ -84,10 +85,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
        
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
-        
-        for i in 0...itemArray.count-1 {
-            questionNumbers.append(i)
-        }
+        fillQuestionNumbers()
         
         updateUI()
         wordBrain.sortFails()
@@ -120,27 +118,27 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         checkAnswerQ(sender,sender.currentTitle!)
     }
     
-    @IBAction func firstArrowButtonPressed(_ sender: UIButton) {
+    @IBAction func arrowButtonAtAnswerViewPressed(_ sender: UIButton) {
         arrowButtonsPressed()
     }
     
-    @IBAction func arrowButtonPressed(_ sender: UIButton) {
+    @IBAction func arrowButtonAtOptionViewPressed(_ sender: UIButton) {
         arrowButtonsPressed()
     }
     
     func arrowButtonsPressed() {
         if showOptions == 0 {
             showOptions = 1
-            firstArrowButton.isHidden = true
-            arrowButton.isHidden = false
+            arrowButtonAtAnswerView.isHidden = true
+            arrowButtonAtOptionView.isHidden = false
             updateViewAppearance(optionView, isHidden: false)
-            arrowButton.setImage(imageRenderer(imageName: "arrowRight", imageSize: 30), for: .normal)
+            arrowButtonAtOptionView.setImage(imageRenderer(imageName: "arrowRight", imageSize: 30), for: .normal)
         } else {
             showOptions = 0
-            firstArrowButton.isHidden = false
-            arrowButton.isHidden = true
+            arrowButtonAtAnswerView.isHidden = false
+            arrowButtonAtOptionView.isHidden = true
             updateViewAppearance(optionView, isHidden: true)
-            arrowButton.setImage(imageRenderer(imageName: "arrowLeft", imageSize: 30), for: .normal)
+            arrowButtonAtOptionView.setImage(imageRenderer(imageName: "arrowLeft", imageSize: 30), for: .normal)
         }
     }
     
@@ -211,7 +209,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
             //it can change textField size if use in the other option
             if  whichStartPressed == 1 && questionCount > 0 {
                 updateViewAppearance(optionView, isHidden: true)
-                self.firstArrowButton.isHidden = true
+                self.arrowButtonAtAnswerView.isHidden = true
             }
             hourButton.setTitle("", for: UIControl.State.normal)
             
@@ -256,7 +254,6 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
             
             refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
             refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
-           
             hourButton.setBackgroundImage(nil, for: UIControl.State.normal)
             
         } else {
@@ -356,7 +353,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         setupAnswerButton(answer1Button)
         setupAnswerButton(answer2Button)
         
-        firstArrowButton.setImage(imageRenderer(imageName: "arrowLeft", imageSize: 30), for: .normal)
+        arrowButtonAtAnswerView.setImage(imageRenderer(imageName: "arrowLeft", imageSize: 30), for: .normal)
         optionView.isHidden = true
         showOptions = 0
     }//setupView
@@ -471,7 +468,6 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         
         //MARK: - userGotItRight
             if userGotItRight {
-                
                 playMP3("true")
                 wordBrain.updateTrueCountMyWords()
                 
@@ -488,7 +484,6 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
                 UserDefaults.standard.set((lastPoint+userPoint), forKey: "lastPoint")
 
             } else {
-                
                 playMP3("false")
                 wordBrain.userGotItWrong()
                
@@ -535,6 +530,12 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     func imageRenderer(imageName: String, imageSize: Int) -> UIImage{
         return UIGraphicsImageRenderer(size: CGSize(width: imageSize, height: imageSize)).image { _ in
             UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: imageSize, height: imageSize)) }
+    }
+    
+    func fillQuestionNumbers() {
+        for i in 0...itemArray.count-1 {
+            questionNumbers.append(i)
+        }
     }
 
     

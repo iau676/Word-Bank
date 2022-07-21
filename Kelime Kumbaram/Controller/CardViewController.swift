@@ -49,7 +49,7 @@ class CardViewController: UIViewController {
         if segue.identifier == "goToResult" {
             let destinationVC = segue.destination as! ResultViewController
             destinationVC.cardCounter = cardCounter
-            destinationVC.itemArray = itemArray
+            //destinationVC.itemArray = itemArray
             destinationVC.quizCoreDataArray = quizCoreDataArray
         }
     }

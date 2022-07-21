@@ -1788,8 +1788,8 @@
                         <outlet property="answer1Button" destination="wUc-6p-wTQ" id="bdc-2Q-e2t"/>
                         <outlet property="answer2Button" destination="Ccv-Rg-O7t" id="4zu-AY-iJH"/>
                         <outlet property="answerStackView" destination="vo1-R2-Lyc" id="c99-nf-4qX"/>
-                        <outlet property="arrowButton" destination="1g8-Zg-wsE" id="HhT-Lj-Puv"/>
-                        <outlet property="firstArrowButton" destination="jl4-0Y-bUx" id="U1H-eC-elY"/>
+                        <outlet property="arrowButtonAtAnswerView" destination="jl4-0Y-bUx" id="U1H-eC-elY"/>
+                        <outlet property="arrowButtonAtOptionView" destination="1g8-Zg-wsE" id="HhT-Lj-Puv"/>
                         <outlet property="hintLabel" destination="xH3-C3-B2H" id="ToG-sz-1xx"/>
                         <outlet property="hourButton" destination="d10-we-tXn" id="KMw-OQ-EJn"/>
                         <outlet property="labelPlaySound" destination="Xlj-4b-1hI" id="Tg6-vu-I71"/>
