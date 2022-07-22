@@ -82,7 +82,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
         
         setupView()
-       
+        
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
         fillQuestionNumbers()
@@ -102,9 +102,8 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToResult" {
             let destinationVC = segue.destination as! ResultViewController
-            //destinationVC.itemArray = itemArray
             destinationVC.option = "my"
-            destinationVC.isWordAddedToHardWords = isWordAddedToHardWords
+            destinationVC.isWordAddedToHardWords = wordBrain.getIsWordAddedToHardWords()
         }
     }
     

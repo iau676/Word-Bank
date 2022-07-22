@@ -29,4 +29,8 @@ class WordCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func updateLabelTextSize(_ uilabel: UILabel, _ textSize: CGFloat){
+        uilabel.font = uilabel.font.withSize(textSize)
+    }
+    
 }

@@ -50,7 +50,6 @@ class CardViewController: UIViewController {
             let destinationVC = segue.destination as! ResultViewController
             destinationVC.cardCounter = cardCounter
             //destinationVC.itemArray = itemArray
-            destinationVC.quizCoreDataArray = quizCoreDataArray
         }
     }
     
@@ -70,7 +69,7 @@ class CardViewController: UIViewController {
         questionTR = itemArray[questionNumber].tr ?? "empty"
         cardCounter += 1
         lastPoint += 1
-        if cardCounter == 26 {
+        if cardCounter == 4 { //26
             performSegue(withIdentifier: "goToResult", sender: self)
         } else {
             UserDefaults.standard.set(lastPoint, forKey: "lastPoint")
