@@ -304,7 +304,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="doj-2d-6WP">
-                                                                <rect key="frame" x="0.0" y="0.0" width="74" height="55"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="103.5" height="55"/>
                                                                 <color key="backgroundColor" name="quizBackground"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="55" id="Km5-or-aO0"/>
@@ -318,7 +318,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Peb-pa-TxM">
-                                                                <rect key="frame" x="90" y="0.0" width="73.5" height="55"/>
+                                                                <rect key="frame" x="119.5" y="0.0" width="104" height="55"/>
                                                                 <color key="backgroundColor" name="quizBackground"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="55" id="IZb-Xp-T5J"/>
@@ -331,7 +331,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMh-dW-bs4">
-                                                                <rect key="frame" x="179.5" y="0.0" width="74" height="55"/>
+                                                                <rect key="frame" x="239.5" y="0.0" width="103.5" height="55"/>
                                                                 <color key="backgroundColor" name="quizBackground"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="55" id="IWE-cd-myu"/>
@@ -341,14 +341,6 @@
                                                                 </state>
                                                                 <connections>
                                                                     <action selector="start3Pressed:" destination="fWh-vg-nFy" eventType="touchUpInside" id="t5K-nw-Gqq"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bM-JR-54Q">
-                                                                <rect key="frame" x="269.5" y="0.0" width="73.5" height="55"/>
-                                                                <color key="backgroundColor" name="quizBackground"/>
-                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <connections>
-                                                                    <action selector="start4Pressed:" destination="fWh-vg-nFy" eventType="touchUpInside" id="0BQ-hN-aRt"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -363,9 +355,6 @@
                                                                 <state key="normal">
                                                                     <color key="titleColor" name="blackColor"/>
                                                                 </state>
-                                                                <connections>
-                                                                    <action selector="expandButtonPressed:" destination="fWh-vg-nFy" eventType="touchUpInside" id="vQh-gq-JpP"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -414,11 +403,8 @@
                         <outlet property="startButton" destination="doj-2d-6WP" id="AIj-20-vgZ"/>
                         <outlet property="startButton2" destination="Peb-pa-TxM" id="ifI-7i-GIP"/>
                         <outlet property="startButton3" destination="WMh-dW-bs4" id="JIl-2b-Bpp"/>
-                        <outlet property="startButton4" destination="1bM-JR-54Q" id="aXi-Fo-miY"/>
                         <outlet property="tableView" destination="VfB-fz-ynS" id="Q66-c0-F86"/>
                         <segue destination="dSu-rW-pfA" kind="show" identifier="goToQuiz" id="7ze-fQ-nUp"/>
-                        <segue destination="AKU-mg-roz" kind="presentation" identifier="goNewPoint" modalPresentationStyle="overFullScreen" id="z86-FY-Pwl"/>
-                        <segue destination="R4c-Ok-iJX" kind="show" identifier="goCard" id="pLo-w7-OOR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vIZ-nP-77r" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
