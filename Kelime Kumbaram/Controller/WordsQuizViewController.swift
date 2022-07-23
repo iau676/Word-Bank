@@ -10,7 +10,7 @@ import AVFoundation
 import CoreData
 
 
-class MyQuizViewController: UIViewController, UITextFieldDelegate {
+class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     
     //This didn't crash my app but caused a memory leak every time AVSpeechSynthesizer was declared. I solved this by declaring the AVSpeechSynthesizer as a global variable
     static let synth = AVSpeechSynthesizer()
@@ -22,8 +22,8 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var answer2Button: UIButton!
     @IBOutlet weak var progressBar2: UIProgressView!
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var userPointButton: UIButton!
     @IBOutlet weak var pointButton: UIButton!
-    @IBOutlet weak var hourButton: UIButton!
     @IBOutlet weak var soundButton: UIButton!
     @IBOutlet weak var textFieldStackView: UIStackView!
     @IBOutlet weak var hintLabel: UILabel!
@@ -59,7 +59,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     var answer = 0    
     var questionText = ""
     var answerForStart23 = ""
-    var whichStartPressed = 1
+    var whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
     var soundSpeed = Float()
     var rightOnce = [Int]()
     var rightOnceBool = [Bool]()
@@ -79,7 +79,6 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         getHour()
         
         textField.delegate = self
-        whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
         
         setupView()
         
@@ -168,7 +167,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         if answerForStart23.lowercased() == sender.text!.lowercased() {
             checkAnswerQ(nil,sender.text!)
             textField.text = ""
-            hourButton.setImage(imageRenderer(imageName: "empty", imageSize: 0), for: .normal)
+            pointButton.setImage(imageRenderer(imageName: "empty", imageSize: 0), for: .normal)
             wordBrain.answerTrue()
         }
     }
@@ -187,7 +186,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func hourButtonPressed(_ sender: UIButton) {
-        hourButton.flash()
+        pointButton.flash()
         playSound(answerForStart23, "en-US")
     }
     
@@ -210,12 +209,12 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
                 updateViewAppearance(optionView, isHidden: true)
                 self.arrowButtonAtAnswerView.isHidden = true
             }
-            hourButton.setTitle("", for: UIControl.State.normal)
+            pointButton.setTitle("", for: UIControl.State.normal)
             
             if whichStartPressed == 3 {
-                hourButton.setImage(imageRenderer(imageName: "sound", imageSize: 66), for: .normal)
+                pointButton.setImage(imageRenderer(imageName: "sound", imageSize: 66), for: .normal)
             } else {
-                hourButton.isHidden=true
+                pointButton.isHidden=true
             }
                  
             failNumber =  UserDefaults.standard.array(forKey: "failNumber") as? [Int] ?? [Int]()
@@ -253,7 +252,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
             
             refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
             refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
-            hourButton.setBackgroundImage(nil, for: UIControl.State.normal)
+            pointButton.setBackgroundImage(nil, for: UIControl.State.normal)
             
         } else {
             questionCount = 0
@@ -269,10 +268,10 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     
     @objc func hideBubbleButton(){
         if whichStartPressed == 3 {
-            hourButton.setTitle("", for: UIControl.State.normal)
-            hourButton.setImage(imageRenderer(imageName: "sound", imageSize: 66), for: .normal)
+            pointButton.setTitle("", for: UIControl.State.normal)
+            pointButton.setImage(imageRenderer(imageName: "sound", imageSize: 66), for: .normal)
         } else {
-            hourButton.isHidden = true
+            pointButton.isHidden = true
         }
         
         if whichStartPressed == 2 {
@@ -280,7 +279,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @objc func changeLabelColor() {
+    @objc func updateHintLabelColor() {
         hintLabel.textColor = UIColor(named: "d6d6d6")
     }
     
@@ -288,7 +287,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         let imgName = timer.userInfo!
         let imagePath:String? = Bundle.main.path(forResource: (imgName as! String), ofType: "png")
         let image:UIImage? = UIImage(contentsOfFile: imagePath!)
-        hourButton.setBackgroundImage(image, for: UIControl.State.normal)
+        pointButton.setBackgroundImage(image, for: UIControl.State.normal)
     }
 
     //MARK: - Other Functions
@@ -300,7 +299,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
     
     func setupView(){
         
-        hourButton.isHidden = true
+        pointButton.isHidden = true
         
         if whichStartPressed == 1 {
             textFieldStackView.isHidden = true
@@ -320,7 +319,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         
         if whichStartPressed == 3 {
             questionLabel.isHidden = true
-            hourButton.isHidden = false
+            pointButton.isHidden = false
         }
         
         // 1 is false, 0 is true
@@ -337,12 +336,12 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         questionLabel.font = questionLabel.font.withSize(textSize)
         answer1Button.titleLabel?.font =  answer1Button.titleLabel?.font.withSize(textSize)
         answer2Button.titleLabel?.font =  answer2Button.titleLabel?.font.withSize(textSize)
-        pointButton.titleLabel?.font =  pointButton.titleLabel?.font.withSize(textSize)
+        userPointButton.titleLabel?.font =  userPointButton.titleLabel?.font.withSize(textSize)
         
         segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
         
-        pointButton.layer.cornerRadius = 12
-        pointButton.setTitle(String(UserDefaults.standard.integer(forKey: "lastPoint").withCommas()), for: UIControl.State.normal)
+        userPointButton.layer.cornerRadius = 12
+        userPointButton.setTitle(String(UserDefaults.standard.integer(forKey: "lastPoint").withCommas()), for: UIControl.State.normal)
         
         progressBar.progress = 0
         progressBar2.progress = 0
@@ -388,7 +387,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         } else {
             hintLabel.textColor = UIColor(named: "greenColorSingle")
             hintLabel.flash()
-            Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(changeLabelColor), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(updateHintLabelColor), userInfo: nil, repeats: false)
         }
     }
     
@@ -402,7 +401,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
             u.voice = AVSpeechSynthesisVoice(language: language)
             //        u.voice = AVSpeechSynthesisVoice(language: "en-GB")
         u.rate = soundSpeed
-        MyQuizViewController.synth.speak(u)
+        WordsQuizViewController.synth.speak(u)
     }
     
     func playMP3(_ soundName: String) {
@@ -441,7 +440,7 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         
         answer1Button.isEnabled = false
         answer2Button.isEnabled = false
-        hourButton.isHidden = false
+        pointButton.isHidden = false
         questionLabel.text = ""
         
         userPoint = UserDefaults.standard.integer(forKey: "pointForMyWords")
@@ -471,9 +470,9 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
                 wordBrain.updateTrueCountMyWords()
                 
                 sender?.backgroundColor = UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00)
-                hourButton.setTitleColor(UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00), for: .normal)
-                pointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
-                hourButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
+                pointButton.setTitleColor(UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00), for: .normal)
+                userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
+                pointButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
                 
                 timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "greenBubble")
                 timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "greenBubble2")
@@ -487,9 +486,9 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
                 wordBrain.userGotItWrong()
                
                 sender?.backgroundColor = UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00)
-                hourButton.setTitleColor(UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00), for: .normal)
-                pointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
-                hourButton.setTitle(String(-userPoint), for: UIControl.State.normal)
+                pointButton.setTitleColor(UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00), for: .normal)
+                userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
+                pointButton.setTitle(String(-userPoint), for: UIControl.State.normal)
                 
                 timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "redBubble")
                 timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "redBubble2")
@@ -514,12 +513,12 @@ class MyQuizViewController: UIViewController, UITextFieldDelegate {
         let lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
         
         questionLabel.isHidden = true
-        hourButton.isHidden = false
+        pointButton.isHidden = false
         
-        hourButton.setTitleColor(UIColor(red: 1.00, green: 0.56, blue: 0.62, alpha: 1.00), for: .normal)
-        hourButton.setImage(imageRenderer(imageName: "empty", imageSize: 0), for: .normal)
-        pointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)
-        hourButton.setTitle(String(-1), for: UIControl.State.normal)
+        pointButton.setTitleColor(UIColor(red: 1.00, green: 0.56, blue: 0.62, alpha: 1.00), for: .normal)
+        pointButton.setImage(imageRenderer(imageName: "empty", imageSize: 0), for: .normal)
+        pointButton.setTitle(String(-1), for: UIControl.State.normal)
+        userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)
     
         Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(hideBubbleButton), userInfo: nil, repeats: false)
         

@@ -302,7 +302,7 @@ struct WordBrain {
             saveWord()
     }
     
-    mutating func userGotItRight() -> Bool {
+    mutating func updateRightCountHardWords() -> Bool {
                 
         let i = hardItemArray[questionNumber].correctNumber
         hardItemArray[questionNumber].correctNumber = i - 1
@@ -335,7 +335,7 @@ struct WordBrain {
         return hardItemArray.count < 2 ? true : false
     }
     
-    func updateFalseCountHardWords(){
+    func updateWrongCountHardWords(){
 
         if let itemm = itemArray.first(where: {$0.uuid == hardItemArray[questionNumber].uuid}) {
             itemm.falseCount += 1

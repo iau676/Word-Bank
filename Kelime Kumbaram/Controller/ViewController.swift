@@ -358,7 +358,7 @@ class ViewController: UIViewController {
         
         
         if segue.identifier == "goMyWords" {
-            let destinationVC = segue.destination as! myWordsViewController
+            let destinationVC = segue.destination as! WordsViewController
             destinationVC.goAddPage = goAddPage
         }
         
