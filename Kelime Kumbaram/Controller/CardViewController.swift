@@ -22,7 +22,7 @@ class CardViewController: UIViewController {
     var itemArray: [Item] { return wordBrain.itemArray }
     var cardCounter = 0
     var questionNumber = 0
-    var lastPoint = 0
+    var lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
     var questionENG = ""
     var questionTR = ""
     
@@ -30,15 +30,7 @@ class CardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
-        tableView.tableFooterView = UIView()
-        lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
-        
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
+        setupTableView()
         wordBrain.loadItemArray()
         updateText()
     }
@@ -62,6 +54,13 @@ class CardViewController: UIViewController {
     }
     
     //MARK: - Other Functions
+    
+    func setupTableView(){
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
+        tableView.tableFooterView = UIView()
+    }
     
     func updateText(){
         questionNumber = Int.random(in: 0..<itemArray.count)

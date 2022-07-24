@@ -61,20 +61,17 @@ class NewPointViewController: UIViewController {
     
     @IBAction func continuePressed(_ sender: UIButton) {
         continueButton.pulstate()
-        
-        let when = DispatchTime.now() + 0.1
-        
-        if UserDefaults.standard.integer(forKey: "goLevelUp") == 1 {
-            UserDefaults.standard.set(2, forKey: "goLevelUp")
-            performSegue(withIdentifier: "goLevelUp", sender: self)
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: when){
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
+        dismissView()
     }
     
     //MARK: - Other Functions
+    
+    func dismissView(){
+        let when = DispatchTime.now() + 0.1
+        DispatchQueue.main.asyncAfter(deadline: when){
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
     
     private func setupViews() {
         continueButton.layer.cornerRadius = continueButton.frame.height / 2

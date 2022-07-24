@@ -58,20 +58,17 @@ class LevelUpController: UIViewController {
     
     @IBAction func continuePressed(_ sender: UIButton) {
         continueButton.pulstate()
-        let when = DispatchTime.now() + 0.1
-        if UserDefaults.standard.integer(forKey: "goLevelUp") == 2 {
-            UserDefaults.standard.set(0, forKey: "goLevelUp")
-            DispatchQueue.main.asyncAfter(deadline: when){
-                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-            }
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: when){
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
+        dismissView()
     }
     
     //MARK: - Other Functions
+    
+    func dismissView(){
+        let when = DispatchTime.now() + 0.1
+        DispatchQueue.main.asyncAfter(deadline: when){
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
     
     private func setupViews() {
         continueButton.layer.cornerRadius = continueButton.frame.height / 2

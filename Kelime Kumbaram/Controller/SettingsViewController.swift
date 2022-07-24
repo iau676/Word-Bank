@@ -77,7 +77,11 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
-        setupView()
+        assignSoundImageName()
+        updateTextSize()
+        setupCornerRadius()
+        setupDefaults()
+        setupButton(soundSpeedButton)
     }
     
     //MARK: - prepare
@@ -96,7 +100,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     //MARK: - IBAction
 
     @IBAction func wordSoundChanged(_ sender: UISwitch) {
-
         if sender.isOn {
             UserDefaults.standard.set(0, forKey: "playSound")
             changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
@@ -104,21 +107,17 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             UserDefaults.standard.set(1, forKey: "playSound")
             changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
         }
-        
     }
     
     @IBAction func appSoundChanged(_ sender: UISwitch) {
-        
         if sender.isOn {
             UserDefaults.standard.set(0, forKey: "playAppSound")
         } else {
             UserDefaults.standard.set(1, forKey: "playAppSound")
         }
-        
     }
     
     @IBAction func soundSpeedChanged(_ sender: UISegmentedControl) {
-        
         switch sender.selectedSegmentIndex {
         case 0:
             UserDefaults.standard.set(0.3, forKey: "soundSpeed")
@@ -134,7 +133,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             break
         default: break
         }
-        
         soundSpeedButton.flash()
         playSound()
     }
@@ -181,8 +179,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Other Functions
     
-    func setupView(){
-        
+    func assignSoundImageName(){
         switch traitCollection.userInterfaceStyle {
         case .light, .unspecified:
             soundImageName = "soundBlack"
@@ -192,22 +189,14 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             break
         default: break
         }
-        
-        updateTextSize()
-        
-        setupCornerRadius()
-        setupDefaults()
-        setupButton(soundSpeedButton)
     }
     
     func setupButton(_ button: UIButton){
-        
         button.setImage(UIGraphicsImageRenderer(size: CGSize(width: soundImageSize, height: soundImageSize)).image { _ in
             UIImage(named: soundImageName)?.draw(in: CGRect(x: 0, y: 0, width: soundImageSize, height: soundImageSize)) }, for: .normal)
     }
     
     func setupCornerRadius(){
-        
         playSoundView.layer.cornerRadius = 8
         fontView.layer.cornerRadius = 8
         x2view.layer.cornerRadius = 8
