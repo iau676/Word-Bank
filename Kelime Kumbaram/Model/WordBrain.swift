@@ -57,6 +57,16 @@ struct WordBrain {
         }
     }
     
+    mutating func addNewWord(english: String, meaning: String){
+        let newItem = Item(context: self.context)
+        newItem.eng = english
+        newItem.tr = meaning
+        newItem.date = Date()
+        newItem.uuid = UUID().uuidString
+        newItem.isCreatedFromUser = true
+        self.itemArray.append(newItem)
+    }
+    
     mutating func getQuestionText(_ selectedSegmentIndex: Int, _ whichQuestion: Int, _ startPressed:Int) -> String {
         
         questionNumbers.removeAll()

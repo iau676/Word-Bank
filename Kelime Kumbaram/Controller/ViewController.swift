@@ -12,73 +12,47 @@ import UserNotifications
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var darkView: UIView!
+    //MARK: - IBOutlet
     
+    @IBOutlet weak var darkView: UIView!
     @IBOutlet weak var levelStackView: UIStackView!
     @IBOutlet weak var titleView: UIView!
-    
     @IBOutlet weak var buttonView: UIView!
-    
     @IBOutlet weak var levelView: UIView!
-    
     @IBOutlet weak var x2view: UIView!
-    
     @IBOutlet weak var x2button: UIButton!
-    
     @IBOutlet weak var levelLabel: UILabel!
-
     @IBOutlet weak var blueButton: UIButton!
     @IBOutlet weak var greenButton: UIButton!
     @IBOutlet weak var yellowButton: UIButton!
-    
     @IBOutlet weak var settingsButton: UIButton!
-    
-    
     @IBOutlet weak var titleLabel: UILabel!
     
-    @IBOutlet weak var scoreView: UIView!
+    //MARK: - Variables
     
-    @IBOutlet weak var scoreView2: UIStackView!
-    
-    @IBOutlet weak var scoreLabel: UILabel!
-    
-    
-    @IBOutlet weak var firstLabelConstraint: NSLayoutConstraint!
-    
-    var progressValue:Float = 0.0
-    
-    var goView = ""
-    var goAddPage = 0
-
     var wordBrain = WordBrain()
     var itemArray = [Item]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     let cp = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let notificationCenter = UNUserNotificationCenter.current()
     
+    var goAddPage = 0
+    var progressValue:Float = 0.0
+    
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
-        
-        //fix sound problem for real device
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord)
-        } catch {
-            assertionFailure("Failed to configure `AVAAudioSession`: \(error.localizedDescription)")
-        }
+        fixSoundProblemForRealDevice()
         setupFirstLaunch()
         getHour()
-        check2xTime()
-        print("hour>\(UserDefaults.standard.integer(forKey: "lastHour"))")
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        
-        setupView()
-
+        setupCircularProgress()
+        check2xTime()
+        setupButtons()
+        setupNavigationBar()
     }
     
     override func viewDidLayoutSubviews() {
@@ -89,47 +63,149 @@ class ViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-
     
-
+    //MARK: - prepare
     
-    //MARK: - setup
-    func setupFirstLaunch(){
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goSettings" {
+            if segue.destination is SettingsViewController {
+                (segue.destination as? SettingsViewController)?.onViewWillDisappear = {
+                    self.check2xTime()
+                }
+            }
+        }
         
+        if segue.identifier == "goWords" {
+            let destinationVC = segue.destination as! WordsViewController
+            destinationVC.goAddPage = goAddPage
+        }
+    }
+   
+    //MARK: - IBAction
+    
+    @IBAction func greenButtonPressed(_ sender: UIButton) {
+        UserDefaults.standard.set(1, forKey: "startPressed")
+        UserDefaults.standard.set("blue", forKey: "whichButton")
+        goAddPage = 1
+        greenButton.pulstate()
+        viewDidLayoutSubviews()
+        goAfter100Milliseconds(identifier: "goWords")
+    }
+    
+    @IBAction func blueButtonPressed(_ sender: UIButton) {
+        UserDefaults.standard.set("blue", forKey: "whichButton")
+        goAddPage = 0
+        blueButton.pulstate()
+        goAfter100Milliseconds(identifier: "goWords")
+    }
+    
+    @IBAction func yellowButtonPressed(_ sender: UIButton) {
+        UserDefaults.standard.set("yellow", forKey: "whichButton")
+        yellowButton.pulstate()
+        goAfter100Milliseconds(identifier: "goHardWords")
+    }
+
+    @IBAction func setNotificationFirstTime(_ sender: UIButton) {
+        //works after any button pressed
+        if UserDefaults.standard.integer(forKey: "setNotificationFirstTime") == 0 {
+            setNotification()
+            UserDefaults.standard.set(1, forKey: "setNotificationFirstTime")
+            print("SET NOTİFİCATİON<<")
+        }
+    }
+    
+    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
+        performSegue(withIdentifier: "goSettings", sender: self)
+    }
+    
+    //MARK: - Objc Functions
+    
+    @objc func checkAction(sender : UITapGestureRecognizer) {
+        let vc = CustomModalViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false)
+    }
+    
+    @objc func appendDefaultWords() {
+        let defaultWordsCount = wordBrain.defaultWords.count
+        
+        for index in 0..<defaultWordsCount {
+            _ = index // noneed
+            wordBrain.addNewWord(english: "\(wordBrain.defaultWords[index].eng)", meaning: "\(wordBrain.defaultWords[index].tr)")
+        }
+        UserDefaults.standard.set(defaultWordsCount, forKey: "userWordCount")
+        wordBrain.saveWord()
+     }
+    
+    //MARK: - Other Functions
+
+    func setupFirstLaunch(){
         notificationCenter.requestAuthorization(options: [.alert, .sound]) {
             (permissionGranted, error) in
-            if(!permissionGranted)
-            {
+            if(!permissionGranted){
                 print("Permission Denied")
             }
         }
         
+        //version 2.0.1
         if UserDefaults.standard.object(forKey: "2xTime") == nil {
-            //assign two day ago
             let calendar = Calendar.current
             let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())
             UserDefaults.standard.set(twoDaysAgo, forKey: "2xTime")
             UserDefaults.standard.set(23, forKey: "userSelectedHour")
             UserDefaults.standard.set("empty", forKey: "lastEditLabel")
-        }
-        
-        if UserDefaults.standard.integer(forKey: "textSize") < wordBrain.defaultWords.count {
-            Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateCoreData), userInfo: nil, repeats: false)
-        }
-        
-        
-        if UserDefaults.standard.integer(forKey: "pointForMyWords") < 10 {
             UserDefaults.standard.set(10, forKey: "pointForMyWords")
-
-        }
-        
-        if UserDefaults.standard.integer(forKey: "textSize") < 9 {
             UserDefaults.standard.set(15, forKey: "textSize")
+            Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(appendDefaultWords), userInfo: nil, repeats: false)
         }
-    }//setupFirstLaunch
+    }
     
-    func setupView(){
+    func goAfter100Milliseconds(identifier: String){
+        let when = DispatchTime.now() + 0.1
+        DispatchQueue.main.asyncAfter(deadline: when){
+            self.performSegue(withIdentifier: identifier, sender: self)
+        }
+    }
+    
+    func setupButtons(){
+        blueButton.backgroundColor = UIColor(red: 0.11, green: 0.73, blue: 0.92, alpha: 1.00)
+        greenButton.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
+        yellowButton.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00)
         
+        setupButtonShadow(greenButton, shadowColor: UIColor(red: 0.07, green: 0.60, blue: 0.44, alpha: 1.00))
+        setupButtonShadow(blueButton, shadowColor: UIColor(red: 0.07, green: 0.60, blue: 0.75, alpha: 1.00))
+        setupButtonShadow(yellowButton, shadowColor: UIColor(red: 1.00, green: 0.66, blue: 0.03, alpha: 1.00))
+
+        greenButton.setButtonCornerRadius(15)
+        blueButton.setButtonCornerRadius(15)
+        yellowButton.setButtonCornerRadius(15)
+ 
+        greenButton.setImage(imageRenderer(imageName: "new", width: 35, height: 35), for: .normal)
+        blueButton.setImage(imageRenderer(imageName: "bank", width: 40, height: 40), for: .normal)
+        yellowButton.setImage(imageRenderer(imageName: "hard", width: 35, height: 35), for: .normal)
+        settingsButton.setImage(imageRenderer(imageName: "settingsImage", width: 23, height: 23), for: .normal)
+    }
+    
+    func setupButtonShadow(_ button: UIButton, shadowColor: UIColor){
+        button.layer.shadowColor = shadowColor.cgColor
+        button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+        button.layer.shadowOpacity = 1.0
+        button.layer.shadowRadius = 0.0
+        button.layer.masksToBounds = false
+    }
+    
+    func setupNavigationBar(){
+        // back button color
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 0.11, green: 0.11, blue: 0.11, alpha: 1.00)
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(red: 0.11, green: 0.11, blue: 0.11, alpha: 1.00)]
+    
+        //delete navigation bar background
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+            self.navigationController?.navigationBar.isTranslucent = true
+    }
+    
+    func setupCircularProgress(){
         progressValue = wordBrain.calculateLevel()
         levelLabel.text = UserDefaults.standard.string(forKey: "level")
         
@@ -140,93 +216,8 @@ class ViewController: UIViewController {
         
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
         cp.addGestureRecognizer(gesture)
-  
-        if UserDefaults.standard.integer(forKey: "lastHour") == UserDefaults.standard.integer(forKey: "userSelectedHour") {
-            x2view.isHidden = false
-        } else {
-            x2view.isHidden = true
-        }
-        
+    }
 
-        greenButton.layer.shadowColor = UIColor(red: 0.07, green: 0.60, blue: 0.44, alpha: 1.00).cgColor
-        greenButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
-        greenButton.layer.shadowOpacity = 1.0
-        greenButton.layer.shadowRadius = 0.0
-        greenButton.layer.masksToBounds = false
-        greenButton.layer.cornerRadius = 17.0
-
-        blueButton.layer.shadowColor = UIColor(red: 0.07, green: 0.60, blue: 0.75, alpha: 1.00).cgColor
-        blueButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
-        blueButton.layer.shadowOpacity = 1.0
-        blueButton.layer.shadowRadius = 0.0
-        blueButton.layer.masksToBounds = false
-        blueButton.layer.cornerRadius = 17.0
-
-        yellowButton.layer.shadowColor = UIColor(red: 1.00, green: 0.66, blue: 0.03, alpha: 1.00).cgColor
-        yellowButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
-        yellowButton.layer.shadowOpacity = 1.0
-        yellowButton.layer.shadowRadius = 0.0
-        yellowButton.layer.masksToBounds = false
-        yellowButton.layer.cornerRadius = 17.0
-
-        
-        blueButton.layer.cornerRadius = 15
-        greenButton.layer.cornerRadius = 15
-        yellowButton.layer.cornerRadius = 15
- 
-        greenButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 35, height: 35)).image { _ in
-            UIImage(named: "new")?.draw(in: CGRect(x: 0, y: 0, width: 35, height: 35)) }, for: .normal)
-        
-        blueButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 40, height: 40)).image { _ in
-            UIImage(named: "bank")?.draw(in: CGRect(x: 0, y: 0, width: 40, height: 40)) }, for: .normal)
-      
-        yellowButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 35, height: 35)).image { _ in
-            UIImage(named: "hard")?.draw(in: CGRect(x: 0, y: 0, width: 35, height: 35)) }, for: .normal)
-        
-        // back button color
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 0.11, green: 0.11, blue: 0.11, alpha: 1.00)
-        
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(red: 0.11, green: 0.11, blue: 0.11, alpha: 1.00)]
-        
-        settingsButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 23, height: 23)).image { _ in
-            UIImage(named: "settingsImage")?.draw(in: CGRect(x: 0, y: 0, width: 23, height: 23)) }, for: .normal)
-        
-        blueButton.backgroundColor = UIColor(red: 0.11, green: 0.73, blue: 0.92, alpha: 1.00)
-        greenButton.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
-        yellowButton.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00)
-        firstLabelConstraint.constant = 60
-        
-        //delete navigation bar background
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            self.navigationController?.navigationBar.shadowImage = UIImage()
-            self.navigationController?.navigationBar.isTranslucent = true
-    }//setupView
-    
-    @objc func updateCoreData() {
-        
-   
-        
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        loadItems()
-        
-        for index in 0..<wordBrain.defaultWords.count {
-            _ = index // noneed
-            let newItem = Item(context: context)
-            newItem.eng = "\(wordBrain.defaultWords[index].eng)"
-            newItem.tr = "\(wordBrain.defaultWords[index].tr)"
-            itemArray.append(newItem)
-            print("(((-####-->\(index)")
-        }
-        
-        UserDefaults.standard.set(wordBrain.defaultWords.count, forKey: "userWordCount")
-
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
-     } //updateCoreData
-    
     func setNotification(){
             
             DispatchQueue.main.async
@@ -240,11 +231,8 @@ class ViewController: UIViewController {
                     
                     let date = DateComponents(hour: 23, minute: 44)
                     let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
-                    
                     let id = UUID().uuidString
-                    
                     let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-                    
                     
                     self.notificationCenter.removeAllPendingNotificationRequests()
                     
@@ -274,99 +262,21 @@ class ViewController: UIViewController {
         UserDefaults.standard.set(Calendar.current.component(.hour, from: Date()), forKey: "lastHour")
         UserDefaults.standard.synchronize()
     }
-
     
-    
-   
-    //MARK: - user did something
-    @IBAction func greenButtonPressed(_ sender: UIButton) {
-        UserDefaults.standard.set(1, forKey: "startPressed")
-        UserDefaults.standard.set("blue", forKey: "whichButton")
-        goAddPage = 1
-        greenButton.pulstate()
-        viewDidLayoutSubviews()
-        let when = DispatchTime.now() + 0.1
-        
-        DispatchQueue.main.asyncAfter(deadline: when){ self.performSegue(withIdentifier: "goMyWords", sender: self) }
- 
-    }
-    
-    @IBAction func yellowButtonPressed(_ sender: UIButton) {
-        UserDefaults.standard.set("yellow", forKey: "whichButton")
-        yellowButton.pulstate()
-        
-        let when = DispatchTime.now() + 0.1
-        DispatchQueue.main.asyncAfter(deadline: when){
-            self.performSegue(withIdentifier: "goWords", sender: self)
-        }
-    }
-    
-    @IBAction func blueButtonPressed(_ sender: UIButton) {
-        UserDefaults.standard.set("blue", forKey: "whichButton")
-        goAddPage = 0
-        blueButton.pulstate()
-        
-        let when = DispatchTime.now() + 0.1
-        DispatchQueue.main.asyncAfter(deadline: when){
-            self.performSegue(withIdentifier: "goMyWords", sender: self)
-        }
+    func imageRenderer(imageName: String, width: CGFloat, height: CGFloat) -> UIImage {
+       return UIGraphicsImageRenderer(size: CGSize(width: width, height: height)).image { _ in
+            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }
     }
 
-    @IBAction func setNotificationFirstTime(_ sender: UIButton) {
-        //works after any button pressed
-        if UserDefaults.standard.integer(forKey: "setNotificationFirstTime") == 0 {
-            setNotification()
-            UserDefaults.standard.set(1, forKey: "setNotificationFirstTime")
-            print("SET NOTİFİCATİON<<")
-        }
-    }
-    
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        performSegue(withIdentifier: "goSettings", sender: self)
-    }
-    
-    @objc func checkAction(sender : UITapGestureRecognizer) {
-        let vc = CustomModalViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false)
-    }
-    
-
-    
-    
-    //MARK: - loadItems
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    func fixSoundProblemForRealDevice(){
         do {
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-          itemArray = try context.fetch(request)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord)
         } catch {
-           print("Error fetching data from context \(error)")
+            assertionFailure("Failed to configure `AVAAudioSession`: \(error.localizedDescription)")
         }
-    }
-
-    
-    //MARK: - prepare
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     
-        if segue.identifier == "goSettings" {
-            if segue.destination is SettingsViewController {
-                (segue.destination as? SettingsViewController)?.onViewWillDisappear = {
-                    self.check2xTime()
-                }
-            }
-        }
-        
-        
-        if segue.identifier == "goMyWords" {
-            let destinationVC = segue.destination as! WordsViewController
-            destinationVC.goAddPage = goAddPage
-        }
-        
     }
 
 }
-
-
 
 //MARK: - extensions
 

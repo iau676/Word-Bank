@@ -24,6 +24,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Variables
     
     var isOpen = false
+    var wordBrain = WordBrain()
     var itemArray = [Item]()
     var player: AVAudioPlayer!
     var tapGesture = UITapGestureRecognizer()
@@ -34,7 +35,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var userWordCount = ""
     var userWordCountInt = 0
     var userWordCountIntVariable = 0 //fix userdefaults slow problem
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let coinImage = UIImage(named: "coin.png")!
     let emptyImage = UIImage(named: "empty.png")!
     let plusImage = UIImage(named: "plus.png")!
@@ -83,17 +83,11 @@ class AddViewController: UIViewController, UITextFieldDelegate {
             if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
                 playMP3("mario")
                 if goEdit == 0 {
-                    let newItem = Item(context: self.context)
-                    newItem.eng = engTxtField.text!
-                    newItem.tr = trTxtField.text!
-                    newItem.date = Date()
-                    newItem.uuid = UUID().uuidString
-                    newItem.isCreatedFromUser = true
-                    self.itemArray.append(newItem)
+                    wordBrain.addNewWord(english: engTxtField.text!, meaning: trTxtField.text!)
                     
-                    let userWord = UserDefaults.standard.integer(forKey: "userWordCount")
-                    UserDefaults.standard.set(userWord+1, forKey: "userWordCount")
-                    
+                    let userWordCount = UserDefaults.standard.integer(forKey: "userWordCount")
+                    UserDefaults.standard.set(userWordCount+1, forKey: "userWordCount")
+                    wordBrain.saveWord()
                     userWordCountIntVariable += 1
                  
                     Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(goVideo), userInfo: nil, repeats: false)
