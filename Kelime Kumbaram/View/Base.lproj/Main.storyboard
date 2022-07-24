@@ -1300,7 +1300,7 @@
         <scene sceneID="GkB-hd-Q59">
             <objects>
                 <viewController id="9q6-8v-FQ1" customClass="WordsViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="WVg-dI-ycn">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="WVg-dI-ycn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1419,10 +1419,10 @@
                         <color key="backgroundColor" name="bblueColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="UTr-xt-31a" firstAttribute="leading" secondItem="5Tp-Me-Byh" secondAttribute="leading" constant="16" id="4hi-qB-eyn"/>
                             <constraint firstItem="UTr-xt-31a" firstAttribute="top" secondItem="5Tp-Me-Byh" secondAttribute="top" constant="22" id="9R8-Ys-Y8t"/>
+                            <constraint firstItem="UTr-xt-31a" firstAttribute="leading" secondItem="5Tp-Me-Byh" secondAttribute="leading" constant="16" id="Ngq-kY-ztr"/>
                             <constraint firstItem="5Tp-Me-Byh" firstAttribute="bottom" secondItem="UTr-xt-31a" secondAttribute="bottom" constant="32" id="WUN-lA-iDw"/>
-                            <constraint firstItem="5Tp-Me-Byh" firstAttribute="trailing" secondItem="UTr-xt-31a" secondAttribute="trailing" constant="16" id="rJZ-P5-s12"/>
+                            <constraint firstItem="5Tp-Me-Byh" firstAttribute="trailing" secondItem="UTr-xt-31a" secondAttribute="trailing" constant="16" id="p0S-Rn-Icq"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="M76-If-vXd" appends="YES" id="1bH-c6-Idx"/>

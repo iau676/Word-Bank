@@ -40,6 +40,10 @@
 		707106F0275A1E42005532D0 /* redBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EC275A1E41005532D0 /* redBubble.png */; };
 		707106F1275A1E42005532D0 /* redBubble4.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106ED275A1E41005532D0 /* redBubble4.png */; };
 		707106F2275A1E42005532D0 /* redBubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EE275A1E41005532D0 /* redBubble2.png */; };
+		707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC384288DA9DA00832F35 /* String+Extensions.swift */; };
+		707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */; };
+		707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */; };
+		707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC38A288DAA4A00832F35 /* Int+Extensions.swift */; };
 		7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081AB0127CCD15700E2996A /* NewPointViewController.swift */; };
 		7081AB0527CCD3CB00E2996A /* newpoint.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0427CCD3CB00E2996A /* newpoint.mp4 */; };
 		7081AB0727CCFA4300E2996A /* dog.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0627CCFA4300E2996A /* dog.mp4 */; };
@@ -90,6 +94,10 @@
 		707106EC275A1E41005532D0 /* redBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble.png; sourceTree = "<group>"; };
 		707106ED275A1E41005532D0 /* redBubble4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble4.png; sourceTree = "<group>"; };
 		707106EE275A1E41005532D0 /* redBubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble2.png; sourceTree = "<group>"; };
+		707EC384288DA9DA00832F35 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
+		707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
+		707EC38A288DAA4A00832F35 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		7081AB0127CCD15700E2996A /* NewPointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPointViewController.swift; sourceTree = "<group>"; };
 		7081AB0427CCD3CB00E2996A /* newpoint.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = newpoint.mp4; sourceTree = "<group>"; };
 		7081AB0627CCFA4300E2996A /* dog.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dog.mp4; sourceTree = "<group>"; };
@@ -204,6 +212,10 @@
 				708AFD89288719F900E09AE1 /* UIView+Extensions.swift */,
 				70C357E72888638300F3AD86 /* UIButton+Extensions.swift */,
 				702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */,
+				707EC384288DA9DA00832F35 /* String+Extensions.swift */,
+				707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */,
+				707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */,
+				707EC38A288DAA4A00832F35 /* Int+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -335,16 +347,20 @@
 				706CBACF27593331008B4773 /* HardWordsQuizViewController.swift in Sources */,
 				706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */,
 				7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */,
+				707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */,
+				707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */,
 				700C439927A856FD00D94497 /* CustomModalViewController.swift in Sources */,
 				708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,
 				70FC7F38275BD1DE00F138E7 /* WordsQuizViewController.swift in Sources */,
+				707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */,
 				70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */,
 				706CBAD627593993008B4773 /* WordCell.swift in Sources */,
 				708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */,
 				70209B2B2759613900D527D3 /* WordBrain.swift in Sources */,
 				702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */,
 				7060437627EC83AE00D0D953 /* X2TimeViewController.swift in Sources */,
+				707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */,
 				706CBACB275930E9008B4773 /* HardWordsViewController.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,
 				7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */,
