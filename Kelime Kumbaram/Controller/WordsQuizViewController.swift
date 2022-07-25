@@ -201,7 +201,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         hint = ""
         hintLabel.text = ""
 
-        if questionCount < 25 {
+        if questionCount < 3 {
 
             //it can change textField size if use in the other option
             if  whichStartPressed == 1 && questionCount > 0 {

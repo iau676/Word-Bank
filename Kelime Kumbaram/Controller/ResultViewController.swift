@@ -281,21 +281,33 @@ extension ResultViewController: UITableViewDataSource {
         return cell
     }
     
-    func updateCellLabelText(_ cell: WordCell, _ i: Int){
+    func updateCellLabelText(_ cell: WordCell, _ index: Int){
+        let i = arrayOfIndex[index]
         if option == "my" {
-            cell.engLabel.text = itemArray[arrayOfIndex[i]].eng
-            cell.trLabel.text = itemArray[arrayOfIndex[i]].tr
+            if selectedSegmentIndex == 0 {
+                cell.engLabel.text = itemArray[i].eng
+                cell.trLabel.text = itemArray[i].tr
+            } else {
+                cell.engLabel.text = itemArray[i].tr
+                cell.trLabel.text = itemArray[i].eng
+            }
         } else {
-            cell.engLabel.text = arrayForResultViewENG[i]
-            cell.trLabel.text = arrayForResultViewTR[i]
+            if selectedSegmentIndex == 0 {
+                cell.engLabel.text = arrayForResultViewENG[index]
+                cell.trLabel.text = arrayForResultViewTR[index]
+            } else {
+                cell.engLabel.text = arrayForResultViewTR[index]
+                cell.trLabel.text = arrayForResultViewENG[index]
+                
+            }
         }
-        cell.numberLabel.text = String(i+1)
+        cell.numberLabel.text = String(index+1)
     }
     
     func updateCellForListeningExercise(_ cell: WordCell){
         if whichStartPressed == 3 {
-            cell.engView.isHidden = true
-            cell.trLabel.textAlignment = .center
+            cell.trView.isHidden = true
+            cell.engLabel.textAlignment = .center
         }
     }
     
@@ -322,9 +334,11 @@ extension ResultViewController: UITableViewDataSource {
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
         if option == "my" {
-            cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(), itemArray[arrayOfIndex[i]].tr ?? "empty")
+            cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
+                                                          (selectedSegmentIndex == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
         } else {
-            cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(), arrayForResultViewTR[i])
+            cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
+                                                          (selectedSegmentIndex == 0) ? arrayForResultViewTR[i] : arrayForResultViewENG[i])
         }
     }
     

@@ -205,25 +205,24 @@ struct WordBrain {
 
     mutating func getAnswer(_ sender: Int) -> String {
         if changedQuestionNumber % 2 == sender {
-           
-            
             if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
                 return selectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
             } else {
                 return selectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             }
-            
         } else {
-            answer = Int.random(in: 0..<questionNumbersCopy.count)
-            let temp = questionNumbersCopy[answer]
-                 
-            if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
-                return selectedSegmentIndex == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
+            if questionNumbersCopy.count > 0 {
+                answer = Int.random(in: 0..<questionNumbersCopy.count)
+                let temp = questionNumbersCopy[answer]
+                     
+                if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
+                    return selectedSegmentIndex == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
+                } else {
+                    return selectedSegmentIndex == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
+                }
             } else {
-                return selectedSegmentIndex == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
+                return ""
             }
-            
-            
         }
     }
     

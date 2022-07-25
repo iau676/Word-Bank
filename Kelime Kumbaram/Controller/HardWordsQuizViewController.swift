@@ -44,7 +44,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     var wordBrain = WordBrain()
     var player: AVAudioPlayer!
     var timer = Timer()
-    var totalQuestionNumber = 25
+    var totalQuestionNumber = 3
     var showOptions = 0
     var questionNumber = 0
     var letterCounter = 0
