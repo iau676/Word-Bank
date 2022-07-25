@@ -27,6 +27,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var itemArray = [Item]()
     var player: AVAudioPlayer!
     var tapGesture = UITapGestureRecognizer()
+    var updateWordsPage: (()->())?
     var onViewWillDisappear: (()->())?
     var goEdit = 0
     var editIndex = 0
@@ -46,6 +47,10 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         setupTxtFields()
         checkEditStatus()
         preventInterrupt()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        onViewWillDisappear?()
     }
     
     //MARK: - prepare
@@ -75,7 +80,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                     Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(dismissView), userInfo: nil, repeats: false)
                 }
                 
-                onViewWillDisappear?()
+                updateWordsPage?()
                 
                 trTxtField.text = ""
                 engTxtField.text = ""

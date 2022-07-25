@@ -9,7 +9,6 @@ import UIKit
 import AVFoundation
 import CoreData
 
-
 class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     
     //This didn't crash my app but caused a memory leak every time AVSpeechSynthesizer was declared. I solved this by declaring the AVSpeechSynthesizer as a global variable
