@@ -27,17 +27,17 @@ class WordsViewController: UIViewController {
     
     //MARK: - Variables
     
-    var selectedSegmentIndex = 0
     var goEdit = 0
     var editIndex = 0
     var goAddPage = 0
     var showWords = 0
     var expandIconName = ""
     var notExpandIconName = ""
-    var itemArray = [Item]()
+    var wordBrain = WordBrain()
+    var itemArray: [Item] { return wordBrain.itemArray }
     var HardItemArray = [HardItem]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let textSize = UserDefaults.standard.integer(forKey: "textSize")
+    let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
     let pageStatistic = ["Kumbaradaki kelime sayısı: \(UserDefaults.standard.integer(forKey: "userWordCount"))" ,
                          "Yapılan alıştırma sayısı: \(UserDefaults.standard.integer(forKey: "blueExerciseCount"))",
                          
@@ -49,58 +49,38 @@ class WordsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Kumbaram"
-        loadItems()
+        wordBrain.loadItemArray()
         setupSearchBar()
         setupView()
         setupExerciseButtons()
+        setupExpandButton()
         hideKeyboardWhenTappedAround()
         updateSearchBarPlaceholder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        selectedSegmentIndex = 0
-        UserDefaults.standard.set(0, forKey: "selectedSegmentIndex")
-        
-        assignExpandIconName()
-        
-        showWords = 0
-        expandButton.setImage(imageRenderer(imageName: expandIconName, width: 35, height: 25), for: .normal)
-        searchBar.isHidden = true
-        
-        if goAddPage == 1 {
-            showWords = 1
-            updateView()
-            performSegue(withIdentifier: "goAdd", sender: self)
-        }
-        tableView.reloadData()
+        checkGoAddPage()
     }
     
     //MARK: - prepare
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToMyQuiz2" {
-          //  let destinationVC = segue.destination as! MyQuizViewController
-           // destinationVC.itemArray = itemArray
-        }
-        
-//        if segue.identifier == "goCard" {
-//            let destinationVC = segue.destination as! CardViewController
-//            destinationVC.itemArray = itemArray
-//        }
-        
         if segue.identifier == "goAdd" {
             let destinationVC = segue.destination as! AddViewController
-                        
             destinationVC.itemArray = itemArray
             destinationVC.modalPresentationStyle = .overFullScreen
             
-            
             if segue.destination is AddViewController {
-                (segue.destination as? AddViewController)?.onViewWillDisappear = {
-                    self.saveItems()
-                    self.loadItems()
+                (segue.destination as? AddViewController)?.updateWordsPage = {
+                    self.wordBrain.saveWord()
+                    self.wordBrain.loadItemArray()
                     self.updateSearchBarPlaceholder()
+                    self.tableView.reloadData()
+                }
+                
+                (segue.destination as? AddViewController)?.onViewWillDisappear = {
                     self.goEdit = 0
+                    self.goAddPage = 0
                 }
             }
             
@@ -120,12 +100,12 @@ class WordsViewController: UIViewController {
             showWords = 0
         }
         updateView()
-        print("<showWords>\(showWords)")
         tableView.reloadData()
     }
     
     @IBAction func addBarButtonPressed(_ sender: UIBarButtonItem) {
-        goAdd()
+        goAddPage = 1
+        checkGoAddPage()
     }
     
     @IBAction func startPressed(_ sender: Any) {
@@ -204,27 +184,6 @@ class WordsViewController: UIViewController {
         }
     }
 
-    
-    
-    //MARK: - Model Manupulation Methods
-    func saveItems() {
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
-    }
-    
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
-        do {
-          request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-          itemArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-        self.tableView.reloadData()
-    }
-
     //MARK: - Other Functions
     
     func setupView(){
@@ -243,12 +202,8 @@ class WordsViewController: UIViewController {
             expandButton.setImage(imageRenderer(imageName: expandIconName, width: 35, height: 25), for: .normal)
             emptyView.updateViewVisibility(false)
             searchBar.updateSearchBarVisibility(true)
+            updateTableViewConstraintMultiplier(0.7)
             
-            UIView.transition(with: tableView, duration: 0.6,
-                              options: .transitionCrossDissolve,
-                              animations: {
-                                self.updateTableViewConstraintMultiplier(0.7)
-                          })
             tableView.frame = CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.size.width, height: CGFloat(66*pageStatistic.count-1));
     
             tableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
@@ -256,23 +211,19 @@ class WordsViewController: UIViewController {
             expandButton.setImage(imageRenderer(imageName: notExpandIconName, width: 35, height: 25), for: .normal)
             emptyView.updateViewVisibility(true)
             searchBar.updateSearchBarVisibility(false)
+            updateTableViewConstraintMultiplier(0.2)
             
-            UIView.transition(with: tableView, duration: 0.6,
-                              options: .transitionCrossDissolve,
-                              animations: {
-                                self.updateTableViewConstraintMultiplier(0.2)
-                          })
             tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         }
     }
    
     func setupSearchBar() {
         searchBar.delegate = self
-        
+        searchBar.isHidden = true
         // SearchBar text
         let textFieldInsideUISearchBar = searchBar.value(forKey: "searchField") as? UITextField
         textFieldInsideUISearchBar?.textColor = UIColor.black
-        textFieldInsideUISearchBar?.font = textFieldInsideUISearchBar?.font?.withSize(CGFloat(textSize))
+        textFieldInsideUISearchBar?.font = textFieldInsideUISearchBar?.font?.withSize(textSize)
 
         // SearchBar placeholder
         let labelInsideUISearchBar = textFieldInsideUISearchBar!.value(forKey: "placeholderLabel") as? UILabel
@@ -317,7 +268,7 @@ class WordsViewController: UIViewController {
         setupExerciseButtonShadow(startButton4)
     }
     
-    func setupExerciseButtonImage(_ button: UIButton, imageName: String, width: Int, height: Int){
+    func setupExerciseButtonImage(_ button: UIButton, imageName: String, width: CGFloat, height: CGFloat){
         button.setImage(imageRenderer(imageName: imageName, width: width+textSize, height: height+textSize), for: .normal)
     }
     
@@ -330,27 +281,30 @@ class WordsViewController: UIViewController {
     }
     
     func updateTableViewConstraintMultiplier(_ double: Double) {
-        let newConstraint2 = self.tableViewConstraint.constraintWithMultiplier(double)
-        self.tableViewConstraint.isActive = false
-        self.view.addConstraint(newConstraint2)
-        self.view.layoutIfNeeded()
-        self.tableViewConstraint = newConstraint2
+        UIView.transition(with: tableView, duration: 0.6,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            let newConstraint2 = self.tableViewConstraint.constraintWithMultiplier(double)
+                            self.tableViewConstraint.isActive = false
+                            self.view.addConstraint(newConstraint2)
+                            self.view.layoutIfNeeded()
+                            self.tableViewConstraint = newConstraint2
+                      })
     }
 
-    func goAdd(){
-        performSegue(withIdentifier: "goAdd", sender: self)
-      
-        if showWords == 0 {
+    func checkGoAddPage(){
+        if goAddPage == 1 {
             showWords = 1
             tableView.reloadData()
             updateView()
+            performSegue(withIdentifier: "goAdd", sender: self)
         }
     }
     
     func check2Items(){
         if itemArray.count < 2 {
-            let alert = UIAlertController(title: "En az iki kelime gereklidir", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
+            let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 self.showWords = 1
                 self.updateView()
                 self.tableView.reloadData()
@@ -390,9 +344,14 @@ class WordsViewController: UIViewController {
         }
     }
     
-    func imageRenderer(imageName: String, width: Int, height: Int) -> UIImage {
+    func imageRenderer(imageName: String, width: CGFloat, height: CGFloat) -> UIImage {
         return UIGraphicsImageRenderer(size: CGSize(width: width, height: height)).image { _ in
             UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }
+    }
+    
+    func setupExpandButton(){
+        assignExpandIconName()
+        expandButton.setImage(imageRenderer(imageName: expandIconName, width: 35, height: 25), for: .normal)
     }
     
     func assignExpandIconName() {
@@ -419,15 +378,15 @@ extension WordsViewController: UISearchBarDelegate {
             let request : NSFetchRequest<Item> = Item.fetchRequest()
             request.predicate = NSPredicate(format: "eng CONTAINS[cd] %@", searchBar.text!)
             request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: true)]
-            loadItems(with: request)
+            wordBrain.loadItemArray(with: request)
         } else {
-            loadItems()
+            wordBrain.loadItemArray()
         }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
-            loadItems()
+            wordBrain.loadItemArray()
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
@@ -436,9 +395,9 @@ extension WordsViewController: UISearchBarDelegate {
     
     func updateSearchBarPlaceholder(){
         if itemArray.count > 0 {
-            searchBar.placeholder = "\(itemArray.count) kelime içerisinde ara"
+            searchBar.placeholder = "Search in \(itemArray.count) words"
         } else {
-            searchBar.placeholder = "Henüz kelime eklemediniz"
+            searchBar.placeholder = "Nothing to see here"
         }
     }
 }
@@ -455,7 +414,6 @@ extension WordsViewController: UITableViewDataSource {
         tableView.backgroundColor = UIColor(named: "rightCelerColor")
         tableView.separatorStyle = .singleLine
         if showWords == 1 {
-            
             tableView.rowHeight = UITableView.automaticDimension
             tableView.isScrollEnabled = true
             cell.engView.isHidden = false
@@ -472,23 +430,19 @@ extension WordsViewController: UITableViewDataSource {
         } else {
             cell.engView.isHidden = true
             cell.trView.isHidden = false
-            print("showWords-\(showWords)>>\(pageStatistic.count)>>\(indexPath.row)")
             //Fatal error: Index out of range
             //problem text size 17 and 10 words when press expand button
             if indexPath.row < 4 {
                 cell.trLabel.text = pageStatistic[indexPath.row]
             }
-            
-            cell.numberLabel.text = ""
             tableView.backgroundColor = UIColor.clear
             tableView.rowHeight = 66
             tableView.isScrollEnabled = false
             // tableView contentSize
             tableView.frame = CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.size.width, height: CGFloat(66*pageStatistic.count-1));
         }
-        
-        cell.engLabel.font = cell.engLabel.font.withSize(CGFloat(textSize))
-        cell.trLabel.font = cell.trLabel.font.withSize(CGFloat(textSize))
+        cell.updateLabelTextSize(cell.engLabel, textSize)
+        cell.updateLabelTextSize(cell.trLabel, textSize)
         return cell
     }
 }
@@ -508,42 +462,29 @@ extension WordsViewController: UITableViewDelegate {
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             // 1 is false, 0 is true
-            if UserDefaults.standard.integer(forKey: "switchDelete") == 0 {
                 
-                let alert = UIAlertController(title: "Kelime silinecek", message: "Bu eylem geri alınamaz", preferredStyle: .alert)
-                let action = UIAlertAction(title: "Sil", style: .destructive) { (action) in
-                    
-                    self.context.delete(self.itemArray[indexPath.row])
-                    self.itemArray.remove(at: indexPath.row)
-                    
-                    self.saveItems()
-                    self.updateSearchBarPlaceholder()
-                    let userWordCount = UserDefaults.standard.integer(forKey: "userWordCount")
-                    UserDefaults.standard.set(userWordCount-1, forKey: "userWordCount")
-                    self.findUserPoint()
-                    if self.itemArray.count > 0 {
-                        tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
-                    } else {
-                        tableView.reloadData()
-                    }
-                    self.dismiss(animated: true, completion: nil)
-                }
-                let actionCancel = UIAlertAction(title: "İptal", style: UIAlertAction.Style.cancel) { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                }
-                alert.addAction(action)
-                alert.addAction(actionCancel)
-                self.present(alert, animated: true, completion: nil)
-            } else {
+            let alert = UIAlertController(title: "Word will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+                
                 self.context.delete(self.itemArray[indexPath.row])
-                self.itemArray.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
-                self.saveItems()
+                self.wordBrain.removeWord(at: indexPath.row)
                 self.updateSearchBarPlaceholder()
                 let userWordCount = UserDefaults.standard.integer(forKey: "userWordCount")
                 UserDefaults.standard.set(userWordCount-1, forKey: "userWordCount")
                 self.findUserPoint()
+                if self.itemArray.count > 0 {
+                    tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+                } else {
+                    tableView.reloadData()
+                }
+                self.dismiss(animated: true, completion: nil)
             }
+            let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(action)
+            alert.addAction(actionCancel)
+            self.present(alert, animated: true, completion: nil)
             success(true)
         })
         deleteAction.image = imageRenderer(imageName: "bin", width: 25, height: 25)
@@ -586,7 +527,7 @@ extension WordsViewController: UITableViewDelegate {
                    print("Error saving context \(error)")
                 }
                 
-                self.loadItems()
+                self.wordBrain.loadItemArray()
                 
                 let alert = UIAlertController(title: "Zor kelimeler sayfasına eklendi", message: "", preferredStyle: .alert)
                 let when = DispatchTime.now() + 1

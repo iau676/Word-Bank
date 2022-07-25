@@ -67,6 +67,10 @@ struct WordBrain {
         self.itemArray.append(newItem)
     }
     
+    mutating func removeWord(at index: Int){
+        itemArray.remove(at: index)
+    }
+    
     mutating func getQuestionText(_ selectedSegmentIndex: Int, _ whichQuestion: Int, _ startPressed:Int) -> String {
         
         questionNumbers.removeAll()

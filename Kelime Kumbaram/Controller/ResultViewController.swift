@@ -46,7 +46,7 @@ class ResultViewController: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let fiveIndex =  UserDefaults.standard.array(forKey: "fiveIndex") as? [Int] ?? [Int]()
     let arrayOfIndex =  UserDefaults.standard.array(forKey: "rightOnce") as? [Int] ?? [Int]()
-    let arrayOfBool =  UserDefaults.standard.array(forKey: "rightOnceBool") as? [Bool] ?? [Bool]()
+    let userAnswer =  UserDefaults.standard.array(forKey: "rightOnceBool") as? [Bool] ?? [Bool]()
     let arrayForResultViewENG = UserDefaults.standard.array(forKey: "arrayForResultViewENG") as? [String] ?? [String]()
     let arrayForResultViewTR = UserDefaults.standard.array(forKey: "arrayForResultViewTR") as? [String] ?? [String]()
     let arrayForResultViewUserAnswer = UserDefaults.standard.array(forKey: "arrayForResultViewUserAnswer") as? [String] ?? [String]()
@@ -106,7 +106,7 @@ class ResultViewController: UIViewController {
     
     @IBAction func showWordsButtonPressed(_ sender: UIButton) {
         showTable = (showTable==0) ? 1 : 0
-        let title = (showTable==0) ? "Kelimeleri Göster" : "Kelimeleri Gizle"
+        let title = (showTable==0) ? "Show Words" : "Hide Words"
         showWordsButton.setTitle(title, for: UIControl.State.normal)
         self.tableView.reloadData()
     }
@@ -149,12 +149,12 @@ class ResultViewController: UIViewController {
     func checkWhichExercise() {
         if whichStartPressed == 4 {
             scoreLabelText = "25 kelime inceleyerek\n25 puan kazandınız!"
-            numberOfTrue = arrayOfBool.count
+            numberOfTrue = userAnswer.count
             addedHardWordsLabel.isHidden = true
             showWordsButton.isHidden = true
         } else {
             updateHardWordText()
-            scoreLabel.text = "\(numberOfTrue)/\(arrayOfBool.count)"
+            scoreLabel.text = "\(numberOfTrue)/\(userAnswer.count)"
             scoreLabelText = "Hepsi doğru!"
         }
     }
@@ -180,11 +180,10 @@ class ResultViewController: UIViewController {
     
     func updateStatistic() {
         if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
-            
             UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "blueExerciseCount")+1, forKey: "blueExerciseCount")
             UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "blueTrueCount")+numberOfTrue, forKey: "blueTrueCount")
-            UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "blueFalseCount")+(arrayOfBool.count-numberOfTrue), forKey: "blueFalseCount")
-            if numberOfTrue == arrayOfBool.count {
+            UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "blueFalseCount")+(userAnswer.count-numberOfTrue), forKey: "blueFalseCount")
+            if numberOfTrue == userAnswer.count {
                 UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "blueAllTrue")+1, forKey: "blueAllTrue")
             }
             updateExerciseCount()
@@ -210,15 +209,15 @@ class ResultViewController: UIViewController {
     }
     
     func calculateNumberOfTrue() {
-        for i in 0..<arrayOfBool.count {
-            if arrayOfBool[i] == true {
+        for i in 0..<userAnswer.count {
+            if userAnswer[i] == true {
                 numberOfTrue += 1
             }
         }
     }
     
     func checkAllTrue(){
-        if numberOfTrue == arrayOfBool.count {
+        if numberOfTrue == userAnswer.count {
             showWordsButton.isHidden = whichStartPressed == 4 ?  true : false
             tableView.backgroundColor = .clear
             showTable = 0
@@ -239,39 +238,6 @@ class ResultViewController: UIViewController {
         
         if newLevel - lastLevel > 0 {
             performSegue(withIdentifier: "goLevelUp", sender: self)
-        }
-    }
-
-    func findUserPoint(){ //using after delete a word
-        let userWordCountIntVariable = UserDefaults.standard.integer(forKey: "userWordCount")
-        let lastPoint = UserDefaults.standard.integer(forKey: "pointForMyWords")
-        print("userWordCountIntVariable>>\(userWordCountIntVariable)")
-        print("lastPoint>>\(lastPoint)")
-        if userWordCountIntVariable >= 100 {
-           let newPoint = userWordCountIntVariable/100*2 + 12
-            if newPoint - lastPoint > 0 {
-                textForLabel = "Her doğru cevap için\n +\(newPoint-10) puan alacaksınız."
-                userWordCount = String(userWordCountIntVariable)
-                UserDefaults.standard.set(newPoint, forKey: "pointForMyWords")
-                UserDefaults.standard.set(1, forKey: "goLevelUp")
-                performSegue(withIdentifier: "goNewPoint", sender: self)
-            }
-        } else {
-            var newPoint = 0
-            if  userWordCountIntVariable >= 10{
-                if userWordCountIntVariable < 50 {
-                    newPoint = 11
-                } else {
-                    newPoint = 12
-                }
-                if newPoint - lastPoint > 0 {
-                    textForLabel = "Her doğru cevap için\n +\(newPoint-10) puan kazanacaksınız."
-                    userWordCount = String(userWordCountIntVariable)
-                    UserDefaults.standard.set(newPoint, forKey: "pointForMyWords")
-                    UserDefaults.standard.set(1, forKey: "goLevelUp")
-                    performSegue(withIdentifier: "goNewPoint", sender: self)
-                }
-            }
         }
     }
     
@@ -295,7 +261,7 @@ class ResultViewController: UIViewController {
 extension ResultViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (showTable==1) ? arrayOfBool.count : 0
+        return (showTable==1) ? userAnswer.count : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -303,16 +269,27 @@ extension ResultViewController: UITableViewDataSource {
         
         updateCellLabelText(cell, indexPath.row)
         updateCellForListeningExercise(cell)
-        updateCellLabelTextColor(cell)
         updateCellLabelTextSize(cell)
-        
-        if arrayOfBool[indexPath.row] == false {
+        updateCellLabelTextColor(cell)
+       
+        if userAnswer[indexPath.row] == false {
             updateCellViewBackgroundForWrong(cell)
             updateCellLabelTextForWrong(cell, indexPath.row)
         } else {
             updateCellViewBackgroundForRight(cell)
         }
         return cell
+    }
+    
+    func updateCellLabelText(_ cell: WordCell, _ i: Int){
+        if option == "my" {
+            cell.engLabel.text = itemArray[arrayOfIndex[i]].eng
+            cell.trLabel.text = itemArray[arrayOfIndex[i]].tr
+        } else {
+            cell.engLabel.text = arrayForResultViewENG[i]
+            cell.trLabel.text = arrayForResultViewTR[i]
+        }
+        cell.numberLabel.text = String(i+1)
     }
     
     func updateCellForListeningExercise(_ cell: WordCell){
@@ -333,25 +310,14 @@ extension ResultViewController: UITableViewDataSource {
         cell.trLabel.textColor = UIColor(red: 0.17, green: 0.17, blue: 0.18, alpha: 1.00)
     }
     
-    func updateCellViewBackgroundForRight(_ cell: WordCell){
-        cell.trView.backgroundColor = UIColor(red: 0.44, green: 0.86, blue: 0.73, alpha: 1.00)
-        cell.engView.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
-    }
-    
     func updateCellViewBackgroundForWrong(_ cell: WordCell){
         cell.trView.backgroundColor = UIColor(red: 1.00, green: 0.56, blue: 0.62, alpha: 1.00)
         cell.engView.backgroundColor = UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00)
     }
     
-    func updateCellLabelText(_ cell: WordCell, _ i: Int){
-        if option == "my" {
-            cell.engLabel.text = itemArray[arrayOfIndex[i]].eng
-            cell.trLabel.text = itemArray[arrayOfIndex[i]].tr
-        } else {
-            cell.engLabel.text = arrayForResultViewENG[i]
-            cell.trLabel.text = arrayForResultViewTR[i]
-        }
-        cell.numberLabel.text = String(i+1)
+    func updateCellViewBackgroundForRight(_ cell: WordCell){
+        cell.trView.backgroundColor = UIColor(red: 0.44, green: 0.86, blue: 0.73, alpha: 1.00)
+        cell.engView.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
@@ -367,9 +333,9 @@ extension ResultViewController: UITableViewDataSource {
         let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: textSize+2)]
         let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
         
-        let partOne = NSMutableAttributedString(string: "Cevabınız:\n", attributes: normalFontAttributes)
+        let partOne = NSMutableAttributedString(string: "Your answer:\n", attributes: normalFontAttributes)
         let partTwo = userAnswer
-        let partThree = NSMutableAttributedString(string: userAnswer.length == 0 ? "Doğru cevap: \n" : "\nDoğru cevap: \n", attributes: normalFontAttributes)
+        let partThree = NSMutableAttributedString(string: userAnswer.length == 0 ? "Correct answer: \n" : "\nCorrect answer: \n", attributes: normalFontAttributes)
         let partFour = NSMutableAttributedString(string: trueAnswer, attributes: boldFontAttributes as [NSAttributedString.Key : Any])
 
         let combination = NSMutableAttributedString()
