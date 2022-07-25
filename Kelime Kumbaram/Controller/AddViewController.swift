@@ -19,11 +19,10 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var engTxtField: UITextField!
     @IBOutlet weak var trTxtField: UITextField!
     @IBOutlet weak var addButton: UIButton!
-    @IBOutlet weak var checkButton: UIButton!
+    @IBOutlet weak var coinButton: UIButton!
     
     //MARK: - Variables
     
-    var isOpen = false
     var wordBrain = WordBrain()
     var itemArray = [Item]()
     var player: AVAudioPlayer!
@@ -31,10 +30,10 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var onViewWillDisappear: (()->())?
     var goEdit = 0
     var editIndex = 0
+    var userWordCountInt = 0
     var textForLabel = ""
     var userWordCount = ""
-    var userWordCountInt = 0
-    var userWordCountIntVariable = 0 //fix userdefaults slow problem
+    var userWordCountIntVariable = UserDefaults.standard.integer(forKey: "userWordCount") //fix userdefaults slow problem
     let coinImage = UIImage(named: "coin.png")!
     let emptyImage = UIImage(named: "empty.png")!
     let plusImage = UIImage(named: "plus.png")!
@@ -42,28 +41,11 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
-        
         setupViews()
-        
-        setupButton(button: addButton, buttonTitle: "", image: plusImage, imageSize: 23, cornerRadius: 6)
-        checkButton.deleteBackgroundImage()
-        
-        setupTxtField(txtFld: engTxtField, placeholder: "İngilizce")
-        setupTxtField(txtFld: trTxtField, placeholder: "Türkçe")
-        
+        setupButtons()
+        setupTxtFields()
         checkEditStatus()
-        
         preventInterrupt()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        engTxtField.becomeFirstResponder()
-        userWordCountIntVariable = UserDefaults.standard.integer(forKey: "userWordCount")
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            onViewWillDisappear?()
     }
     
     //MARK: - prepare
@@ -79,23 +61,17 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     //MARK: - IBAction
     
     @IBAction func addButtonPressed(_ sender: Any) {
-        
             if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
                 playMP3("mario")
                 if goEdit == 0 {
                     wordBrain.addNewWord(english: engTxtField.text!, meaning: trTxtField.text!)
-                    
-                    let userWordCount = UserDefaults.standard.integer(forKey: "userWordCount")
-                    UserDefaults.standard.set(userWordCount+1, forKey: "userWordCount")
+                    UserDefaults.standard.set(userWordCountIntVariable+1, forKey: "userWordCount")
                     wordBrain.saveWord()
                     userWordCountIntVariable += 1
-                 
-                    Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(goVideo), userInfo: nil, repeats: false)
-                    
+                    Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(goNewPoint), userInfo: nil, repeats: false)
                 } else {
                     itemArray[editIndex].eng = engTxtField.text!
                     itemArray[editIndex].tr = trTxtField.text!
-                    
                     Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(dismissView), userInfo: nil, repeats: false)
                 }
                 
@@ -105,15 +81,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 engTxtField.text = ""
                 engTxtField.becomeFirstResponder()
 
-                checkButton.setBackgroundImage(coinImage, for: .normal)
-                
-                UIView.transition(with: checkButton, duration: 0.2, options: .transitionFlipFromTop, animations: nil, completion: nil)
-                
-                Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(flipButton), userInfo: nil, repeats: false)
-
-                Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(animateDown), userInfo: nil, repeats: false)
-                
-                Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(deleteButtonBackgroundImage), userInfo: nil, repeats: false)
+                flipCoinButton()
             }
     }
     
@@ -128,12 +96,12 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Objc Functions
     
     @objc func flipButton(){
-        checkButton.setBackgroundImage(coinImage, for: .normal)
-        UIView.transition(with: checkButton, duration: 0.5, options: .transitionFlipFromTop, animations: nil, completion: nil)
+        coinButton.setBackgroundImage(coinImage, for: .normal)
+        UIView.transition(with: coinButton, duration: 0.5, options: .transitionFlipFromTop, animations: nil, completion: nil)
     }
 
     @objc func deleteButtonBackgroundImage(){
-        checkButton.deleteBackgroundImage()
+        coinButton.deleteBackgroundImage()
     }
     
     @objc func dismissView(){
@@ -142,16 +110,16 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func animateDown(){
-        checkButton.animateDown()
+        coinButton.animateDown()
     }
     
-    @objc func goVideo(){
+    @objc func goNewPoint(){
         let lastPoint = UserDefaults.standard.integer(forKey: "pointForMyWords")
     
         if userWordCountIntVariable >= 100 {
            let newPoint = userWordCountIntVariable/100*2 + 12
             if newPoint - lastPoint > 0 {
-                textForLabel = "Her doğru cevap için\n +\(newPoint-10) puan alacaksınız."
+                textForLabel = "You will get +\(newPoint-10) points for each correct answer."
                 userWordCount = String(userWordCountIntVariable)
                 UserDefaults.standard.set(newPoint, forKey: "pointForMyWords")
                 performSegue(withIdentifier: "goNewPoint", sender: self)
@@ -165,7 +133,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                     newPoint = 12
                 }
                 if newPoint - lastPoint > 0 {
-                    textForLabel = "Her doğru cevap için\n +\(newPoint-10) puan kazanacaksınız."
+                    textForLabel = "You will get +\(newPoint-10) points for each correct answer."
                     userWordCount = String(userWordCountIntVariable)
                     UserDefaults.standard.set(newPoint, forKey: "pointForMyWords")
                     performSegue(withIdentifier: "goNewPoint", sender: self)
@@ -178,13 +146,13 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     func checkAction(){
         if engTxtField.text!.count > 0 || trTxtField.text!.count > 0 {
-            let alert = UIAlertController(title: "Değişiklikler kaydedilmedi", message: "", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Your changes could not be saved", message: "", preferredStyle: .alert)
 
-            let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
+            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 self.dismiss(animated: true, completion: nil)
             }
             
-            let actionCancel = UIAlertAction(title: "İptal", style: UIAlertAction.Style.cancel) { (action) in
+            let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
                 alert.dismiss(animated: true, completion: nil)
             }
             
@@ -211,6 +179,17 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         textView.layer.cornerRadius = 12
     }
     
+    func setupButtons(){
+        setupButton(button: addButton, buttonTitle: "", image: plusImage, imageSize: 23, cornerRadius: 6)
+        coinButton.deleteBackgroundImage()
+    }
+    
+    func setupTxtFields(){
+        setupTxtField(txtFld: engTxtField, placeholder: "English")
+        setupTxtField(txtFld: trTxtField, placeholder: "Meaning")
+        engTxtField.becomeFirstResponder()
+    }
+    
     func setupButton(button: UIButton, buttonTitle: String, image: UIImage=UIImage(), imageSize: Int=0, cornerRadius: Int){
         button.setTitle(buttonTitle, for: .normal)
         button.setImage(imageRenderer(image: image, imageSize: imageSize), for: .normal)
@@ -225,11 +204,19 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         )
     }
     
+    func flipCoinButton(){
+        coinButton.setBackgroundImage(coinImage, for: .normal)
+        UIView.transition(with: coinButton, duration: 0.2, options: .transitionFlipFromTop, animations: nil, completion: nil)
+        Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(flipButton), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(animateDown), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(deleteButtonBackgroundImage), userInfo: nil, repeats: false)
+    }
+    
     func checkEditStatus() {
         if goEdit == 1 {
             engTxtField.text = UserDefaults.standard.string(forKey: "engEdit")
             trTxtField.text = UserDefaults.standard.string(forKey: "trEdit")
-            setupButton(button: addButton, buttonTitle: "Kaydet", image: emptyImage, imageSize: 0, cornerRadius: 6)
+            setupButton(button: addButton, buttonTitle: "Save", image: emptyImage, imageSize: 0, cornerRadius: 6)
         }
     }
     
