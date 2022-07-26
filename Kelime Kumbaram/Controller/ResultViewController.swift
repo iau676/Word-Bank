@@ -11,10 +11,7 @@ import AVFoundation
 import Combine
 
 class ResultViewController: UIViewController {
-    
-    //This didn't crash my app but caused a memory leak every time AVSpeechSynthesizer was declared. I solved this by declaring the AVSpeechSynthesizer as a global variable
-    static let synth = AVSpeechSynthesizer()
-    
+
     //MARK: - IBOutlet
     
     @IBOutlet weak var videoView: UIView!
@@ -29,7 +26,6 @@ class ResultViewController: UIViewController {
     //MARK: - Variables
     
     var wordBrain = WordBrain()
-    var playerMP3: AVAudioPlayer!
     var itemArray: [Item] { return wordBrain.itemArray }
     var isWordAddedToHardWords = 0
     var numberOfTrue = 0
@@ -53,7 +49,7 @@ class ResultViewController: UIViewController {
     let selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
     let whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
     let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
-    let soundSpeed = UserDefaults.standard.float(forKey: "soundSpeed")
+    let soundSpeed = UserDefaults.standard.double(forKey: "soundSpeed")
     
     //MARK: - Life Cycle
     
@@ -240,20 +236,7 @@ class ResultViewController: UIViewController {
             performSegue(withIdentifier: "goLevelUp", sender: self)
         }
     }
-    
-    func playMP3(_ soundName: String){
-        if UserDefaults.standard.integer(forKey: "playAppSound") == 0 {
-            let url = Bundle.main.url(forResource: "/sounds/\(soundName)", withExtension: "mp3")
-            playerMP3 = try! AVAudioPlayer(contentsOf: url!)
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-                 try AVAudioSession.sharedInstance().setActive(true)
-               } catch {
-                 print(error)
-               }
-            playerMP3.play()
-        }
-    }
+
 }
 
     //MARK: - Show Cell
@@ -373,22 +356,20 @@ extension ResultViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if whichStartPressed == 3 {
-            var soundName = ""
+            var word = ""
             
             switch UserDefaults.standard.string(forKey: "whichButton") {
             case "blue":
-                soundName = itemArray[arrayOfIndex[indexPath.row]].eng ?? "empty"
+                word = itemArray[arrayOfIndex[indexPath.row]].eng ?? "empty"
                 break
             case "yellow":
-                soundName =  arrayForResultViewENG[indexPath.row]
+                word =  arrayForResultViewENG[indexPath.row]
                 break
             default: break
             }
+            
+            player.playSound(soundSpeed, word)
 
-            let u = AVSpeechUtterance(string: soundName)
-            u.voice = AVSpeechSynthesisVoice(language: "en-US")
-            u.rate = soundSpeed
-            ResultViewController.synth.speak(u)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

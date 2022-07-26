@@ -15,6 +15,29 @@ class Player {
      var playerLayer: AVPlayerLayer?
      private let notificationCenter = NotificationCenter.default
      private var appEventSubscribers = [AnyCancellable]()
+     var playerMP3: AVAudioPlayer!
+     static let synth = AVSpeechSynthesizer()
+    
+    func playSound(_ selectedSpeed: Double, _ word: String){
+        let u = AVSpeechUtterance(string: word)
+        u.voice = AVSpeechSynthesisVoice(language: "en-US")
+        u.rate = Float(selectedSpeed)
+        Player.synth.speak(u)
+    }
+    
+    func playMP3(_ soundName: String) {
+        if UserDefaults.standard.integer(forKey: "playAppSound") == 0 {
+            let url = Bundle.main.url(forResource: "/sounds/\(soundName)", withExtension: "mp3")
+            playerMP3 = try! AVAudioPlayer(contentsOf: url!)
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {
+             print(error)
+            }
+            playerMP3.play()
+        }
+    }
     
     func buildPlayer(videoName: String) -> AVPlayer? {
         guard let filePath = Bundle.main.path(forResource: videoName, ofType: "mp4") else { return nil }

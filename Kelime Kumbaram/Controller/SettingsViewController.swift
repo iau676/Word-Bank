@@ -40,14 +40,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var viewConstraint: NSLayoutConstraint!
     
     //MARK: - Variable
-    
-    var selectedSpeed = 0.0
+    var player = Player()
+    var soundSpeed = 0.0
     var onViewWillDisappear: (()->())?
     var soundImageName = ""
     var soundImageSize = 30
     var textSize : CGFloat = 0.0
-    
-    static let synth = AVSpeechSynthesizer()
     
     let hours = ["00:00 - 01:00",
                  "01:00 - 02:00",
@@ -121,26 +119,26 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         switch sender.selectedSegmentIndex {
         case 0:
             UserDefaults.standard.set(0.3, forKey: "soundSpeed")
-            selectedSpeed = 0.3
+            soundSpeed = 0.3
             break
         case 1:
             UserDefaults.standard.set(0.5, forKey: "soundSpeed")
-            selectedSpeed = 0.5
+            soundSpeed = 0.5
             break
         case 2:
             UserDefaults.standard.set(0.7, forKey: "soundSpeed")
-            selectedSpeed = 0.7
+            soundSpeed = 0.7
             break
         default: break
         }
         soundSpeedButton.flash()
-        playSound()
+        player.playSound(soundSpeed, "how are you?")
     }
     
     
     @IBAction func speakerButtonPressed(_ sender: UIButton) {
         soundSpeedButton.flash()
-        playSound()
+        player.playSound(soundSpeed, "how are you?")
     }
     
     @IBAction func textSizeChanged(_ sender: UISegmentedControl) {
@@ -231,8 +229,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
         x2time.text = hours[UserDefaults.standard.integer(forKey: "userSelectedHour")]
         
-        selectedSpeed = UserDefaults.standard.double(forKey: "soundSpeed")
-        switch selectedSpeed {
+        soundSpeed = UserDefaults.standard.double(forKey: "soundSpeed")
+        switch soundSpeed {
         case 0.3:
             soundSpeedSegmentedControl.selectedSegmentIndex = 0
             break
@@ -272,7 +270,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
 
     func updateTextSize(){
-        
         textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
         
         updateLabelTextSize(settingsText)
@@ -298,23 +295,14 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     func dismissView(){
         self.dismiss(animated: true, completion: nil)
     }
-    
-    func playSound(){
-        let u = AVSpeechUtterance(string: "how are you?")
-        u.voice = AVSpeechSynthesisVoice(language: "en-US")
-        u.rate = Float(selectedSpeed)
-        SettingsViewController.synth.speak(u)
-    }
-    
+
     func changeViewState(_ uiview: UIView, alpha a: CGFloat, isUserInteraction bool: Bool){
-        
         UIView.transition(with: uiview, duration: 0.4,
                           options: (a < 1 ? .transitionFlipFromTop : .transitionFlipFromBottom),
                           animations: {
             uiview.isUserInteractionEnabled = bool
             uiview.alpha = a
         })
-        
     }
     
     override func updateViewConstraints() {

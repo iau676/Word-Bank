@@ -219,7 +219,6 @@ class ViewController: UIViewController {
     }
 
     func setNotification(){
-            
             DispatchQueue.main.async
             {
                 let title = "2x Saati 🎉"

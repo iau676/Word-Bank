@@ -11,9 +11,6 @@ import CoreData
 
 class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     
-    //This didn't crash my app but caused a memory leak every time AVSpeechSynthesizer was declared. I solved this by declaring the AVSpeechSynthesizer as a global variable
-    static let synth = AVSpeechSynthesizer()
-    
     //MARK: - IBOutlet
     
     @IBOutlet weak var questionLabel: UILabel!
@@ -41,8 +38,8 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Variables
     
+    var player = Player()
     var wordBrain = WordBrain()
-    var player: AVAudioPlayer!
     var timer = Timer()
     var totalQuestionNumber = 3
     var showOptions = 0
@@ -54,7 +51,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     var answer = ""
     var selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
     var whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
-    var soundSpeed = UserDefaults.standard.float(forKey: "soundSpeed")
+    var soundSpeed = UserDefaults.standard.double(forKey: "soundSpeed")
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var arrayForResultView = [HardItem]()
     var arrayForResultViewUserAnswer = [String]()
@@ -88,7 +85,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     @IBAction func soundButtonPressed(_ sender: UIButton) {
         soundButton.flash()
         if whichStartPressed == 1 && selectedSegmentIndex == 0 {
-            playSound(text, "en-US")
+            player.playSound(soundSpeed, text)
         } else {
             getLetter()
         }
@@ -125,14 +122,14 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
                 UIImage(named: "empty")?.draw(in: CGRect(x: 0, y: 0, width: 0, height: 0)) }, for: .normal)
             wordBrain.answerTrue()
             if whichStartPressed == 2 {
-                playSound(answerForStart23, "en-US")
+                player.playSound(soundSpeed, text)
             }
         }
     }
     
     @IBAction func hourButtonPressed(_ sender: UIButton) {
         pointButton.flash()
-        playSound(text, "en-US")
+        player.playSound(soundSpeed, text)
     }
     
     @IBAction func answerPressed(_ sender: UIButton) {
@@ -179,14 +176,14 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             case 1:
                 // 0 is true
                 if  UserDefaults.standard.integer(forKey: "playSound") == 0 && selectedSegmentIndex == 0 {
-                    playSound(text, "en-US")
+                    player.playSound(soundSpeed, text)
                 }
                 break
             case 2:
                 textField.becomeFirstResponder()
                 break
             case 3:
-                playSound(text, "en-US")
+                player.playSound(soundSpeed, text)
                 textField.becomeFirstResponder()
                 break
             default: break
@@ -360,29 +357,6 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         UserDefaults.standard.synchronize()
     }
     
-    func playSound(_ soundName: String, _ language: String)
-    {
-        let u = AVSpeechUtterance(string: soundName)
-        u.voice = AVSpeechSynthesisVoice(language: language)
-        u.rate = soundSpeed
-        HardWordsQuizViewController.synth.speak(u)
-    }
-    
-    func playMP3(_ soundName: String)
-    {
-        if UserDefaults.standard.integer(forKey: "playAppSound") == 0 {
-            let url = Bundle.main.url(forResource: "/sounds/\(soundName)", withExtension: "mp3")
-            player = try! AVAudioPlayer(contentsOf: url!)
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-                 try AVAudioSession.sharedInstance().setActive(true)
-               } catch {
-                 print(error)
-               }
-            player.play()
-        }
-    }
-    
     func getLetter(){
         
         let str = wordBrain.getAnswer()
@@ -400,7 +374,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             }
             hintLabel.text = "\(hint+hintSpace)"
             decreaseOnePoint()
-            playMP3("beep")
+            player.playMP3("beep")
         } else {
             hintLabel.textColor =  UIColor(named: "greenColorSingle")
             hintLabel.flash()
@@ -456,7 +430,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         questionLabel.text = ""
             
             if userGotItRight {
-                playMP3("true")
+                player.playMP3("true")
                 
                 if wordBrain.updateRightCountHardWords() { questionNumber = totalQuestionNumber }
                 
@@ -474,7 +448,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
                 UserDefaults.standard.set(lastPoint+userPoint, forKey: "lastPoint")
   
             } else {
-                playMP3("false")
+                player.playMP3("false")
                 
                 wordBrain.updateWrongCountHardWords()
                 

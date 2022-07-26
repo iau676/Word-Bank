@@ -11,9 +11,6 @@ import CoreData
 
 class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     
-    //This didn't crash my app but caused a memory leak every time AVSpeechSynthesizer was declared. I solved this by declaring the AVSpeechSynthesizer as a global variable
-    static let synth = AVSpeechSynthesizer()
-    
     //MARK: - IBOutlet
     
     @IBOutlet weak var questionLabel: UILabel!
@@ -59,12 +56,12 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     var questionText = ""
     var answerForStart23 = ""
     var whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
-    var soundSpeed = Float()
+    var soundSpeed = Double()
     var rightOnce = [Int]()
     var rightOnceBool = [Bool]()
     var arrayForResultViewUserAnswer = [String]()
-    var player: AVAudioPlayer!
     var isWordAddedToHardWords = 0
+    var player = Player()
     var wordBrain = WordBrain()
     let lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
     let lastHour = UserDefaults.standard.integer(forKey: "lastHour")
@@ -177,7 +174,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         
         if whichStartPressed == 1 {
             if selectedSegmentIndex == 0 {
-                playSound(questionText, "en-US")
+                player.playSound(soundSpeed, questionText)
             }
         } else {
             getLetter()
@@ -186,7 +183,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func hourButtonPressed(_ sender: UIButton) {
         pointButton.flash()
-        playSound(answerForStart23, "en-US")
+        player.playSound(soundSpeed, answerForStart23)
     }
     
     @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
@@ -232,9 +229,9 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
                 if UserDefaults.standard.integer(forKey: "playSound") == 0 {
                     if selectedSegmentIndex == 0 {
                         if UserDefaults.standard.string(forKey: "whichButton") == "yellow" {
-                            playSound(questionText, "en-GB")
+                            player.playSound(soundSpeed, questionText)
                         } else {
-                            playSound(questionText, "en-US")
+                            player.playSound(soundSpeed, questionText)
                         }
                     }
                 }
@@ -243,7 +240,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
                 textField.becomeFirstResponder()
                 break
             case 3:
-                playSound(answerForStart23, "en-US")
+                player.playSound(soundSpeed, answerForStart23)
                 textField.becomeFirstResponder()
                 break
             default: break
@@ -328,7 +325,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             switchPlaySound.isOn = true
         }
         
-        soundSpeed = UserDefaults.standard.float(forKey: "soundSpeed")
+        soundSpeed = UserDefaults.standard.double(forKey: "soundSpeed")
         segmentedControl.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
         
         let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
@@ -382,7 +379,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             }
             hintLabel.text = "\(hint+hintSpace)"
             decreaseOnePoint()
-            playMP3("beep")
+            player.playMP3("beep")
         } else {
             hintLabel.textColor = UIColor(named: "greenColorSingle")
             hintLabel.flash()
@@ -393,28 +390,6 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     func getHour() {
         UserDefaults.standard.set(Calendar.current.component(.hour, from: Date()), forKey: "lastHour")
         UserDefaults.standard.synchronize()
-    }
-    
-    func playSound(_ soundName: String, _ language: String) {
-        let u = AVSpeechUtterance(string: soundName)
-            u.voice = AVSpeechSynthesisVoice(language: language)
-            //        u.voice = AVSpeechSynthesisVoice(language: "en-GB")
-        u.rate = soundSpeed
-        WordsQuizViewController.synth.speak(u)
-    }
-    
-    func playMP3(_ soundName: String) {
-        if UserDefaults.standard.integer(forKey: "playAppSound") == 0 {
-            let url = Bundle.main.url(forResource: "/sounds/\(soundName)", withExtension: "mp3")
-            player = try! AVAudioPlayer(contentsOf: url!)
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-                 try AVAudioSession.sharedInstance().setActive(true)
-               } catch {
-                 print(error)
-               }
-            player.play()
-        }
     }
 
     func checkAnswerQ(_ sender: UIButton? = nil, _ userAnswer: String){
@@ -465,7 +440,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         
         //MARK: - userGotItRight
             if userGotItRight {
-                playMP3("true")
+                player.playMP3("true")
                 wordBrain.updateTrueCountMyWords()
                 
                 sender?.backgroundColor = UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00)
@@ -481,7 +456,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
                 UserDefaults.standard.set((lastPoint+userPoint), forKey: "lastPoint")
 
             } else {
-                playMP3("false")
+                player.playMP3("false")
                 wordBrain.userGotItWrong()
                
                 sender?.backgroundColor = UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00)

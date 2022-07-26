@@ -23,9 +23,9 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Variables
     
+    var player = Player()
     var wordBrain = WordBrain()
     var itemArray = [Item]()
-    var player: AVAudioPlayer!
     var tapGesture = UITapGestureRecognizer()
     var updateWordsPage: (()->())?
     var onViewWillDisappear: (()->())?
@@ -67,7 +67,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func addButtonPressed(_ sender: Any) {
             if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
-                playMP3("mario")
+                player.playMP3("mario")
                 if goEdit == 0 {
                     wordBrain.addNewWord(english: engTxtField.text!, meaning: trTxtField.text!)
                     UserDefaults.standard.set(userWordCountIntVariable+1, forKey: "userWordCount")
@@ -243,19 +243,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         return UIGraphicsImageRenderer(size: CGSize(width: imageSize, height: imageSize)).image { _ in
             image.draw(in: CGRect(x: 0, y: 0, width: imageSize, height: imageSize)) }
     }
-    
-    func playMP3(_ soundName: String) {
-        if UserDefaults.standard.integer(forKey: "playAppSound") == 0 {
-            let url = Bundle.main.url(forResource: "/sounds/\(soundName)", withExtension: "mp3")
-            player = try! AVAudioPlayer(contentsOf: url!)
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-                try AVAudioSession.sharedInstance().setActive(true)
-            } catch {
-             print(error)
-            }
-            player.play()
-        }
-    }
+
 }
 
