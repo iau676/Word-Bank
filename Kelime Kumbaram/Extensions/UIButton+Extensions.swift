@@ -94,4 +94,9 @@ extension UIButton {
                 }
     }
     
+    func setImage(imageName: String, width: CGFloat, height: CGFloat){
+        self.setImage(UIGraphicsImageRenderer(size: CGSize(width: width, height: height)).image { _ in
+            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }, for: .normal)
+    }
+    
 }

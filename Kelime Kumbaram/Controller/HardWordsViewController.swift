@@ -121,7 +121,7 @@ class HardWordsViewController: UIViewController {
     }
     
     func setupExerciseButtonImage(_ uibutton: UIButton, imageName: String, width: CGFloat, height: CGFloat){
-        uibutton.setImage(imageRenderer(imageName: imageName, width: width+textSize, height: height+textSize), for: .normal)
+        uibutton.setImage(imageName: imageName, width: width+textSize, height: height+textSize)
     }
     
     func setupExerciseButtonShadow(_ uibutton: UIButton){
@@ -168,11 +168,6 @@ class HardWordsViewController: UIViewController {
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         }
-    }
-    
-    func imageRenderer(imageName: String, width: CGFloat, height: CGFloat) -> UIImage{
-        return UIGraphicsImageRenderer(size: CGSize(width: width, height: height)).image { _ in
-            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }
     }
     
     func check2Items() {

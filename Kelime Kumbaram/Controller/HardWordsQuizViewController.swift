@@ -118,8 +118,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         if answerForStart23.lowercased() == sender.text!.lowercased() {
             checkAnswer(nil,sender.text!)
             textField.text = ""
-            pointButton.setImage(UIGraphicsImageRenderer(size: CGSize(width: 0, height: 0)).image { _ in
-                UIImage(named: "empty")?.draw(in: CGRect(x: 0, y: 0, width: 0, height: 0)) }, for: .normal)
+            pointButton.setImage(imageName: "empty", width: 0, height: 0)
             wordBrain.answerTrue()
             if whichStartPressed == 2 {
                 player.playSound(soundSpeed, text)
@@ -163,7 +162,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             }
 
             if whichStartPressed == 3 {
-                pointButton.setImage(imageRenderer(imageName: "sound", width: 66, height: 66), for: .normal)
+                pointButton.setImage(imageName: "sound", width: 66, height: 66)
             } else {
                 pointButton.isHidden=true
             }
@@ -231,7 +230,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
      @objc func hideBubbleButton(){
          if whichStartPressed == 3 {
              pointButton.setTitle("", for: UIControl.State.normal)
-             pointButton.setImage(imageRenderer(imageName: "sound", width: 66, height: 66), for: .normal)
+             pointButton.setImage(imageName: "sound", width: 66, height: 66)
          } else {
              pointButton.isHidden = true
          }
@@ -254,13 +253,13 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             firstArrowButton.isHidden = true
             arrowButton.isHidden = false
             optionView.updateViewVisibility(false)
-            arrowButton.setImage(imageRenderer(imageName: "arrowRight", width: 30, height: 30), for: .normal)
+            arrowButton.setImage(imageName: "arrowRight", width: 30, height: 30)
         } else {
             showOptions = 0
             firstArrowButton.isHidden = false
             arrowButton.isHidden = true
             optionView.updateViewVisibility(true)
-            arrowButton.setImage(imageRenderer(imageName: "arrowLeft", width: 30, height: 30), for: .normal)
+            arrowButton.setImage(imageName: "arrowLeft", width: 30, height: 30)
         }
     }
     
@@ -294,7 +293,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         setupAnswerButton(answer1Button)
         setupAnswerButton(answer2Button)
         
-        firstArrowButton.setImage(imageRenderer(imageName: "arrowLeft", width: 30, height: 30), for: .normal)
+        firstArrowButton.setImage(imageName: "arrowLeft", width: 30, height: 30)
         
         optionView.isHidden = true
             
@@ -319,12 +318,12 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             answerStackView.isHidden = false
             questionLabel.isHidden = false
             updateViewConstraints(2)
-            soundButton.setImage(imageRenderer(imageName: "soundLeft", width: 40, height: 40), for: .normal)
+            soundButton.setImage(imageName: "soundLeft", width: 40, height: 40)
         } else {
             answerStackView.isHidden = true
             textFieldStackView.isHidden = false
             progrssBar2.isHidden = false
-            soundButton.setImage(imageRenderer(imageName: "question", width: 35, height: 35), for: .normal)
+            soundButton.setImage(imageName: "question", width: 35, height: 35)
             
             textField.attributedPlaceholder = NSAttributedString(string: whichStartPressed == 2 ? "İngilizcesi..." : "Yazılışı...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
             
@@ -340,7 +339,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             answerStackView.isHidden = false
             textFieldStackView.isHidden = true
             progrssBar2.isHidden = true
-            soundButton.setImage(imageRenderer(imageName: "soundLeft", width: 40, height: 40), for: .normal)
+            soundButton.setImage(imageName: "soundLeft", width: 40, height: 40)
         }
     }
     
@@ -484,7 +483,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         questionLabel.isHidden = true
         
         pointButton.setTitleColor(UIColor(red: 1.00, green: 0.56, blue: 0.62, alpha: 1.00), for: .normal)
-        pointButton.setImage(imageRenderer(imageName: "empty", width: 0, height: 0), for: .normal)
+        pointButton.setImage(imageName: "empty", width: 0, height: 0)
         
         userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)
         pointButton.setTitle(String(-1), for: UIControl.State.normal)
@@ -492,11 +491,6 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(hideBubbleButton), userInfo: nil, repeats: false)
         
         UserDefaults.standard.set((lastPoint-1), forKey: "lastPoint")
-    }
-    
-    func imageRenderer(imageName: String, width: CGFloat, height: CGFloat) -> UIImage{
-        return UIGraphicsImageRenderer(size: CGSize(width: width, height: height)).image { _ in
-            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }
     }
     
     func preventInterrupt(){

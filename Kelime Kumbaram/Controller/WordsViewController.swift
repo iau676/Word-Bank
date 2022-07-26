@@ -199,7 +199,7 @@ class WordsViewController: UIViewController {
     
     func updateView(){
         if showWords == 0 {
-            expandButton.setImage(imageRenderer(imageName: expandIconName, width: 35, height: 25), for: .normal)
+            expandButton.setImage(imageName: expandIconName, width: 35, height: 25)
             emptyView.updateViewVisibility(false)
             searchBar.updateSearchBarVisibility(true)
             updateTableViewConstraintMultiplier(0.7)
@@ -208,7 +208,7 @@ class WordsViewController: UIViewController {
     
             tableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         } else {
-            expandButton.setImage(imageRenderer(imageName: notExpandIconName, width: 35, height: 25), for: .normal)
+            expandButton.setImage(imageName: notExpandIconName, width: 35, height: 25)
             emptyView.updateViewVisibility(true)
             searchBar.updateSearchBarVisibility(false)
             updateTableViewConstraintMultiplier(0.2)
@@ -269,7 +269,7 @@ class WordsViewController: UIViewController {
     }
     
     func setupExerciseButtonImage(_ button: UIButton, imageName: String, width: CGFloat, height: CGFloat){
-        button.setImage(imageRenderer(imageName: imageName, width: width+textSize, height: height+textSize), for: .normal)
+        button.setImage(imageName: imageName, width: width+textSize, height: height+textSize)
     }
     
     func setupExerciseButtonShadow(_ button: UIButton) {
@@ -351,7 +351,7 @@ class WordsViewController: UIViewController {
     
     func setupExpandButton(){
         assignExpandIconName()
-        expandButton.setImage(imageRenderer(imageName: expandIconName, width: 35, height: 25), for: .normal)
+        expandButton.setImage(imageName: expandIconName, width: 35, height: 25)
     }
     
     func assignExpandIconName() {

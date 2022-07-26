@@ -44,7 +44,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     var soundSpeed = 0.0
     var onViewWillDisappear: (()->())?
     var soundImageName = ""
-    var soundImageSize = 30
     var textSize : CGFloat = 0.0
     
     let hours = ["00:00 - 01:00",
@@ -190,8 +189,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupButton(_ button: UIButton){
-        button.setImage(UIGraphicsImageRenderer(size: CGSize(width: soundImageSize, height: soundImageSize)).image { _ in
-            UIImage(named: soundImageName)?.draw(in: CGRect(x: 0, y: 0, width: soundImageSize, height: soundImageSize)) }, for: .normal)
+        button.setImage(imageName: soundImageName, width: 30, height: 30)
     }
     
     func setupCornerRadius(){

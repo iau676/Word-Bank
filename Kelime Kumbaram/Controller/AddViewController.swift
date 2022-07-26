@@ -36,8 +36,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var userWordCount = ""
     var userWordCountIntVariable = UserDefaults.standard.integer(forKey: "userWordCount") //fix userdefaults slow problem
     let coinImage = UIImage(named: "coin.png")!
-    let emptyImage = UIImage(named: "empty.png")!
-    let plusImage = UIImage(named: "plus.png")!
     
     //MARK: - Life Cycle
     
@@ -185,7 +183,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupButtons(){
-        setupButton(button: addButton, buttonTitle: "", image: plusImage, imageSize: 23, cornerRadius: 6)
+        setupButton(button: addButton, buttonTitle: "", imageName: "plus", imageSize: 23, cornerRadius: 6)
         coinButton.deleteBackgroundImage()
     }
     
@@ -195,9 +193,9 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         engTxtField.becomeFirstResponder()
     }
     
-    func setupButton(button: UIButton, buttonTitle: String, image: UIImage=UIImage(), imageSize: Int=0, cornerRadius: Int){
+    func setupButton(button: UIButton, buttonTitle: String, imageName: String, imageSize: CGFloat=0, cornerRadius: Int){
         button.setTitle(buttonTitle, for: .normal)
-        button.setImage(imageRenderer(image: image, imageSize: imageSize), for: .normal)
+        button.setImage(imageName: imageName, width: imageSize, height: imageSize)
         button.layer.cornerRadius = CGFloat(cornerRadius)
     }
     
@@ -221,7 +219,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         if goEdit == 1 {
             engTxtField.text = UserDefaults.standard.string(forKey: "engEdit")
             trTxtField.text = UserDefaults.standard.string(forKey: "trEdit")
-            setupButton(button: addButton, buttonTitle: "Save", image: emptyImage, imageSize: 0, cornerRadius: 6)
+            setupButton(button: addButton, buttonTitle: "Save", imageName: "empty", imageSize: 0, cornerRadius: 6)
         }
     }
     
@@ -237,11 +235,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 engTxtField.becomeFirstResponder()
             }
             return true
-    }
-    
-    func imageRenderer(image: UIImage, imageSize: Int) -> UIImage {
-        return UIGraphicsImageRenderer(size: CGSize(width: imageSize, height: imageSize)).image { _ in
-            image.draw(in: CGRect(x: 0, y: 0, width: imageSize, height: imageSize)) }
     }
 
 }

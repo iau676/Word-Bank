@@ -126,13 +126,13 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             arrowButtonAtAnswerView.isHidden = true
             arrowButtonAtOptionView.isHidden = false
             updateViewAppearance(optionView, isHidden: false)
-            arrowButtonAtOptionView.setImage(imageRenderer(imageName: "arrowRight", imageSize: 30), for: .normal)
+            arrowButtonAtOptionView.setImage(imageName: "arrowRight", width: 30, height: 30)
         } else {
             showOptions = 0
             arrowButtonAtAnswerView.isHidden = false
             arrowButtonAtOptionView.isHidden = true
             updateViewAppearance(optionView, isHidden: true)
-            arrowButtonAtOptionView.setImage(imageRenderer(imageName: "arrowLeft", imageSize: 30), for: .normal)
+            arrowButtonAtOptionView.setImage(imageName: "arrowLeft", width: 30, height: 30)
         }
     }
     
@@ -163,7 +163,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         if answerForStart23.lowercased() == sender.text!.lowercased() {
             checkAnswerQ(nil,sender.text!)
             textField.text = ""
-            pointButton.setImage(imageRenderer(imageName: "empty", imageSize: 0), for: .normal)
+            pointButton.setImage(imageName: "empty", width: 0, height: 0)
             wordBrain.answerTrue()
         }
     }
@@ -208,7 +208,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             pointButton.setTitle("", for: UIControl.State.normal)
             
             if whichStartPressed == 3 {
-                pointButton.setImage(imageRenderer(imageName: "sound", imageSize: 66), for: .normal)
+                pointButton.setImage(imageName: "sound", width: 66, height: 66)
             } else {
                 pointButton.isHidden=true
             }
@@ -265,7 +265,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     @objc func hideBubbleButton(){
         if whichStartPressed == 3 {
             pointButton.setTitle("", for: UIControl.State.normal)
-            pointButton.setImage(imageRenderer(imageName: "sound", imageSize: 66), for: .normal)
+            pointButton.setImage(imageName: "sound", width: 66, height: 66)
         } else {
             pointButton.isHidden = true
         }
@@ -300,10 +300,10 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         if whichStartPressed == 1 {
             textFieldStackView.isHidden = true
             progressBar2.isHidden = true
-            soundButton.setImage(imageRenderer(imageName: "soundLeft", imageSize: 40), for: .normal)
+            soundButton.setImage(imageName: "soundLeft", width: 40, height: 40)
         } else {
             answerStackView.isHidden = true
-            soundButton.setImage(imageRenderer(imageName: "question", imageSize: 35), for: .normal)
+            soundButton.setImage(imageName: "question", width: 35, height: 35)
             textField.attributedPlaceholder = NSAttributedString(string: whichStartPressed == 2 ? "İngilizcesi..." : "Yazılışı...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
             
             let newConstraint = wordViewConstrait.constraintWithMultiplier(4)
@@ -347,7 +347,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         setupAnswerButton(answer1Button)
         setupAnswerButton(answer2Button)
         
-        arrowButtonAtAnswerView.setImage(imageRenderer(imageName: "arrowLeft", imageSize: 30), for: .normal)
+        arrowButtonAtAnswerView.setImage(imageName: "arrowLeft", width: 30, height: 30)
         optionView.isHidden = true
         showOptions = 0
     }//setupView
@@ -490,7 +490,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         pointButton.isHidden = false
         
         pointButton.setTitleColor(UIColor(red: 1.00, green: 0.56, blue: 0.62, alpha: 1.00), for: .normal)
-        pointButton.setImage(imageRenderer(imageName: "empty", imageSize: 0), for: .normal)
+        pointButton.setImage(imageName: "empty", width: 0, height: 0)
         pointButton.setTitle(String(-1), for: UIControl.State.normal)
         userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)
     
@@ -499,25 +499,10 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         UserDefaults.standard.set((lastPoint-1), forKey: "lastPoint")
     }
     
-    func imageRenderer(imageName: String, imageSize: Int) -> UIImage{
-        return UIGraphicsImageRenderer(size: CGSize(width: imageSize, height: imageSize)).image { _ in
-            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: imageSize, height: imageSize)) }
-    }
-    
     func fillQuestionNumbers() {
         for i in 0...itemArray.count-1 {
             questionNumbers.append(i)
         }
     }
 
-    
-//    func loadItemsToHardItemArray(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
-//        do {
-//           // request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: false)]
-//            HardItemArray = try context.fetch(request)
-//        } catch {
-//           print("Error fetching data from context \(error)")
-//        }
-//    }
-  
 }
