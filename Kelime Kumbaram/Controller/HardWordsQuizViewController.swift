@@ -49,12 +49,10 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     var answerForStart23 = ""
     var hint = ""
     var answer = ""
-    var selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
-    var whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
-    var soundSpeed = UserDefaults.standard.double(forKey: "soundSpeed")
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var arrayForResultView = [HardItem]()
     var arrayForResultViewUserAnswer = [String]()
+    
     
     //MARK: - Life Cycle
     
@@ -84,8 +82,8 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func soundButtonPressed(_ sender: UIButton) {
         soundButton.flash()
-        if whichStartPressed == 1 && selectedSegmentIndex == 0 {
-            player.playSound(soundSpeed, text)
+        if wordBrain.startPressed.getInt() == 1 && wordBrain.selectedSegmentIndex.getInt() == 0 {
+            player.playSound(wordBrain.soundSpeed.getDouble(), text)
         } else {
             getLetter()
         }
@@ -101,15 +99,14 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func switchPressed(_ sender: UISwitch) {
         if sender.isOn {
-            UserDefaults.standard.set(0, forKey: "playSound")
+            wordBrain.playSound.set(0)
         } else {
-            UserDefaults.standard.set(1, forKey: "playSound")
+            wordBrain.playSound.set(1)
         }
     }
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
-        UserDefaults.standard.set(sender.selectedSegmentIndex, forKey: "selectedSegmentIndex")
-        selectedSegmentIndex = sender.selectedSegmentIndex
+        wordBrain.selectedSegmentIndex.set(sender.selectedSegmentIndex)
         updateUI()
     }
     
@@ -120,15 +117,15 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             textField.text = ""
             pointButton.setImage(imageName: "empty", width: 0, height: 0)
             wordBrain.answerTrue()
-            if whichStartPressed == 2 {
-                player.playSound(soundSpeed, text)
+            if wordBrain.startPressed.getInt() == 2 {
+                player.playSound(wordBrain.soundSpeed.getDouble(), text)
             }
         }
     }
     
     @IBAction func hourButtonPressed(_ sender: UIButton) {
         pointButton.flash()
-        player.playSound(soundSpeed, text)
+        player.playSound(wordBrain.soundSpeed.getDouble(), text)
     }
     
     @IBAction func answerPressed(_ sender: UIButton) {
@@ -152,7 +149,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
            updateByWhichStartPressed()
             
             //it can change textField size if use in the other option
-            if  whichStartPressed == 1 && questionNumber > 0{
+            if  wordBrain.startPressed.getInt() == 1 && questionNumber > 0{
                 UIView.transition(with: optionStackView, duration: 0.4,
                                   options: .transitionCrossDissolve,
                                   animations: {
@@ -161,28 +158,28 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
                               })
             }
 
-            if whichStartPressed == 3 {
+            if wordBrain.startPressed.getInt() == 3 {
                 pointButton.setImage(imageName: "sound", width: 66, height: 66)
             } else {
                 pointButton.isHidden=true
             }
  
-            text = wordBrain.getQuestionText(selectedSegmentIndex, questionNumber, whichStartPressed)
+            text = wordBrain.getQuestionText(wordBrain.selectedSegmentIndex.getInt(), questionNumber, wordBrain.startPressed.getInt())
             answerForStart23 = wordBrain.getAnswer()
             questionLabel.text = text
             
-            switch whichStartPressed {
+            switch wordBrain.startPressed.getInt() {
             case 1:
                 // 0 is true
-                if  UserDefaults.standard.integer(forKey: "playSound") == 0 && selectedSegmentIndex == 0 {
-                    player.playSound(soundSpeed, text)
+                if  wordBrain.playSound.getInt() == 0 && wordBrain.selectedSegmentIndex.getInt() == 0 {
+                    player.playSound(wordBrain.soundSpeed.getDouble(), text)
                 }
                 break
             case 2:
                 textField.becomeFirstResponder()
                 break
             case 3:
-                player.playSound(soundSpeed, text)
+                player.playSound(wordBrain.soundSpeed.getDouble(), text)
                 textField.becomeFirstResponder()
                 break
             default: break
@@ -228,14 +225,14 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
      }
      
      @objc func hideBubbleButton(){
-         if whichStartPressed == 3 {
+         if wordBrain.startPressed.getInt() == 3 {
              pointButton.setTitle("", for: UIControl.State.normal)
              pointButton.setImage(imageName: "sound", width: 66, height: 66)
          } else {
              pointButton.isHidden = true
          }
          
-         if whichStartPressed == 2 {
+         if wordBrain.startPressed.getInt() == 2 {
              questionLabel.isHidden = false
          }
      }
@@ -265,14 +262,14 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     
     func setupView(){
         // 1 is false, 0 is true
-        if UserDefaults.standard.integer(forKey: "playSound") == 1 {
+        if wordBrain.playSound.getInt() == 1 {
             switchPlaySound.isOn = false
         } else {
             switchPlaySound.isOn = true
         }
-        segmentedControl.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
+        segmentedControl.selectedSegmentIndex = wordBrain.selectedSegmentIndex.getInt()
         
-        let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
+        let textSize = wordBrain.textSize.getCGFloat()
         questionLabel.font = questionLabel.font.withSize(textSize)
         answer1Button.titleLabel?.font =  answer1Button.titleLabel?.font.withSize(textSize)
         answer2Button.titleLabel?.font =  answer2Button.titleLabel?.font.withSize(textSize)
@@ -282,8 +279,8 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         
         userPointButton.layer.cornerRadius = 12
     
-        userPointButton.setTitle(String(UserDefaults.standard.integer(forKey: "lastPoint").withCommas()), for: UIControl.State.normal)
-  
+        userPointButton.setTitle(String(wordBrain.lastPoint.getInt().withCommas()), for: UIControl.State.normal)
+        
         progressBar.progress = 0
         progrssBar2.progress = 0
         
@@ -312,7 +309,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
 
     func updateByWhichStartPressed() {
         
-        if whichStartPressed == 1 {
+        if wordBrain.startPressed.getInt() == 1 {
             textFieldStackView.isHidden = true
             progrssBar2.isHidden = true
             answerStackView.isHidden = false
@@ -325,17 +322,17 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             progrssBar2.isHidden = false
             soundButton.setImage(imageName: "question", width: 35, height: 35)
             
-            textField.attributedPlaceholder = NSAttributedString(string: whichStartPressed == 2 ? "İngilizcesi..." : "Yazılışı...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
+            textField.attributedPlaceholder = NSAttributedString(string: wordBrain.startPressed.getInt() == 2 ? "İngilizcesi..." : "Yazılışı...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
             
             updateViewConstraints(4)
         }
         
-        if whichStartPressed == 3 {
+        if wordBrain.startPressed.getInt() == 3 {
             questionLabel.isHidden = true
             pointButton.isHidden = false
         }
         
-        if whichStartPressed == 0 {
+        if wordBrain.startPressed.getInt() == 0 {
             answerStackView.isHidden = false
             textFieldStackView.isHidden = true
             progrssBar2.isHidden = true
@@ -352,8 +349,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     func getHour() {
-        UserDefaults.standard.set(Calendar.current.component(.hour, from: Date()), forKey: "lastHour")
-        UserDefaults.standard.synchronize()
+        wordBrain.lastHour.set(Calendar.current.component(.hour, from: Date()))
     }
     
     func getLetter(){
@@ -385,15 +381,14 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     func checkAnswer(_ sender: UIButton? = nil, _ userAnswer: String){
         
         getHour()
-        selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
         questionNumber += 1
         
         var userPoint = 0
         var userGotItRight = true
 
-        userPoint = UserDefaults.standard.integer(forKey: "pointForMyWords")
+        userPoint = wordBrain.pointForMyWords.getInt()
         
-        switch whichStartPressed {
+        switch wordBrain.startPressed.getInt() {
             case 2:
                     userPoint += 10
                     break
@@ -403,7 +398,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             default: break
         }
         
-        if UserDefaults.standard.integer(forKey: "lastHour") == UserDefaults.standard.integer(forKey: "userSelectedHour") {
+        if wordBrain.lastHour.getInt() == wordBrain.userSelectedHour.getInt() {
             userPoint = userPoint * 2
         }
         
@@ -411,7 +406,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         progressBar.progress = progrs
         progrssBar2.progress = progrs
         
-        if whichStartPressed == 1 {
+        if wordBrain.startPressed.getInt() == 1 {
             userGotItRight = wordBrain.checkAnswer(userAnswer: userAnswer)
         } else {
             userGotItRight = answerForStart23.lowercased() == userAnswer.lowercased()
@@ -419,9 +414,9 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         }
         
         arrayForResultViewUserAnswer.append(userAnswer)
-        UserDefaults.standard.set(arrayForResultViewUserAnswer, forKey: "arrayForResultViewUserAnswer")
+        wordBrain.userAnswers.set(arrayForResultViewUserAnswer)
         
-        let lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
+        let lastPoint = wordBrain.lastPoint.getInt()
         
         answer1Button.isEnabled = false
         answer2Button.isEnabled = false
@@ -444,8 +439,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
                 timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "greenBubble3")
                 timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "greenBubble4")
                 
-                UserDefaults.standard.set(lastPoint+userPoint, forKey: "lastPoint")
-  
+                wordBrain.lastPoint.set(lastPoint+userPoint)
             } else {
                 player.playMP3("false")
                 
@@ -462,9 +456,8 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
                 timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "redBubble3")
                 timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "redBubble4")
                 
-                UserDefaults.standard.set((lastPoint-userPoint), forKey: "lastPoint")
+                wordBrain.lastPoint.set(lastPoint-userPoint)
             }
-            UserDefaults.standard.synchronize()
         
             wordBrain.nextQuestion()
             Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
@@ -477,7 +470,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     
     func decreaseOnePoint(){
         
-        let lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
+        let lastPoint = wordBrain.lastPoint.getInt()
         
         pointButton.isHidden = false
         questionLabel.isHidden = true
@@ -490,7 +483,8 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     
         Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(hideBubbleButton), userInfo: nil, repeats: false)
         
-        UserDefaults.standard.set((lastPoint-1), forKey: "lastPoint")
+        wordBrain.lastPoint.set(lastPoint-1)
+        
     }
     
     func preventInterrupt(){

@@ -84,8 +84,8 @@ class ViewController: UIViewController {
     //MARK: - IBAction
     
     @IBAction func greenButtonPressed(_ sender: UIButton) {
-        UserDefaults.standard.set(1, forKey: "startPressed")
-        UserDefaults.standard.set("blue", forKey: "whichButton")
+        wordBrain.startPressed.set(1)
+        wordBrain.whichButton.set("blue")
         goAddPage = 1
         greenButton.pulstate()
         viewDidLayoutSubviews()
@@ -93,23 +93,23 @@ class ViewController: UIViewController {
     }
     
     @IBAction func blueButtonPressed(_ sender: UIButton) {
-        UserDefaults.standard.set("blue", forKey: "whichButton")
+        wordBrain.whichButton.set("blue")
         goAddPage = 0
         blueButton.pulstate()
         goAfter100Milliseconds(identifier: "goWords")
     }
     
     @IBAction func yellowButtonPressed(_ sender: UIButton) {
-        UserDefaults.standard.set("yellow", forKey: "whichButton")
+        wordBrain.whichButton.set("yellow")
         yellowButton.pulstate()
         goAfter100Milliseconds(identifier: "goHardWords")
     }
 
     @IBAction func setNotificationFirstTime(_ sender: UIButton) {
         //works after any button pressed
-        if UserDefaults.standard.integer(forKey: "setNotificationFirstTime") == 0 {
+        if wordBrain.setNotificationFirstTime.getInt() == 0 {
             setNotification()
-            UserDefaults.standard.set(1, forKey: "setNotificationFirstTime")
+            wordBrain.setNotificationFirstTime.set(1)
             print("SET NOTİFİCATİON<<")
         }
     }
@@ -133,7 +133,7 @@ class ViewController: UIViewController {
             _ = index // noneed
             wordBrain.addNewWord(english: "\(wordBrain.defaultWords[index].eng)", meaning: "\(wordBrain.defaultWords[index].tr)")
         }
-        UserDefaults.standard.set(defaultWordsCount, forKey: "userWordCount")
+        wordBrain.userWordCount.set(defaultWordsCount)
         wordBrain.saveWord()
      }
     
@@ -148,14 +148,14 @@ class ViewController: UIViewController {
         }
         
         //version 2.0.1
-        if UserDefaults.standard.object(forKey: "2xTime") == nil {
+        if wordBrain.x2Time.getValue() == nil {
             let calendar = Calendar.current
-            let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())
-            UserDefaults.standard.set(twoDaysAgo, forKey: "2xTime")
-            UserDefaults.standard.set(23, forKey: "userSelectedHour")
-            UserDefaults.standard.set("empty", forKey: "lastEditLabel")
-            UserDefaults.standard.set(10, forKey: "pointForMyWords")
-            UserDefaults.standard.set(15, forKey: "textSize")
+            let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())!
+            wordBrain.x2Time.set(twoDaysAgo)
+            wordBrain.userSelectedHour.set(23)
+            wordBrain.lastEditLabel.set("empty")
+            wordBrain.pointForMyWords.set("10")
+            wordBrain.textSize.set(15)
             Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(appendDefaultWords), userInfo: nil, repeats: false)
         }
     }
@@ -179,11 +179,11 @@ class ViewController: UIViewController {
         greenButton.setButtonCornerRadius(15)
         blueButton.setButtonCornerRadius(15)
         yellowButton.setButtonCornerRadius(15)
- 
-        greenButton.setImage(imageRenderer(imageName: "new", width: 35, height: 35), for: .normal)
-        blueButton.setImage(imageRenderer(imageName: "bank", width: 40, height: 40), for: .normal)
-        yellowButton.setImage(imageRenderer(imageName: "hard", width: 35, height: 35), for: .normal)
-        settingsButton.setImage(imageRenderer(imageName: "settingsImage", width: 23, height: 23), for: .normal)
+        
+        greenButton.setImage(imageName: "new", width: 35, height: 35)
+        blueButton.setImage(imageName: "bank", width: 40, height: 40)
+        yellowButton.setImage(imageName: "hard", width: 35, height: 35)
+        settingsButton.setImage(imageName: "settingsImage", width: 23, height: 23)
     }
     
     func setupButtonShadow(_ button: UIButton, shadowColor: UIColor){
@@ -207,7 +207,7 @@ class ViewController: UIViewController {
     
     func setupCircularProgress(){
         progressValue = wordBrain.calculateLevel()
-        levelLabel.text = UserDefaults.standard.string(forKey: "level")
+        levelLabel.text = wordBrain.level.getString()
         
         cp.trackColor = UIColor.white
         cp.progressColor = UIColor(red: 252.0/255.0, green: 141.0/255.0, blue: 165.0/255.0, alpha: 1.0)
@@ -249,7 +249,7 @@ class ViewController: UIViewController {
     }
     
     func check2xTime(){
-        if UserDefaults.standard.integer(forKey: "lastHour") == UserDefaults.standard.integer(forKey: "userSelectedHour") {
+        if wordBrain.lastHour.getInt() == wordBrain.userSelectedHour.getInt() {
             x2view.isHidden = false
             x2button.pulstatex2()
         } else {
@@ -258,13 +258,7 @@ class ViewController: UIViewController {
     }
     
     func getHour() {
-        UserDefaults.standard.set(Calendar.current.component(.hour, from: Date()), forKey: "lastHour")
-        UserDefaults.standard.synchronize()
-    }
-    
-    func imageRenderer(imageName: String, width: CGFloat, height: CGFloat) -> UIImage {
-       return UIGraphicsImageRenderer(size: CGSize(width: width, height: height)).image { _ in
-            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }
+        wordBrain.lastHour.set(Calendar.current.component(.hour, from: Date()))
     }
 
     func fixSoundProblemForRealDevice(){

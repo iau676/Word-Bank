@@ -46,7 +46,6 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var questionNumbers: [Int] = []
     var questionNumbersCopy: [Int] = []
-    var selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
     var questionCount = 0
     var timer = Timer()
     var questionNumber = 0
@@ -55,7 +54,6 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     var answer = 0    
     var questionText = ""
     var answerForStart23 = ""
-    var whichStartPressed = UserDefaults.standard.integer(forKey: "startPressed")
     var soundSpeed = Double()
     var rightOnce = [Int]()
     var rightOnceBool = [Bool]()
@@ -63,8 +61,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     var isWordAddedToHardWords = 0
     var player = Player()
     var wordBrain = WordBrain()
-    let lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
-    let lastHour = UserDefaults.standard.integer(forKey: "lastHour")
+    var whichStartPressed : Int { return wordBrain.startPressed.getInt() }
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     //MARK: - Life Cycle
@@ -146,15 +143,14 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func switchPressed(_ sender: UISwitch) {
         if sender.isOn {
-            UserDefaults.standard.set(0, forKey: "playSound")
+            wordBrain.playSound.set(0)
         } else {
-            UserDefaults.standard.set(1, forKey: "playSound")
+            wordBrain.playSound.set(1)
         }
     }
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
-        UserDefaults.standard.set(sender.selectedSegmentIndex, forKey: "selectedSegmentIndex")
-        selectedSegmentIndex = sender.selectedSegmentIndex
+        wordBrain.selectedSegmentIndex.set(sender.selectedSegmentIndex)
         updateUI()
     }
     
@@ -173,7 +169,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         soundButton.flash()
         
         if whichStartPressed == 1 {
-            if selectedSegmentIndex == 0 {
+            if wordBrain.selectedSegmentIndex.getInt() == 0 {
                 player.playSound(soundSpeed, questionText)
             }
         } else {
@@ -212,11 +208,11 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             } else {
                 pointButton.isHidden=true
             }
-                 
-            failNumber =  UserDefaults.standard.array(forKey: "failNumber") as? [Int] ?? [Int]()
-            failIndex =  UserDefaults.standard.array(forKey: "failIndex") as? [Int] ?? [Int]()
+         
+            failNumber = wordBrain.failNumber.getValue() as? [Int] ?? [Int]()
+            failIndex = wordBrain.failIndex.getValue() as? [Int] ?? [Int]()
                 
-            questionText = wordBrain.getQuestionText(selectedSegmentIndex,questionCount, whichStartPressed)
+            questionText = wordBrain.getQuestionText(wordBrain.selectedSegmentIndex.getInt(),questionCount, whichStartPressed)
             answerForStart23 = wordBrain.getAnswer()
             questionLabel.text = questionText
 
@@ -226,9 +222,9 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             //0 is true, 1 is false
             switch whichStartPressed {
             case 1:
-                if UserDefaults.standard.integer(forKey: "playSound") == 0 {
-                    if selectedSegmentIndex == 0 {
-                        if UserDefaults.standard.string(forKey: "whichButton") == "yellow" {
+                if wordBrain.playSound.getInt() == 0 {
+                    if wordBrain.selectedSegmentIndex.getInt() == 0 {
+                        if wordBrain.whichButton.getString() == "yellow" {
                             player.playSound(soundSpeed, questionText)
                         } else {
                             player.playSound(soundSpeed, questionText)
@@ -319,16 +315,16 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         }
         
         // 1 is false, 0 is true
-        if UserDefaults.standard.integer(forKey: "playSound") == 1 {
+        if wordBrain.playSound.getInt() == 1 {
             switchPlaySound.isOn = false
         } else {
             switchPlaySound.isOn = true
         }
         
-        soundSpeed = UserDefaults.standard.double(forKey: "soundSpeed")
-        segmentedControl.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "selectedSegmentIndex")
+        soundSpeed = wordBrain.soundSpeed.getDouble()
+        segmentedControl.selectedSegmentIndex = wordBrain.selectedSegmentIndex.getInt()
         
-        let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
+        let textSize = wordBrain.textSize.getCGFloat()
         questionLabel.font = questionLabel.font.withSize(textSize)
         answer1Button.titleLabel?.font =  answer1Button.titleLabel?.font.withSize(textSize)
         answer2Button.titleLabel?.font =  answer2Button.titleLabel?.font.withSize(textSize)
@@ -337,7 +333,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
         
         userPointButton.layer.cornerRadius = 12
-        userPointButton.setTitle(String(UserDefaults.standard.integer(forKey: "lastPoint").withCommas()), for: UIControl.State.normal)
+        userPointButton.setTitle(String(wordBrain.lastPoint.getInt().withCommas()), for: UIControl.State.normal)
         
         progressBar.progress = 0
         progressBar2.progress = 0
@@ -388,8 +384,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     func getHour() {
-        UserDefaults.standard.set(Calendar.current.component(.hour, from: Date()), forKey: "lastHour")
-        UserDefaults.standard.synchronize()
+        wordBrain.lastHour.set(Calendar.current.component(.hour, from: Date()))
     }
 
     func checkAnswerQ(_ sender: UIButton? = nil, _ userAnswer: String){
@@ -408,16 +403,16 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             userGotItRight = answerForStart23.lowercased() == userAnswer.lowercased() ? true : false
         }
         
-        let lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
+        let lastPoint = wordBrain.lastPoint.getInt()
         arrayForResultViewUserAnswer.append(userAnswer)
-        UserDefaults.standard.set(arrayForResultViewUserAnswer, forKey: "arrayForResultViewUserAnswer")
+        wordBrain.userAnswers.set(arrayForResultViewUserAnswer)
         
         answer1Button.isEnabled = false
         answer2Button.isEnabled = false
         pointButton.isHidden = false
         questionLabel.text = ""
         
-        userPoint = UserDefaults.standard.integer(forKey: "pointForMyWords")
+        userPoint = wordBrain.pointForMyWords.getInt()
         
         print("userPoint> \(userPoint)")
         
@@ -434,7 +429,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         default: break
         }
         
-        if UserDefaults.standard.integer(forKey: "lastHour") == UserDefaults.standard.integer(forKey: "userSelectedHour") {
+        if wordBrain.lastHour.getInt() == wordBrain.userSelectedHour.getInt() {
             userPoint *= 2
         }
         
@@ -453,8 +448,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
                 timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "greenBubble3")
                 timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "greenBubble4")
                 
-                UserDefaults.standard.set((lastPoint+userPoint), forKey: "lastPoint")
-
+                wordBrain.lastPoint.set(lastPoint+userPoint)
             } else {
                 player.playMP3("false")
                 wordBrain.userGotItWrong()
@@ -469,9 +463,8 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
                 timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "redBubble3")
                 timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "redBubble4")
                 
-                UserDefaults.standard.set((lastPoint-userPoint), forKey: "lastPoint")
+                wordBrain.lastPoint.set(lastPoint-userPoint)
             }
-            UserDefaults.standard.synchronize()
       
         wordBrain.nextQuestion()
             
@@ -484,7 +477,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     
     func decreaseOnePoint(){
         
-        let lastPoint = UserDefaults.standard.integer(forKey: "lastPoint")
+        let lastPoint = wordBrain.lastPoint.getInt()
         
         questionLabel.isHidden = true
         pointButton.isHidden = false
@@ -496,7 +489,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     
         Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(hideBubbleButton), userInfo: nil, repeats: false)
         
-        UserDefaults.standard.set((lastPoint-1), forKey: "lastPoint")
+        wordBrain.lastPoint.set(lastPoint-1)
     }
     
     func fillQuestionNumbers() {

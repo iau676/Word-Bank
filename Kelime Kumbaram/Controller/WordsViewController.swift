@@ -37,12 +37,12 @@ class WordsViewController: UIViewController {
     var itemArray: [Item] { return wordBrain.itemArray }
     var HardItemArray = [HardItem]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
+    var textSize: CGFloat { return wordBrain.textSize.getCGFloat() }
     let pageStatistic = ["Kumbaradaki kelime sayısı: \(UserDefaults.standard.integer(forKey: "userWordCount"))" ,
-                         "Yapılan alıştırma sayısı: \(UserDefaults.standard.integer(forKey: "blueExerciseCount"))",
-                         
-                         "Doğru cevap sayısı: \(UserDefaults.standard.integer(forKey: "blueTrueCount"))",
-                         "Yanlış cevap sayısı: \(UserDefaults.standard.integer(forKey: "blueFalseCount"))"]
+                             "Yapılan alıştırma sayısı: \(UserDefaults.standard.integer(forKey: "blueExerciseCount"))",
+                             
+                             "Doğru cevap sayısı: \(UserDefaults.standard.integer(forKey: "blueTrueCount"))",
+                             "Yanlış cevap sayısı: \(UserDefaults.standard.integer(forKey: "blueFalseCount"))"]
     
     //MARK: - Life Cycle
     
@@ -109,13 +109,13 @@ class WordsViewController: UIViewController {
     }
     
     @IBAction func startPressed(_ sender: Any) {
-        UserDefaults.standard.set(1, forKey: "startPressed")
+        wordBrain.startPressed.set(1)
         startButton.pulstate()
         check2Items()
     }
     
     @IBAction func startPressed2(_ sender: UIButton) {
-        UserDefaults.standard.set(2, forKey: "startPressed")
+        wordBrain.startPressed.set(2)
         startButton2.pulstate()
         check2Items()
     }
@@ -123,8 +123,8 @@ class WordsViewController: UIViewController {
     @IBAction func startPressed3(_ sender: UIButton) {
         startButton3.pulstate()
         //0 is true, 1 is false
-        if UserDefaults.standard.integer(forKey: "playSound") == 0 {
-            UserDefaults.standard.set(3, forKey: "startPressed")
+        if wordBrain.playSound.getInt() == 0 {
+            wordBrain.startPressed.set(3)
             check2Items()
         } else {
             let alert = UIAlertController(title: "Bu alıştırmayı başlatmak için \"Kelime dinle\" özelliğini aktif etmeniz gerekir.", message: "", preferredStyle: .alert)
@@ -138,7 +138,7 @@ class WordsViewController: UIViewController {
     }
     
     @IBAction func startPressed4(_ sender: UIButton) {
-        UserDefaults.standard.set(4, forKey: "startPressed")
+        wordBrain.startPressed.set(4)
         startButton4.pulstate()
         
         if itemArray.count < 2 {
@@ -321,14 +321,14 @@ class WordsViewController: UIViewController {
     }
     
     func findUserPoint(){ //using after delete a word
-        let userWordCountIntVariable = UserDefaults.standard.integer(forKey: "userWordCount")
-        var lastPoint = UserDefaults.standard.integer(forKey: "pointForMyWords")
+        let userWordCountIntVariable = wordBrain.userWordCount.getInt()
+        var lastPoint = wordBrain.pointForMyWords.getInt()
         print("userWordCountIntVariable>>\(userWordCountIntVariable)")
         print("lastPoint>>\(lastPoint)")
         if userWordCountIntVariable >= 100 {
            let newPoint = userWordCountIntVariable/100*2 + 12
             if lastPoint - newPoint > 0 {
-                UserDefaults.standard.set(newPoint, forKey: "pointForMyWords")
+                wordBrain.pointForMyWords.set(newPoint)
             }
         } else {
           if  userWordCountIntVariable >= 10{
@@ -340,7 +340,7 @@ class WordsViewController: UIViewController {
           } else {
               lastPoint = 10
           }
-          UserDefaults.standard.set(lastPoint, forKey: "pointForMyWords")
+          wordBrain.pointForMyWords.set(lastPoint)
         }
     }
     
@@ -469,8 +469,8 @@ extension WordsViewController: UITableViewDelegate {
                 self.context.delete(self.itemArray[indexPath.row])
                 self.wordBrain.removeWord(at: indexPath.row)
                 self.updateSearchBarPlaceholder()
-                let userWordCount = UserDefaults.standard.integer(forKey: "userWordCount")
-                UserDefaults.standard.set(userWordCount-1, forKey: "userWordCount")
+                let userWordCount = self.wordBrain.userWordCount.getInt()
+                self.wordBrain.userWordCount.set(userWordCount-1)
                 self.findUserPoint()
                 if self.itemArray.count > 0 {
                     tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
@@ -494,10 +494,10 @@ extension WordsViewController: UITableViewDelegate {
 
             self.goEdit = 1
             self.editIndex = indexPath.row
-            let engEdit = self.itemArray[indexPath.row].eng
-            let trEdit = self.itemArray[indexPath.row].tr
-            UserDefaults.standard.set(engEdit, forKey: "engEdit")
-            UserDefaults.standard.set(trEdit, forKey: "trEdit")
+            let engEdit = self.itemArray[indexPath.row].eng ?? "empty"
+            let trEdit = self.itemArray[indexPath.row].tr ?? "empty"
+            self.wordBrain.engEdit.set(engEdit)
+            self.wordBrain.trEdit.set(trEdit)
             self.performSegue(withIdentifier: "goAdd", sender: self)
             success(true)
         })
@@ -518,8 +518,8 @@ extension WordsViewController: UITableViewDelegate {
                 self.HardItemArray.append(newItem)
                 
                 self.itemArray[indexPath.row].addedHardWords = true
-                let lastCount = UserDefaults.standard.integer(forKey: "hardWordsCount")
-                UserDefaults.standard.set(lastCount+1, forKey: "hardWordsCount")
+                let lastCount = self.wordBrain.hardWordsCount.getInt()
+                self.wordBrain.hardWordsCount.set(lastCount+1)
 
                 do {
                     try self.context.save()

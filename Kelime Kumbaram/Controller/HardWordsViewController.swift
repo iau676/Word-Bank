@@ -30,7 +30,7 @@ class HardWordsViewController: UIViewController {
     var userWordCount = ""
     var numberForAlert = 0
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let textSize = CGFloat(UserDefaults.standard.integer(forKey: "textSize"))
+    var textSize: CGFloat { return wordBrain.textSize.getCGFloat() }
     
     //MARK: - Life Cycle
     
@@ -55,23 +55,23 @@ class HardWordsViewController: UIViewController {
     //MARK: - IBAction
 
     @IBAction func startPressed(_ sender: UIButton) {
-        UserDefaults.standard.set(1, forKey: "startPressed")
+        wordBrain.startPressed.set(1)
         startButton.pulstate()
         check2Items()
     }
     
     @IBAction func start2Pressed(_ sender: UIButton) {
-        UserDefaults.standard.set(2, forKey: "startPressed")
+        wordBrain.startPressed.set(2)
         startButton2.pulstate()
         check2Items()
     }
     
     @IBAction func start3Pressed(_ sender: UIButton) {
-        UserDefaults.standard.set(3, forKey: "startPressed")
+        wordBrain.startPressed.set(3)
         startButton3.pulstate()
         
         //0 is true, 1 is false
-        if UserDefaults.standard.integer(forKey: "playSound") == 0 {
+        if wordBrain.playSound.getInt() == 0 {
             check2Items()
         } else {
             let alert = UIAlertController(title: "Bu alıştırmayı başlatmak için \"Kelime dinle\" özelliğini aktif etmeniz gerekir.", message: "", preferredStyle: .alert)
@@ -172,7 +172,7 @@ class HardWordsViewController: UIViewController {
     
     func check2Items() {
         // 2 words required
-        if UserDefaults.standard.integer(forKey: "hardWordsCount") < 2 {
+        if wordBrain.hardWordsCount.getInt() < 2 {
             let alert = UIAlertController(title: "En az iki kelime gereklidir", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
                 self.navigationController?.popToRootViewController(animated: true)

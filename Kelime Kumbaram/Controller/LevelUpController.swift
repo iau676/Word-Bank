@@ -13,6 +13,7 @@ class LevelUpController: UIViewController {
     
     //MARK: - IBOutlet
 
+    var wordBrain = WordBrain()
     @IBOutlet weak var darkView: UIView!
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
@@ -26,8 +27,7 @@ class LevelUpController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
-        levelLabel.text = UserDefaults.standard.string(forKey: "level")
+        levelLabel.text = wordBrain.level.getString()
     }
     
     override func viewWillAppear(_ animated: Bool) {

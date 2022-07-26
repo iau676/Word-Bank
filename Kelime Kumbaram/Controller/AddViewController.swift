@@ -34,7 +34,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var userWordCountInt = 0
     var textForLabel = ""
     var userWordCount = ""
-    var userWordCountIntVariable = UserDefaults.standard.integer(forKey: "userWordCount") //fix userdefaults slow problem
+    var userWordCountIntVariable = 0 //fix userdefaults slow problem
     let coinImage = UIImage(named: "coin.png")!
     
     //MARK: - Life Cycle
@@ -45,6 +45,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         setupTxtFields()
         checkEditStatus()
         preventInterrupt()
+        userWordCountIntVariable = wordBrain.userWordCount.getInt()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,7 +69,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 player.playMP3("mario")
                 if goEdit == 0 {
                     wordBrain.addNewWord(english: engTxtField.text!, meaning: trTxtField.text!)
-                    UserDefaults.standard.set(userWordCountIntVariable+1, forKey: "userWordCount")
+                    wordBrain.userWordCount.set(userWordCountIntVariable+1)
                     wordBrain.saveWord()
                     userWordCountIntVariable += 1
                     Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(goNewPoint), userInfo: nil, repeats: false)
@@ -117,14 +118,14 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func goNewPoint(){
-        let lastPoint = UserDefaults.standard.integer(forKey: "pointForMyWords")
+        let lastPoint = wordBrain.pointForMyWords.getInt()
     
         if userWordCountIntVariable >= 100 {
            let newPoint = userWordCountIntVariable/100*2 + 12
             if newPoint - lastPoint > 0 {
                 textForLabel = "You will get +\(newPoint-10) points for each correct answer."
                 userWordCount = String(userWordCountIntVariable)
-                UserDefaults.standard.set(newPoint, forKey: "pointForMyWords")
+                wordBrain.pointForMyWords.set(newPoint)
                 performSegue(withIdentifier: "goNewPoint", sender: self)
             }
         } else {
@@ -138,7 +139,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 if newPoint - lastPoint > 0 {
                     textForLabel = "You will get +\(newPoint-10) points for each correct answer."
                     userWordCount = String(userWordCountIntVariable)
-                    UserDefaults.standard.set(newPoint, forKey: "pointForMyWords")
+                    wordBrain.pointForMyWords.set(newPoint)
                     performSegue(withIdentifier: "goNewPoint", sender: self)
                 }
             }
@@ -163,8 +164,8 @@ class AddViewController: UIViewController, UITextFieldDelegate {
             alert.addAction(actionCancel)
             
             if goEdit == 1 {
-                if engTxtField.text != UserDefaults.standard.string(forKey: "engEdit") ||
-                    trTxtField.text != UserDefaults.standard.string(forKey: "trEdit") {
+                if engTxtField.text != wordBrain.engEdit.getString() ||
+                    trTxtField.text != wordBrain.trEdit.getString() {
                     present(alert, animated: true, completion: nil)
                 } else {
                     self.dismiss(animated: true, completion: nil)
@@ -217,8 +218,8 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     func checkEditStatus() {
         if goEdit == 1 {
-            engTxtField.text = UserDefaults.standard.string(forKey: "engEdit")
-            trTxtField.text = UserDefaults.standard.string(forKey: "trEdit")
+            engTxtField.text = wordBrain.engEdit.getString()
+            trTxtField.text = wordBrain.trEdit.getString()
             setupButton(button: addButton, buttonTitle: "Save", imageName: "empty", imageSize: 0, cornerRadius: 6)
         }
     }

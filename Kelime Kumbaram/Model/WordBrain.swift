@@ -14,17 +14,60 @@ struct WordBrain {
     var questionNumbers: [Int] = []
     var questionNumbersCopy: [Int] = []
     
+    var startPressed = UserDefaultsManager(key: "startPressed")
+    var whichButton = UserDefaultsManager(key: "whichButton")
+    var setNotificationFirstTime = UserDefaultsManager(key: "setNotificationFirstTime")
+    var userWordCount = UserDefaultsManager(key: "userWordCount")
+    var x2Time = UserDefaultsManager(key: "2xTime")
+    var userSelectedHour = UserDefaultsManager(key: "userSelectedHour")
+    var lastEditLabel = UserDefaultsManager(key: "lastEditLabel")
+    
+    var level = UserDefaultsManager(key: "level")
+    var goLevelUp = UserDefaultsManager(key: "goLevelUp")
+    var lastPoint = UserDefaultsManager(key: "lastPoint")
+    var selectedSegmentIndex = UserDefaultsManager(key: "selectedSegmentIndex")
+    var soundSpeed = UserDefaultsManager(key: "soundSpeed")
+    var playSound = UserDefaultsManager(key: "playSound")
+    var playAppSound = UserDefaultsManager(key: "playAppSound")
+    var textSize = UserDefaultsManager(key: "textSize")
+    var lastHour = UserDefaultsManager(key: "lastHour")
+    var pointForMyWords = UserDefaultsManager(key: "pointForMyWords")
+    var userAnswers = UserDefaultsManager(key: "userAnswers")
+    var failNumber = UserDefaultsManager(key: "failNumber")
+    var failIndex = UserDefaultsManager(key: "failIndex")
+    var hardWordsCount = UserDefaultsManager(key: "hardWordsCount")
+    
+    var blueExerciseCount = UserDefaultsManager(key: "blueExerciseCount")
+    var blueTrueCount = UserDefaultsManager(key: "blueTrueCount")
+    var blueFalseCount = UserDefaultsManager(key: "blueFalseCount")
+    
+    var engEdit = UserDefaultsManager(key: "engEdit")
+    var trEdit = UserDefaultsManager(key: "trEdit")
+    
+    var rightOnce = UserDefaultsManager(key: "rightOnce")
+    var rightOnceBool = UserDefaultsManager(key: "rightOnceBool")
+    var arrayForResultViewENG = UserDefaultsManager(key: "arrayForResultViewENG")
+    var arrayForResultViewTR = UserDefaultsManager(key: "arrayForResultViewTR")
+    var blueAllTrue = UserDefaultsManager(key: "blueAllTrue")
+    
+    var start1count = UserDefaultsManager(key: "start1count")
+    var start2count = UserDefaultsManager(key: "start2count")
+    var start3count = UserDefaultsManager(key: "start3count")
+    var start4count = UserDefaultsManager(key: "start4count")
+    
+    
+    
     var questionNumber = 0
     var changedQuestionNumber = 0
-    var selectedSegmentIndex = 0
+    var userSelectedSegmentIndex = 0
     var onlyHereNumber = 0
     var answer = 0
     var firstFalseIndex = -1
     
-    var rightOnce = [Int]()
-    var rightOnceBool = [Bool]()
-    var arrayForResultViewENG = [String]()
-    var arrayForResultViewTR = [String]()
+    var rightOncee = [Int]()
+    var rightOnceBooll = [Bool]()
+    var arrayForResultViewENGG = [String]()
+    var arrayForResultViewTRR = [String]()
     var isWordAddedToHardWords = 0
     
     
@@ -138,17 +181,16 @@ struct WordBrain {
                  
                 }
 
-            rightOnce.append(questionNumber)
-            UserDefaults.standard.set(rightOnce, forKey: "rightOnce")
+            rightOncee.append(questionNumber)
+            UserDefaults.standard.set(rightOncee, forKey: "rightOnce")
                 
         changedQuestionNumber = questionNumber + Int.random(in: 0...9)
-        self.selectedSegmentIndex = selectedSegmentIndex
+        self.userSelectedSegmentIndex = selectedSegmentIndex
      
         questionNumbersCopy = questionNumbers
         questionNumbersCopy.remove(at: questionNumber)
   
         if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
-            print("segmenttttt")
             if startPressed == 1 {
                 return selectedSegmentIndex == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr!
                 
@@ -206,9 +248,9 @@ struct WordBrain {
     mutating func getAnswer(_ sender: Int) -> String {
         if changedQuestionNumber % 2 == sender {
             if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
-                return selectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
+                return userSelectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
             } else {
-                return selectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
+                return userSelectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             }
         } else {
             if questionNumbersCopy.count > 0 {
@@ -216,9 +258,9 @@ struct WordBrain {
                 let temp = questionNumbersCopy[answer]
                      
                 if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
-                    return selectedSegmentIndex == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
+                    return userSelectedSegmentIndex == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
                 } else {
-                    return selectedSegmentIndex == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
+                    return userSelectedSegmentIndex == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
                 }
             } else {
                 return ""
@@ -247,50 +289,50 @@ struct WordBrain {
         var trueAnswer = ""
         //print("####HardItemArray>>\(HardItemArray)")
         if UserDefaults.standard.string(forKey: "whichButton") == "blue" {
-             trueAnswer = selectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
+             trueAnswer = userSelectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
         } else {
-             trueAnswer = selectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
+             trueAnswer = userSelectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             
-            arrayForResultViewENG.append(hardItemArray[questionNumber].eng ?? "empty")
-            UserDefaults.standard.set(arrayForResultViewENG, forKey: "arrayForResultViewENG")
+            arrayForResultViewENGG.append(hardItemArray[questionNumber].eng ?? "empty")
+            UserDefaults.standard.set(arrayForResultViewENGG, forKey: "arrayForResultViewENG")
             
-            arrayForResultViewTR.append(hardItemArray[questionNumber].tr ?? "empty")
-            UserDefaults.standard.set(arrayForResultViewTR, forKey: "arrayForResultViewTR")
+            arrayForResultViewTRR.append(hardItemArray[questionNumber].tr ?? "empty")
+            UserDefaults.standard.set(arrayForResultViewTRR, forKey: "arrayForResultViewTR")
            
         }
         
         if userAnswer == trueAnswer {
             //need for result view
-            rightOnceBool.append(true)
-            UserDefaults.standard.set(rightOnceBool, forKey: "rightOnceBool")
+            rightOnceBooll.append(true)
+            UserDefaults.standard.set(rightOnceBooll, forKey: "rightOnceBool")
             UserDefaults.standard.synchronize()
             return true
         } else {
             //need for result view
-            rightOnceBool.append(false)
-            UserDefaults.standard.set(rightOnceBool, forKey: "rightOnceBool")
+            rightOnceBooll.append(false)
+            UserDefaults.standard.set(rightOnceBooll, forKey: "rightOnceBool")
             UserDefaults.standard.synchronize()
             return false
         }
     }
     
     mutating func arrayForResultView(){
-        arrayForResultViewENG.append(hardItemArray[questionNumber].eng ?? "empty")
-        UserDefaults.standard.set(arrayForResultViewENG, forKey: "arrayForResultViewENG")
+        arrayForResultViewENGG.append(hardItemArray[questionNumber].eng ?? "empty")
+        UserDefaults.standard.set(arrayForResultViewENGG, forKey: "arrayForResultViewENG")
         
-        arrayForResultViewTR.append(hardItemArray[questionNumber].tr ?? "empty")
-        UserDefaults.standard.set(arrayForResultViewTR, forKey: "arrayForResultViewTR")
+        arrayForResultViewTRR.append(hardItemArray[questionNumber].tr ?? "empty")
+        UserDefaults.standard.set(arrayForResultViewTRR, forKey: "arrayForResultViewTR")
     }
     
     mutating func answerTrue(){ // except test option
-        rightOnceBool.append(true)
-        UserDefaults.standard.set(rightOnceBool, forKey: "rightOnceBool")
+        rightOnceBooll.append(true)
+        UserDefaults.standard.set(rightOnceBooll, forKey: "rightOnceBool")
         UserDefaults.standard.synchronize()
     }
     
     mutating func answerFalse() { // // except test option
-        rightOnceBool.append(false)
-        UserDefaults.standard.set(rightOnceBool, forKey: "rightOnceBool")
+        rightOnceBooll.append(false)
+        UserDefaults.standard.set(rightOnceBooll, forKey: "rightOnceBool")
         UserDefaults.standard.synchronize()
     }
     

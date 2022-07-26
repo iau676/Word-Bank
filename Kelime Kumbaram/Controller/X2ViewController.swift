@@ -13,6 +13,7 @@ class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
     
     //MARK: - IBOutlet
 
+    var wordBrain = WordBrain()
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var lastEditLabel: UILabel!
@@ -54,9 +55,9 @@ class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
         saveButton.layer.cornerRadius = 8
         pickerView.dataSource = self
         pickerView.delegate = self
-        pickerView.selectRow(UserDefaults.standard.integer(forKey: "userSelectedHour"), inComponent: 0, animated: true)
+        pickerView.selectRow(wordBrain.userSelectedHour.getInt(), inComponent: 0, animated: true)
         
-        let lastEdit = UserDefaults.standard.string(forKey: "lastEditLabel") ?? "empty"
+        let lastEdit = wordBrain.lastEditLabel.getString()
         
         if lastEdit != "empty" {
             lastEditLabel.text = "En son \(lastEdit) tarihinde değiştirildi."
@@ -73,7 +74,7 @@ class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         
         // subtract date from now
-        let dateComponents = Calendar.current.dateComponents([.day], from: UserDefaults.standard.object(forKey: "2xTime") as! Date, to: Date())
+        let dateComponents = Calendar.current.dateComponents([.day], from: wordBrain.x2Time.getValue() as! Date, to: Date())
         
         if let dayCount = dateComponents.day {
             
@@ -91,11 +92,11 @@ class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
             let alert = UIAlertController(title:  title , message: message, preferredStyle: .alert)
                 let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
                     if dayCount >= 1 {
-                        UserDefaults.standard.set(Date(), forKey: "2xTime")
+                        self.wordBrain.x2Time.set(Date())
                         let lastEditLabel = Date().getFormattedDate(format: "dd/MM/yyyy, HH:mm")
-                        UserDefaults.standard.set(lastEditLabel, forKey: "lastEditLabel")
+                        self.wordBrain.lastEditLabel.set(lastEditLabel)
                         self.lastEditLabel.text = "En son \(lastEditLabel) tarihinde değiştirildi."
-                        UserDefaults.standard.set(self.userSelectedHour, forKey: "userSelectedHour")
+                        self.wordBrain.userSelectedHour.set(self.userSelectedHour)
                         self.onViewWillDisappear?(self.userSelectedHour)
                         self.setNotification()
                     }
@@ -143,7 +144,8 @@ class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
     }
     
     func updateInfoLabel(){
-        infoLabel.text = "\(hours[UserDefaults.standard.integer(forKey: "userSelectedHour")]) saatleri arasında her doğru cevap için 2x puan kazanacaksınız."
+        
+        infoLabel.text = "\(hours[wordBrain.userSelectedHour.getInt()]) saatleri arasında her doğru cevap için 2x puan kazanacaksınız."
     }
     
     func setNotification(){

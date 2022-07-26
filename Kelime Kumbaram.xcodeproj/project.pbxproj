@@ -44,6 +44,7 @@
 		707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */; };
 		707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */; };
 		707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC38A288DAA4A00832F35 /* Int+Extensions.swift */; };
+		7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */; };
 		7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081AB0127CCD15700E2996A /* NewPointViewController.swift */; };
 		7081AB0527CCD3CB00E2996A /* newpoint.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0427CCD3CB00E2996A /* newpoint.mp4 */; };
 		7081AB0727CCFA4300E2996A /* dog.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0627CCFA4300E2996A /* dog.mp4 */; };
@@ -98,6 +99,7 @@
 		707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		707EC38A288DAA4A00832F35 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
+		7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7081AB0127CCD15700E2996A /* NewPointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPointViewController.swift; sourceTree = "<group>"; };
 		7081AB0427CCD3CB00E2996A /* newpoint.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = newpoint.mp4; sourceTree = "<group>"; };
 		7081AB0627CCFA4300E2996A /* dog.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dog.mp4; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			children = (
 				704B055428364098006C7F96 /* Word.swift */,
 				70209B2A2759613900D527D3 /* WordBrain.swift */,
+				7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */,
 				70C357E428882DFC00F3AD86 /* Player.swift */,
 				706CBABB27592F8D008B4773 /* _3.xcdatamodeld */,
 			);
@@ -341,6 +344,7 @@
 				706CBAB727592F8D008B4773 /* ViewController.swift in Sources */,
 				708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */,
 				7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */,
+				7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */,
 				706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */,
 				70C357E528882DFC00F3AD86 /* Player.swift in Sources */,
 				70175BC427E71F170053CBDB /* CardViewController.swift in Sources */,
