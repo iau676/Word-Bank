@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		700BC57F2892FE9E00903C04 /* WordBrain+calculateLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */; };
+		700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */; };
 		700C439927A856FD00D94497 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700C439827A856FD00D94497 /* CustomModalViewController.swift */; };
 		7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7014743527AAB4EE005E1854 /* LevelUpController.swift */; };
 		701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701581BC27DE80D800796ADE /* SettingsViewController.swift */; };
@@ -60,6 +62,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateLevel.swift"; sourceTree = "<group>"; };
+		700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+LevelPoints.swift"; sourceTree = "<group>"; };
 		700C439827A856FD00D94497 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
 		7014743527AAB4EE005E1854 /* LevelUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpController.swift; sourceTree = "<group>"; };
 		701581BC27DE80D800796ADE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -163,9 +167,11 @@
 			children = (
 				704B055428364098006C7F96 /* Word.swift */,
 				70209B2A2759613900D527D3 /* WordBrain.swift */,
+				700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */,
 				7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */,
 				70C357E428882DFC00F3AD86 /* Player.swift */,
 				706CBABB27592F8D008B4773 /* _3.xcdatamodeld */,
+				700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -359,10 +365,12 @@
 				70FC7F38275BD1DE00F138E7 /* WordsQuizViewController.swift in Sources */,
 				707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */,
 				70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */,
+				700BC57F2892FE9E00903C04 /* WordBrain+calculateLevel.swift in Sources */,
 				706CBAD627593993008B4773 /* WordCell.swift in Sources */,
 				708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */,
 				70209B2B2759613900D527D3 /* WordBrain.swift in Sources */,
 				702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */,
+				700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */,
 				7060437627EC83AE00D0D953 /* X2TimeViewController.swift in Sources */,
 				707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */,
 				706CBACB275930E9008B4773 /* HardWordsViewController.swift in Sources */,
