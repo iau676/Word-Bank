@@ -8,7 +8,6 @@
 import UIKit
 import AVFoundation
 import CoreData
-import UserNotifications
 
 class ViewController: UIViewController {
     
@@ -33,7 +32,6 @@ class ViewController: UIViewController {
     var wordBrain = WordBrain()
     var itemArray = [Item]()
     let cp = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    let notificationCenter = UNUserNotificationCenter.current()
     
     var goAddPage = 0
     var progressValue:Float = 0.0
@@ -108,7 +106,7 @@ class ViewController: UIViewController {
     @IBAction func setNotificationFirstTime(_ sender: UIButton) {
         //works after any button pressed
         if wordBrain.setNotificationFirstTime.getInt() == 0 {
-            setNotification()
+            wordBrain.setNotification()
             wordBrain.setNotificationFirstTime.set(1)
             print("SET NOTİFİCATİON<<")
         }
@@ -140,7 +138,7 @@ class ViewController: UIViewController {
     //MARK: - Other Functions
 
     func setupFirstLaunch(){
-        notificationCenter.requestAuthorization(options: [.alert, .sound]) {
+        wordBrain.notificationCenter.requestAuthorization(options: [.alert, .sound]) {
             (permissionGranted, error) in
             if(!permissionGranted){
                 print("Permission Denied")
@@ -218,35 +216,7 @@ class ViewController: UIViewController {
         cp.addGestureRecognizer(gesture)
     }
 
-    func setNotification(){
-            DispatchQueue.main.async
-            {
-                let title = "2x Saati 🎉"
-                let message = "Bir saat boyunca her doğru cevap için 2x puan kazanacaksınız!"
-                
-                    let content = UNMutableNotificationContent()
-                    content.title = title
-                    content.body = message
-                    
-                    let date = DateComponents(hour: 23, minute: 44)
-                    let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
-                    let id = UUID().uuidString
-                    let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-                    
-                    self.notificationCenter.removeAllPendingNotificationRequests()
-                    
-                    self.notificationCenter.add(request) { (error) in
-                        if(error != nil)
-                        {
-                            print("Error " + error.debugDescription)
-                            return
-                        }
-                    }
-                    
-                    print("id>>\(id)")
-                    print("selected new date")
-            }
-    }
+
     
     func check2xTime(){
         if wordBrain.lastHour.getInt() == wordBrain.userSelectedHour.getInt() {

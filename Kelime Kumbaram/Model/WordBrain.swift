@@ -71,6 +71,7 @@ struct WordBrain {
     
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let notificationCenter = UNUserNotificationCenter.current()
     var hardItemArray = [HardItem]()
     var quizCoreDataArray = [AddedList]()
     

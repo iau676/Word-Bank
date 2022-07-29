@@ -38,17 +38,16 @@ class WordsViewController: UIViewController {
     var HardItemArray = [HardItem]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var textSize: CGFloat { return wordBrain.textSize.getCGFloat() }
-    let pageStatistic = ["Kumbaradaki kelime sayısı: \(UserDefaults.standard.integer(forKey: "userWordCount"))" ,
-                             "Yapılan alıştırma sayısı: \(UserDefaults.standard.integer(forKey: "blueExerciseCount"))",
-                             
-                             "Doğru cevap sayısı: \(UserDefaults.standard.integer(forKey: "blueTrueCount"))",
-                             "Yanlış cevap sayısı: \(UserDefaults.standard.integer(forKey: "blueFalseCount"))"]
+    let pageStatistic = ["Words count: \(UserDefaults.standard.integer(forKey: "userWordCount"))" ,
+                             "Completed exercises count: \(UserDefaults.standard.integer(forKey: "blueExerciseCount"))",
+                             "Correct answers: \(UserDefaults.standard.integer(forKey: "blueTrueCount"))",
+                             "Wrong answers: \(UserDefaults.standard.integer(forKey: "blueFalseCount"))"]
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Kumbaram"
+        title = "Bank"
         wordBrain.loadItemArray()
         setupSearchBar()
         setupView()
@@ -127,8 +126,8 @@ class WordsViewController: UIViewController {
             wordBrain.startPressed.set(3)
             check2Items()
         } else {
-            let alert = UIAlertController(title: "Bu alıştırmayı başlatmak için \"Kelime dinle\" özelliğini aktif etmeniz gerekir.", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
+            let alert = UIAlertController(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 // what will happen once user clicks the add item button on UIAlert
                 self.navigationController?.popToRootViewController(animated: true)
             }
@@ -142,8 +141,8 @@ class WordsViewController: UIViewController {
         startButton4.pulstate()
         
         if itemArray.count < 2 {
-            let alert = UIAlertController(title: "En az iki kelime gereklidir", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
+            let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 // what will happen once user clicks the add item button on UIAlert
                 self.showWords = 1
                 self.updateView()
@@ -402,7 +401,8 @@ extension WordsViewController: UISearchBarDelegate {
     }
 }
 
-//MARK: - Show Words
+    //MARK: - Show Words
+
 extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (showWords == 1 ?  itemArray.count == 0 ? 1 : itemArray.count  : pageStatistic.count)
@@ -447,8 +447,8 @@ extension WordsViewController: UITableViewDataSource {
     }
 }
 
+    //MARK: - Swipe Cell
 
-//MARK: - Swipe Cell
 extension WordsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -529,14 +529,14 @@ extension WordsViewController: UITableViewDelegate {
                 
                 self.wordBrain.loadItemArray()
                 
-                let alert = UIAlertController(title: "Zor kelimeler sayfasına eklendi", message: "", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Added to Hard Words", message: "", preferredStyle: .alert)
                 let when = DispatchTime.now() + 1
                 DispatchQueue.main.asyncAfter(deadline: when){
                   alert.dismiss(animated: true, completion: nil)
                 }
                 self.present(alert, animated: true, completion: nil)
             } else {
-                    let alert = UIAlertController(title: "Zaten mevcut", message: "", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Already Added", message: "", preferredStyle: .alert)
 
                     // dismiss alert after 1 second
                     let when = DispatchTime.now() + 1

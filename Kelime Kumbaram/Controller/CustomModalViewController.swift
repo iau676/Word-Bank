@@ -11,7 +11,7 @@ class CustomModalViewController: UIViewController {
     // define lazy views
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sonraki seviye için gereken puan\n\(UserDefaults.standard.integer(forKey: "needPoint").withCommas())"
+        label.text = "\(UserDefaults.standard.integer(forKey: "needPoint").withCommas()) points required for next level"
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = UIColor(red: 0.98, green: 0.25, blue: 0.41, alpha: 1.00)

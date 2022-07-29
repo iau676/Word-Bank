@@ -322,7 +322,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             progrssBar2.isHidden = false
             soundButton.setImage(imageName: "question", width: 35, height: 35)
             
-            textField.attributedPlaceholder = NSAttributedString(string: wordBrain.startPressed.getInt() == 2 ? "İngilizcesi..." : "Yazılışı...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
+//            textField.attributedPlaceholder = NSAttributedString(string: wordBrain.startPressed.getInt() == 2 ? "..." : "...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
             
             updateViewConstraints(4)
         }

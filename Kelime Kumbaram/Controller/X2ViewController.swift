@@ -60,7 +60,7 @@ class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
         let lastEdit = wordBrain.lastEditLabel.getString()
         
         if lastEdit != "empty" {
-            lastEditLabel.text = "En son \(lastEdit) tarihinde değiştirildi."
+            lastEditLabel.text = "Last changed on \(lastEdit)"
         } else {
             lastEditLabel.text = ""
         }
@@ -82,27 +82,27 @@ class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
             var message = ""
             
             if dayCount >= 1 {
-                title = "\(hours[userSelectedHour]) saatleri arasında 2x puan kazanacaksınız"
-                message = "Bu özelliği günde sadece bir defa değiştirebilirsiniz."
+                title = "You will earn 2x points for each correct answer between \(hours[userSelectedHour]) hours."
+                message = "You can change this feature only once a day."
             } else {
-                title = "Bu özelliği günde sadece bir defa değiştirebilirsiniz."
+                title = "You can change this feature only once a day."
                 message = ""
             }
             
             let alert = UIAlertController(title:  title , message: message, preferredStyle: .alert)
-                let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
+                let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                     if dayCount >= 1 {
                         self.wordBrain.x2Time.set(Date())
                         let lastEditLabel = Date().getFormattedDate(format: "dd/MM/yyyy, HH:mm")
                         self.wordBrain.lastEditLabel.set(lastEditLabel)
-                        self.lastEditLabel.text = "En son \(lastEditLabel) tarihinde değiştirildi."
+                        self.lastEditLabel.text = "Last changed on \(lastEditLabel)"
                         self.wordBrain.userSelectedHour.set(self.userSelectedHour)
                         self.onViewWillDisappear?(self.userSelectedHour)
-                        self.setNotification()
+                        self.wordBrain.setNotification()
                     }
                     self.dismiss(animated: true, completion: nil)
                 }
-                let actionCancel = UIAlertAction(title: "İptal", style: UIAlertAction.Style.cancel) { (action) in
+                let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
                     alert.dismiss(animated: true, completion: nil)
                 }
                 alert.addAction(action)
@@ -137,41 +137,14 @@ class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
     //MARK: - Other Functions
     
     override func updateViewConstraints() {
-                self.view.frame.size.height = UIScreen.main.bounds.height - 120
-                self.view.frame.origin.y =  120
-                self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
-                super.updateViewConstraints()
+        self.view.frame.size.height = UIScreen.main.bounds.height - 120
+        self.view.frame.origin.y =  120
+        self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
+        super.updateViewConstraints()
     }
     
     func updateInfoLabel(){
-        
-        infoLabel.text = "\(hours[wordBrain.userSelectedHour.getInt()]) saatleri arasında her doğru cevap için 2x puan kazanacaksınız."
-    }
-    
-    func setNotification(){
-            DispatchQueue.main.async
-            {
-                let title = "2x Saati 🎉"
-                let message = "Bir saat boyunca her doğru cevap için 2x puan kazanacaksınız!"
-             
-                let content = UNMutableNotificationContent()
-                content.title = title
-                content.body = message
-                
-                let date = DateComponents(hour: self.userSelectedHour, minute: 00)
-                let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
-                let id = UUID().uuidString
-                let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-                self.notificationCenter.removeAllPendingNotificationRequests()
-                
-                self.notificationCenter.add(request) { (error) in
-                    if(error != nil){
-                        print("Error " + error.debugDescription)
-                        return
-                    }
-                }
-                print("selected new date")
-            }
+        infoLabel.text = "You will earn 2x points for each correct answer between \(hours[wordBrain.userSelectedHour.getInt()])  hours."
     }
     
 }

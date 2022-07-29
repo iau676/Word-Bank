@@ -144,14 +144,14 @@ class ResultViewController: UIViewController {
     
     func checkWhichExercise() {
         if whichStartPressed == 4 {
-            scoreLabelText = "25 kelime inceleyerek\n25 puan kazandınız!"
+            scoreLabelText = "By studying 25 words\nYou've earned 25 points!"
             numberOfTrue = userAnswer.count
             addedHardWordsLabel.isHidden = true
             showWordsButton.isHidden = true
         } else {
             updateHardWordText()
             scoreLabel.text = "\(numberOfTrue)/\(userAnswer.count)"
-            scoreLabelText = "Hepsi doğru!"
+            scoreLabelText = "All Correct!"
         }
     }
     
@@ -168,7 +168,7 @@ class ResultViewController: UIViewController {
     func updateHardWordText(){
         //print how many words added to hard words
         if isWordAddedToHardWords > 0 {
-            addedHardWordsLabel.text = "Zor Kelimeler sayfasına \(isWordAddedToHardWords) kelime eklendi."
+            addedHardWordsLabel.text = "\(isWordAddedToHardWords) words added to Hard Words."
         } else {
             addedHardWordsLabel.text = ""
         }

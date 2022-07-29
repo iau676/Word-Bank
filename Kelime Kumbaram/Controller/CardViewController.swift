@@ -79,7 +79,7 @@ class CardViewController: UIViewController {
     }
 
     func showAlertForAlreadyAdded(){
-        let alert = UIAlertController(title: "Zaten mevcut", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Already Added", message: "", preferredStyle: .alert)
         let when = DispatchTime.now() + 0.3
         DispatchQueue.main.asyncAfter(deadline: when){
             alert.dismiss(animated: true, completion: nil)
@@ -89,7 +89,7 @@ class CardViewController: UIViewController {
     }
     
     func showAlertForAdded() {
-        let alert = UIAlertController(title: "Zor kelimeler sayfasına eklendi", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Added to Hard Words", message: "", preferredStyle: .alert)
         
         let when = DispatchTime.now() + 0.5
         DispatchQueue.main.asyncAfter(deadline: when){

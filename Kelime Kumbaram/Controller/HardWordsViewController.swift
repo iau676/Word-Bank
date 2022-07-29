@@ -36,7 +36,7 @@ class HardWordsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Zor Kelimeler"
+        title = "Hard Words"
         setupTableView()
         setupGradientBackground()
         setupExerciseButtons()
@@ -74,7 +74,7 @@ class HardWordsViewController: UIViewController {
         if wordBrain.playSound.getInt() == 0 {
             check2Items()
         } else {
-            let alert = UIAlertController(title: "Bu alıştırmayı başlatmak için \"Kelime dinle\" özelliğini aktif etmeniz gerekir.", message: "", preferredStyle: .alert)
+            let alert = UIAlertController(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
                 self.navigationController?.popToRootViewController(animated: true)
             }
@@ -173,8 +173,8 @@ class HardWordsViewController: UIViewController {
     func check2Items() {
         // 2 words required
         if wordBrain.hardWordsCount.getInt() < 2 {
-            let alert = UIAlertController(title: "En az iki kelime gereklidir", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Tamam", style: .default) { (action) in
+            let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 self.navigationController?.popToRootViewController(animated: true)
             }
             alert.addAction(action)

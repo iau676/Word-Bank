@@ -300,7 +300,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         } else {
             answerStackView.isHidden = true
             soundButton.setImage(imageName: "question", width: 35, height: 35)
-            textField.attributedPlaceholder = NSAttributedString(string: whichStartPressed == 2 ? "İngilizcesi..." : "Yazılışı...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
+//            textField.attributedPlaceholder = NSAttributedString(string: whichStartPressed == 2 ? "..." : "...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
             
             let newConstraint = wordViewConstrait.constraintWithMultiplier(4)
             wordViewConstrait.isActive = false
