@@ -36,7 +36,6 @@ class WordsViewController: UIViewController {
     var wordBrain = WordBrain()
     var itemArray: [Item] { return wordBrain.itemArray }
     var HardItemArray = [HardItem]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var textSize: CGFloat { return wordBrain.textSize.getCGFloat() }
     let pageStatistic = ["Words count: \(WordBrain.userWordCount.getInt())" ,
                          "Completed exercises count: \(WordBrain.blueExerciseCount.getInt())",
@@ -71,12 +70,11 @@ class WordsViewController: UIViewController {
             
             if segue.destination is AddViewController {
                 (segue.destination as? AddViewController)?.updateWordsPage = {
-                    self.wordBrain.saveWord()
+                    self.wordBrain.saveContext()
                     self.wordBrain.loadItemArray()
                     self.updateSearchBarPlaceholder()
                     self.tableView.reloadData()
                 }
-                
                 (segue.destination as? AddViewController)?.onViewWillDisappear = {
                     self.goEdit = 0
                     self.goAddPage = 0
@@ -128,7 +126,6 @@ class WordsViewController: UIViewController {
         } else {
             let alert = UIAlertController(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
-                // what will happen once user clicks the add item button on UIAlert
                 self.navigationController?.popToRootViewController(animated: true)
             }
             alert.addAction(action)
@@ -143,7 +140,6 @@ class WordsViewController: UIViewController {
         if itemArray.count < 2 {
             let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
-                // what will happen once user clicks the add item button on UIAlert
                 self.showWords = 1
                 self.updateView()
                 self.tableView.reloadData()
@@ -400,6 +396,7 @@ extension WordsViewController: UISearchBarDelegate {
 
 extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        updateSearchBarPlaceholder()
         return (showWords == 1 ?  itemArray.count == 0 ? 1 : itemArray.count  : pageStatistic.count)
     }
     
@@ -456,28 +453,21 @@ extension WordsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            // 1 is false, 0 is true
-                
             let alert = UIAlertController(title: "Word will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Delete", style: .destructive) { (action) in
-                
-                self.context.delete(self.itemArray[indexPath.row])
+            let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
                 self.wordBrain.removeWord(at: indexPath.row)
-                self.updateSearchBarPlaceholder()
-                let userWordCount = WordBrain.userWordCount.getInt()
-                WordBrain.userWordCount.set(userWordCount-1)
+                WordBrain.userWordCount.set(WordBrain.userWordCount.getInt()-1)
                 self.findUserPoint()
                 if self.itemArray.count > 0 {
                     tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                 } else {
                     tableView.reloadData()
                 }
-                self.dismiss(animated: true, completion: nil)
             }
             let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
                 alert.dismiss(animated: true, completion: nil)
             }
-            alert.addAction(action)
+            alert.addAction(actionDelete)
             alert.addAction(actionCancel)
             self.present(alert, animated: true, completion: nil)
             success(true)
@@ -486,7 +476,6 @@ extension WordsViewController: UITableViewDelegate {
         deleteAction.setBackgroundColor(UIColor.systemRed)
         
         let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-
             self.goEdit = 1
             self.editIndex = indexPath.row
             let engEdit = self.itemArray[indexPath.row].eng ?? "empty"
@@ -500,29 +489,8 @@ extension WordsViewController: UITableViewDelegate {
         editAction.setBackgroundColor(UIColor(red: 0.46, green: 0.62, blue: 0.80, alpha: 1.00))
         
         let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            
             if self.itemArray[indexPath.row].addedHardWords == false {
-                let newItem = HardItem(context: self.context)
-                newItem.eng = self.itemArray[indexPath.row].eng
-                newItem.tr = self.itemArray[indexPath.row].tr
-                newItem.uuid = self.itemArray[indexPath.row].uuid
-                newItem.originalindex = Int32(indexPath.row)
-                newItem.originalList = "MyWords"
-                newItem.date = Date()
-                newItem.correctNumber = 5
-                self.HardItemArray.append(newItem)
-                
-                self.itemArray[indexPath.row].addedHardWords = true
-                let lastCount = self.wordBrain.hardWordsCount.getInt()
-                self.wordBrain.hardWordsCount.set(lastCount+1)
-
-                do {
-                    try self.context.save()
-                } catch {
-                   print("Error saving context \(error)")
-                }
-                
-                self.wordBrain.loadItemArray()
+                self.wordBrain.addWordToHardWords(indexPath.row)
                 
                 let alert = UIAlertController(title: "Added to Hard Words", message: "", preferredStyle: .alert)
                 let when = DispatchTime.now() + 1
@@ -530,18 +498,7 @@ extension WordsViewController: UITableViewDelegate {
                   alert.dismiss(animated: true, completion: nil)
                 }
                 self.present(alert, animated: true, completion: nil)
-            } else {
-                    let alert = UIAlertController(title: "Already Added", message: "", preferredStyle: .alert)
-
-                    // dismiss alert after 1 second
-                    let when = DispatchTime.now() + 1
-                    DispatchQueue.main.asyncAfter(deadline: when){
-                      alert.dismiss(animated: true, completion: nil)
-                    }
-               
-                    self.present(alert, animated: true, completion: nil)
             }
-
             success(true)
         })
         addAction.setImage(imageName: "plus", width: 25, height: 25)
@@ -551,11 +508,6 @@ extension WordsViewController: UITableViewDelegate {
             if self.itemArray[indexPath.row].addedHardWords == true {
                 return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
             }
-            
-            if self.itemArray[indexPath.row].isCreatedFromUser == false {
-                return UISwipeActionsConfiguration(actions: [deleteAction, addAction])
-            }
-
             return UISwipeActionsConfiguration(actions: [deleteAction, editAction, addAction])
         } else {
             return UISwipeActionsConfiguration()

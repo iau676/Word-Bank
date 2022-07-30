@@ -92,7 +92,9 @@ struct WordBrain {
     }
     
     mutating func removeWord(at index: Int){
+        context.delete(itemArray[index])
         itemArray.remove(at: index)
+        saveContext()
     }
     
     mutating func addWordToHardWords(_ index: Int) {
@@ -113,7 +115,7 @@ struct WordBrain {
         let lastCount = hardWordsCount.getInt()
         hardWordsCount.set(lastCount+1)
     
-        saveWord()
+        saveContext()
     }
     
     mutating func sortFails(){
@@ -321,7 +323,7 @@ struct WordBrain {
                 hardWordsCount.set(hardWordsCount.getInt()-1)
             }
         }
-        saveWord()
+        saveContext()
         return hardItemArray.count < 2 ? true : false
     }
     
@@ -329,12 +331,12 @@ struct WordBrain {
         if let itemm = itemArray.first(where: {$0.uuid == hardItemArray[questionNumber].uuid}) {
             itemm.falseCount += 1
         }
-        saveWord()
+        saveContext()
     }
     
     func userGotItCorrect(){
         itemArray[questionNumber].trueCount += 1
-        saveWord()
+        saveContext()
     }
     
     mutating func userGotItWrong() {
@@ -342,7 +344,7 @@ struct WordBrain {
         if itemArray[questionNumber].addedHardWords == false{
             addWordToHardWords(questionNumber)
         }
-        saveWord()
+        saveContext()
     }
 
     mutating func loadHardItemArray(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
@@ -363,7 +365,7 @@ struct WordBrain {
         }
     }
     
-    func saveWord() {
+    func saveContext() {
         do {
           try context.save()
         } catch {

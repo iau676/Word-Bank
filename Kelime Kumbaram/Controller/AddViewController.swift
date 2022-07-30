@@ -70,7 +70,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 if goEdit == 0 {
                     wordBrain.addWord(english: engTxtField.text!, meaning: trTxtField.text!)
                     WordBrain.userWordCount.set(userWordCountIntVariable+1)
-                    wordBrain.saveWord()
+                    wordBrain.saveContext()
                     userWordCountIntVariable += 1
                     Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(goNewPoint), userInfo: nil, repeats: false)
                 } else {

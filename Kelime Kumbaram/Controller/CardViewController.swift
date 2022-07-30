@@ -23,8 +23,8 @@ class CardViewController: UIViewController {
     var cardCounter = 0
     var questionNumber = 0
     var lastPoint = 0
-    var questionENG = ""
-    var questionTR = ""
+    var wordEnglish = ""
+    var wordMeaning = ""
     
     //MARK: - Life Cycle
     
@@ -33,7 +33,7 @@ class CardViewController: UIViewController {
         lastPoint = wordBrain.lastPoint.getInt()
         setupTableView()
         wordBrain.loadItemArray()
-        updateText()
+        updateWord()
     }
     
     //MARK: - prepare
@@ -49,7 +49,7 @@ class CardViewController: UIViewController {
     //MARK: - IBAction
     
     @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        updateText()
+        updateWord()
         swipeAnimation()
         tableView.reloadData()
     }
@@ -63,10 +63,10 @@ class CardViewController: UIViewController {
         tableView.tableFooterView = UIView()
     }
     
-    func updateText(){
+    func updateWord(){
         questionNumber = Int.random(in: 0..<itemArray.count)
-        questionENG = itemArray[questionNumber].eng ?? "empty"
-        questionTR = itemArray[questionNumber].tr ?? "empty"
+        wordEnglish = itemArray[questionNumber].eng ?? "empty"
+        wordMeaning = itemArray[questionNumber].tr ?? "empty"
         cardCounter += 1
         lastPoint += 1
         if cardCounter == 4 { //26
@@ -76,27 +76,6 @@ class CardViewController: UIViewController {
         }
         self.swipeAnimation()
         self.tableView.reloadData()
-    }
-
-    func showAlertForAlreadyAdded(){
-        let alert = UIAlertController(title: "Already Added", message: "", preferredStyle: .alert)
-        let when = DispatchTime.now() + 0.3
-        DispatchQueue.main.asyncAfter(deadline: when){
-            alert.dismiss(animated: true, completion: nil)
-            self.updateText()
-        }
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func showAlertForAdded() {
-        let alert = UIAlertController(title: "Added to Hard Words", message: "", preferredStyle: .alert)
-        
-        let when = DispatchTime.now() + 0.5
-        DispatchQueue.main.asyncAfter(deadline: when){
-            alert.dismiss(animated: true, completion: nil)
-            self.updateText()
-        }
-        self.present(alert, animated: true, completion: nil)
     }
     
     func swipeAnimation() {
@@ -118,13 +97,11 @@ extension CardViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! WordCell
-        
         cell.engView.isHidden = true
         cell.trLabel.textAlignment = .center
         cell.trView.backgroundColor = UIColor(named: "quizBackground")
         cell.trLabel.textColor = UIColor(named: "d6d6d6")
-        cell.trLabel.attributedText = writeAnswerCell(questionENG, questionTR)
-
+        cell.trLabel.attributedText = writeAnswerCell(wordEnglish, wordMeaning)
         return cell
     }
     
@@ -137,6 +114,7 @@ extension CardViewController: UITableViewDataSource {
         let textSize = wordBrain.textSize.getCGFloat()
         
         let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size:textSize+12)]
+        
         let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "d6d6d6"), NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
         
         let english = NSMutableAttributedString(string: "\(eng)\n\n", attributes: boldFontAttributes as [NSAttributedString.Key : Any])
@@ -167,7 +145,7 @@ extension CardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?{
         let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            self.showAlertForAdded()
+            self.showAlert(title: "Added to Hard Words")
             self.wordBrain.addWordToHardWords(self.questionNumber)
             success(true)
         })
@@ -175,10 +153,19 @@ extension CardViewController: UITableViewDelegate {
         addAction.setBackgroundColor(UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00))
         
         if itemArray[questionNumber].addedHardWords == true {
-            showAlertForAlreadyAdded()
+            showAlert(title: "Already Added")
             return UISwipeActionsConfiguration()
         }
-        
         return UISwipeActionsConfiguration(actions: [addAction])
+    }
+
+    func showAlert(title: String){
+        let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        let when = DispatchTime.now() + 0.5
+        DispatchQueue.main.asyncAfter(deadline: when){
+            alert.dismiss(animated: true, completion: nil)
+            self.updateWord()
+        }
+        self.present(alert, animated: true, completion: nil)
     }
 }
