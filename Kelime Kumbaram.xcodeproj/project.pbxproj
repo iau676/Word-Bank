@@ -10,6 +10,7 @@
 		700BC57F2892FE9E00903C04 /* WordBrain+calculateLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */; };
 		700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */; };
 		700C439927A856FD00D94497 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700C439827A856FD00D94497 /* CustomModalViewController.swift */; };
+		7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */; };
 		7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7014743527AAB4EE005E1854 /* LevelUpController.swift */; };
 		701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701581BC27DE80D800796ADE /* SettingsViewController.swift */; };
 		70175BC427E71F170053CBDB /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175BC327E71F170053CBDB /* CardViewController.swift */; };
@@ -66,6 +67,7 @@
 		700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateLevel.swift"; sourceTree = "<group>"; };
 		700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+LevelPoints.swift"; sourceTree = "<group>"; };
 		700C439827A856FD00D94497 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
+		7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContextualAction+Extensions.swift"; sourceTree = "<group>"; };
 		7014743527AAB4EE005E1854 /* LevelUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpController.swift; sourceTree = "<group>"; };
 		701581BC27DE80D800796ADE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		70175BC327E71F170053CBDB /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */,
 				707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */,
 				707EC38A288DAA4A00832F35 /* Int+Extensions.swift */,
+				7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */,
 				708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */,
 				702A978327EB378A00AEECF7 /* X2ViewController.swift in Sources */,
+				7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */,
 				701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */,
 				704B055528364098006C7F96 /* Word.swift in Sources */,
 			);

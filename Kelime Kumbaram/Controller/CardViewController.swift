@@ -99,12 +99,6 @@ class CardViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func imageRenderer(imageName: String) -> UIImage {
-        let imageSize = 25
-        return UIGraphicsImageRenderer(size: CGSize(width: imageSize, height: imageSize)).image { _ in
-            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: imageSize, height: imageSize)) }
-    }
-    
     func swipeAnimation() {
         tableView.isHidden = true
         UIView.transition(with: tableView, duration: 1.0,
@@ -113,7 +107,6 @@ class CardViewController: UIViewController {
                             self.tableView.isHidden = false
                       })
     }
-    
 }
 
     //MARK: - Show Words
@@ -178,8 +171,8 @@ extension CardViewController: UITableViewDelegate {
             self.wordBrain.addWordToHardWords(self.questionNumber)
             success(true)
         })
-        addAction.image = imageRenderer(imageName: "plus")
-        addAction.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00)
+        addAction.setImage(imageName: "plus", width: 25, height: 25)
+        addAction.setBackgroundColor(UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00))
         
         if itemArray[questionNumber].addedHardWords == true {
             showAlertForAlreadyAdded()

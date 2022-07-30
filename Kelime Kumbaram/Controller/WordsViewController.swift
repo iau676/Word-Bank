@@ -343,11 +343,6 @@ class WordsViewController: UIViewController {
         }
     }
     
-    func imageRenderer(imageName: String, width: CGFloat, height: CGFloat) -> UIImage {
-        return UIGraphicsImageRenderer(size: CGSize(width: width, height: height)).image { _ in
-            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }
-    }
-    
     func setupExpandButton(){
         assignExpandIconName()
         expandButton.setImage(imageName: expandIconName, width: 35, height: 25)
@@ -487,8 +482,8 @@ extension WordsViewController: UITableViewDelegate {
             self.present(alert, animated: true, completion: nil)
             success(true)
         })
-        deleteAction.image = imageRenderer(imageName: "bin", width: 25, height: 25)
-        deleteAction.backgroundColor = UIColor.systemRed
+        deleteAction.setImage(imageName: "bin", width: 25, height: 25)
+        deleteAction.setBackgroundColor(UIColor.systemRed)
         
         let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
 
@@ -501,8 +496,8 @@ extension WordsViewController: UITableViewDelegate {
             self.performSegue(withIdentifier: "goAdd", sender: self)
             success(true)
         })
-        editAction.image = imageRenderer(imageName: "edit", width: 25, height: 25)
-        editAction.backgroundColor = UIColor(red: 0.46, green: 0.62, blue: 0.80, alpha: 1.00)
+        editAction.setImage(imageName: "edit", width: 25, height: 25)
+        editAction.setBackgroundColor(UIColor(red: 0.46, green: 0.62, blue: 0.80, alpha: 1.00))
         
         let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             
@@ -549,8 +544,8 @@ extension WordsViewController: UITableViewDelegate {
 
             success(true)
         })
-        addAction.image = imageRenderer(imageName: "plus", width: 25, height: 25)
-        addAction.backgroundColor = UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00)
+        addAction.setImage(imageName: "plus", width: 25, height: 25)
+        addAction.setBackgroundColor(UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00))
         
         if showWords == 1 {
             if self.itemArray[indexPath.row].addedHardWords == true {
