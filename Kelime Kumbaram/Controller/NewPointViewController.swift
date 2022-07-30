@@ -28,7 +28,8 @@ class NewPointViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        setupDarkView()
+        setupContinueButton()
         levelLabel.text = userWordCount
         newPointLabel.text = textForLabel
     }
@@ -73,15 +74,16 @@ class NewPointViewController: UIViewController {
         }
     }
     
-    private func setupViews() {
+    private func setupDarkView(){
+        darkView.backgroundColor = UIColor(white: 0.1, alpha: 0)
+    }
+    
+    private func setupContinueButton(){
         continueButton.layer.cornerRadius = continueButton.frame.height / 2
-        continueButton.layer.shadowColor = UIColor(red: 0.27, green: 0.27, blue: 0.27, alpha: 1.00).cgColor
+        continueButton.layer.shadowColor = UIColor(red: 0.16, green: 0.19, blue: 0.28, alpha: 1.00).cgColor
         continueButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
         continueButton.layer.shadowOpacity = 1.0
         continueButton.layer.shadowRadius = 0.0
         continueButton.layer.masksToBounds = false
-        continueButton.layer.cornerRadius = continueButton.frame.height / 2
-        darkView.backgroundColor = UIColor(white: 0.1, alpha: 0)
     }
-    
 }

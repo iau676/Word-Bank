@@ -165,9 +165,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func soundButtonPressed(_ sender: UIButton) {
-        
         soundButton.flash()
-        
         if whichStartPressed == 1 {
             if wordBrain.selectedSegmentIndex.getInt() == 0 {
                 player.playSound(soundSpeed, questionText)
@@ -189,7 +187,6 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Objc Function
     
     @objc func updateUI() {
-        
         letterCounter = 0
         hint = ""
         hintLabel.text = ""
@@ -359,7 +356,6 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     func getLetter(){
-        
         let str = wordBrain.getAnswer()
         
         if letterCounter < str.count {
@@ -433,38 +429,37 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             userPoint *= 2
         }
         
-        //MARK: - userGotItRight
-            if userGotItRight {
-                player.playMP3("true")
-                wordBrain.userGotItCorrect()
-                
-                sender?.backgroundColor = UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00)
-                pointButton.setTitleColor(UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00), for: .normal)
-                userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
-                pointButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
-                
-                timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "greenBubble")
-                timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "greenBubble2")
-                timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "greenBubble3")
-                timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "greenBubble4")
-                
-                wordBrain.lastPoint.set(lastPoint+userPoint)
-            } else {
-                player.playMP3("false")
-                wordBrain.userGotItWrong()
-               
-                sender?.backgroundColor = UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00)
-                pointButton.setTitleColor(UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00), for: .normal)
-                userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
-                pointButton.setTitle(String(-userPoint), for: UIControl.State.normal)
-                
-                timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "redBubble")
-                timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "redBubble2")
-                timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "redBubble3")
-                timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "redBubble4")
-                
-                wordBrain.lastPoint.set(lastPoint-userPoint)
-            }
+        if userGotItRight {
+            player.playMP3("true")
+            wordBrain.userGotItCorrect()
+            
+            sender?.backgroundColor = UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00)
+            pointButton.setTitleColor(UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00), for: .normal)
+            userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
+            pointButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
+            
+            timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "greenBubble")
+            timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "greenBubble2")
+            timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "greenBubble3")
+            timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "greenBubble4")
+            
+            wordBrain.lastPoint.set(lastPoint+userPoint)
+        } else {
+            player.playMP3("false")
+            wordBrain.userGotItWrong()
+           
+            sender?.backgroundColor = UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00)
+            pointButton.setTitleColor(UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00), for: .normal)
+            userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
+            pointButton.setTitle(String(-userPoint), for: UIControl.State.normal)
+            
+            timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "redBubble")
+            timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "redBubble2")
+            timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "redBubble3")
+            timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "redBubble4")
+            
+            wordBrain.lastPoint.set(lastPoint-userPoint)
+        }
       
         wordBrain.nextQuestion()
             
@@ -476,7 +471,6 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     func decreaseOnePoint(){
-        
         let lastPoint = wordBrain.lastPoint.getInt()
         
         questionLabel.isHidden = true

@@ -65,7 +65,6 @@ class WordsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goAdd" {
             let destinationVC = segue.destination as! AddViewController
-            destinationVC.itemArray = itemArray
             destinationVC.modalPresentationStyle = .overFullScreen
             
             if segue.destination is AddViewController {
@@ -357,7 +356,6 @@ class WordsViewController: UIViewController {
         default: break
         }
     }
-
 }
 
 //MARK: - Search Bar

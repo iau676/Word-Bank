@@ -206,7 +206,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupDefaults(){
-        
         if wordBrain.playSound.getInt() == 1 {
             switchWordSound.isOn = false
             changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
@@ -308,5 +307,4 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
         super.updateViewConstraints()
     }
-
 }

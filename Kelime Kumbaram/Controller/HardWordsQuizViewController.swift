@@ -214,14 +214,14 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func updateCheckColors(){
-         answer1Button.isEnabled = true
-         answer2Button.isEnabled = true
-         answer1Button.backgroundColor = UIColor.clear
-         answer2Button.backgroundColor = UIColor.clear
-         questionLabel.text = text
-         pointButton.isHidden = false
-         pointButton.setTitle(" ", for: UIControl.State.normal)
-         pointButton.setBackgroundImage(nil, for: UIControl.State.normal)
+        answer1Button.isEnabled = true
+        answer2Button.isEnabled = true
+        answer1Button.backgroundColor = UIColor.clear
+        answer2Button.backgroundColor = UIColor.clear
+        questionLabel.text = text
+        pointButton.isHidden = false
+        pointButton.setTitle(" ", for: UIControl.State.normal)
+        pointButton.setBackgroundImage(nil, for: UIControl.State.normal)
      }
      
      @objc func hideBubbleButton(){
@@ -240,8 +240,8 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Other Functions
     
     func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
-            getLetter()
-            return true
+        getLetter()
+        return true
     }
     
     func arrowButtonsPressed() {
@@ -353,7 +353,6 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     func getLetter(){
-        
         let str = wordBrain.getAnswer()
         
         if letterCounter < str.count {
@@ -375,7 +374,6 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             hintLabel.flash()
             Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(updateHintLabelColor), userInfo: nil, repeats: false)
         }
-        
     }
     
     func checkAnswer(_ sender: UIButton? = nil, _ userAnswer: String){

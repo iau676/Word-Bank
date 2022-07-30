@@ -39,7 +39,6 @@ class ResultViewController: UIViewController {
     var scoreLabelText = ""
     
     let player = Player()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var arrayOfIndex: [Int] { return wordBrain.rightOnce.getValue() as? [Int] ?? [Int]() }
     var userAnswer: [Bool] { return wordBrain.rightOnceBool.getValue() as? [Bool] ?? [Bool]() }
@@ -236,7 +235,6 @@ class ResultViewController: UIViewController {
             performSegue(withIdentifier: "goLevelUp", sender: self)
         }
     }
-
 }
 
     //MARK: - Show Cell
@@ -325,14 +323,17 @@ extension ResultViewController: UITableViewDataSource {
         }
     }
     
-    func writeAnswerCell(_ userAnswer: NSAttributedString, _ trueAnswer: String) -> NSMutableAttributedString {
-        
+    func writeAnswerCell(_ userAnswer: NSAttributedString, _ trueAnswer: String) -> NSMutableAttributedString {        
         let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: textSize+2)]
+        
         let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
         
         let partOne = NSMutableAttributedString(string: "Your answer:\n", attributes: normalFontAttributes)
+        
         let partTwo = userAnswer
+        
         let partThree = NSMutableAttributedString(string: userAnswer.length == 0 ? "Correct answer: \n" : "\nCorrect answer: \n", attributes: normalFontAttributes)
+        
         let partFour = NSMutableAttributedString(string: trueAnswer, attributes: boldFontAttributes as [NSAttributedString.Key : Any])
 
         let combination = NSMutableAttributedString()

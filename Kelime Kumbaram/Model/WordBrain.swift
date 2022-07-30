@@ -89,6 +89,7 @@ struct WordBrain {
         newItem.uuid = UUID().uuidString
         newItem.isCreatedFromUser = true
         self.itemArray.append(newItem)
+        saveContext()
     }
     
     mutating func removeWord(at index: Int){

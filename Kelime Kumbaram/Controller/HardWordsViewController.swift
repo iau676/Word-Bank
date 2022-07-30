@@ -95,16 +95,16 @@ class HardWordsViewController: UIViewController {
     //MARK: - Other Functions
     
     func updateView(){
-            emptyView.updateViewVisibility(true)
-            UIView.transition(with: emptyView, duration: 0.6,
-                              options: .transitionCrossDissolve,
-                              animations: {
-                                let newConstraint2 = self.stackViewConstraint.constraintWithMultiplier(0.2)
-                                self.stackViewConstraint.isActive = false
-                                self.view.addConstraint(newConstraint2)
-                                self.view.layoutIfNeeded()
-                                self.stackViewConstraint = newConstraint2
-                          })
+        emptyView.updateViewVisibility(true)
+        UIView.transition(with: emptyView, duration: 0.6,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            let newConstraint2 = self.stackViewConstraint.constraintWithMultiplier(0.2)
+                            self.stackViewConstraint.isActive = false
+                            self.view.addConstraint(newConstraint2)
+                            self.view.layoutIfNeeded()
+                            self.stackViewConstraint = newConstraint2
+                      })
     }
     
     func setupTableView(){
@@ -186,7 +186,6 @@ class HardWordsViewController: UIViewController {
             }
         }
     }
-    
 }
     //MARK: - Show Words
 

@@ -25,7 +25,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     var player = Player()
     var wordBrain = WordBrain()
-    var itemArray = [Item]()
+    var itemArray: [Item] { return wordBrain.itemArray }
     var tapGesture = UITapGestureRecognizer()
     var updateWordsPage: (()->())?
     var onViewWillDisappear: (()->())?
@@ -40,6 +40,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
+        wordBrain.loadItemArray()
         setupViews()
         setupButtons()
         setupTxtFields()
@@ -55,38 +56,37 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     //MARK: - prepare
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "goNewPoint" {
-                let destinationVC = segue.destination as! NewPointViewController
-                destinationVC.textForLabel = textForLabel
-                destinationVC.userWordCount = userWordCount
-            }
+        if segue.identifier == "goNewPoint" {
+            let destinationVC = segue.destination as! NewPointViewController
+            destinationVC.textForLabel = textForLabel
+            destinationVC.userWordCount = userWordCount
+        }
     }
     
     //MARK: - IBAction
     
     @IBAction func addButtonPressed(_ sender: Any) {
-            if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
-                player.playMP3("mario")
-                if goEdit == 0 {
-                    wordBrain.addWord(english: engTxtField.text!, meaning: trTxtField.text!)
-                    WordBrain.userWordCount.set(userWordCountIntVariable+1)
-                    wordBrain.saveContext()
-                    userWordCountIntVariable += 1
-                    Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(goNewPoint), userInfo: nil, repeats: false)
-                } else {
-                    itemArray[editIndex].eng = engTxtField.text!
-                    itemArray[editIndex].tr = trTxtField.text!
-                    Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(dismissView), userInfo: nil, repeats: false)
-                }
-                
-                updateWordsPage?()
-                
-                trTxtField.text = ""
-                engTxtField.text = ""
-                engTxtField.becomeFirstResponder()
-
-                flipCoinButton()
+        if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
+            player.playMP3("mario")
+            if goEdit == 0 {
+                wordBrain.addWord(english: engTxtField.text!, meaning: trTxtField.text!)
+                WordBrain.userWordCount.set(userWordCountIntVariable+1)
+                userWordCountIntVariable += 1
+                Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(goNewPoint), userInfo: nil, repeats: false)
+            } else {
+                itemArray[editIndex].eng = engTxtField.text!
+                itemArray[editIndex].tr = trTxtField.text!
+                Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(dismissView), userInfo: nil, repeats: false)
             }
+            
+            updateWordsPage?()
+            
+            trTxtField.text = ""
+            engTxtField.text = ""
+            engTxtField.becomeFirstResponder()
+
+            flipCoinButton()
+        }
     }
     
     @IBAction func topViewPressed(_ sender: UIButton) {
@@ -230,13 +230,12 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            if textField == engTxtField {
-                trTxtField.becomeFirstResponder()
-            } else {
-                engTxtField.becomeFirstResponder()
-            }
-            return true
+        if textField == engTxtField {
+            trTxtField.becomeFirstResponder()
+        } else {
+            engTxtField.becomeFirstResponder()
+        }
+        return true
     }
-
 }
 

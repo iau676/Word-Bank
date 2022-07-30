@@ -132,7 +132,6 @@ class ViewController: UIViewController {
             wordBrain.addWord(english: "\(wordBrain.defaultWords[index].eng)", meaning: "\(wordBrain.defaultWords[index].tr)")
         }
         WordBrain.userWordCount.set(defaultWordsCount)
-        wordBrain.saveContext()
      }
     
     //MARK: - Other Functions
@@ -216,8 +215,6 @@ class ViewController: UIViewController {
         cp.addGestureRecognizer(gesture)
     }
 
-
-    
     func check2xTime(){
         if wordBrain.lastHour.getInt() == wordBrain.userSelectedHour.getInt() {
             x2view.isHidden = false
@@ -238,5 +235,4 @@ class ViewController: UIViewController {
             assertionFailure("Failed to configure `AVAAudioSession`: \(error.localizedDescription)")
         }
     }
-
 }
