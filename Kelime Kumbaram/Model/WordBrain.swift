@@ -17,7 +17,6 @@ struct WordBrain {
     var startPressed = UserDefaultsManager(key: "startPressed")
     var whichButton = UserDefaultsManager(key: "whichButton")
     var setNotificationFirstTime = UserDefaultsManager(key: "setNotificationFirstTime")
-    var userWordCount = UserDefaultsManager(key: "userWordCount")
     var x2Time = UserDefaultsManager(key: "2xTime")
     var userSelectedHour = UserDefaultsManager(key: "userSelectedHour")
     var lastEditLabel = UserDefaultsManager(key: "lastEditLabel")
@@ -38,9 +37,10 @@ struct WordBrain {
     var failIndex = UserDefaultsManager(key: "failIndex")
     var hardWordsCount = UserDefaultsManager(key: "hardWordsCount")
     
-    var blueExerciseCount = UserDefaultsManager(key: "blueExerciseCount")
-    var blueTrueCount = UserDefaultsManager(key: "blueTrueCount")
-    var blueFalseCount = UserDefaultsManager(key: "blueFalseCount")
+    static var userWordCount = UserDefaultsManager(key: "userWordCount")
+    static var blueExerciseCount = UserDefaultsManager(key: "blueExerciseCount")
+    static var blueTrueCount = UserDefaultsManager(key: "blueTrueCount")
+    static var blueFalseCount = UserDefaultsManager(key: "blueFalseCount")
     
     var engEdit = UserDefaultsManager(key: "engEdit")
     var trEdit = UserDefaultsManager(key: "trEdit")
@@ -55,6 +55,7 @@ struct WordBrain {
     var start2count = UserDefaultsManager(key: "start2count")
     var start3count = UserDefaultsManager(key: "start3count")
     var start4count = UserDefaultsManager(key: "start4count")
+ 
     
     var questionNumber = 0
     var changedQuestionNumber = 0
@@ -86,9 +87,6 @@ struct WordBrain {
         Word(e: "world", t: "dünya")
 
     ]
-    
-    let pageStatistic = ["\(UserDefaults.standard.integer(forKey: "blueExerciseCount")) defa alıştırma yaptınız", "\(UserDefaults.standard.integer(forKey: "blueAllTrue")) alıştırmayı hepsini doğru yaparak tamamladınız" ,"\(UserDefaults.standard.integer(forKey: "blueTrueCount")) defa doğru cevap verdiniz", "\(UserDefaults.standard.integer(forKey: "blueFalseCount")) defa yanlış cevap verdiniz"]
-
     
     mutating func sortFails(){
         for i in 0..<itemArray.count {

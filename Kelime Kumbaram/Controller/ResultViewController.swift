@@ -176,9 +176,9 @@ class ResultViewController: UIViewController {
     
     func updateStatistic() {
         if wordBrain.whichButton.getString() == "blue" {
-            wordBrain.blueExerciseCount.set(wordBrain.blueExerciseCount.getInt()+1)
-            wordBrain.blueTrueCount.set(wordBrain.blueTrueCount.getInt()+numberOfTrue)
-            wordBrain.blueFalseCount.set(wordBrain.blueFalseCount.getInt()+(userAnswer.count-numberOfTrue))
+            WordBrain.blueExerciseCount.set(WordBrain.blueExerciseCount.getInt()+1)
+            WordBrain.blueTrueCount.set(WordBrain.blueTrueCount.getInt()+numberOfTrue)
+            WordBrain.blueFalseCount.set(WordBrain.blueFalseCount.getInt()+(userAnswer.count-numberOfTrue))
             if numberOfTrue == userAnswer.count {
                 wordBrain.blueAllTrue.set(wordBrain.blueAllTrue.getInt()+1)
             }

@@ -38,10 +38,10 @@ class WordsViewController: UIViewController {
     var HardItemArray = [HardItem]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var textSize: CGFloat { return wordBrain.textSize.getCGFloat() }
-    let pageStatistic = ["Words count: \(UserDefaults.standard.integer(forKey: "userWordCount"))" ,
-                             "Completed exercises count: \(UserDefaults.standard.integer(forKey: "blueExerciseCount"))",
-                             "Correct answers: \(UserDefaults.standard.integer(forKey: "blueTrueCount"))",
-                             "Wrong answers: \(UserDefaults.standard.integer(forKey: "blueFalseCount"))"]
+    let pageStatistic = ["Words count: \(WordBrain.userWordCount.getInt())" ,
+                         "Completed exercises count: \(WordBrain.blueExerciseCount.getInt())",
+                         "Correct answers: \(WordBrain.blueTrueCount.getInt())",
+                         "Wrong answers: \(WordBrain.blueFalseCount.getInt())"]
     
     //MARK: - Life Cycle
     
@@ -320,7 +320,7 @@ class WordsViewController: UIViewController {
     }
     
     func findUserPoint(){ //using after delete a word
-        let userWordCountIntVariable = wordBrain.userWordCount.getInt()
+        let userWordCountIntVariable = WordBrain.userWordCount.getInt()
         var lastPoint = wordBrain.pointForMyWords.getInt()
         print("userWordCountIntVariable>>\(userWordCountIntVariable)")
         print("lastPoint>>\(lastPoint)")
@@ -469,8 +469,8 @@ extension WordsViewController: UITableViewDelegate {
                 self.context.delete(self.itemArray[indexPath.row])
                 self.wordBrain.removeWord(at: indexPath.row)
                 self.updateSearchBarPlaceholder()
-                let userWordCount = self.wordBrain.userWordCount.getInt()
-                self.wordBrain.userWordCount.set(userWordCount-1)
+                let userWordCount = WordBrain.userWordCount.getInt()
+                WordBrain.userWordCount.set(userWordCount-1)
                 self.findUserPoint()
                 if self.itemArray.count > 0 {
                     tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)

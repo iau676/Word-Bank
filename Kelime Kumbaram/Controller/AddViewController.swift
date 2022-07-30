@@ -45,7 +45,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         setupTxtFields()
         checkEditStatus()
         preventInterrupt()
-        userWordCountIntVariable = wordBrain.userWordCount.getInt()
+        userWordCountIntVariable = WordBrain.userWordCount.getInt()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -69,7 +69,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 player.playMP3("mario")
                 if goEdit == 0 {
                     wordBrain.addNewWord(english: engTxtField.text!, meaning: trTxtField.text!)
-                    wordBrain.userWordCount.set(userWordCountIntVariable+1)
+                    WordBrain.userWordCount.set(userWordCountIntVariable+1)
                     wordBrain.saveWord()
                     userWordCountIntVariable += 1
                     Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(goNewPoint), userInfo: nil, repeats: false)
