@@ -81,7 +81,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     //MARK: - IBAction
 
     @IBAction func soundButtonPressed(_ sender: UIButton) {
-        soundButton.flash()
+        soundButton.bounce()
         if wordBrain.startPressed.getInt() == 1 && wordBrain.selectedSegmentIndex.getInt() == 0 {
             player.playSound(wordBrain.soundSpeed.getDouble(), text)
         } else {
@@ -124,7 +124,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func hourButtonPressed(_ sender: UIButton) {
-        pointButton.flash()
+        pointButton.bounce()
         player.playSound(wordBrain.soundSpeed.getDouble(), text)
     }
     

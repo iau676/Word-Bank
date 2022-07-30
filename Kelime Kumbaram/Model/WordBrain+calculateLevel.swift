@@ -327,8 +327,7 @@ extension WordBrain {
         default:
             level.set(0)
             needPoint.set(0-lastSavedPoint)
-            return 1.0
-            
+            return 0.0
         }
     }
 }

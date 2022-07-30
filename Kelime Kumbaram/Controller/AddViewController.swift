@@ -66,6 +66,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     //MARK: - IBAction
     
     @IBAction func addButtonPressed(_ sender: Any) {
+        addButton.bounce()
         if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
             player.playMP3("mario")
             if goEdit == 0 {

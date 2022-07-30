@@ -165,7 +165,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func soundButtonPressed(_ sender: UIButton) {
-        soundButton.flash()
+        soundButton.bounce()
         if whichStartPressed == 1 {
             if wordBrain.selectedSegmentIndex.getInt() == 0 {
                 player.playSound(soundSpeed, questionText)
@@ -176,7 +176,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func hourButtonPressed(_ sender: UIButton) {
-        pointButton.flash()
+        pointButton.bounce()
         player.playSound(soundSpeed, answerForStart23)
     }
     

@@ -85,7 +85,7 @@ class ViewController: UIViewController {
         wordBrain.startPressed.set(1)
         wordBrain.whichButton.set("blue")
         goAddPage = 1
-        greenButton.pulstate()
+        greenButton.bounce()
         viewDidLayoutSubviews()
         goAfter100Milliseconds(identifier: "goWords")
     }
@@ -93,13 +93,13 @@ class ViewController: UIViewController {
     @IBAction func blueButtonPressed(_ sender: UIButton) {
         wordBrain.whichButton.set("blue")
         goAddPage = 0
-        blueButton.pulstate()
+        blueButton.bounce()
         goAfter100Milliseconds(identifier: "goWords")
     }
     
     @IBAction func yellowButtonPressed(_ sender: UIButton) {
         wordBrain.whichButton.set("yellow")
-        yellowButton.pulstate()
+        yellowButton.bounce()
         goAfter100Milliseconds(identifier: "goHardWords")
     }
 

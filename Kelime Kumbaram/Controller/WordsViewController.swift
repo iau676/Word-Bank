@@ -106,18 +106,18 @@ class WordsViewController: UIViewController {
     
     @IBAction func startPressed(_ sender: Any) {
         wordBrain.startPressed.set(1)
-        startButton.pulstate()
+        startButton.bounce()
         check2Items()
     }
     
     @IBAction func startPressed2(_ sender: UIButton) {
         wordBrain.startPressed.set(2)
-        startButton2.pulstate()
+        startButton2.bounce()
         check2Items()
     }
     
     @IBAction func startPressed3(_ sender: UIButton) {
-        startButton3.pulstate()
+        startButton3.bounce()
         //0 is true, 1 is false
         if wordBrain.playSound.getInt() == 0 {
             wordBrain.startPressed.set(3)
