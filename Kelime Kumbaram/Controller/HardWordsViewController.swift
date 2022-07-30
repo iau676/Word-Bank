@@ -125,7 +125,7 @@ class HardWordsViewController: UIViewController {
     }
     
     func setupExerciseButtonShadow(_ uibutton: UIButton){
-        uibutton.layer.shadowColor = UIColor(red: 0.16, green: 0.19, blue: 0.28, alpha: 1.00).cgColor
+        uibutton.layer.shadowColor = UIColor(hex: "#293047")?.cgColor
         uibutton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         uibutton.layer.shadowOpacity = 1.0
         uibutton.layer.shadowRadius = 0.0

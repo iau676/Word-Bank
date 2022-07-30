@@ -15,7 +15,7 @@ class X2TimeViewController: UIViewController {
     override func viewDidLoad() {
         x2Label.text = "You are on 2x points hour!\n\nYou will earn 2x points for each correct answer.\n\nYou can change this hour on settings."
         
-        self.view.backgroundColor = UIColor(red: 0.99, green: 0.55, blue: 0.65, alpha: 1.00)
+        self.view.backgroundColor = UIColor(hex: "#fc8da5")
     }
     
     override func updateViewConstraints() {

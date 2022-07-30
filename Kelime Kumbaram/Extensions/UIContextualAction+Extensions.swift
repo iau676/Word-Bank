@@ -14,7 +14,7 @@ extension UIContextualAction {
             UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }
     }
     
-    func setBackgroundColor(_ uicolor: UIColor){
+    func setBackgroundColor(_ uicolor: UIColor?){
         self.backgroundColor = uicolor
     }
 }

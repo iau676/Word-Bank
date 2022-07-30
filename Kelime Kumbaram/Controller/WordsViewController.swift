@@ -267,7 +267,7 @@ class WordsViewController: UIViewController {
     }
     
     func setupExerciseButtonShadow(_ button: UIButton) {
-        button.layer.shadowColor = UIColor(red: 0.16, green: 0.19, blue: 0.28, alpha: 1.00).cgColor
+        button.layer.shadowColor = UIColor(hex: "#293047")?.cgColor
         button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         button.layer.shadowOpacity = 1.0
         button.layer.shadowRadius = 0.0
@@ -484,7 +484,7 @@ extension WordsViewController: UITableViewDelegate {
             success(true)
         })
         editAction.setImage(imageName: "edit", width: 25, height: 25)
-        editAction.setBackgroundColor(UIColor(red: 0.46, green: 0.62, blue: 0.80, alpha: 1.00))
+        editAction.setBackgroundColor(UIColor(hex: "#759ecc"))
         
         let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             if self.itemArray[indexPath.row].addedHardWords == false {
@@ -500,7 +500,7 @@ extension WordsViewController: UITableViewDelegate {
             success(true)
         })
         addAction.setImage(imageName: "plus", width: 25, height: 25)
-        addAction.setBackgroundColor(UIColor(red: 1.00, green: 0.75, blue: 0.28, alpha: 1.00))
+        addAction.setBackgroundColor(UIColor(hex: "#ffbf47"))
         
         if showWords == 1 {
             if self.itemArray[indexPath.row].addedHardWords == true {

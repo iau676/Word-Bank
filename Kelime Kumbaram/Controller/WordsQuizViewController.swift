@@ -269,7 +269,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func updateHintLabelColor() {
-        hintLabel.textColor = UIColor(named: "d6d6d6")
+        hintLabel.textColor = UIColor(hex: "#d6d6d6")
     }
     
     @objc func updateImg(_ timer: Timer){
@@ -352,7 +352,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         button.backgroundColor = .clear
         button.layer.cornerRadius = 18
         button.layer.borderWidth = 5
-        button.layer.borderColor = UIColor(red: 0.28, green: 0.40, blue: 0.56, alpha: 1.00).cgColor
+        button.layer.borderColor = UIColor(hex: "#47668f")?.cgColor
     }
     
     func getLetter(){
@@ -373,7 +373,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             decreaseOnePoint()
             player.playMP3("beep")
         } else {
-            hintLabel.textColor = UIColor(named: "greenColorSingle")
+            hintLabel.textColor = UIColor(hex: "#2bbd85")
             hintLabel.flash()
             Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(updateHintLabelColor), userInfo: nil, repeats: false)
         }
@@ -433,8 +433,8 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             player.playMP3("true")
             wordBrain.userGotItCorrect()
             
-            sender?.backgroundColor = UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00)
-            pointButton.setTitleColor(UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00), for: .normal)
+            sender?.backgroundColor = UIColor(hex: "#2bbd85")
+            pointButton.setTitleColor(UIColor(hex: "#2bbd85"), for: .normal)
             userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
             pointButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
             
@@ -448,8 +448,8 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
             player.playMP3("false")
             wordBrain.userGotItWrong()
            
-            sender?.backgroundColor = UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00)
-            pointButton.setTitleColor(UIColor(red: 1.00, green: 0.39, blue: 0.44, alpha: 1.00), for: .normal)
+            sender?.backgroundColor = UIColor(hex: "#ff6370")
+            pointButton.setTitleColor(UIColor(hex: "#ff6370"), for: .normal)
             userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
             pointButton.setTitle(String(-userPoint), for: UIControl.State.normal)
             
@@ -476,7 +476,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         questionLabel.isHidden = true
         pointButton.isHidden = false
         
-        pointButton.setTitleColor(UIColor(red: 1.00, green: 0.56, blue: 0.62, alpha: 1.00), for: .normal)
+        pointButton.setTitleColor(UIColor(hex: "#ff6370"), for: .normal)
         pointButton.setImage(imageName: "empty", width: 0, height: 0)
         pointButton.setTitle(String(-1), for: UIControl.State.normal)
         userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)

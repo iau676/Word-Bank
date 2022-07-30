@@ -210,7 +210,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func updateHintLabelColor() {
-        hintLabel.textColor = UIColor(named: "d6d6d6")
+        hintLabel.textColor = UIColor(hex: "#d6d6d6")
     }
     
     @objc func updateCheckColors(){
@@ -304,7 +304,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         button.backgroundColor = .clear
         button.layer.cornerRadius = 18
         button.layer.borderWidth = 5
-        button.layer.borderColor = UIColor(red: 0.28, green: 0.40, blue: 0.56, alpha: 1.00).cgColor
+        button.layer.borderColor = UIColor(hex: "#47668f")?.cgColor
     }
 
     func updateByWhichStartPressed() {
@@ -370,7 +370,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             decreaseOnePoint()
             player.playMP3("beep")
         } else {
-            hintLabel.textColor =  UIColor(named: "greenColorSingle")
+            hintLabel.textColor =  UIColor(hex: "#2bbd85")
             hintLabel.flash()
             Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(updateHintLabelColor), userInfo: nil, repeats: false)
         }
@@ -426,8 +426,8 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             
             if wordBrain.updateCorrectCountHardWord() { questionNumber = totalQuestionNumber }
             
-            sender?.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
-            pointButton.setTitleColor(UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00), for: .normal)
+            sender?.backgroundColor = UIColor(hex: "#2bbd85")
+            pointButton.setTitleColor(UIColor(hex: "#2bbd85"), for: .normal)
                    
             userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
             pointButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
@@ -443,8 +443,8 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
             
             wordBrain.updateWrongCountHardWords()
             
-            sender?.backgroundColor = UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00)
-            pointButton.setTitleColor(UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00), for: .normal)
+            sender?.backgroundColor = UIColor(hex: "#ff6370")
+            pointButton.setTitleColor(UIColor(hex: "#ff6370"), for: .normal)
             
             userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
             pointButton.setTitle(String(-userPoint), for: UIControl.State.normal)
@@ -473,7 +473,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         pointButton.isHidden = false
         questionLabel.isHidden = true
         
-        pointButton.setTitleColor(UIColor(red: 1.00, green: 0.56, blue: 0.62, alpha: 1.00), for: .normal)
+        pointButton.setTitleColor(UIColor(hex: "#ff6370"), for: .normal)
         pointButton.setImage(imageName: "empty", width: 0, height: 0)
         
         userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)

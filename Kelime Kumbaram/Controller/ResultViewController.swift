@@ -129,7 +129,7 @@ class ResultViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = UIColor(red: 0.20, green: 0.24, blue: 0.35, alpha: 1.00)
+        tableView.backgroundColor = UIColor(hex: "#323d5a")
         tableView.layer.cornerRadius = 10
     }
     
@@ -299,18 +299,18 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func updateCellLabelTextColor(_ cell: WordCell) {
-        cell.engLabel.textColor = UIColor(red: 0.17, green: 0.17, blue: 0.18, alpha: 1.00)
-        cell.trLabel.textColor = UIColor(red: 0.17, green: 0.17, blue: 0.18, alpha: 1.00)
-    }
-    
-    func updateCellViewBackgroundForWrong(_ cell: WordCell){
-        cell.trView.backgroundColor = UIColor(red: 1.00, green: 0.56, blue: 0.62, alpha: 1.00)
-        cell.engView.backgroundColor = UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00)
+        cell.engLabel.textColor = UIColor(hex: "#2b2b2e")
+        cell.trLabel.textColor = UIColor(hex: "#2b2b2e")
     }
     
     func updateCellViewBackgroundForRight(_ cell: WordCell){
-        cell.trView.backgroundColor = UIColor(red: 0.44, green: 0.86, blue: 0.73, alpha: 1.00)
-        cell.engView.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
+        cell.engView.backgroundColor = UIColor(hex: "#17bf8c")
+        cell.trView.backgroundColor = UIColor(hex: "#70dbba")
+    }
+    
+    func updateCellViewBackgroundForWrong(_ cell: WordCell){
+        cell.engView.backgroundColor = UIColor(hex: "#eb5c70")
+        cell.trView.backgroundColor = UIColor(hex: "#ff8f9e")
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
