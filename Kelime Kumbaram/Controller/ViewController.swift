@@ -129,7 +129,7 @@ class ViewController: UIViewController {
         
         for index in 0..<defaultWordsCount {
             _ = index // noneed
-            wordBrain.addNewWord(english: "\(wordBrain.defaultWords[index].eng)", meaning: "\(wordBrain.defaultWords[index].tr)")
+            wordBrain.addWord(english: "\(wordBrain.defaultWords[index].eng)", meaning: "\(wordBrain.defaultWords[index].tr)")
         }
         WordBrain.userWordCount.set(defaultWordsCount)
         wordBrain.saveWord()

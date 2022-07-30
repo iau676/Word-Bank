@@ -436,7 +436,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         //MARK: - userGotItRight
             if userGotItRight {
                 player.playMP3("true")
-                wordBrain.updateTrueCountMyWords()
+                wordBrain.userGotItCorrect()
                 
                 sender?.backgroundColor = UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00)
                 pointButton.setTitleColor(UIColor(red: 0.17, green: 0.74, blue: 0.52, alpha: 1.00), for: .normal)

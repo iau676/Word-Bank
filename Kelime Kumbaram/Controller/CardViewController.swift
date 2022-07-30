@@ -152,9 +152,9 @@ extension CardViewController: UITableViewDataSource {
      
         let combination = NSMutableAttributedString()
             
-            combination.append(english)
-            combination.append(meaning)
-        
+        combination.append(english)
+        combination.append(meaning)
+    
         return combination
     }
 }
@@ -172,11 +172,10 @@ extension CardViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView,
-                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-    {
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?{
         let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             self.showAlertForAdded()
-            self.wordBrain.addHardWords(self.questionNumber)
+            self.wordBrain.addWordToHardWords(self.questionNumber)
             success(true)
         })
         addAction.image = imageRenderer(imageName: "plus")

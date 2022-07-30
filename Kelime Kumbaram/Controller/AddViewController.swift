@@ -68,7 +68,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
             if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
                 player.playMP3("mario")
                 if goEdit == 0 {
-                    wordBrain.addNewWord(english: engTxtField.text!, meaning: trTxtField.text!)
+                    wordBrain.addWord(english: engTxtField.text!, meaning: trTxtField.text!)
                     WordBrain.userWordCount.set(userWordCountIntVariable+1)
                     wordBrain.saveWord()
                     userWordCountIntVariable += 1

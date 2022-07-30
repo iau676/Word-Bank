@@ -423,44 +423,44 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         pointButton.isHidden = false
         questionLabel.text = ""
             
-            if userGotItRight {
-                player.playMP3("true")
-                
-                if wordBrain.updateRightCountHardWords() { questionNumber = totalQuestionNumber }
-                
-                sender?.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
-                pointButton.setTitleColor(UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00), for: .normal)
-                       
-                userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
-                pointButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
-                
-                timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "greenBubble")
-                timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "greenBubble2")
-                timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "greenBubble3")
-                timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "greenBubble4")
-                
-                wordBrain.lastPoint.set(lastPoint+userPoint)
-            } else {
-                player.playMP3("false")
-                
-                wordBrain.updateWrongCountHardWords()
-                
-                sender?.backgroundColor = UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00)
-                pointButton.setTitleColor(UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00), for: .normal)
-                
-                userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
-                pointButton.setTitle(String(-userPoint), for: UIControl.State.normal)
-                
-                timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "redBubble")
-                timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "redBubble2")
-                timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "redBubble3")
-                timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "redBubble4")
-                
-                wordBrain.lastPoint.set(lastPoint-userPoint)
-            }
-        
-            wordBrain.nextQuestion()
-            Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
+        if userGotItRight {
+            player.playMP3("true")
+            
+            if wordBrain.updateCorrectCountHardWord() { questionNumber = totalQuestionNumber }
+            
+            sender?.backgroundColor = UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00)
+            pointButton.setTitleColor(UIColor(red: 0.09, green: 0.75, blue: 0.55, alpha: 1.00), for: .normal)
+                   
+            userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
+            pointButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
+            
+            timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "greenBubble")
+            timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "greenBubble2")
+            timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "greenBubble3")
+            timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "greenBubble4")
+            
+            wordBrain.lastPoint.set(lastPoint+userPoint)
+        } else {
+            player.playMP3("false")
+            
+            wordBrain.updateWrongCountHardWords()
+            
+            sender?.backgroundColor = UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00)
+            pointButton.setTitleColor(UIColor(red: 0.92, green: 0.36, blue: 0.44, alpha: 1.00), for: .normal)
+            
+            userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
+            pointButton.setTitle(String(-userPoint), for: UIControl.State.normal)
+            
+            timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "redBubble")
+            timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "redBubble2")
+            timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "redBubble3")
+            timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "redBubble4")
+            
+            wordBrain.lastPoint.set(lastPoint-userPoint)
+        }
+    
+        wordBrain.nextQuestion()
+        Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
         
     }//checkAnswer
     
