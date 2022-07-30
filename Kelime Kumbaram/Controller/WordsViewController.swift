@@ -246,7 +246,7 @@ class WordsViewController: UIViewController {
     
     func setupNavigationBar(){
         let backButton = UIBarButtonItem()
-        backButton.title = "Geri"
+        backButton.title = "Back"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
     
@@ -311,30 +311,6 @@ class WordsViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: when){
                 self.performSegue(withIdentifier: "goToMyQuiz2", sender: self)
             }
-        }
-    }
-    
-    func findUserPoint(){ //using after delete a word
-        let userWordCountIntVariable = WordBrain.userWordCount.getInt()
-        var lastPoint = wordBrain.pointForMyWords.getInt()
-        print("userWordCountIntVariable>>\(userWordCountIntVariable)")
-        print("lastPoint>>\(lastPoint)")
-        if userWordCountIntVariable >= 100 {
-           let newPoint = userWordCountIntVariable/100*2 + 12
-            if lastPoint - newPoint > 0 {
-                wordBrain.pointForMyWords.set(newPoint)
-            }
-        } else {
-          if  userWordCountIntVariable >= 10{
-              if userWordCountIntVariable < 50 {
-                  lastPoint = 11
-              } else {
-                  lastPoint = 12
-              }
-          } else {
-              lastPoint = 10
-          }
-          wordBrain.pointForMyWords.set(lastPoint)
         }
     }
     
@@ -455,7 +431,7 @@ extension WordsViewController: UITableViewDelegate {
             let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
                 self.wordBrain.removeWord(at: indexPath.row)
                 WordBrain.userWordCount.set(WordBrain.userWordCount.getInt()-1)
-                self.findUserPoint()
+                self.wordBrain.calculateExercisePoint()
                 if self.itemArray.count > 0 {
                     tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                 } else {

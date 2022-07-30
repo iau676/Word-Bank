@@ -390,7 +390,7 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Swe-D3-FxE">
-                        <barButtonItem key="backBarButtonItem" title="Geri" id="4c7-CE-yY1"/>
+                        <barButtonItem key="backBarButtonItem" title="Back" id="4c7-CE-yY1"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -832,21 +832,21 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="oeL-n5-M7B" customClass="ResultViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KDH-vU-C5Y">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZBm-fj-LAJ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="M4H-CJ-oeH">
-                                <rect key="frame" x="16" y="0.0" width="382" height="842"/>
+                                <rect key="frame" x="16" y="44" width="382" height="852"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbk-k7-QRy" userLabel="confettiView">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="121"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="122.5"/>
                                         <subviews>
                                             <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEw-x9-JH3">
-                                                <rect key="frame" x="146" y="15.5" width="90" height="90"/>
+                                                <rect key="frame" x="146" y="16" width="90" height="90"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="90" id="1Da-HN-et2"/>
                                                     <constraint firstAttribute="height" constant="90" id="bit-zD-kbo"/>
@@ -861,10 +861,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMs-Go-8nt" userLabel="labelView">
-                                        <rect key="frame" x="0.0" y="129" width="382" height="60"/>
+                                        <rect key="frame" x="0.0" y="130.5" width="382" height="61"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/23" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNa-9p-Mxi">
-                                                <rect key="frame" x="156.5" y="15.5" width="69" height="34.5"/>
+                                                <rect key="frame" x="156.5" y="16.5" width="69" height="34.5"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -876,11 +876,11 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="s8f-Gj-Kbj">
-                                        <rect key="frame" x="0.0" y="197" width="382" height="453"/>
+                                        <rect key="frame" x="0.0" y="199.5" width="382" height="459"/>
                                         <color key="backgroundColor" name="quizBackground"/>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVy-DH-9Ey" userLabel="hardWordsLabelView">
-                                        <rect key="frame" x="0.0" y="658" width="382" height="12"/>
+                                        <rect key="frame" x="0.0" y="666.5" width="382" height="12"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dJ-Io-bCx">
                                                 <rect key="frame" x="167.5" y="8.5" width="47" height="23.5"/>
@@ -895,7 +895,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6dq-xx-GZF">
-                                        <rect key="frame" x="0.0" y="678" width="382" height="35"/>
+                                        <rect key="frame" x="0.0" y="686.5" width="382" height="35"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbW-fW-3JH">
                                                 <rect key="frame" x="0.0" y="0.0" width="382" height="35"/>
@@ -915,10 +915,10 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBv-u8-fLc" userLabel="buttonView">
-                                        <rect key="frame" x="0.0" y="721" width="382" height="121"/>
+                                        <rect key="frame" x="0.0" y="729.5" width="382" height="122.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="130" translatesAutoresizingMaskIntoConstraints="NO" id="d17-pM-EUt">
-                                                <rect key="frame" x="74.5" y="35.5" width="233" height="50"/>
+                                                <rect key="frame" x="74.5" y="36.5" width="233" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5cQ-nB-76q">
                                                         <rect key="frame" x="0.0" y="-1" width="58" height="50"/>
@@ -1431,7 +1431,7 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Otp-ff-5WC">
-                        <barButtonItem key="backBarButtonItem" title="Geri" id="bZS-kS-GtQ"/>
+                        <barButtonItem key="backBarButtonItem" title="Back" id="bZS-kS-GtQ"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Vl5-8r-wXf">
                             <connections>
                                 <action selector="addBarButtonPressed:" destination="9q6-8v-FQ1" id="N0z-UZ-Zfz"/>
@@ -1766,7 +1766,7 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Pp4-Ue-pZe">
-                        <barButtonItem key="backBarButtonItem" title="Geri" id="ekA-Cb-6lt"/>
+                        <barButtonItem key="backBarButtonItem" title="Back" id="ekA-Cb-6lt"/>
                     </navigationItem>
                     <connections>
                         <outlet property="answer1Button" destination="wUc-6p-wTQ" id="bdc-2Q-e2t"/>
@@ -2385,9 +2385,9 @@
         <segue reference="aqO-RI-dlc"/>
         <segue reference="bhg-Vj-Bf9"/>
         <segue reference="ys5-yi-eYE"/>
-        <segue reference="vPV-zd-Pre"/>
+        <segue reference="Gqj-eb-Cz0"/>
         <segue reference="cEH-UA-HgG"/>
-        <segue reference="fmd-6p-Sw8"/>
+        <segue reference="7ze-fQ-nUp"/>
         <segue reference="jYF-Qn-kjl"/>
     </inferredMetricsTieBreakers>
     <resources>

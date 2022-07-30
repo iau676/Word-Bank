@@ -154,7 +154,7 @@ class HardWordsViewController: UIViewController {
     
     func setupNavigationBar(){
         let backButton = UIBarButtonItem()
-        backButton.title = "Geri"
+        backButton.title = "Back"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
     

@@ -384,7 +384,7 @@ class HardWordsQuizViewController: UIViewController, UITextFieldDelegate {
         var userPoint = 0
         var userGotItRight = true
 
-        userPoint = wordBrain.pointForMyWords.getInt()
+        userPoint = wordBrain.exercisePoint.getInt()
         
         switch wordBrain.startPressed.getInt() {
             case 2:

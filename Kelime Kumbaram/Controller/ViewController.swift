@@ -151,7 +151,7 @@ class ViewController: UIViewController {
             wordBrain.x2Time.set(twoDaysAgo)
             wordBrain.userSelectedHour.set(23)
             wordBrain.lastEditLabel.set("empty")
-            wordBrain.pointForMyWords.set("10")
+            wordBrain.exercisePoint.set("10")
             wordBrain.textSize.set(15)
             Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(appendDefaultWords), userInfo: nil, repeats: false)
         }

@@ -28,7 +28,7 @@ struct WordBrain {
     var playAppSound = UserDefaultsManager(key: "playAppSound")
     var textSize = UserDefaultsManager(key: "textSize")
     var lastHour = UserDefaultsManager(key: "lastHour")
-    var pointForMyWords = UserDefaultsManager(key: "pointForMyWords")
+    var exercisePoint = UserDefaultsManager(key: "pointForMyWords")
     var userAnswers = UserDefaultsManager(key: "userAnswers")
     var failNumber = UserDefaultsManager(key: "failNumber")
     var failIndex = UserDefaultsManager(key: "failIndex")

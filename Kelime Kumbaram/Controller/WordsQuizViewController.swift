@@ -408,7 +408,7 @@ class WordsQuizViewController: UIViewController, UITextFieldDelegate {
         pointButton.isHidden = false
         questionLabel.text = ""
         
-        userPoint = wordBrain.pointForMyWords.getInt()
+        userPoint = wordBrain.exercisePoint.getInt()
         
         print("userPoint> \(userPoint)")
         

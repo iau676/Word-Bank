@@ -119,31 +119,13 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func goNewPoint(){
-        let lastPoint = wordBrain.pointForMyWords.getInt()
-    
-        if userWordCountIntVariable >= 100 {
-           let newPoint = userWordCountIntVariable/100*2 + 12
-            if newPoint - lastPoint > 0 {
-                textForLabel = "You will get +\(newPoint-10) points for each correct answer."
-                userWordCount = String(userWordCountIntVariable)
-                wordBrain.pointForMyWords.set(newPoint)
-                performSegue(withIdentifier: "goNewPoint", sender: self)
-            }
-        } else {
-            var newPoint = 0
-            if  userWordCountIntVariable >= 10 {
-                if userWordCountIntVariable < 50 {
-                    newPoint = 11
-                } else {
-                    newPoint = 12
-                }
-                if newPoint - lastPoint > 0 {
-                    textForLabel = "You will get +\(newPoint-10) points for each correct answer."
-                    userWordCount = String(userWordCountIntVariable)
-                    wordBrain.pointForMyWords.set(newPoint)
-                    performSegue(withIdentifier: "goNewPoint", sender: self)
-                }
-            }
+        let lastPoint = wordBrain.exercisePoint.getInt()
+        wordBrain.calculateExercisePoint(userWordCount: userWordCountIntVariable)
+        let newPoint = wordBrain.exercisePoint.getInt()
+        if newPoint != lastPoint {
+            textForLabel = "You will get +\(newPoint-10) points for each correct answer."
+            userWordCount = String(userWordCountIntVariable)
+            performSegue(withIdentifier: "goNewPoint", sender: self)
         }
     }
     
