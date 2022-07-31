@@ -33,7 +33,6 @@ class ResultViewController: UIViewController {
     var newLevel:Int = 0
     var cardCounter = 0
     var showTable = 1
-    var option = ""
     var textForLabel = ""
     var userWordCount = ""
     var scoreLabelText = ""
@@ -111,13 +110,13 @@ class ResultViewController: UIViewController {
     }
     
     @IBAction func refreshPressed(_ sender: Any) {
-        if option == "my" {
+        if wordBrain.whichButton.getString() == "blue" {
             performSegue(withIdentifier: "goToMyQuiz", sender: self)
         } else {
             if whichStartPressed == 4 {
                 performSegue(withIdentifier: "goCard", sender: self)
             } else {
-                performSegue(withIdentifier: "goToQuiz", sender: self)
+                performSegue(withIdentifier: "goToMyQuiz", sender: self)
             }
         }
     }
@@ -264,7 +263,7 @@ extension ResultViewController: UITableViewDataSource {
     
     func updateCellLabelText(_ cell: WordCell, _ index: Int){
         let i = arrayOfIndex[index]
-        if option == "my" {
+        if wordBrain.whichButton.getString() == "blue" {
             if selectedSegmentIndex == 0 {
                 cell.engLabel.text = itemArray[i].eng
                 cell.trLabel.text = itemArray[i].tr
@@ -314,7 +313,7 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
-        if option == "my" {
+        if wordBrain.whichButton.getString() == "blue" {
             cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
                                                           (selectedSegmentIndex == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
         } else {

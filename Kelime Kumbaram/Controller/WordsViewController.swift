@@ -309,7 +309,7 @@ class WordsViewController: UIViewController {
         } else {
             let when = DispatchTime.now() + 0.1
             DispatchQueue.main.asyncAfter(deadline: when){
-                self.performSegue(withIdentifier: "goToMyQuiz2", sender: self)
+                self.performSegue(withIdentifier: "goToExercise", sender: self)
             }
         }
     }
