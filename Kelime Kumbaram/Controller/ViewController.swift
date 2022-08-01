@@ -100,7 +100,7 @@ class ViewController: UIViewController {
     @IBAction func yellowButtonPressed(_ sender: UIButton) {
         wordBrain.whichButton.set("yellow")
         yellowButton.bounce()
-        goAfter100Milliseconds(identifier: "goHardWords")
+        goAfter100Milliseconds(identifier: "goWords")
     }
 
     @IBAction func setNotificationFirstTime(_ sender: UIButton) {

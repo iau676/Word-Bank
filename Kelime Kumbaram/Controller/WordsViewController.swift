@@ -35,10 +35,11 @@ class WordsViewController: UIViewController {
     var notExpandIconName = ""
     var wordBrain = WordBrain()
     var itemArray: [Item] { return wordBrain.itemArray }
-    var HardItemArray = [HardItem]()
+    var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var textSize: CGFloat { return wordBrain.textSize.getCGFloat() }
-    let pageStatistic = ["Words count: \(WordBrain.userWordCount.getInt())" ,
-                         "Completed exercises count: \(WordBrain.blueExerciseCount.getInt())",
+    var whichButton: String	{ return wordBrain.whichButton.getString() }
+    let pageStatistic = ["Total words: \(WordBrain.userWordCount.getInt())" ,
+                         "Completed exercises: \(WordBrain.blueExerciseCount.getInt())",
                          "Correct answers: \(WordBrain.blueTrueCount.getInt())",
                          "Wrong answers: \(WordBrain.blueFalseCount.getInt())"]
     
@@ -46,8 +47,15 @@ class WordsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Bank"
+        title = "My Words"
+
+        if whichButton != "blue" {
+            title = "Hard Words"
+            showWords = 1
+            updateView()
+        }
         wordBrain.loadItemArray()
+        wordBrain.loadHardItemArray()
         setupSearchBar()
         setupView()
         setupExerciseButtons()
@@ -59,7 +67,7 @@ class WordsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         checkGoAddPage()
     }
-    
+     
     //MARK: - prepare
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -204,10 +212,18 @@ class WordsViewController: UIViewController {
         } else {
             expandButton.setImage(imageName: notExpandIconName, width: 35, height: 25)
             emptyView.updateViewVisibility(true)
-            searchBar.updateSearchBarVisibility(false)
             updateTableViewConstraintMultiplier(0.2)
             
-            tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            if whichButton == "blue" {
+                searchBar.updateSearchBarVisibility(false)
+                tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            } else {
+                searchBar.updateSearchBarVisibility(true)
+                tableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+                startButton4.isHidden = true
+                expandButton.isHidden = true
+                navigationItem.rightBarButtonItem = nil
+            }
         }
     }
    
@@ -240,7 +256,12 @@ class WordsViewController: UIViewController {
     func setupBackgroundColor(){
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
-        gradient.colors = [UIColor(named: "bblueColor")!.cgColor, UIColor(named: "bblueColorBottom")!.cgColor]
+        if whichButton == "blue" {
+            gradient.colors = [UIColor(named: "bblueColor")!.cgColor, UIColor(named: "bblueColorBottom")!.cgColor]
+        } else {
+            gradient.colors = [UIColor(named: "yellowColor")!.cgColor, UIColor(named: "yellowColorBottom")!.cgColor]
+        }
+        
         mainView.layer.insertSublayer(gradient, at: 0)
     }
     
@@ -371,7 +392,12 @@ extension WordsViewController: UISearchBarDelegate {
 extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         updateSearchBarPlaceholder()
-        return (showWords == 1 ?  itemArray.count == 0 ? 1 : itemArray.count  : pageStatistic.count)
+        if whichButton == "blue" {
+            return (showWords == 1 ?  itemArray.count == 0 ? 1 : itemArray.count  : pageStatistic.count)
+        } else {
+            showAlertIfHardWordsEmpty()
+            return hardItemArray.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -386,8 +412,14 @@ extension WordsViewController: UITableViewDataSource {
             cell.trView.isHidden = false
             
             if itemArray.count > 0 {
-                cell.engLabel.text = itemArray[indexPath.row].eng
-                cell.trLabel.text = itemArray[indexPath.row].tr
+                if whichButton == "blue" {
+                    cell.engLabel.text = itemArray[indexPath.row].eng
+                    cell.trLabel.text = itemArray[indexPath.row].tr
+                } else {
+                    cell.engLabel.text = hardItemArray[indexPath.row].eng
+                    cell.trLabel.text = hardItemArray[indexPath.row].tr
+                }
+                
             } else {
                 cell.trView.isHidden = true
                 cell.engLabel.text = ""
@@ -410,6 +442,18 @@ extension WordsViewController: UITableViewDataSource {
         cell.updateLabelTextSize(cell.engLabel, textSize)
         cell.updateLabelTextSize(cell.trLabel, textSize)
         return cell
+    }
+    
+    func showAlertIfHardWordsEmpty(){
+        if hardItemArray.count <= 0 {
+            let alert = UIAlertController(title: "Nothing to see here yet", message: "When you answer a word incorrectly in the exercises, that word is added to this page. In order to delete that word from here, you should answer correctly 5 times.", preferredStyle: .alert)
+                            
+            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
     }
 }
 
@@ -478,7 +522,7 @@ extension WordsViewController: UITableViewDelegate {
         addAction.setImage(imageName: "plus", width: 25, height: 25)
         addAction.setBackgroundColor(UIColor(hex: "#ffbf47"))
         
-        if showWords == 1 {
+        if showWords == 1 && whichButton == "blue" {
             if self.itemArray[indexPath.row].addedHardWords == true {
                 return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
             }

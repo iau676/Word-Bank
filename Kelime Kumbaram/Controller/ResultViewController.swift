@@ -166,7 +166,8 @@ class ResultViewController: UIViewController {
     func updateHardWordText(){
         //print how many words added to hard words
         if isWordAddedToHardWords > 0 {
-            addedHardWordsLabel.text = "\(isWordAddedToHardWords) words added to Hard Words."
+            let WordOrWords = (isWordAddedToHardWords == 1) ? "Word" : "Words"
+            addedHardWordsLabel.text = "\(isWordAddedToHardWords) \(WordOrWords) Added to Hard Words."
         } else {
             addedHardWordsLabel.text = ""
         }
