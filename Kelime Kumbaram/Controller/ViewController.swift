@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var yellowButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
+        
     
     //MARK: - Variables
     
@@ -80,6 +81,13 @@ class ViewController: UIViewController {
     }
    
     //MARK: - IBAction
+    
+    @IBAction func x2ButtonPressed(_ sender: Any) {
+        let vc = X2HourViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false)
+    }
+    
     
     @IBAction func greenButtonPressed(_ sender: UIButton) {
         wordBrain.startPressed.set(1)

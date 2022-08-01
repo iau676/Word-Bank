@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 import UserNotifications
 
-class X2ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     //MARK: - IBOutlet
 

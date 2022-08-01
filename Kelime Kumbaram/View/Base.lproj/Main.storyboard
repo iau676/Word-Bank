@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,7 +45,7 @@
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" backgroundImage="x2"/>
                                                                 <connections>
-                                                                    <segue destination="gq3-QF-0vy" kind="presentation" id="0Hm-eS-Byx"/>
+                                                                    <action selector="x2ButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="r2F-b5-TEw"/>
                                                                 </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2x" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSS-lU-eVj">
@@ -242,37 +241,6 @@
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3700" y="36.431784107946029"/>
-        </scene>
-        <!--Time View Controller-->
-        <scene sceneID="R8H-TW-zkX">
-            <objects>
-                <viewController id="gq3-QF-0vy" customClass="X2TimeViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="MS7-pw-Ldy">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNx-j1-xrU">
-                                <rect key="frame" x="16" y="32" width="382" height="29"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="21"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="oY9-P1-UtV"/>
-                        <color key="backgroundColor" systemColor="systemPinkColor"/>
-                        <constraints>
-                            <constraint firstItem="GNx-j1-xrU" firstAttribute="leading" secondItem="oY9-P1-UtV" secondAttribute="leading" constant="16" id="IdJ-2N-fNl"/>
-                            <constraint firstItem="GNx-j1-xrU" firstAttribute="top" secondItem="oY9-P1-UtV" secondAttribute="top" constant="32" id="kEf-1U-tUH"/>
-                            <constraint firstItem="oY9-P1-UtV" firstAttribute="trailing" secondItem="GNx-j1-xrU" secondAttribute="trailing" constant="16" id="wxf-FM-f1u"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="x2Label" destination="GNx-j1-xrU" id="5Ik-Ae-9KU"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sqN-Tk-TBA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3700" y="761"/>
         </scene>
         <!--Card View Controller-->
         <scene sceneID="4Cf-kR-bPu">
@@ -1461,10 +1429,10 @@
             </objects>
             <point key="canvasLocation" x="4641" y="-1342"/>
         </scene>
-        <!--View Controller-->
+        <!--Setting View Controller-->
         <scene sceneID="8fg-Kl-8Qt">
             <objects>
-                <viewController id="evb-Qz-GqT" customClass="X2ViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="evb-Qz-GqT" customClass="X2SettingViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B25-aA-TFd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1915,8 +1883,5 @@
         <namedColor name="yellowColor">
             <color red="1" green="0.75294117647058822" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

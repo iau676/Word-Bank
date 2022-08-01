@@ -21,11 +21,10 @@
 		702577DC280748DD0009FF65 /* kumbaram.png in Resources */ = {isa = PBXBuildFile; fileRef = 702577DB280748DD0009FF65 /* kumbaram.png */; };
 		702577DE280748E50009FF65 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 702577DD280748E50009FF65 /* launch.png */; };
 		7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* WordsViewController.swift */; };
-		702A978327EB378A00AEECF7 /* X2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A978227EB378A00AEECF7 /* X2ViewController.swift */; };
+		702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A978227EB378A00AEECF7 /* X2SettingViewController.swift */; };
 		7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7039B87927A6A04700519D39 /* CircularProgressView.swift */; };
 		704B055528364098006C7F96 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* Word.swift */; };
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
-		7060437627EC83AE00D0D953 /* X2TimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7060437527EC83AE00D0D953 /* X2TimeViewController.swift */; };
 		706A9A24275A6FF800E64ECC /* greenBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A20275A6FF800E64ECC /* greenBubble.png */; };
 		706A9A25275A6FF800E64ECC /* greenBubble3.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A21275A6FF800E64ECC /* greenBubble3.png */; };
 		706A9A26275A6FF800E64ECC /* greenBubble4.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A22275A6FF800E64ECC /* greenBubble4.png */; };
@@ -60,6 +59,7 @@
 		70C357E528882DFC00F3AD86 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E428882DFC00F3AD86 /* Player.swift */; };
 		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
 		70F5903B2897F17E008D4FE1 /* CompletedExercisesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */; };
+		70F5903D289822C4008D4FE1 /* X2HourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5903C289822C4008D4FE1 /* X2HourViewController.swift */; };
 		70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FC6A4A27E26DD500C31481 /* CloudKit.framework */; };
 		70FC7F38275BD1DE00F138E7 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */; };
 /* End PBXBuildFile section */
@@ -79,11 +79,10 @@
 		702577DB280748DD0009FF65 /* kumbaram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kumbaram.png; sourceTree = "<group>"; };
 		702577DD280748E50009FF65 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		7027F690275B9B84001F6068 /* WordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
-		702A978227EB378A00AEECF7 /* X2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2ViewController.swift; sourceTree = "<group>"; };
+		702A978227EB378A00AEECF7 /* X2SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2SettingViewController.swift; sourceTree = "<group>"; };
 		7039B87927A6A04700519D39 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		704B055428364098006C7F96 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
-		7060437527EC83AE00D0D953 /* X2TimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2TimeViewController.swift; sourceTree = "<group>"; };
 		706A9A20275A6FF800E64ECC /* greenBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble.png; sourceTree = "<group>"; };
 		706A9A21275A6FF800E64ECC /* greenBubble3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble3.png; sourceTree = "<group>"; };
 		706A9A22275A6FF800E64ECC /* greenBubble4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble4.png; sourceTree = "<group>"; };
@@ -120,6 +119,7 @@
 		70C357E428882DFC00F3AD86 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		70C357E72888638300F3AD86 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedExercisesViewController.swift; sourceTree = "<group>"; };
+		70F5903C289822C4008D4FE1 /* X2HourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2HourViewController.swift; sourceTree = "<group>"; };
 		70FC6A4A27E26DD500C31481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,8 +150,8 @@
 				7081AB0127CCD15700E2996A /* NewPointViewController.swift */,
 				701581BC27DE80D800796ADE /* SettingsViewController.swift */,
 				70175BC327E71F170053CBDB /* CardViewController.swift */,
-				702A978227EB378A00AEECF7 /* X2ViewController.swift */,
-				7060437527EC83AE00D0D953 /* X2TimeViewController.swift */,
+				702A978227EB378A00AEECF7 /* X2SettingViewController.swift */,
+				70F5903C289822C4008D4FE1 /* X2HourViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -382,13 +382,13 @@
 				70209B2B2759613900D527D3 /* WordBrain.swift in Sources */,
 				702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */,
 				700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */,
-				7060437627EC83AE00D0D953 /* X2TimeViewController.swift in Sources */,
 				707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */,
 				70F5903B2897F17E008D4FE1 /* CompletedExercisesViewController.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,
 				7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */,
+				70F5903D289822C4008D4FE1 /* X2HourViewController.swift in Sources */,
 				708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */,
-				702A978327EB378A00AEECF7 /* X2ViewController.swift in Sources */,
+				702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */,
 				7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */,
 				701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */,
 				704B055528364098006C7F96 /* Word.swift in Sources */,

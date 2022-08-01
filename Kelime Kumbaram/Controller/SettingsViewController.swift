@@ -86,8 +86,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goPicker" {
-            if segue.destination is X2ViewController {
-                (segue.destination as? X2ViewController)?.onViewWillDisappear = { (id) -> Void in
+            if segue.destination is X2SettingViewController {
+                (segue.destination as? X2SettingViewController)?.onViewWillDisappear = { (id) -> Void in
                     self.x2time.text = self.hours[id]
                     self.onViewWillDisappear?()// trigger function in ViewController
                 }

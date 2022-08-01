@@ -1,36 +1,34 @@
 //
-//  CompletedExercisesViewController.swift
+//  X2HourViewController.swift
 //  Kelime Kumbaram
 //
 //  Created by ibrahim uysal on 1.08.2022.
 //
+
 import UIKit
 
-class CompletedExercisesViewController: UIViewController {
-    
-    var wordBrain = WordBrain()
+class X2HourViewController: UIViewController {
     
     // define lazy views
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Completed Exercises"
+        label.text = ""
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = UIColor(named: "cellTextColor")
-        label.font = UIFont(name: "AvenirNext-DemiBold", size: wordBrain.textSize.getCGFloat()+3)
+        label.font = UIFont(name: "AvenirNext-DemiBold", size: 21)
         return label
     }()
 
     lazy var notesLabel: UILabel = {
         let label = UILabel()
-        label.text = "Test: \(wordBrain.start1count.getInt())\n\nWriting: \(wordBrain.start2count.getInt())\n\nListening: \(wordBrain.start3count.getInt())\n\nCard: \(wordBrain.start4count.getInt())"
-        label.font = UIFont(name: "AvenirNext-DemiBold", size: wordBrain.textSize.getCGFloat())
-        label.textColor = UIColor(named: "cellTextColor")
+        label.text = "You are on 2x points hour!\n\nYou will earn 2x points for each correct answer.\n\nYou can change this hour on settings."
+        label.font = UIFont(name: "AvenirNext-Regular", size: 21)
+        label.textColor = UIColor(hex: "#f6f6f6")
         label.numberOfLines = 0
-        label.textAlignment = NSTextAlignment.justified
+        label.textAlignment = .center
         return label
     }()
-    
     
     lazy var contentStackView: UIStackView = {
         let spacer = UIView()
@@ -43,7 +41,7 @@ class CompletedExercisesViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "leftCellColor")
+        view.backgroundColor = UIColor(hex: "#fc8da5")
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         return view
@@ -75,7 +73,6 @@ class CompletedExercisesViewController: UIViewController {
         // tap gesture on dimmed view to dismiss
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleCloseAction))
         dimmedView.addGestureRecognizer(tapGesture)
-        
         setupPanGesture()
     }
     
@@ -238,3 +235,4 @@ class CompletedExercisesViewController: UIViewController {
         }
     }
 }
+
