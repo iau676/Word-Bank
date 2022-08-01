@@ -38,10 +38,10 @@ class WordsViewController: UIViewController {
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var textSize: CGFloat { return wordBrain.textSize.getCGFloat() }
     var whichButton: String	{ return wordBrain.whichButton.getString() }
-    let pageStatistic = ["Total words: \(WordBrain.userWordCount.getInt())" ,
-                         "Completed exercises: \(WordBrain.blueExerciseCount.getInt())",
-                         "Correct answers: \(WordBrain.blueTrueCount.getInt())",
-                         "Wrong answers: \(WordBrain.blueFalseCount.getInt())"]
+    let pageStatistic = ["Total Words: \(WordBrain.userWordCount.getInt())" ,
+                         "Completed Exercises: \(WordBrain.blueExerciseCount.getInt())",
+                         "Correct Answers: \(WordBrain.blueTrueCount.getInt())",
+                         "Wrong Answers: \(WordBrain.blueFalseCount.getInt())"]
     
     //MARK: - Life Cycle
     
@@ -460,13 +460,6 @@ extension WordsViewController: UITableViewDataSource {
     //MARK: - Swipe Cell
 
 extension WordsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -530,6 +523,22 @@ extension WordsViewController: UITableViewDelegate {
         } else {
             return UISwipeActionsConfiguration()
         }
+    }
+}
+
+extension WordsViewController {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 1 && showWords == 0 {
+            let vc = CompletedExercisesViewController()
+            vc.modalPresentationStyle = .overCurrentContext
+            self.present(vc, animated: false)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
 }
 
