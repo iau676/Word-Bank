@@ -20,29 +20,14 @@ extension UIButton {
     func pulstate(){
         let pulse = CASpringAnimation(keyPath: "transform.scale")
         pulse.duration = 0.4
-        pulse.fromValue = 0.95
-        pulse.toValue = 1
-        pulse.autoreverses = true
-        pulse.repeatCount = 1
-        pulse.initialVelocity = 0.5
-        //pulse.damping = 1.0
-        
-        layer.add(pulse, forKey: nil)
-    }
-    
-    func pulstatex2(){
-        let pulse = CASpringAnimation(keyPath: "transform.scale")
-        pulse.duration = 0.4
         pulse.fromValue = 0.85
         pulse.toValue = 1
         pulse.autoreverses = true
-        pulse.repeatCount = 23
+        pulse.repeatCount = 5
         pulse.initialVelocity = 0.5
         pulse.damping = 2.5
-
         layer.add(pulse, forKey: nil)
     }
-    
     
     func flash(){
         let flash = CABasicAnimation(keyPath: "opacity")
@@ -52,8 +37,6 @@ extension UIButton {
         flash.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         flash.autoreverses = true
         flash.repeatCount = 1
-        
-        
         layer.add(flash, forKey: nil)
     }
 
@@ -80,7 +63,6 @@ extension UIButton {
         animation.toValue = CGPoint(x: center.x, y:  4*center.y)
         animation.duration = 1
         animation.fillMode = .forwards
-      
         layer.add(animation, forKey: nil)
     }
     

@@ -762,7 +762,7 @@
         <scene sceneID="GkB-hd-Q59">
             <objects>
                 <viewController id="9q6-8v-FQ1" customClass="WordsViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="WVg-dI-ycn">
+                    <view key="view" contentMode="scaleToFill" id="WVg-dI-ycn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

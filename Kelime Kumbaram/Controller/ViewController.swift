@@ -26,8 +26,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var yellowButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
-        
-    
+            
     //MARK: - Variables
     
     var wordBrain = WordBrain()
@@ -226,7 +225,7 @@ class ViewController: UIViewController {
     func check2xTime(){
         if wordBrain.lastHour.getInt() == wordBrain.userSelectedHour.getInt() {
             x2view.isHidden = false
-            x2button.pulstatex2()
+            x2button.pulstate()
         } else {
             x2view.isHidden = true
         }
