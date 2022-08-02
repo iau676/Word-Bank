@@ -10,14 +10,14 @@ import Foundation
 extension WordBrain {
     
     func setLevelAndReturnProgress(_ newLevel: Int, _ firstLevelPoint: Int, _ secondLevelPoint: Int) -> Float {
-        let lastSavedPoint = lastPoint.getInt()
-        level.set(newLevel)
-        needPoint.set(secondLevelPoint-lastSavedPoint)
+        let lastSavedPoint = UserDefault.lastPoint.getInt()
+        UserDefault.level.set(newLevel)
+        UserDefault.needPoint.set(secondLevelPoint-lastSavedPoint)
         return Float(lastSavedPoint-firstLevelPoint)/Float((secondLevelPoint-firstLevelPoint))
     }
     
     func calculateLevel() -> Float {
-        let lastSavedPoint = lastPoint.getInt()
+        let lastSavedPoint = UserDefault.lastPoint.getInt()
         switch lastSavedPoint {
         case levelPoints._1..<levelPoints._2:
             return setLevelAndReturnProgress(1, levelPoints._1, levelPoints._2)
@@ -320,13 +320,13 @@ extension WordBrain {
             return setLevelAndReturnProgress(100, levelPoints._100, 676_000_000)
             
         case 676_000_000..<2_147_483_646:
-            level.set(676)
-            needPoint.set(0)
+            UserDefault.level.set(676)
+            UserDefault.needPoint.set(0)
             return 1.0
 
         default:
-            level.set(0)
-            needPoint.set(0-lastSavedPoint)
+            UserDefault.level.set(0)
+            UserDefault.needPoint.set(0-lastSavedPoint)
             return 0.0
         }
     }

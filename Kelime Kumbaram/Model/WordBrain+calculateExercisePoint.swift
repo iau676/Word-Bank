@@ -8,20 +8,20 @@
 import Foundation
 
 extension WordBrain {
-    func calculateExercisePoint(userWordCount: Int = WordBrain.userWordCount.getInt()){
-        let lastPoint = exercisePoint.getInt()
+    func calculateExercisePoint(userWordCount: Int = UserDefault.userWordCount.getInt()){
+        let lastPoint = UserDefault.exercisePoint.getInt()
         switch userWordCount {
         case _ where userWordCount >= 100:
             let newPoint = userWordCount/100*2 + 12
             if newPoint != lastPoint {
-                exercisePoint.set(newPoint)
+                UserDefault.exercisePoint.set(newPoint)
             }
         case _ where userWordCount >= 50:
-            exercisePoint.set(12)
+            UserDefault.exercisePoint.set(12)
         case _ where userWordCount >= 10:
-            exercisePoint.set(11)
+            UserDefault.exercisePoint.set(11)
         default:
-            exercisePoint.set(10)
+            UserDefault.exercisePoint.set(10)
         }
     }
 }

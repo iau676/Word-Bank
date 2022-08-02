@@ -28,7 +28,7 @@ class LevelUpController: UIViewController {
         super.viewDidLoad()
         setupDarkView()
         setupContinueButton()
-        levelLabel.text = wordBrain.level.getString()
+        levelLabel.text = UserDefault.level.getString()
     }
     
     override func viewWillAppear(_ animated: Bool) {

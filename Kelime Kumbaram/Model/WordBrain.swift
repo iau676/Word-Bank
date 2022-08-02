@@ -10,45 +10,6 @@ import UIKit
 import CoreData
 
 struct WordBrain {
-    
-    var startPressed = UserDefaultsManager(key: "startPressed")
-    var whichButton = UserDefaultsManager(key: "whichButton")
-    var setNotificationFirstTime = UserDefaultsManager(key: "setNotificationFirstTime")
-    var x2Time = UserDefaultsManager(key: "2xTime")
-    var userSelectedHour = UserDefaultsManager(key: "userSelectedHour")
-    var lastEditLabel = UserDefaultsManager(key: "lastEditLabel")
-    
-    var level = UserDefaultsManager(key: "level")
-    var needPoint = UserDefaultsManager(key: "needPoint")
-    var goLevelUp = UserDefaultsManager(key: "goLevelUp")
-    var lastPoint = UserDefaultsManager(key: "lastPoint")
-    var selectedSegmentIndex = UserDefaultsManager(key: "selectedSegmentIndex")
-    var soundSpeed = UserDefaultsManager(key: "soundSpeed")
-    var playSound = UserDefaultsManager(key: "playSound")
-    var playAppSound = UserDefaultsManager(key: "playAppSound")
-    var textSize = UserDefaultsManager(key: "textSize")
-    var lastHour = UserDefaultsManager(key: "lastHour")
-    var exercisePoint = UserDefaultsManager(key: "pointForMyWords")
-    var userAnswers = UserDefaultsManager(key: "userAnswers")
-    var failNumber = UserDefaultsManager(key: "failNumber")
-    var failIndex = UserDefaultsManager(key: "failIndex")
-    var hardWordsCount = UserDefaultsManager(key: "hardWordsCount")
-    
-    var rightOnce = UserDefaultsManager(key: "rightOnce")
-    var rightOnceBool = UserDefaultsManager(key: "rightOnceBool")
-    var arrayForResultViewENG = UserDefaultsManager(key: "arrayForResultViewENG")
-    var arrayForResultViewTR = UserDefaultsManager(key: "arrayForResultViewTR")
-    var blueAllTrue = UserDefaultsManager(key: "blueAllTrue")
-    
-    var start1count = UserDefaultsManager(key: "start1count")
-    var start2count = UserDefaultsManager(key: "start2count")
-    var start3count = UserDefaultsManager(key: "start3count")
-    var start4count = UserDefaultsManager(key: "start4count")
-    
-    static var userWordCount = UserDefaultsManager(key: "userWordCount")
-    static var blueExerciseCount = UserDefaultsManager(key: "blueExerciseCount")
-    static var blueTrueCount = UserDefaultsManager(key: "blueTrueCount")
-    static var blueFalseCount = UserDefaultsManager(key: "blueFalseCount")
         
     var itemArray = [Item]()
     var hardItemArray = [HardItem]()
@@ -58,9 +19,6 @@ struct WordBrain {
     var failsDictionary =  [Int:Int]()
     var sortedFailsDictionary = Array<(key: Int, value: Int)>()
     
-    var engEdit = UserDefaultsManager(key: "engEdit")
-    var trEdit = UserDefaultsManager(key: "trEdit")
- 
     var questionNumber = 0
     var changedQuestionNumber = 0
     var userSelectedSegmentIndex = 0
@@ -117,8 +75,8 @@ struct WordBrain {
         isWordAddedToHardWords = isWordAddedToHardWords + 1
         
         itemArray[index].addedHardWords = true
-        let lastCount = hardWordsCount.getInt()
-        hardWordsCount.set(lastCount+1)
+        let lastCount = UserDefault.hardWordsCount.getInt()
+        UserDefault.hardWordsCount.set(lastCount+1)
     
         saveContext()
     }
@@ -140,7 +98,7 @@ struct WordBrain {
         loadItemArray()
 
         // these will be return a function
-                if whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "blue" {
                     
                     if itemArray.count > 200 {
                         switch whichQuestion {
@@ -193,7 +151,7 @@ struct WordBrain {
                  
                 }
             rightOncee.append(questionNumber)
-            rightOnce.set(rightOncee)
+        UserDefault.rightOnce.set(rightOncee)
                 
         changedQuestionNumber = questionNumber + Int.random(in: 0...9)
         userSelectedSegmentIndex = selectedSegmentIndex
@@ -201,7 +159,7 @@ struct WordBrain {
         questionNumbersCopy = questionNumbers
         questionNumbersCopy.remove(at: questionNumber)
   
-        if whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "blue" {
             if startPressed == 1 {
                 return selectedSegmentIndex == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr!
             } else {
@@ -217,7 +175,7 @@ struct WordBrain {
     } //getQuestionText
     
     func getAnswer() -> String{
-        if whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "blue" {
             return itemArray[questionNumber].eng!
         } else {
             return hardItemArray[questionNumber].eng!
@@ -235,7 +193,7 @@ struct WordBrain {
 
     mutating func getAnswer(_ sender: Int) -> String {
         if changedQuestionNumber % 2 == sender {
-            if whichButton.getString() == "blue" {
+            if UserDefault.whichButton.getString() == "blue" {
                 return userSelectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
             } else {
                 return userSelectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
@@ -245,7 +203,7 @@ struct WordBrain {
                 answer = Int.random(in: 0..<questionNumbersCopy.count)
                 let temp = questionNumbersCopy[answer]
                      
-                if whichButton.getString() == "blue" {
+                if UserDefault.whichButton.getString() == "blue" {
                     return userSelectedSegmentIndex == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
                 } else {
                     return userSelectedSegmentIndex == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
@@ -257,7 +215,7 @@ struct WordBrain {
     }
     
     mutating func nextQuestion() {
-        if whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "blue" {
             if questionNumber + 1 < itemArray.count {
                 questionNumber += 1
             } else {
@@ -274,28 +232,28 @@ struct WordBrain {
     
     mutating func checkAnswer(userAnswer: String) -> Bool {
         var trueAnswer = ""
-        if whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "blue" {
              trueAnswer = userSelectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
         } else {
              trueAnswer = userSelectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             
             arrayForResultViewENGG.append(hardItemArray[questionNumber].eng ?? "empty")
-            arrayForResultViewENG.set(arrayForResultViewENGG)
+            UserDefault.arrayForResultViewENG.set(arrayForResultViewENGG)
             
             arrayForResultViewTRR.append(hardItemArray[questionNumber].tr ?? "empty")
-            arrayForResultViewTR.set(arrayForResultViewTRR)
+            UserDefault.arrayForResultViewTR.set(arrayForResultViewTRR)
         }
         
         if userAnswer == trueAnswer {
             //need for result view
             rightOnceBooll.append(true)
-            rightOnceBool.set(rightOnceBooll)
+            UserDefault.rightOnceBool.set(rightOnceBooll)
             UserDefaults.standard.synchronize()
             return true
         } else {
             //need for result view
             rightOnceBooll.append(false)
-            rightOnceBool.set(rightOnceBooll)
+            UserDefault.rightOnceBool.set(rightOnceBooll)
             UserDefaults.standard.synchronize()
             return false
         }
@@ -303,15 +261,15 @@ struct WordBrain {
     
     mutating func arrayForResultView(){
         arrayForResultViewENGG.append(hardItemArray[questionNumber].eng ?? "empty")
-        arrayForResultViewENG.set(arrayForResultViewENGG)
+        UserDefault.arrayForResultViewENG.set(arrayForResultViewENGG)
         
         arrayForResultViewTRR.append(hardItemArray[questionNumber].tr ?? "empty")
-        arrayForResultViewTR.set(arrayForResultViewTRR)
+        UserDefault.arrayForResultViewTR.set(arrayForResultViewTRR)
     }
     
     mutating func answerTrue(){ // except test option
         rightOnceBooll.append(true)
-        rightOnceBool.set(rightOnceBooll)
+        UserDefault.rightOnceBool.set(rightOnceBooll)
         UserDefaults.standard.synchronize()
     }
     
@@ -325,7 +283,7 @@ struct WordBrain {
                 }
                 context.delete(hardItemArray[questionNumber])
                 hardItemArray.remove(at: questionNumber)
-                hardWordsCount.set(hardWordsCount.getInt()-1)
+                UserDefault.hardWordsCount.set(UserDefault.hardWordsCount.getInt()-1)
             }
         }
         saveContext()

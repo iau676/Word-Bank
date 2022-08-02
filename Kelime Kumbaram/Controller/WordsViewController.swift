@@ -36,12 +36,12 @@ class WordsViewController: UIViewController {
     var wordBrain = WordBrain()
     var itemArray: [Item] { return wordBrain.itemArray }
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
-    var textSize: CGFloat { return wordBrain.textSize.getCGFloat() }
-    var whichButton: String	{ return wordBrain.whichButton.getString() }
-    let pageStatistic = ["Total Words: \(WordBrain.userWordCount.getInt())" ,
-                         "Completed Exercises: \(WordBrain.blueExerciseCount.getInt())",
-                         "Correct Answers: \(WordBrain.blueTrueCount.getInt())",
-                         "Wrong Answers: \(WordBrain.blueFalseCount.getInt())"]
+    var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    var whichButton: String	{ return UserDefault.whichButton.getString() }
+    let pageStatistic = ["Total Words: \(UserDefault.userWordCount.getInt())" ,
+                         "Completed Exercises: \(UserDefault.blueExerciseCount.getInt())",
+                         "Correct Answers: \(UserDefault.blueTrueCount.getInt())",
+                         "Wrong Answers: \(UserDefault.blueFalseCount.getInt())"]
     
     //MARK: - Life Cycle
     
@@ -113,13 +113,13 @@ class WordsViewController: UIViewController {
     }
     
     @IBAction func startPressed(_ sender: Any) {
-        wordBrain.startPressed.set(1)
+        UserDefault.startPressed.set(1)
         startButton.bounce()
         check2Items()
     }
     
     @IBAction func startPressed2(_ sender: UIButton) {
-        wordBrain.startPressed.set(2)
+        UserDefault.startPressed.set(2)
         startButton2.bounce()
         check2Items()
     }
@@ -127,8 +127,8 @@ class WordsViewController: UIViewController {
     @IBAction func startPressed3(_ sender: UIButton) {
         startButton3.bounce()
         //0 is true, 1 is false
-        if wordBrain.playSound.getInt() == 0 {
-            wordBrain.startPressed.set(3)
+        if UserDefault.playSound.getInt() == 0 {
+            UserDefault.startPressed.set(3)
             check2Items()
         } else {
             let alert = UIAlertController(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "", preferredStyle: .alert)
@@ -141,7 +141,7 @@ class WordsViewController: UIViewController {
     }
     
     @IBAction func startPressed4(_ sender: UIButton) {
-        wordBrain.startPressed.set(4)
+        UserDefault.startPressed.set(4)
         startButton4.pulstate()
         
         if itemArray.count < 2 {
@@ -467,7 +467,7 @@ extension WordsViewController: UITableViewDelegate {
             let alert = UIAlertController(title: "Word will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
             let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
                 self.wordBrain.removeWord(at: indexPath.row)
-                WordBrain.userWordCount.set(WordBrain.userWordCount.getInt()-1)
+                UserDefault.userWordCount.set(UserDefault.userWordCount.getInt()-1)
                 self.wordBrain.calculateExercisePoint()
                 if self.itemArray.count > 0 {
                     tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
@@ -491,8 +491,8 @@ extension WordsViewController: UITableViewDelegate {
             self.editIndex = indexPath.row
             let engEdit = self.itemArray[indexPath.row].eng ?? "empty"
             let trEdit = self.itemArray[indexPath.row].tr ?? "empty"
-            self.wordBrain.engEdit.set(engEdit)
-            self.wordBrain.trEdit.set(trEdit)
+            UserDefault.engEdit.set(engEdit)
+            UserDefault.trEdit.set(trEdit)
             self.performSegue(withIdentifier: "goAdd", sender: self)
             success(true)
         })

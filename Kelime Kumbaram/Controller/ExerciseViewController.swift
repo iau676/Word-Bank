@@ -59,8 +59,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var isWordAddedToHardWords = 0
     var player = Player()
     var wordBrain = WordBrain()
-    var whichButton: String { return wordBrain.whichButton.getString() }
-    var whichStartPressed : Int { return wordBrain.startPressed.getInt() }
+    var whichButton: String { return UserDefault.whichButton.getString() }
+    var whichStartPressed : Int { return UserDefault.startPressed.getInt() }
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     //MARK: - Life Cycle
@@ -140,14 +140,14 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func switchPressed(_ sender: UISwitch) {
         if sender.isOn {
-            wordBrain.playSound.set(0)
+            UserDefault.playSound.set(0)
         } else {
-            wordBrain.playSound.set(1)
+            UserDefault.playSound.set(1)
         }
     }
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
-        wordBrain.selectedSegmentIndex.set(sender.selectedSegmentIndex)
+        UserDefault.selectedSegmentIndex.set(sender.selectedSegmentIndex)
         updateUI()
     }
     
@@ -164,7 +164,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     @IBAction func soundButtonPressed(_ sender: UIButton) {
         soundButton.bounce()
         if whichStartPressed == 1 {
-            if wordBrain.selectedSegmentIndex.getInt() == 0 {
+            if UserDefault.selectedSegmentIndex.getInt() == 0 {
                 player.playSound(soundSpeed, questionText)
             }
         } else {
@@ -203,19 +203,19 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                 pointButton.isHidden=true
             }
          
-            failNumber = wordBrain.failNumber.getValue() as? [Int] ?? [Int]()
-            failIndex = wordBrain.failIndex.getValue() as? [Int] ?? [Int]()
+            failNumber = UserDefault.failNumber.getValue() as? [Int] ?? [Int]()
+            failIndex = UserDefault.failIndex.getValue() as? [Int] ?? [Int]()
                 
-            questionText = wordBrain.getQuestionText(wordBrain.selectedSegmentIndex.getInt(),questionCount, whichStartPressed)
+            questionText = wordBrain.getQuestionText(UserDefault.selectedSegmentIndex.getInt(),questionCount, whichStartPressed)
             answerForStart23 = wordBrain.getAnswer()
             questionLabel.text = questionText
 
             //0 is true, 1 is false
             switch whichStartPressed {
             case 1:
-                if wordBrain.playSound.getInt() == 0 {
-                    if wordBrain.selectedSegmentIndex.getInt() == 0 {
-                        if wordBrain.whichButton.getString() == "yellow" {
+                if UserDefault.playSound.getInt() == 0 {
+                    if UserDefault.selectedSegmentIndex.getInt() == 0 {
+                        if UserDefault.whichButton.getString() == "yellow" {
                             player.playSound(soundSpeed, questionText)
                         } else {
                             player.playSound(soundSpeed, questionText)
@@ -291,7 +291,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         } else {
             answerStackView.isHidden = true
             soundButton.setImage(imageName: "question", width: 35, height: 35)
-//            textField.attributedPlaceholder = NSAttributedString(string: whichStartPressed == 2 ? "..." : "...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.40, green: 0.40, blue: 0.40, alpha: 1.00)])
             
             let newConstraint = wordViewConstrait.constraintWithMultiplier(4)
             wordViewConstrait.isActive = false
@@ -306,16 +305,16 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         }
         
         // 1 is false, 0 is true
-        if wordBrain.playSound.getInt() == 1 {
+        if UserDefault.playSound.getInt() == 1 {
             switchPlaySound.isOn = false
         } else {
             switchPlaySound.isOn = true
         }
         
-        soundSpeed = wordBrain.soundSpeed.getDouble()
-        segmentedControl.selectedSegmentIndex = wordBrain.selectedSegmentIndex.getInt()
+        soundSpeed = UserDefault.soundSpeed.getDouble()
+        segmentedControl.selectedSegmentIndex = UserDefault.selectedSegmentIndex.getInt()
         
-        let textSize = wordBrain.textSize.getCGFloat()
+        let textSize = UserDefault.textSize.getCGFloat()
         questionLabel.font = questionLabel.font.withSize(textSize)
         answer1Button.titleLabel?.font =  answer1Button.titleLabel?.font.withSize(textSize)
         answer2Button.titleLabel?.font =  answer2Button.titleLabel?.font.withSize(textSize)
@@ -324,7 +323,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
         
         userPointButton.layer.cornerRadius = 12
-        userPointButton.setTitle(String(wordBrain.lastPoint.getInt().withCommas()), for: UIControl.State.normal)
+        userPointButton.setTitle(String(UserDefault.lastPoint.getInt().withCommas()), for: UIControl.State.normal)
         
         progressBar.progress = 0
         progressBar2.progress = 0
@@ -374,7 +373,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     func getHour() {
-        wordBrain.lastHour.set(Calendar.current.component(.hour, from: Date()))
+        UserDefault.lastHour.set(Calendar.current.component(.hour, from: Date()))
     }
 
     func checkAnswerQ(_ sender: UIButton? = nil, _ userAnswer: String){
@@ -396,16 +395,16 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        let lastPoint = wordBrain.lastPoint.getInt()
+        let lastPoint = UserDefault.lastPoint.getInt()
         arrayForResultViewUserAnswer.append(userAnswer)
-        wordBrain.userAnswers.set(arrayForResultViewUserAnswer)
+        UserDefault.userAnswers.set(arrayForResultViewUserAnswer)
         
         answer1Button.isEnabled = false
         answer2Button.isEnabled = false
         pointButton.isHidden = false
         questionLabel.text = ""
         
-        userPoint = wordBrain.exercisePoint.getInt()
+        userPoint = UserDefault.exercisePoint.getInt()
         
         print("userPoint> \(userPoint)")
         
@@ -422,7 +421,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         default: break
         }
         
-        if wordBrain.lastHour.getInt() == wordBrain.userSelectedHour.getInt() {
+        if UserDefault.lastHour.getInt() == UserDefault.userSelectedHour.getInt() {
             userPoint *= 2
         }
         
@@ -445,7 +444,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "greenBubble3")
             timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "greenBubble4")
             
-            wordBrain.lastPoint.set(lastPoint+userPoint)
+            UserDefault.lastPoint.set(lastPoint+userPoint)
         } else {
             player.playMP3("false")
             
@@ -465,7 +464,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "redBubble3")
             timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "redBubble4")
             
-            wordBrain.lastPoint.set(lastPoint-userPoint)
+            UserDefault.lastPoint.set(lastPoint-userPoint)
         }
       
         wordBrain.nextQuestion()
@@ -478,7 +477,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     func decreaseOnePoint(){
-        let lastPoint = wordBrain.lastPoint.getInt()
+        let lastPoint = UserDefault.lastPoint.getInt()
         
         questionLabel.isHidden = true
         pointButton.isHidden = false
@@ -490,7 +489,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
         Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(hideBubbleButton), userInfo: nil, repeats: false)
         
-        wordBrain.lastPoint.set(lastPoint-1)
+        UserDefault.lastPoint.set(lastPoint-1)
     }
 
 }

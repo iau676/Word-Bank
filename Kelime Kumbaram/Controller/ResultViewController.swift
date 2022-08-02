@@ -39,15 +39,15 @@ class ResultViewController: UIViewController {
     
     let player = Player()
     
-    var arrayOfIndex: [Int] { return wordBrain.rightOnce.getValue() as? [Int] ?? [Int]() }
-    var userAnswer: [Bool] { return wordBrain.rightOnceBool.getValue() as? [Bool] ?? [Bool]() }
-    var arrayForResultViewENG: [String] { return wordBrain.arrayForResultViewENG.getValue() as? [String] ?? [String]() }
-    var arrayForResultViewTR: [String] { return wordBrain.arrayForResultViewTR.getValue() as? [String] ?? [String]() }
-    var arrayForResultViewUserAnswer: [String] { wordBrain.userAnswers.getValue() as? [String] ?? [String]() }
-    var selectedSegmentIndex: Int { return wordBrain.selectedSegmentIndex.getInt() }
-    var whichStartPressed: Int { return wordBrain.startPressed.getInt() }
-    var textSize: CGFloat { return wordBrain.textSize.getCGFloat() }
-    var soundSpeed: Double { return wordBrain.soundSpeed.getDouble() }
+    var arrayOfIndex: [Int] { return UserDefault.rightOnce.getValue() as? [Int] ?? [Int]() }
+    var userAnswer: [Bool] { return UserDefault.rightOnceBool.getValue() as? [Bool] ?? [Bool]() }
+    var arrayForResultViewENG: [String] { return UserDefault.arrayForResultViewENG.getValue() as? [String] ?? [String]() }
+    var arrayForResultViewTR: [String] { return UserDefault.arrayForResultViewTR.getValue() as? [String] ?? [String]() }
+    var arrayForResultViewUserAnswer: [String] { UserDefault.userAnswers.getValue() as? [String] ?? [String]() }
+    var selectedSegmentIndex: Int { return UserDefault.selectedSegmentIndex.getInt() }
+    var whichStartPressed: Int { return UserDefault.startPressed.getInt() }
+    var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
     
     //MARK: - Life Cycle
     
@@ -110,7 +110,7 @@ class ResultViewController: UIViewController {
     }
     
     @IBAction func refreshPressed(_ sender: Any) {
-        if wordBrain.whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "blue" {
             performSegue(withIdentifier: "goToMyQuiz", sender: self)
         } else {
             if whichStartPressed == 4 {
@@ -133,7 +133,7 @@ class ResultViewController: UIViewController {
     }
     
     func updateRefreshButtonVisibility(){
-        if wordBrain.whichButton.getString() == "yellow" && wordBrain.hardWordsCount.getInt() < 2 {
+        if UserDefault.whichButton.getString() == "yellow" && UserDefault.hardWordsCount.getInt() < 2 {
             refreshButton.isHidden = true
         } else {
             refreshButton.isHidden = false
@@ -174,12 +174,12 @@ class ResultViewController: UIViewController {
     }
     
     func updateStatistic() {
-        if wordBrain.whichButton.getString() == "blue" {
-            WordBrain.blueExerciseCount.set(WordBrain.blueExerciseCount.getInt()+1)
-            WordBrain.blueTrueCount.set(WordBrain.blueTrueCount.getInt()+numberOfTrue)
-            WordBrain.blueFalseCount.set(WordBrain.blueFalseCount.getInt()+(userAnswer.count-numberOfTrue))
+        if UserDefault.whichButton.getString() == "blue" {
+            UserDefault.blueExerciseCount.set(UserDefault.blueExerciseCount.getInt()+1)
+            UserDefault.blueTrueCount.set(UserDefault.blueTrueCount.getInt()+numberOfTrue)
+            UserDefault.blueFalseCount.set(UserDefault.blueFalseCount.getInt()+(userAnswer.count-numberOfTrue))
             if numberOfTrue == userAnswer.count {
-                wordBrain.blueAllTrue.set(wordBrain.blueAllTrue.getInt()+1)
+                UserDefault.blueAllTrue.set(UserDefault.blueAllTrue.getInt()+1)
             }
             updateExerciseCount()
         }
@@ -188,16 +188,16 @@ class ResultViewController: UIViewController {
     func updateExerciseCount() {
         switch whichStartPressed {
         case 1:
-            wordBrain.start1count.set(wordBrain.start1count.getInt()+1)
+            UserDefault.start1count.set(UserDefault.start1count.getInt()+1)
             break
         case 2:
-            wordBrain.start2count.set(wordBrain.start2count.getInt()+1)
+            UserDefault.start2count.set(UserDefault.start2count.getInt()+1)
             break
         case 3:
-            wordBrain.start3count.set(wordBrain.start3count.getInt()+1)
+            UserDefault.start3count.set(UserDefault.start3count.getInt()+1)
             break
         case 4:
-            wordBrain.start4count.set(wordBrain.start4count.getInt()+1)
+            UserDefault.start4count.set(UserDefault.start4count.getInt()+1)
             break
         default: break
         }
@@ -225,11 +225,11 @@ class ResultViewController: UIViewController {
     }
     
     func checkLevelUp(){
-        lastLevel = wordBrain.level.getInt()
+        lastLevel = UserDefault.level.getInt()
          _ = wordBrain.calculateLevel()
-        newLevel = wordBrain.level.getInt()
+        newLevel = UserDefault.level.getInt()
         
-        wordBrain.goLevelUp.set(0)
+        UserDefault.goLevelUp.set(0)
         
         if newLevel - lastLevel > 0 {
             performSegue(withIdentifier: "goLevelUp", sender: self)
@@ -264,7 +264,7 @@ extension ResultViewController: UITableViewDataSource {
     
     func updateCellLabelText(_ cell: WordCell, _ index: Int){
         let i = arrayOfIndex[index]
-        if wordBrain.whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "blue" {
             if selectedSegmentIndex == 0 {
                 cell.engLabel.text = itemArray[i].eng
                 cell.trLabel.text = itemArray[i].tr
@@ -314,7 +314,7 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
-        if wordBrain.whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "blue" {
             cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
                                                           (selectedSegmentIndex == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
         } else {
@@ -359,7 +359,7 @@ extension ResultViewController: UITableViewDelegate {
         if whichStartPressed == 3 {
             var word = ""
             
-            switch wordBrain.whichButton.getString() {
+            switch UserDefault.whichButton.getString() {
             case "blue":
                 word = itemArray[arrayOfIndex[indexPath.row]].eng ?? "empty"
                 break

@@ -20,7 +20,7 @@ extension WordBrain {
                 content.body = message
                 
                 // let date = DateComponents(hour: 23, minute: 44)
-                let date = DateComponents(hour: userSelectedHour.getInt(), minute: 00)
+                let date = DateComponents(hour: UserDefault.userSelectedHour.getInt(), minute: 00)
                 let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
                 let id = UUID().uuidString
                 let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)

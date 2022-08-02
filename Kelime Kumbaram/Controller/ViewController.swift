@@ -89,8 +89,8 @@ class ViewController: UIViewController {
     
     
     @IBAction func greenButtonPressed(_ sender: UIButton) {
-        wordBrain.startPressed.set(1)
-        wordBrain.whichButton.set("blue")
+        UserDefault.startPressed.set(1)
+        UserDefault.whichButton.set("blue")
         goAddPage = 1
         greenButton.bounce()
         viewDidLayoutSubviews()
@@ -98,23 +98,23 @@ class ViewController: UIViewController {
     }
     
     @IBAction func blueButtonPressed(_ sender: UIButton) {
-        wordBrain.whichButton.set("blue")
+        UserDefault.whichButton.set("blue")
         goAddPage = 0
         blueButton.bounce()
         goAfter100Milliseconds(identifier: "goWords")
     }
     
     @IBAction func yellowButtonPressed(_ sender: UIButton) {
-        wordBrain.whichButton.set("yellow")
+        UserDefault.whichButton.set("yellow")
         yellowButton.bounce()
         goAfter100Milliseconds(identifier: "goWords")
     }
 
     @IBAction func setNotificationFirstTime(_ sender: UIButton) {
         //works after any button pressed
-        if wordBrain.setNotificationFirstTime.getInt() == 0 {
+        if UserDefault.setNotificationFirstTime.getInt() == 0 {
             wordBrain.setNotification()
-            wordBrain.setNotificationFirstTime.set(1)
+            UserDefault.setNotificationFirstTime.set(1)
             print("SET NOTİFİCATİON<<")
         }
     }
@@ -138,7 +138,7 @@ class ViewController: UIViewController {
             _ = index // noneed
             wordBrain.addWord(english: "\(wordBrain.defaultWords[index].eng)", meaning: "\(wordBrain.defaultWords[index].tr)")
         }
-        WordBrain.userWordCount.set(defaultWordsCount)
+        UserDefault.userWordCount.set(defaultWordsCount)
      }
     
     //MARK: - Other Functions
@@ -152,14 +152,14 @@ class ViewController: UIViewController {
         }
         
         //version 2.0.1
-        if wordBrain.x2Time.getValue() == nil {
+        if UserDefault.x2Time.getValue() == nil {
             let calendar = Calendar.current
             let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())!
-            wordBrain.x2Time.set(twoDaysAgo)
-            wordBrain.userSelectedHour.set(23)
-            wordBrain.lastEditLabel.set("empty")
-            wordBrain.exercisePoint.set("10")
-            wordBrain.textSize.set(15)
+            UserDefault.x2Time.set(twoDaysAgo)
+            UserDefault.userSelectedHour.set(23)
+            UserDefault.lastEditLabel.set("empty")
+            UserDefault.exercisePoint.set("10")
+            UserDefault.textSize.set(15)
             Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(appendDefaultWords), userInfo: nil, repeats: false)
         }
     }
@@ -211,7 +211,7 @@ class ViewController: UIViewController {
     
     func setupCircularProgress(){
         progressValue = wordBrain.calculateLevel()
-        levelLabel.text = wordBrain.level.getString()
+        levelLabel.text = UserDefault.level.getString()
         
         cp.trackColor = UIColor.white
         cp.progressColor = Colors.pink!
@@ -223,7 +223,7 @@ class ViewController: UIViewController {
     }
 
     func check2xTime(){
-        if wordBrain.lastHour.getInt() == wordBrain.userSelectedHour.getInt() {
+        if UserDefault.lastHour.getInt() == UserDefault.userSelectedHour.getInt() {
             x2view.isHidden = false
             x2button.pulstate()
         } else {
@@ -232,7 +232,7 @@ class ViewController: UIViewController {
     }
     
     func getHour() {
-        wordBrain.lastHour.set(Calendar.current.component(.hour, from: Date()))
+        UserDefault.lastHour.set(Calendar.current.component(.hour, from: Date()))
     }
 
     func fixSoundProblemForRealDevice(){

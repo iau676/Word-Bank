@@ -30,7 +30,7 @@ class CardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        lastPoint = wordBrain.lastPoint.getInt()
+        lastPoint = UserDefault.lastPoint.getInt()
         setupTableView()
         wordBrain.loadItemArray()
         updateWord()
@@ -72,7 +72,7 @@ class CardViewController: UIViewController {
         if cardCounter == 4 { //26
             performSegue(withIdentifier: "goToResult", sender: self)
         } else {
-            wordBrain.lastPoint.set(lastPoint)
+            UserDefault.lastPoint.set(lastPoint)
         }
         self.swipeAnimation()
         self.tableView.reloadData()
@@ -111,7 +111,7 @@ extension CardViewController: UITableViewDataSource {
     
     func writeAnswerCell(_ eng: String, _ tr: String) -> NSMutableAttributedString{
         
-        let textSize = wordBrain.textSize.getCGFloat()
+        let textSize = UserDefault.textSize.getCGFloat()
         
         let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size:textSize+12)]
         

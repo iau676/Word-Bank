@@ -55,9 +55,9 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
         saveButton.layer.cornerRadius = 8
         pickerView.dataSource = self
         pickerView.delegate = self
-        pickerView.selectRow(wordBrain.userSelectedHour.getInt(), inComponent: 0, animated: true)
+        pickerView.selectRow(UserDefault.userSelectedHour.getInt(), inComponent: 0, animated: true)
         
-        let lastEdit = wordBrain.lastEditLabel.getString()
+        let lastEdit = UserDefault.lastEditLabel.getString()
         
         if lastEdit != "empty" {
             lastEditLabel.text = "Last changed on \(lastEdit)"
@@ -74,7 +74,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         
         // subtract date from now
-        let dateComponents = Calendar.current.dateComponents([.day], from: wordBrain.x2Time.getValue() as! Date, to: Date())
+        let dateComponents = Calendar.current.dateComponents([.day], from: UserDefault.x2Time.getValue() as! Date, to: Date())
         
         if let dayCount = dateComponents.day {
             
@@ -92,11 +92,11 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
             let alert = UIAlertController(title:  title , message: message, preferredStyle: .alert)
                 let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                     if dayCount >= 1 {
-                        self.wordBrain.x2Time.set(Date())
+                        UserDefault.x2Time.set(Date())
                         let lastEditLabel = Date().getFormattedDate(format: "dd/MM/yyyy, HH:mm")
-                        self.wordBrain.lastEditLabel.set(lastEditLabel)
+                        UserDefault.lastEditLabel.set(lastEditLabel)
                         self.lastEditLabel.text = "Last changed on \(lastEditLabel)"
-                        self.wordBrain.userSelectedHour.set(self.userSelectedHour)
+                        UserDefault.userSelectedHour.set(self.userSelectedHour)
                         self.onViewWillDisappear?(self.userSelectedHour)
                         self.wordBrain.setNotification()
                     }
@@ -144,7 +144,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     func updateInfoLabel(){
-        infoLabel.text = "You will earn 2x points for each correct answer between \(hours[wordBrain.userSelectedHour.getInt()])  hours."
+        infoLabel.text = "You will earn 2x points for each correct answer between \(hours[UserDefault.userSelectedHour.getInt()])  hours."
     }
     
 }

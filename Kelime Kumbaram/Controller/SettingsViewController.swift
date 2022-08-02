@@ -99,34 +99,34 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func wordSoundChanged(_ sender: UISwitch) {
         if sender.isOn {
-            wordBrain.playSound.set(0)
+            UserDefault.playSound.set(0)
             changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
         } else {
-            wordBrain.playSound.set(1)
+            UserDefault.playSound.set(1)
             changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
         }
     }
     
     @IBAction func appSoundChanged(_ sender: UISwitch) {
         if sender.isOn {
-            wordBrain.playAppSound.set(0)
+            UserDefault.playAppSound.set(0)
         } else {
-            wordBrain.playAppSound.set(1)
+            UserDefault.playAppSound.set(1)
         }
     }
     
     @IBAction func soundSpeedChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            wordBrain.soundSpeed.set(0.3)
+            UserDefault.soundSpeed.set(0.3)
             soundSpeed = 0.3
             break
         case 1:
-            wordBrain.soundSpeed.set(0.5)
+            UserDefault.soundSpeed.set(0.5)
             soundSpeed = 0.5
             break
         case 2:
-            wordBrain.soundSpeed.set(0.7)
+            UserDefault.soundSpeed.set(0.7)
             soundSpeed = 0.7
             break
         default: break
@@ -144,25 +144,25 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBAction func textSizeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            wordBrain.textSize.set(9)
+            UserDefault.textSize.set(9)
             break
         case 1:
-            wordBrain.textSize.set(11)
+            UserDefault.textSize.set(11)
             break
         case 2:
-            wordBrain.textSize.set(13)
+            UserDefault.textSize.set(13)
             break
         case 3:
-            wordBrain.textSize.set(15)
+            UserDefault.textSize.set(15)
             break
         case 4:
-            wordBrain.textSize.set(17)
+            UserDefault.textSize.set(17)
             break
         case 5:
-            wordBrain.textSize.set(19)
+            UserDefault.textSize.set(19)
             break
         default:
-            wordBrain.textSize.set(21)
+            UserDefault.textSize.set(21)
         }
         updateTextSize()
     }
@@ -206,7 +206,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupDefaults(){
-        if wordBrain.playSound.getInt() == 1 {
+        if UserDefault.playSound.getInt() == 1 {
             switchWordSound.isOn = false
             changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
         } else {
@@ -214,20 +214,20 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
         }
         
-        if wordBrain.playAppSound.getInt() == 1 {
+        if UserDefault.playAppSound.getInt() == 1 {
             switchAppSound.isOn = false
         } else {
             switchAppSound.isOn = true
         }
         
-        if wordBrain.textSize.getInt() == 0 {
-            wordBrain.textSize.set(15)
-            wordBrain.soundSpeed.set(0.3)
+        if UserDefault.textSize.getInt() == 0 {
+            UserDefault.textSize.set(15)
+            UserDefault.soundSpeed.set(0.3)
         }
         
-        x2time.text = hours[wordBrain.userSelectedHour.getInt()]
+        x2time.text = hours[UserDefault.userSelectedHour.getInt()]
         
-        soundSpeed = wordBrain.soundSpeed.getDouble()
+        soundSpeed = UserDefault.soundSpeed.getDouble()
         switch soundSpeed {
         case 0.3:
             soundSpeedSegmentedControl.selectedSegmentIndex = 0
@@ -241,7 +241,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         default: break
         }
         
-        switch wordBrain.textSize.getInt() {
+        switch UserDefault.textSize.getInt() {
         case 9:
             textSegmentedControl.selectedSegmentIndex = 0
             break
@@ -268,7 +268,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
 
     func updateTextSize(){
-        textSize = wordBrain.textSize.getCGFloat()
+        textSize = UserDefault.textSize.getCGFloat()
         
         updateLabelTextSize(settingsText)
         updateLabelTextSize(wordSoundText)

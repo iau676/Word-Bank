@@ -17,14 +17,14 @@ class CompletedExercisesViewController: UIViewController {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = Colors.black
-        label.font = UIFont(name: "AvenirNext-DemiBold", size: wordBrain.textSize.getCGFloat()+3)
+        label.font = UIFont(name: "AvenirNext-DemiBold", size: UserDefault.textSize.getCGFloat()+3)
         return label
     }()
 
     lazy var notesLabel: UILabel = {
         let label = UILabel()
-        label.text = "Test: \(wordBrain.start1count.getInt())\n\nWriting: \(wordBrain.start2count.getInt())\n\nListening: \(wordBrain.start3count.getInt())\n\nCard: \(wordBrain.start4count.getInt())"
-        label.font = UIFont(name: "AvenirNext-DemiBold", size: wordBrain.textSize.getCGFloat())
+        label.text = "Test: \(UserDefault.start1count.getInt())\n\nWriting: \(UserDefault.start2count.getInt())\n\nListening: \(UserDefault.start3count.getInt())\n\nCard: \(UserDefault.start4count.getInt())"
+        label.font = UIFont(name: "AvenirNext-DemiBold", size: UserDefault.textSize.getCGFloat())
         label.textColor = UIColor.black
         label.numberOfLines = 0
         label.textAlignment = NSTextAlignment.justified
