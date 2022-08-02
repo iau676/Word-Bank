@@ -15,7 +15,7 @@ class X2HourViewController: UIViewController {
         label.text = ""
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = UIColor(named: "cellTextColor")
+        label.textColor = UIColor.black
         label.font = UIFont(name: "AvenirNext-DemiBold", size: 21)
         return label
     }()
@@ -24,7 +24,7 @@ class X2HourViewController: UIViewController {
         let label = UILabel()
         label.text = "You are on 2x points hour!\n\nYou will earn 2x points for each correct answer.\n\nYou can change this hour on settings."
         label.font = UIFont(name: "AvenirNext-Regular", size: 21)
-        label.textColor = UIColor(hex: "#f6f6f6")
+        label.textColor = Colors.f6f6f6
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -41,7 +41,7 @@ class X2HourViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hex: "#fc8da5")
+        view.backgroundColor = Colors.pink
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         return view

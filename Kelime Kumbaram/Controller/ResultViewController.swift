@@ -128,7 +128,7 @@ class ResultViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = UIColor(hex: "#323d5a")
+        tableView.backgroundColor = Colors.raven
         tableView.layer.cornerRadius = 10
     }
     
@@ -299,18 +299,18 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func updateCellLabelTextColor(_ cell: WordCell) {
-        cell.engLabel.textColor = UIColor(hex: "#2b2b2e")
-        cell.trLabel.textColor = UIColor(hex: "#2b2b2e")
+        cell.engLabel.textColor = Colors.black
+        cell.trLabel.textColor = Colors.black
     }
     
     func updateCellViewBackgroundForRight(_ cell: WordCell){
-        cell.engView.backgroundColor = UIColor(hex: "#17bf8c")
-        cell.trView.backgroundColor = UIColor(hex: "#70dbba")
+        cell.engView.backgroundColor = Colors.green
+        cell.trView.backgroundColor = Colors.lightGreen
     }
     
     func updateCellViewBackgroundForWrong(_ cell: WordCell){
-        cell.engView.backgroundColor = UIColor(hex: "#eb5c70")
-        cell.trView.backgroundColor = UIColor(hex: "#ff8f9e")
+        cell.engView.backgroundColor = Colors.red
+        cell.trView.backgroundColor = Colors.lightRed
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){

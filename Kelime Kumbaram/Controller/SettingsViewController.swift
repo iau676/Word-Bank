@@ -283,7 +283,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func updateSegmentedControlTextSize(_ segmentedControl: UISegmentedControl){
-        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(named: "cellTextColor")!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
+        segmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
     }
     
     func updateLabelTextSize(_ label: UILabel){

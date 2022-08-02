@@ -14,7 +14,7 @@ class CustomModalViewController: UIViewController {
         label.text = "\(UserDefaults.standard.integer(forKey: "needPoint").withCommas()) points required for next level"
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = UIColor(hex: "#fa4069")
+        label.textColor = Colors.red
         label.font = .systemFont(ofSize: 18)
         return label
     }()
@@ -24,7 +24,7 @@ class CustomModalViewController: UIViewController {
         let label = UILabel()
         label.text = ""
         label.font = .systemFont(ofSize: 15)
-        label.textColor = UIColor(named: "cellTextColor")
+        label.textColor = Colors.black
         label.numberOfLines = 0
 //        label.textAlignment = NSTextAlignment.justified
         return label
@@ -40,7 +40,7 @@ class CustomModalViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "leftCellColor")
+        view.backgroundColor = Colors.cellLeft
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         return view

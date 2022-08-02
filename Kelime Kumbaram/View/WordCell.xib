@@ -29,7 +29,7 @@
                                         <attributedString key="attributedText">
                                             <fragment content="eng">
                                                 <attributes>
-                                                    <color key="NSColor" name="cellTextColor"/>
+                                                    <color key="NSColor" red="0.17247745389999999" green="0.17278310660000001" blue="0.17614644769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="15" name="AvenirNext-Medium"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
@@ -62,7 +62,7 @@
                                         <attributedString key="attributedText">
                                             <fragment content="tr">
                                                 <attributes>
-                                                    <color key="NSColor" name="cellTextColor"/>
+                                                    <color key="NSColor" red="0.17247745389999999" green="0.17278310660000001" blue="0.17614644769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="15" name="AvenirNext-Medium"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
@@ -104,9 +104,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <namedColor name="cellTextColor">
-            <color red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="leftCellColor">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

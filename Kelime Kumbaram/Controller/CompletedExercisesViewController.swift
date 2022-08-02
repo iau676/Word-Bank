@@ -16,7 +16,7 @@ class CompletedExercisesViewController: UIViewController {
         label.text = "Completed Exercises"
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = UIColor(named: "cellTextColor")
+        label.textColor = Colors.black
         label.font = UIFont(name: "AvenirNext-DemiBold", size: wordBrain.textSize.getCGFloat()+3)
         return label
     }()
@@ -25,7 +25,7 @@ class CompletedExercisesViewController: UIViewController {
         let label = UILabel()
         label.text = "Test: \(wordBrain.start1count.getInt())\n\nWriting: \(wordBrain.start2count.getInt())\n\nListening: \(wordBrain.start3count.getInt())\n\nCard: \(wordBrain.start4count.getInt())"
         label.font = UIFont(name: "AvenirNext-DemiBold", size: wordBrain.textSize.getCGFloat())
-        label.textColor = UIColor(named: "cellTextColor")
+        label.textColor = UIColor.black
         label.numberOfLines = 0
         label.textAlignment = NSTextAlignment.justified
         return label
@@ -43,7 +43,7 @@ class CompletedExercisesViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "leftCellColor")
+        view.backgroundColor = Colors.cellLeft
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         return view

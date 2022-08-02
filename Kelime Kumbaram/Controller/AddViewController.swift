@@ -162,7 +162,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupViews(){
-        firstView.backgroundColor = UIColor(white: 0.1, alpha: 0.4)
+        firstView.backgroundColor = Colors.darkBackground
         textView.layer.cornerRadius = 12
     }
     

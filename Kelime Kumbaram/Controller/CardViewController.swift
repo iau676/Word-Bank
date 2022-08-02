@@ -99,8 +99,8 @@ extension CardViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! WordCell
         cell.engView.isHidden = true
         cell.trLabel.textAlignment = .center
-        cell.trView.backgroundColor = UIColor(hex: "#323d5a")
-        cell.trLabel.textColor = UIColor(hex: "#d6d6d6")
+        cell.trView.backgroundColor = Colors.raven
+        cell.trLabel.textColor = Colors.d6d6d6
         cell.trLabel.attributedText = writeAnswerCell(wordEnglish, wordMeaning)
         return cell
     }
@@ -115,7 +115,7 @@ extension CardViewController: UITableViewDataSource {
         
         let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size:textSize+12)]
         
-        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor(hex: "#d6d6d6"), NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
+        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: Colors.d6d6d6, NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
         
         let english = NSMutableAttributedString(string: "\(eng)\n\n", attributes: boldFontAttributes as [NSAttributedString.Key : Any])
         
@@ -150,7 +150,7 @@ extension CardViewController: UITableViewDelegate {
             success(true)
         })
         addAction.setImage(imageName: "plus", width: 25, height: 25)
-        addAction.setBackgroundColor(UIColor(hex: "#ffbf47"))
+        addAction.setBackgroundColor(Colors.yellow)
         
         if itemArray[questionNumber].addedHardWords == true {
             showAlert(title: "Already Added")

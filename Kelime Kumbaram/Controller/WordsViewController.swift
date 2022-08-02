@@ -257,9 +257,9 @@ class WordsViewController: UIViewController {
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
         if whichButton == "blue" {
-            gradient.colors = [UIColor(named: "bblueColor")!.cgColor, UIColor(named: "bblueColorBottom")!.cgColor]
+            gradient.colors = [Colors.bblue!.cgColor, Colors.blueBottom!.cgColor]
         } else {
-            gradient.colors = [UIColor(named: "yellowColor")!.cgColor, UIColor(named: "yellowColorBottom")!.cgColor]
+            gradient.colors = [Colors.yellow!.cgColor, Colors.yellowBottom!.cgColor]
         }
         
         mainView.layer.insertSublayer(gradient, at: 0)
@@ -288,7 +288,7 @@ class WordsViewController: UIViewController {
     }
     
     func setupExerciseButtonShadow(_ button: UIButton) {
-        button.layer.shadowColor = UIColor(hex: "#293047")?.cgColor
+        button.layer.shadowColor = Colors.ravenShadow?.cgColor
         button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         button.layer.shadowOpacity = 1.0
         button.layer.shadowRadius = 0.0
@@ -403,7 +403,7 @@ extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! WordCell
         
-        tableView.backgroundColor = UIColor(named: "rightCelerColor")
+        tableView.backgroundColor = Colors.cellRight
         tableView.separatorStyle = .singleLine
         if showWords == 1 {
             tableView.rowHeight = UITableView.automaticDimension
@@ -497,7 +497,7 @@ extension WordsViewController: UITableViewDelegate {
             success(true)
         })
         editAction.setImage(imageName: "edit", width: 25, height: 25)
-        editAction.setBackgroundColor(UIColor(hex: "#759ecc"))
+        editAction.setBackgroundColor(Colors.lightBlue)
         
         let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             if self.itemArray[indexPath.row].addedHardWords == false {
@@ -513,7 +513,7 @@ extension WordsViewController: UITableViewDelegate {
             success(true)
         })
         addAction.setImage(imageName: "plus", width: 25, height: 25)
-        addAction.setBackgroundColor(UIColor(hex: "#ffbf47"))
+        addAction.setBackgroundColor(Colors.yellow)
         
         if showWords == 1 && whichButton == "blue" {
             if self.itemArray[indexPath.row].addedHardWords == true {

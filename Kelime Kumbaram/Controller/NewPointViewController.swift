@@ -75,12 +75,12 @@ class NewPointViewController: UIViewController {
     }
     
     private func setupDarkView(){
-        darkView.backgroundColor = UIColor(white: 0.1, alpha: 0)
+        darkView.backgroundColor = Colors.darkBackground
     }
     
     private func setupContinueButton(){
         continueButton.layer.cornerRadius = continueButton.frame.height / 2
-        continueButton.layer.shadowColor = UIColor(hex: "#444444")?.cgColor
+        continueButton.layer.shadowColor = Colors.darkGrayShadow?.cgColor
         continueButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
         continueButton.layer.shadowOpacity = 1.0
         continueButton.layer.shadowRadius = 0.0

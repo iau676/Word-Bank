@@ -263,7 +263,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func updateHintLabelColor() {
-        hintLabel.textColor = UIColor(hex: "#d6d6d6")
+        hintLabel.textColor = Colors.d6d6d6
     }
     
     @objc func updateImg(_ timer: Timer){
@@ -346,7 +346,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         button.backgroundColor = .clear
         button.layer.cornerRadius = 18
         button.layer.borderWidth = 5
-        button.layer.borderColor = UIColor(hex: "#47668f")?.cgColor
+        button.layer.borderColor = Colors.testAnswerLayer?.cgColor
     }
     
     func getLetter(){
@@ -367,7 +367,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             decreaseOnePoint()
             player.playMP3("beep")
         } else {
-            hintLabel.textColor = UIColor(hex: "#2bbd85")
+            hintLabel.textColor = Colors.green
             hintLabel.flash()
             Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(updateHintLabelColor), userInfo: nil, repeats: false)
         }
@@ -435,8 +435,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                 if wordBrain.updateCorrectCountHardWord() { questionCount = totalQuestionNumber }
             }
             
-            sender?.backgroundColor = UIColor(hex: "#2bbd85")
-            pointButton.setTitleColor(UIColor(hex: "#2bbd85"), for: .normal)
+            sender?.backgroundColor = Colors.green
+            pointButton.setTitleColor(Colors.green, for: .normal)
             userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
             pointButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
             
@@ -455,8 +455,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                 wordBrain.updateWrongCountHardWords()
             }
            
-            sender?.backgroundColor = UIColor(hex: "#ff6370")
-            pointButton.setTitleColor(UIColor(hex: "#ff6370"), for: .normal)
+            sender?.backgroundColor = Colors.red
+            pointButton.setTitleColor(Colors.red, for: .normal)
             userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
             pointButton.setTitle(String(-userPoint), for: UIControl.State.normal)
             
@@ -483,7 +483,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         questionLabel.isHidden = true
         pointButton.isHidden = false
         
-        pointButton.setTitleColor(UIColor(hex: "#ff6370"), for: .normal)
+        pointButton.setTitleColor(Colors.red, for: .normal)
         pointButton.setImage(imageName: "empty", width: 0, height: 0)
         pointButton.setTitle(String(-1), for: UIControl.State.normal)
         userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)

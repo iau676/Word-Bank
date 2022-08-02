@@ -172,13 +172,13 @@ class ViewController: UIViewController {
     }
     
     func setupButtons(){
-        greenButton.backgroundColor = UIColor(hex: "#17bf8c")
-        blueButton.backgroundColor = UIColor(hex: "#1cbaeb")
-        yellowButton.backgroundColor = UIColor(hex: "#ffbf47")
+        greenButton.backgroundColor = Colors.green
+        blueButton.backgroundColor = Colors.blue
+        yellowButton.backgroundColor = Colors.yellow
         
-        setupButtonShadow(greenButton, shadowColor: UIColor(hex: "#129970"))
-        setupButtonShadow(blueButton, shadowColor: UIColor(hex: "#1299bf"))
-        setupButtonShadow(yellowButton, shadowColor: UIColor(hex: "#ffa808"))
+        setupButtonShadow(greenButton, shadowColor: Colors.greenShadow)
+        setupButtonShadow(blueButton, shadowColor: Colors.blueShadow)
+        setupButtonShadow(yellowButton, shadowColor: Colors.yellowShadow)
 
         greenButton.setButtonCornerRadius(15)
         blueButton.setButtonCornerRadius(15)
@@ -200,8 +200,8 @@ class ViewController: UIViewController {
     
     func setupNavigationBar(){
         // back button color
-        self.navigationController?.navigationBar.tintColor = UIColor(hex: "#1c1c1c")
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(hex: "#1c1c1c")!]
+        self.navigationController?.navigationBar.tintColor = Colors.black
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.black!]
     
         //delete navigation bar background
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -214,7 +214,7 @@ class ViewController: UIViewController {
         levelLabel.text = wordBrain.level.getString()
         
         cp.trackColor = UIColor.white
-        cp.progressColor = UIColor(hex: "#fc8da5")!
+        cp.progressColor = Colors.pink!
         self.view.addSubview(cp)
         cp.setProgressWithAnimation(duration: 1.0, value: progressValue)
         
