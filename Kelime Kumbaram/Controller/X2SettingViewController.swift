@@ -134,7 +134,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
         userSelectedHour = row
     }
     
-    //MARK: - Other Functions
+    //MARK: - Helpers
     
     override func updateViewConstraints() {
         self.view.frame.size.height = UIScreen.main.bounds.height - 120

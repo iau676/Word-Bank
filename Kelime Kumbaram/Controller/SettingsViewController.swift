@@ -175,7 +175,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         dismissView()
     }
     
-    //MARK: - Other Functions
+    //MARK: - Helpers
     
     func assignSoundImageName(){
         switch traitCollection.userInterfaceStyle {

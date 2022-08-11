@@ -98,7 +98,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         checkAction()
     }
     
-    //MARK: - Objc Functions
+    //MARK: - Selectors
     
     @objc func flipButton(){
         coinButton.setBackgroundImage(coinImage, for: .normal)
@@ -129,7 +129,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //MARK: - Other Functions
+    //MARK: - Helpers
     
     func checkAction(){
         if engTxtField.text!.count > 0 || trTxtField.text!.count > 0 {

@@ -123,7 +123,7 @@ class ViewController: UIViewController {
         performSegue(withIdentifier: "goSettings", sender: self)
     }
     
-    //MARK: - Objc Functions
+    //MARK: - Selectors
     
     @objc func checkAction(sender : UITapGestureRecognizer) {
         let vc = CustomModalViewController()
@@ -141,7 +141,7 @@ class ViewController: UIViewController {
         UserDefault.userWordCount.set(defaultWordsCount)
      }
     
-    //MARK: - Other Functions
+    //MARK: - Helpers
 
     func setupFirstLaunch(){
         wordBrain.notificationCenter.requestAuthorization(options: [.alert, .sound]) {

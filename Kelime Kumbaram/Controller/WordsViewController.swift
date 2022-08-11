@@ -186,7 +186,7 @@ class WordsViewController: UIViewController {
         }
     }
 
-    //MARK: - Other Functions
+    //MARK: - Helpers
     
     func setupView(){
         tableView.dataSource = self

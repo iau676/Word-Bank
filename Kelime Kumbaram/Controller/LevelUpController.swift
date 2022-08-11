@@ -62,7 +62,7 @@ class LevelUpController: UIViewController {
         dismissView()
     }
     
-    //MARK: - Other Functions
+    //MARK: - Helpers
     
     func dismissView(){
         let when = DispatchTime.now() + 0.1

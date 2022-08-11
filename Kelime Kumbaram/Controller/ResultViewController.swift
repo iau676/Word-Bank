@@ -121,7 +121,7 @@ class ResultViewController: UIViewController {
         }
     }
     
-    //MARK: - Other Functions
+    //MARK: - Helpers
     
     func setupTableView() {
         tableView.dataSource = self

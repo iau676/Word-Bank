@@ -54,7 +54,7 @@ class CardViewController: UIViewController {
         tableView.reloadData()
     }
     
-    //MARK: - Other Functions
+    //MARK: - Helpers
     
     func setupTableView(){
         tableView.dataSource = self

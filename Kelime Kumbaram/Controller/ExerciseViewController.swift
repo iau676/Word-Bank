@@ -181,7 +181,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.popViewController(animated: true)
     }
         
-    //MARK: - Objc Function
+    //MARK: - Selectors
     
     @objc func updateUI() {
         letterCounter = 0
@@ -273,7 +273,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         pointButton.setBackgroundImage(image, for: UIControl.State.normal)
     }
 
-    //MARK: - Other Functions
+    //MARK: - Helpers
     
     func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
         getLetter()
