@@ -110,14 +110,10 @@ class ResultViewController: UIViewController {
     }
     
     @IBAction func refreshPressed(_ sender: Any) {
-        if UserDefault.whichButton.getString() == "blue" {
-            performSegue(withIdentifier: "goToMyQuiz", sender: self)
+        if whichStartPressed == 4 {
+            performSegue(withIdentifier: "goCard", sender: self)
         } else {
-            if whichStartPressed == 4 {
-                performSegue(withIdentifier: "goCard", sender: self)
-            } else {
-                performSegue(withIdentifier: "goToMyQuiz", sender: self)
-            }
+            performSegue(withIdentifier: "goToMyQuiz", sender: self)
         }
     }
     
@@ -167,7 +163,7 @@ class ResultViewController: UIViewController {
         //print how many words added to hard words
         if isWordAddedToHardWords > 0 {
             let WordOrWords = (isWordAddedToHardWords == 1) ? "Word" : "Words"
-            addedHardWordsLabel.text = "\(isWordAddedToHardWords) \(WordOrWords) Added to Hard Words."
+            addedHardWordsLabel.text = "\(isWordAddedToHardWords) \(WordOrWords) Added to Hard Words"
         } else {
             addedHardWordsLabel.text = ""
         }

@@ -80,7 +80,7 @@ class CardViewController: UIViewController {
     
     func swipeAnimation() {
         tableView.isHidden = true
-        UIView.transition(with: tableView, duration: 1.0,
+        UIView.transition(with: tableView, duration: 0.8,
                           options: .transitionCurlUp,
                           animations: {
                             self.tableView.isHidden = false
