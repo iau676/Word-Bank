@@ -126,7 +126,7 @@ class ViewController: UIViewController {
     //MARK: - Selectors
     
     @objc func checkAction(sender : UITapGestureRecognizer) {
-        let vc = CustomModalViewController()
+        let vc = LevelInfoViewController()
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: false)
     }

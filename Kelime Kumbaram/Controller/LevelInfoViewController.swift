@@ -7,32 +7,21 @@
 
 import UIKit
 
-class CustomModalViewController: UIViewController {
+class LevelInfoViewController: UIViewController {
     // define lazy views
-    lazy var titleLabel: UILabel = {
+    lazy var levelLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(UserDefaults.standard.integer(forKey: "needPoint").withCommas()) points required for next level"
+        label.text = "Required points for next level: \n\(UserDefaults.standard.integer(forKey: "needPoint").withCommas())"
+        label.font = UIFont(name: "AvenirNextCondensed-Medium", size: 20)
+        label.textColor = Colors.red
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = Colors.red
-        label.font = .systemFont(ofSize: 18)
-        return label
-    }()
-
-    
-    lazy var notesLabel: UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.font = .systemFont(ofSize: 15)
-        label.textColor = Colors.black
-        label.numberOfLines = 0
-//        label.textAlignment = NSTextAlignment.justified
         return label
     }()
     
     lazy var contentStackView: UIStackView = {
         let spacer = UIView()
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, notesLabel, spacer])
+        let stackView = UIStackView(arrangedSubviews: [levelLabel, spacer])
         stackView.axis = .vertical
         stackView.spacing = 12.0
         return stackView
@@ -40,7 +29,7 @@ class CustomModalViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = Colors.cellLeft
+        view.backgroundColor = Colors.d6d6d6
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         return view
@@ -57,7 +46,7 @@ class CustomModalViewController: UIViewController {
     // Constants
     let defaultHeight: CGFloat = 120
     let dismissibleHeight: CGFloat = 200
-    let maximumContainerHeight: CGFloat = UIScreen.main.bounds.height - 96
+    let maximumContainerHeight: CGFloat = 120
     // keep current new height, initial is default height
     var currentContainerHeight: CGFloat = 120
     
