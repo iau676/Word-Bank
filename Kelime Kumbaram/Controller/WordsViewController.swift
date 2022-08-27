@@ -31,8 +31,8 @@ class WordsViewController: UIViewController {
     var editIndex = 0
     var goAddPage = 0
     var showWords = 0
-    var expandIconName = ""
-    var notExpandIconName = ""
+    var expandIconName = "expand"
+    var notExpandIconName = "notExpand"
     var wordBrain = WordBrain()
     var itemArray: [Item] { return wordBrain.itemArray }
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
@@ -47,19 +47,12 @@ class WordsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "My Words"
-
-        if whichButton != "blue" {
-            title = "Hard Words"
-            showWords = 1
-            updateView()
-        }
         wordBrain.loadItemArray()
         wordBrain.loadHardItemArray()
+        setupNavigationBar()
         setupSearchBar()
         setupView()
-        setupExerciseButtons()
-        setupExpandButton()
+        setupButtons()
         hideKeyboardWhenTappedAround()
         updateSearchBarPlaceholder()
     }
@@ -193,8 +186,12 @@ class WordsViewController: UIViewController {
         tableView.delegate = self
         tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
         tableView.tableFooterView = UIView()
+
+        if whichButton != "blue" {
+            showWords = 1
+            updateView()
+        }
         
-        setupNavigationBar()
         setupBackgroundColor()
         setupCornerRadius()
     }
@@ -269,25 +266,31 @@ class WordsViewController: UIViewController {
         let backButton = UIBarButtonItem()
         backButton.title = "Back"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        if whichButton == "blue" {
+            title = "My Words"
+        } else {
+            title = "Hard Words"
+        }
     }
     
-    func setupExerciseButtons(){
-        setupExerciseButtonImage(startButton, imageName: "firstStartImage", width: 30, height: 15)
-        setupExerciseButtonImage(startButton2, imageName: "secondStartImage", width: 30, height: 15)
-        setupExerciseButtonImage(startButton3, imageName: "thirdStartImage", width: 30, height: 15)
-        setupExerciseButtonImage(startButton4, imageName: "card", width: 20, height: 20)
+    func setupButtons(){
+        setupButtonImage(startButton, imageName: "firstStartImage", width: 30, height: 15)
+        setupButtonImage(startButton2, imageName: "secondStartImage", width: 30, height: 15)
+        setupButtonImage(startButton3, imageName: "thirdStartImage", width: 30, height: 15)
+        setupButtonImage(startButton4, imageName: "card", width: 20, height: 20)
+        setupButtonImage(expandButton, imageName: expandIconName, width: 35-textSize, height: 25-textSize)
         
-        setupExerciseButtonShadow(startButton)
-        setupExerciseButtonShadow(startButton2)
-        setupExerciseButtonShadow(startButton3)
-        setupExerciseButtonShadow(startButton4)
+        setupButtonShadow(startButton)
+        setupButtonShadow(startButton2)
+        setupButtonShadow(startButton3)
+        setupButtonShadow(startButton4)
     }
     
-    func setupExerciseButtonImage(_ button: UIButton, imageName: String, width: CGFloat, height: CGFloat){
+    func setupButtonImage(_ button: UIButton, imageName: String, width: CGFloat, height: CGFloat){
         button.setImage(imageName: imageName, width: width+textSize, height: height+textSize)
     }
     
-    func setupExerciseButtonShadow(_ button: UIButton) {
+    func setupButtonShadow(_ button: UIButton) {
         button.layer.shadowColor = Colors.ravenShadow?.cgColor
         button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         button.layer.shadowOpacity = 1.0
@@ -332,25 +335,6 @@ class WordsViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: when){
                 self.performSegue(withIdentifier: "goToExercise", sender: self)
             }
-        }
-    }
-    
-    func setupExpandButton(){
-        assignExpandIconName()
-        expandButton.setImage(imageName: expandIconName, width: 35, height: 25)
-    }
-    
-    func assignExpandIconName() {
-        switch traitCollection.userInterfaceStyle {
-        case .light, .unspecified:
-            expandIconName = "expand"
-            notExpandIconName = "notExpand"
-            break
-        case .dark:
-            expandIconName = "expandLight"
-            notExpandIconName = "notExpandLight"
-            break
-        default: break
         }
     }
 }
