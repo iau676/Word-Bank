@@ -134,6 +134,10 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
         userSelectedHour = row
     }
     
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return NSAttributedString(string: hours[row], attributes: [NSAttributedString.Key.foregroundColor: Colors.black!])
+    }
+    
     //MARK: - Helpers
     
     override func updateViewConstraints() {

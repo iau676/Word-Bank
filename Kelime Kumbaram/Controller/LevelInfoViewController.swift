@@ -11,8 +11,8 @@ class LevelInfoViewController: UIViewController {
     // define lazy views
     lazy var levelLabel: UILabel = {
         let label = UILabel()
-        label.text = "Required points for next level: \n\(UserDefaults.standard.integer(forKey: "needPoint").withCommas())"
-        label.font = UIFont(name: "AvenirNext-Medium", size: 20)
+        label.text = "Required points for next level: \n\(UserDefault.needPoint.getInt().withCommas())"
+        label.font = UIFont(name: "AvenirNext-Medium", size: 19)
         label.textColor = Colors.red
         label.textAlignment = .center
         label.numberOfLines = 0
