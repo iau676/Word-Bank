@@ -22,7 +22,19 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cbS-5J-7bN">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="333.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word Bank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1X-Wx-VON">
+                                                <rect key="frame" x="86" y="139.5" width="203.5" height="55"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="40"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="a1X-Wx-VON" firstAttribute="centerY" secondItem="cbS-5J-7bN" secondAttribute="centerY" id="J18-t4-0JQ"/>
+                                            <constraint firstItem="a1X-Wx-VON" firstAttribute="centerX" secondItem="cbS-5J-7bN" secondAttribute="centerX" id="bZy-3w-JoW"/>
+                                        </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-5Y-W9U">
                                         <rect key="frame" x="0.0" y="333.5" width="375" height="333.5"/>
@@ -63,7 +75,7 @@
     <resources>
         <image name="launch.png" width="1024" height="1024"/>
         <namedColor name="yellowColor">
-            <color red="1" green="0.75294117647058822" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.75294117647058822" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
