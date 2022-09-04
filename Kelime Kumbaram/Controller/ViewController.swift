@@ -142,15 +142,8 @@ class ViewController: UIViewController {
      }
     
     //MARK: - Helpers
-
+    
     func setupFirstLaunch(){
-        wordBrain.notificationCenter.requestAuthorization(options: [.alert, .sound]) {
-            (permissionGranted, error) in
-            if(!permissionGranted){
-                print("Permission Denied")
-            }
-        }
-        
         //version 2.0.1
         if UserDefault.x2Time.getValue() == nil {
             let calendar = Calendar.current
@@ -160,8 +153,23 @@ class ViewController: UIViewController {
             UserDefault.lastEditLabel.set("empty")
             UserDefault.exercisePoint.set("10")
             UserDefault.textSize.set(15)
+            askNotificationPermission()
+            showOnboarding()
             Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(appendDefaultWords), userInfo: nil, repeats: false)
         }
+    }
+    
+    func askNotificationPermission(){
+        wordBrain.notificationCenter.requestAuthorization(options: [.alert, .sound]) {
+            (permissionGranted, error) in
+            if(!permissionGranted){
+                print("Permission Denied")
+            }
+        }
+    }
+    
+    func showOnboarding(){
+        navigationController?.pushViewController(OnboardingContainerViewController(), animated: true)
     }
     
     func goAfter100Milliseconds(identifier: String){

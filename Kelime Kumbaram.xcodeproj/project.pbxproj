@@ -59,6 +59,8 @@
 		70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */; };
 		70C357E528882DFC00F3AD86 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E428882DFC00F3AD86 /* Player.swift */; };
 		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
+		70F0AB3F28C51869002E3EC9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */; };
+		70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */; };
 		70F5903B2897F17E008D4FE1 /* CompletedExercisesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */; };
 		70F5903D289822C4008D4FE1 /* X2HourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5903C289822C4008D4FE1 /* X2HourViewController.swift */; };
 		70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FC6A4A27E26DD500C31481 /* CloudKit.framework */; };
@@ -120,6 +122,8 @@
 		70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+setNotification.swift"; sourceTree = "<group>"; };
 		70C357E428882DFC00F3AD86 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		70C357E72888638300F3AD86 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedExercisesViewController.swift; sourceTree = "<group>"; };
 		70F5903C289822C4008D4FE1 /* X2HourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2HourViewController.swift; sourceTree = "<group>"; };
 		70FC6A4A27E26DD500C31481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -214,6 +218,7 @@
 				706CBAB427592F8D008B4773 /* SceneDelegate.swift */,
 				709ED6A62899312800A34007 /* Constants.swift */,
 				708AFD86288719BA00E09AE1 /* Extensions */,
+				70F0AB3D28C51858002E3EC9 /* Onboarding */,
 				70209B1F27595DF200D527D3 /* Model */,
 				70209B1D27595DDE00D527D3 /* View */,
 				70209B1C27595DD000D527D3 /* Controller */,
@@ -264,6 +269,15 @@
 				707106ED275A1E41005532D0 /* redBubble4.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		70F0AB3D28C51858002E3EC9 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */,
+				70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		70FC6A4927E26DD500C31481 /* Frameworks */ = {
@@ -382,6 +396,7 @@
 				700BC57F2892FE9E00903C04 /* WordBrain+calculateLevel.swift in Sources */,
 				706CBAD627593993008B4773 /* WordCell.swift in Sources */,
 				708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */,
+				70F0AB3F28C51869002E3EC9 /* OnboardingViewController.swift in Sources */,
 				70209B2B2759613900D527D3 /* WordBrain.swift in Sources */,
 				702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */,
 				700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */,
@@ -395,6 +410,7 @@
 				7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */,
 				701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */,
 				709ED6A72899312800A34007 /* Constants.swift in Sources */,
+				70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */,
 				704B055528364098006C7F96 /* Word.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
