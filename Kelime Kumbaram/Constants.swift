@@ -12,7 +12,6 @@ enum Colors {
     static let black                     = UIColor(hex: "#1C1C1C")
     static let cellRight                 = UIColor(hex: "#DFDEDE")
     static let cellLeft                  = UIColor(hex: "#F5F5F5")
-    static let bblue                     = UIColor(hex: "#1CBAEA")
     static let blueBottom                = UIColor(hex: "#88D1F0")
     static let yyellow                   = UIColor(hex: "#FFC047")
     static let yellowBottom              = UIColor(hex: "#FFD387")

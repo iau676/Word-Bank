@@ -51,7 +51,7 @@ class OnboardingContainerViewController: UIViewController {
     }
     
     private func setup() {
-        view.backgroundColor = .blue
+        view.backgroundColor = Colors.blue
         
         addChild(pageViewController)
         view.addSubview(pageViewController.view)

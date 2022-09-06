@@ -254,7 +254,7 @@ class WordsViewController: UIViewController {
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
         if whichButton == "blue" {
-            gradient.colors = [Colors.bblue!.cgColor, Colors.blueBottom!.cgColor]
+            gradient.colors = [Colors.blue!.cgColor, Colors.blueBottom!.cgColor]
         } else {
             gradient.colors = [Colors.yellow!.cgColor, Colors.yellowBottom!.cgColor]
         }
