@@ -18,13 +18,15 @@ class OnboardingContainerViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         
-        let page1 = OnboardingViewController(imageName: "world", titleText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ")
-        let page2 = OnboardingViewController(imageName: "bankv", titleText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ")
-        let page3 = OnboardingViewController(imageName: "letter", titleText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ")
+        let page1 = OnboardingViewController(imageName: "newV", titleText: "Add words and create your own dictionary.", backgroundColor: Colors.green)
+        let page2 = OnboardingViewController(imageName: "bankV", titleText: "Make exercise with your words and see your statistics.", backgroundColor: Colors.blue)
+        let page3 = OnboardingViewController(imageName: "hardV", titleText: "When you answer a word incorrectly in the exercises, that word is added to Hard Words. In order to delete that word from here, you should answer correctly 5 times.", backgroundColor: Colors.yellow)
+        let page4 = OnboardingViewController(imageName: "x2V", titleText: "Earn 2x points for each correct answer between your selected hours.", backgroundColor: Colors.pink)
 
         pages.append(page1)
         pages.append(page2)
         pages.append(page3)
+        pages.append(page4)
         
         currentVC = pages.first!
         
@@ -51,7 +53,7 @@ class OnboardingContainerViewController: UIViewController {
     }
     
     private func setup() {
-        view.backgroundColor = Colors.blue
+        view.backgroundColor = Colors.darkGrayShadow
         
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
@@ -74,6 +76,7 @@ class OnboardingContainerViewController: UIViewController {
     private func style() {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.setTitle("Close", for: [])
+        closeButton.tintColor = Colors.darkGrayShadow
         closeButton.addTarget(self, action: #selector(closeTapped), for: .primaryActionTriggered)
     }
     

@@ -15,10 +15,12 @@ class OnboardingViewController: UIViewController {
     
     let imageName: String
     let titleText: String
+    let backgroundColor: UIColor?
     
-    init(imageName: String, titleText: String) {
+    init(imageName: String, titleText: String, backgroundColor: UIColor?) {
         self.imageName = imageName
         self.titleText = titleText
+        self.backgroundColor = backgroundColor
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,8 +38,8 @@ class OnboardingViewController: UIViewController {
 
 extension OnboardingViewController {
     func style() {
-        view.backgroundColor = .systemBackground
-        
+        view.backgroundColor = backgroundColor
+                
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -45,11 +47,12 @@ extension OnboardingViewController {
         // Image
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: imageName)
+        imageView.image = UIImage(named: imageName)!.imageResized(to: CGSize(width: 100, height: 100))
         
         // Label
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = .center
+        titleLabel.textColor = .black
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.numberOfLines = 0
@@ -65,8 +68,8 @@ extension OnboardingViewController {
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 1),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 1)
+            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 4),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 4)
         ])
     }
 }
