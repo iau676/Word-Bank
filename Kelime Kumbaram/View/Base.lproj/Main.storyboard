@@ -665,6 +665,7 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="muh-jy-A48" firstAttribute="centerX" secondItem="J5c-dU-c1M" secondAttribute="centerX" id="F9Y-hT-be1"/>
                                                     <constraint firstItem="muh-jy-A48" firstAttribute="centerY" secondItem="J5c-dU-c1M" secondAttribute="centerY" id="xVI-55-0th"/>
@@ -729,7 +730,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="blackColor"/>
                                 <constraints>
                                     <constraint firstItem="CiY-MF-5xR" firstAttribute="top" secondItem="KTN-Tj-uMC" secondAttribute="top" id="D5u-mN-zIZ"/>
@@ -1398,8 +1399,8 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" name="blackColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="EIc-FP-5Yb" firstAttribute="top" secondItem="olU-SV-rGM" secondAttribute="top" id="DUh-lr-gWf"/>
                                     <constraint firstAttribute="bottom" secondItem="EIc-FP-5Yb" secondAttribute="bottom" id="WdV-p8-o92"/>
@@ -1843,7 +1844,7 @@
         <segue reference="9Cg-1r-QhJ"/>
         <segue reference="aqO-RI-dlc"/>
         <segue reference="VaH-z8-7n4"/>
-        <segue reference="7eU-GJ-yCb"/>
+        <segue reference="ys5-yi-eYE"/>
         <segue reference="Gqj-eb-Cz0"/>
         <segue reference="cEH-UA-HgG"/>
     </inferredMetricsTieBreakers>

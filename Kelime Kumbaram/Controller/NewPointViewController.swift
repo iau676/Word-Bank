@@ -28,7 +28,6 @@ class NewPointViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDarkView()
         setupContinueButton()
         levelLabel.text = userWordCount
         newPointLabel.text = textForLabel
@@ -72,10 +71,6 @@ class NewPointViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: when){
             self.dismiss(animated: true, completion: nil)
         }
-    }
-    
-    private func setupDarkView(){
-        darkView.backgroundColor = Colors.darkBackground
     }
     
     private func setupContinueButton(){

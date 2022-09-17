@@ -26,7 +26,6 @@ class LevelUpController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDarkView()
         setupContinueButton()
         levelLabel.text = UserDefault.level.getString()
     }
@@ -70,11 +69,7 @@ class LevelUpController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
-    private func setupDarkView(){
-        darkView.backgroundColor = Colors.darkBackground
-    }
-    
+
     private func setupContinueButton(){
         continueButton.layer.cornerRadius = continueButton.frame.height / 2
         continueButton.layer.shadowColor = Colors.darkGrayShadow?.cgColor
