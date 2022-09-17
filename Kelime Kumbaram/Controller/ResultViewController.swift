@@ -125,7 +125,7 @@ class ResultViewController: UIViewController {
         tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = Colors.raven
-        tableView.layer.cornerRadius = 10
+        tableView.layer.cornerRadius = 16
     }
     
     func updateRefreshButtonVisibility(){
@@ -245,6 +245,7 @@ extension ResultViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! WordCell
         
         updateCellLabelText(cell, indexPath.row)
+        updateLastCellCornerRadius(cell, indexPath.row)
         updateCellForListeningExercise(cell)
         updateCellLabelTextSize(cell)
         updateCellLabelTextColor(cell)
@@ -345,6 +346,15 @@ extension ResultViewController: UITableViewDataSource {
         return combination
     }
     
+    func updateLastCellCornerRadius(_ cell: WordCell, _ index: Int){
+        if index == userAnswer.count - 1 {
+            cell.engView.layer.cornerRadius = 16
+            cell.engView.layer.maskedCorners = [.layerMinXMaxYCorner]
+            cell.trView.layer.cornerRadius = 16
+            cell.trView.layer.maskedCorners = [.layerMaxXMaxYCorner]
+            cell.backgroundColor = .clear
+        }
+    }
 }
 
 //MARK: - Tap Cell
