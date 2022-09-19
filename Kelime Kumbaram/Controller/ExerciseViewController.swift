@@ -368,7 +368,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         } else {
             hintLabel.textColor = Colors.green
             hintLabel.flash()
-            Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(updateHintLabelColor), userInfo: nil, repeats: false)
+            scheduledTimer(timeInterval: 0.8, #selector(updateHintLabelColor))
         }
     }
     
@@ -468,8 +468,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         }
       
         wordBrain.nextQuestion()
-            
-        Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
+ 
+        scheduledTimer(timeInterval: 0.7, #selector(updateUI))
     }
     
     func rotateBubbleButton(timeInterval: Double, userInfo: String) -> Timer {
@@ -486,10 +486,14 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         pointButton.setImage(imageName: "empty", width: 0, height: 0)
         pointButton.setTitle(String(-1), for: UIControl.State.normal)
         userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)
-    
-        Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(hideBubbleButton), userInfo: nil, repeats: false)
+        
+        scheduledTimer(timeInterval: 0.4, #selector(hideBubbleButton))
         
         UserDefault.lastPoint.set(lastPoint-1)
+    }
+    
+    func scheduledTimer(timeInterval: Double, _ selector : Selector) {
+        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
     }
 
 }

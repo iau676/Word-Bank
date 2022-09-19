@@ -155,7 +155,7 @@ class ViewController: UIViewController {
             UserDefault.textSize.set(15)
             askNotificationPermission()
             showOnboarding()
-            Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(appendDefaultWords), userInfo: nil, repeats: false)
+            scheduledTimer(timeInterval: 0.5, #selector(appendDefaultWords))
         }
     }
     
@@ -241,6 +241,10 @@ class ViewController: UIViewController {
     
     func getHour() {
         UserDefault.lastHour.set(Calendar.current.component(.hour, from: Date()))
+    }
+    
+    func scheduledTimer(timeInterval: Double, _ selector : Selector) {
+        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
     }
 
     func fixSoundProblemForRealDevice(){

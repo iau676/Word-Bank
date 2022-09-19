@@ -73,11 +73,11 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 wordBrain.addWord(english: engTxtField.text!, meaning: trTxtField.text!)
                 UserDefault.userWordCount.set(userWordCountIntVariable+1)
                 userWordCountIntVariable += 1
-                Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(goNewPoint), userInfo: nil, repeats: false)
+                scheduledTimer(timeInterval: 0.1, #selector(goNewPoint))
             } else {
                 itemArray[editIndex].eng = engTxtField.text!
                 itemArray[editIndex].tr = trTxtField.text!
-                Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(dismissView), userInfo: nil, repeats: false)
+                scheduledTimer(timeInterval: 0.9, #selector(dismissView))
             }
             
             updateWordsPage?()
@@ -97,6 +97,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
         checkAction()
     }
+
     
     //MARK: - Selectors
     
@@ -194,9 +195,13 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     func flipCoinButton(){
         coinButton.setBackgroundImage(coinImage, for: .normal)
         UIView.transition(with: coinButton, duration: 0.2, options: .transitionFlipFromTop, animations: nil, completion: nil)
-        Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(flipButton), userInfo: nil, repeats: false)
-        Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(animateDown), userInfo: nil, repeats: false)
-        Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(deleteButtonBackgroundImage), userInfo: nil, repeats: false)
+        scheduledTimer(timeInterval: 0.3, #selector(flipButton))
+        scheduledTimer(timeInterval: 0.7, #selector(animateDown))
+        scheduledTimer(timeInterval: 1.5, #selector(deleteButtonBackgroundImage))
+    }
+    
+    func scheduledTimer(timeInterval: Double, _ selector : Selector) {
+        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
     }
     
     func checkEditStatus() {
