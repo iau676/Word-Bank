@@ -92,7 +92,7 @@
 		706A9A21275A6FF800E64ECC /* greenBubble3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble3.png; sourceTree = "<group>"; };
 		706A9A22275A6FF800E64ECC /* greenBubble4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble4.png; sourceTree = "<group>"; };
 		706A9A23275A6FF800E64ECC /* greenBubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble2.png; sourceTree = "<group>"; };
-		706CBAAF27592F8D008B4773 /* Kelime Kumbaram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kelime Kumbaram.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		706CBAAF27592F8D008B4773 /* Word Bank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Bank.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		706CBAB227592F8D008B4773 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		706CBAB427592F8D008B4773 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		706CBAB627592F8D008B4773 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -219,7 +219,7 @@
 		706CBAA627592F8D008B4773 = {
 			isa = PBXGroup;
 			children = (
-				706CBAB127592F8D008B4773 /* Kelime Kumbaram */,
+				706CBAB127592F8D008B4773 /* Word Bank */,
 				706CBAB027592F8D008B4773 /* Products */,
 				70FC6A4927E26DD500C31481 /* Frameworks */,
 			);
@@ -228,12 +228,12 @@
 		706CBAB027592F8D008B4773 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				706CBAAF27592F8D008B4773 /* Kelime Kumbaram.app */,
+				706CBAAF27592F8D008B4773 /* Word Bank.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		706CBAB127592F8D008B4773 /* Kelime Kumbaram */ = {
+		706CBAB127592F8D008B4773 /* Word Bank */ = {
 			isa = PBXGroup;
 			children = (
 				706CBAB227592F8D008B4773 /* AppDelegate.swift */,
@@ -251,7 +251,7 @@
 				706CBAC027592F8E008B4773 /* LaunchScreen.storyboard */,
 				706CBAC327592F8E008B4773 /* Info.plist */,
 			);
-			path = "Kelime Kumbaram";
+			path = "Word Bank";
 			sourceTree = "<group>";
 		};
 		708AFD86288719BA00E09AE1 /* Extensions */ = {
@@ -310,9 +310,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		706CBAAE27592F8D008B4773 /* Kelime Kumbaram */ = {
+		706CBAAE27592F8D008B4773 /* Word Bank */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 706CBAC627592F8E008B4773 /* Build configuration list for PBXNativeTarget "Kelime Kumbaram" */;
+			buildConfigurationList = 706CBAC627592F8E008B4773 /* Build configuration list for PBXNativeTarget "Word Bank" */;
 			buildPhases = (
 				706CBAAB27592F8D008B4773 /* Sources */,
 				706CBAAC27592F8D008B4773 /* Frameworks */,
@@ -322,9 +322,9 @@
 			);
 			dependencies = (
 			);
-			name = "Kelime Kumbaram";
+			name = "Word Bank";
 			productName = 23;
-			productReference = 706CBAAF27592F8D008B4773 /* Kelime Kumbaram.app */;
+			productReference = 706CBAAF27592F8D008B4773 /* Word Bank.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -341,7 +341,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 706CBAAA27592F8D008B4773 /* Build configuration list for PBXProject "Kelime Kumbaram" */;
+			buildConfigurationList = 706CBAAA27592F8D008B4773 /* Build configuration list for PBXProject "Word Bank" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -354,7 +354,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				706CBAAE27592F8D008B4773 /* Kelime Kumbaram */,
+				706CBAAE27592F8D008B4773 /* Word Bank */,
 			);
 		};
 /* End PBXProject section */
@@ -583,15 +583,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UA5J3LA7RU;
-				INFOPLIST_FILE = "Kelime Kumbaram/Info.plist";
+				INFOPLIST_FILE = "Word Bank/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ibrahimuysal.-3";
-				PRODUCT_NAME = "Kelime Kumbaram";
+				PRODUCT_NAME = "Word Bank";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -605,15 +605,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UA5J3LA7RU;
-				INFOPLIST_FILE = "Kelime Kumbaram/Info.plist";
+				INFOPLIST_FILE = "Word Bank/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ibrahimuysal.-3";
-				PRODUCT_NAME = "Kelime Kumbaram";
+				PRODUCT_NAME = "Word Bank";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -622,7 +622,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		706CBAAA27592F8D008B4773 /* Build configuration list for PBXProject "Kelime Kumbaram" */ = {
+		706CBAAA27592F8D008B4773 /* Build configuration list for PBXProject "Word Bank" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				706CBAC427592F8E008B4773 /* Debug */,
@@ -631,7 +631,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		706CBAC627592F8E008B4773 /* Build configuration list for PBXNativeTarget "Kelime Kumbaram" */ = {
+		706CBAC627592F8E008B4773 /* Build configuration list for PBXNativeTarget "Word Bank" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				706CBAC727592F8E008B4773 /* Debug */,
