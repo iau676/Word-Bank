@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="ViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="ViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -245,7 +245,7 @@
         <!--Card View Controller-->
         <scene sceneID="4Cf-kR-bPu">
             <objects>
-                <viewController id="R4c-Ok-iJX" customClass="CardViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="R4c-Ok-iJX" customClass="CardViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6vK-5d-cBl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -293,7 +293,7 @@
         <!--Result View Controller-->
         <scene sceneID="y88-tD-Saz">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="oeL-n5-M7B" customClass="ResultViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="oeL-n5-M7B" customClass="ResultViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KDH-vU-C5Y">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -364,7 +364,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="382" height="35"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Kelimeleri Göster">
+                                                <state key="normal" title="Show Words">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -467,7 +467,7 @@
         <!--Add View Controller-->
         <scene sceneID="spQ-01-roC">
             <objects>
-                <viewController id="baS-AH-7tq" customClass="AddViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="baS-AH-7tq" customClass="AddViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OhL-LM-a40">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -633,7 +633,7 @@
         <!--Level Up Controller-->
         <scene sceneID="zwu-Ek-vmJ">
             <objects>
-                <viewController id="Rlr-CF-jX5" customClass="LevelUpController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Rlr-CF-jX5" customClass="LevelUpController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NHt-bM-9Ai">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -762,7 +762,7 @@
         <!--Words View Controller-->
         <scene sceneID="GkB-hd-Q59">
             <objects>
-                <viewController id="9q6-8v-FQ1" customClass="WordsViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9q6-8v-FQ1" customClass="WordsViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" ambiguous="YES" id="WVg-dI-ycn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -941,7 +941,7 @@
         <!--Exercise View Controller-->
         <scene sceneID="7o6-nn-gJq">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="zXo-IR-Z84" customClass="ExerciseViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="zXo-IR-Z84" customClass="ExerciseViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c8r-up-S3W">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1155,8 +1155,8 @@
                                                                 <rect key="frame" x="0.0" y="56" width="305.5" height="40.5"/>
                                                                 <color key="backgroundColor" name="d6d6d6"/>
                                                                 <segments>
-                                                                    <segment title="İngilizce - Türkçe"/>
-                                                                    <segment title="Türkçe - İngilizce"/>
+                                                                    <segment title="English - Meaning"/>
+                                                                    <segment title="Meaning - English"/>
                                                                 </segments>
                                                                 <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <connections>
@@ -1284,7 +1284,7 @@
         <!--New Point View Controller-->
         <scene sceneID="wig-Xl-xE6">
             <objects>
-                <viewController id="AKU-mg-roz" customClass="NewPointViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="AKU-mg-roz" customClass="NewPointViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kRY-tS-Zsg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1433,7 +1433,7 @@
         <!--Setting View Controller-->
         <scene sceneID="8fg-Kl-8Qt">
             <objects>
-                <viewController id="evb-Qz-GqT" customClass="X2SettingViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="evb-Qz-GqT" customClass="X2SettingViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B25-aA-TFd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1500,7 +1500,7 @@
         <!--Settings View Controller-->
         <scene sceneID="cZc-ST-Gb1">
             <objects>
-                <viewController id="7xT-ax-mw9" customClass="SettingsViewController" customModule="Kelime_Kumbaram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7xT-ax-mw9" customClass="SettingsViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eSW-tB-4g6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1843,7 +1843,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="9Cg-1r-QhJ"/>
         <segue reference="pzT-n7-INo"/>
-        <segue reference="VaH-z8-7n4"/>
+        <segue reference="bhg-Vj-Bf9"/>
         <segue reference="4n2-fs-eP8"/>
         <segue reference="Gqj-eb-Cz0"/>
         <segue reference="IiH-a1-RE8"/>
