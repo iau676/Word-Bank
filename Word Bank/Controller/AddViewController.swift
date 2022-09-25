@@ -120,9 +120,11 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func goNewPoint(){
+        
         let lastPoint = UserDefault.exercisePoint.getInt()
         wordBrain.calculateExercisePoint(userWordCount: userWordCountIntVariable)
         let newPoint = UserDefault.exercisePoint.getInt()
+        
         if newPoint != lastPoint {
             textForLabel = "You will get +\(newPoint-10) points for each correct answer."
             userWordCount = String(userWordCountIntVariable)

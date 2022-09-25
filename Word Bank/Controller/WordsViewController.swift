@@ -38,10 +38,7 @@ class WordsViewController: UIViewController {
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     var whichButton: String	{ return UserDefault.whichButton.getString() }
-    let pageStatistic = ["Total Words: \(UserDefault.userWordCount.getInt())" ,
-                         "Completed Exercises: \(UserDefault.blueExerciseCount.getInt())",
-                         "Correct Answers: \(UserDefault.blueTrueCount.getInt())",
-                         "Wrong Answers: \(UserDefault.blueFalseCount.getInt())"]
+    var pageStatistic = [String]()
     
     //MARK: - Life Cycle
     
@@ -49,6 +46,7 @@ class WordsViewController: UIViewController {
         super.viewDidLoad()
         wordBrain.loadItemArray()
         wordBrain.loadHardItemArray()
+        configurePageStatistic()
         setupNavigationBar()
         setupSearchBar()
         setupView()
@@ -223,6 +221,22 @@ class WordsViewController: UIViewController {
             }
         }
     }
+    
+    func configurePageStatistic() {
+        
+        if UserDefault.userWordCount.getInt() != itemArray.count {
+            let wordCount = itemArray.count
+            UserDefault.userWordCount.set(wordCount)
+            wordBrain.calculateExercisePoint(userWordCount: wordCount)
+        }
+        
+        pageStatistic = [
+            "Total Words: \(UserDefault.userWordCount.getInt())" ,
+            "Completed Exercises: \(UserDefault.blueExerciseCount.getInt())",
+            "Correct Answers: \(UserDefault.blueTrueCount.getInt())",
+            "Wrong Answers: \(UserDefault.blueFalseCount.getInt())"
+            ]
+    }
    
     func setupSearchBar() {
         searchBar.delegate = self
@@ -297,7 +311,7 @@ class WordsViewController: UIViewController {
         button.layer.shadowRadius = 0.0
         button.layer.masksToBounds = false
     }
-    
+        
     func updateTableViewConstraintMultiplier(_ double: Double) {
         UIView.transition(with: tableView, duration: 0.6,
                           options: .transitionCrossDissolve,

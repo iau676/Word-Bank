@@ -30,7 +30,6 @@ class ViewController: UIViewController {
     //MARK: - Variables
     
     var wordBrain = WordBrain()
-    var itemArray = [Item]()
     let cp = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     
     var goAddPage = 0
@@ -155,7 +154,15 @@ class ViewController: UIViewController {
             UserDefault.textSize.set(15)
             askNotificationPermission()
             showOnboarding()
-            scheduledTimer(timeInterval: 0.5, #selector(appendDefaultWords))
+        }
+        
+        let when = DispatchTime.now() + 5
+        DispatchQueue.main.asyncAfter(deadline: when){
+            self.wordBrain.loadItemArray()
+            let wordCount = self.wordBrain.itemArray.count
+            if wordCount == 0 {
+                self.scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
+            }
         }
     }
     
