@@ -14,6 +14,8 @@ struct WordBrain {
     var itemArray = [Item]()
     var hardItemArray = [HardItem]()
     
+    static let shareInstance = WordBrain()
+    
     var questionNumbers: [Int] = []
     var questionNumbersCopy: [Int] = []
     var failsDictionary =  [Int:Int]()
