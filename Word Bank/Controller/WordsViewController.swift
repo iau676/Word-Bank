@@ -372,6 +372,7 @@ extension WordsViewController: UISearchBarDelegate {
             request.predicate = NSPredicate(format: "eng CONTAINS[cd] %@", searchBar.text!)
             request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: true)]
             wordBrain.loadItemArray(with: request)
+            tableView.reloadData()
         } else {
             wordBrain.loadItemArray()
         }
@@ -380,6 +381,7 @@ extension WordsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             wordBrain.loadItemArray()
+            tableView.reloadData()
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
