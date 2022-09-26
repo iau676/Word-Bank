@@ -14,6 +14,7 @@ class ResultViewController: UIViewController {
 
     //MARK: - IBOutlet
     
+    @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -54,6 +55,7 @@ class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         wordBrain.loadItemArray()
+        configureColor()
         setupTableView()
         setupLabel()
         setupButton()
@@ -119,12 +121,19 @@ class ResultViewController: UIViewController {
     
     //MARK: - Helpers
     
+    func configureColor() {
+        mainView.backgroundColor = Colors.raven
+        tableView.backgroundColor = Colors.raven
+        scoreLabel.textColor = Colors.cellRight
+        addedHardWordsLabel.textColor = Colors.yellow
+        showWordsButton.setTitleColor(Colors.cellRight, for: .normal)
+    }
+    
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = Colors.raven
         tableView.layer.cornerRadius = 16
     }
     

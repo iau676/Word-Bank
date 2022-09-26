@@ -449,6 +449,7 @@
                         <outlet property="addedHardWordsLabel" destination="1dJ-Io-bCx" id="zjp-t9-o1j"/>
                         <outlet property="confettiButton" destination="KEw-x9-JH3" id="dXD-2v-Gpo"/>
                         <outlet property="homeButton" destination="5cQ-nB-76q" id="bZE-Us-1g9"/>
+                        <outlet property="mainView" destination="KDH-vU-C5Y" id="aH6-Z3-GsM"/>
                         <outlet property="refreshButton" destination="SC9-DJ-mN7" id="dgf-5P-9Yd"/>
                         <outlet property="scoreLabel" destination="UNa-9p-Mxi" id="Ai3-CO-8cY"/>
                         <outlet property="showWordsButton" destination="wbW-fW-3JH" id="Hir-tW-6tE"/>
@@ -753,6 +754,7 @@
                         <outlet property="continueButton" destination="lFH-jJ-tk1" id="nUh-7K-J3O"/>
                         <outlet property="darkView" destination="KTN-Tj-uMC" id="d5w-fg-Pwc"/>
                         <outlet property="levelLabel" destination="bzl-xN-lSY" id="RVY-TK-ZQf"/>
+                        <outlet property="levelUpLabel" destination="mRP-LD-An6" id="DZV-rH-ApT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ogu-of-nMc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1234,11 +1236,11 @@
                         <outlet property="answerStackView" destination="vo1-R2-Lyc" id="c99-nf-4qX"/>
                         <outlet property="arrowButtonAtAnswerView" destination="jl4-0Y-bUx" id="U1H-eC-elY"/>
                         <outlet property="arrowButtonAtOptionView" destination="1g8-Zg-wsE" id="HhT-Lj-Puv"/>
+                        <outlet property="bubbleButton" destination="d10-we-tXn" id="KMw-OQ-EJn"/>
                         <outlet property="hintLabel" destination="xH3-C3-B2H" id="ToG-sz-1xx"/>
                         <outlet property="labelPlaySound" destination="Xlj-4b-1hI" id="Tg6-vu-I71"/>
                         <outlet property="optionStackView" destination="Dpl-gr-ujv" id="Lzj-Gi-4FF"/>
                         <outlet property="optionView" destination="D3q-VY-hZF" id="Df1-ox-Wkt"/>
-                        <outlet property="pointButton" destination="d10-we-tXn" id="KMw-OQ-EJn"/>
                         <outlet property="progressBar" destination="RiJ-e9-i7E" id="SeK-6I-X4y"/>
                         <outlet property="progressBar2" destination="jri-dp-fp8" id="Llr-Tl-Y2w"/>
                         <outlet property="questionLabel" destination="BI0-OM-3Fg" id="CLT-X1-1of"/>
@@ -1421,8 +1423,9 @@
                     <connections>
                         <outlet property="continueButton" destination="q1c-hG-mGC" id="XRc-kw-uvC"/>
                         <outlet property="darkView" destination="olU-SV-rGM" id="5aT-4h-DHc"/>
-                        <outlet property="levelLabel" destination="X6B-A1-Pcg" id="8zz-Tf-kBh"/>
                         <outlet property="newPointLabel" destination="P0a-zn-MXf" id="y3v-ZD-TXl"/>
+                        <outlet property="wordCountLabel" destination="X6B-A1-Pcg" id="8zz-Tf-kBh"/>
+                        <outlet property="wordsLabel" destination="qqd-tA-IDx" id="xH8-Jk-Vsp"/>
                         <segue destination="Rlr-CF-jX5" kind="presentation" identifier="goLevelUp" modalPresentationStyle="fullScreen" id="ys5-yi-eYE"/>
                     </connections>
                 </viewController>
@@ -1508,7 +1511,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lxj-ap-W7w">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bxa-Hf-EJc" userLabel="bottomView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bxa-Hf-EJc" userLabel="topView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="168.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qGb-Zd-csl">
@@ -1808,25 +1811,28 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="appSoundText" destination="PfO-Ek-QLf" id="DOC-xi-uqM"/>
+                        <outlet property="appSoundLabel" destination="PfO-Ek-QLf" id="DOC-xi-uqM"/>
+                        <outlet property="appSoundSwitch" destination="nno-sD-FqS" id="s7K-Te-vmq"/>
                         <outlet property="appSoundView" destination="VP5-uz-Kuo" id="XRV-rp-YGP"/>
-                        <outlet property="fontView" destination="OIe-uj-nov" id="oJ4-Of-GuP"/>
-                        <outlet property="playSoundView" destination="5KS-22-kkb" id="NDo-Gt-JPl"/>
-                        <outlet property="settingsText" destination="lN4-y1-qly" id="dIy-Dl-hnM"/>
-                        <outlet property="settingsView" destination="GGM-c6-7n4" id="XnG-Cc-JWb"/>
-                        <outlet property="sizeText" destination="Oyb-sI-Yyd" id="D4C-la-43B"/>
+                        <outlet property="bottomView" destination="Rk5-7k-rUz" id="MlE-s3-bAr"/>
+                        <outlet property="centerView" destination="GGM-c6-7n4" id="iue-hN-P34"/>
+                        <outlet property="settingsLabel" destination="lN4-y1-qly" id="dIy-Dl-hnM"/>
+                        <outlet property="settingsView" destination="PnV-lk-5Ao" id="VMh-S5-PyQ"/>
                         <outlet property="soundSpeedButton" destination="Jco-2U-nW2" id="i8L-Ad-zyf"/>
+                        <outlet property="soundSpeedLabel" destination="efi-oW-p98" id="E8u-AY-kT2"/>
                         <outlet property="soundSpeedSegmentedControl" destination="4hi-nq-lMd" id="3PZ-xv-yUr"/>
-                        <outlet property="soundSpeedText" destination="efi-oW-p98" id="E8u-AY-kT2"/>
                         <outlet property="soundSpeedView" destination="eGq-EP-bT1" id="2Hp-cj-2uf"/>
-                        <outlet property="switchAppSound" destination="nno-sD-FqS" id="s7K-Te-vmq"/>
-                        <outlet property="switchWordSound" destination="Buk-Rz-vU6" id="s4r-9s-0T1"/>
                         <outlet property="textSegmentedControl" destination="guT-vz-cLZ" id="1UX-31-gms"/>
+                        <outlet property="textSizeLabel" destination="Oyb-sI-Yyd" id="D4C-la-43B"/>
+                        <outlet property="textSizeView" destination="OIe-uj-nov" id="oJ4-Of-GuP"/>
+                        <outlet property="topView" destination="Bxa-Hf-EJc" id="q0H-YW-fFM"/>
                         <outlet property="viewConstraint" destination="5fj-fb-E5T" id="j74-vO-ZvE"/>
-                        <outlet property="wordSoundText" destination="IOv-70-WEp" id="Y7j-Fb-7mW"/>
+                        <outlet property="wordSoundLabel" destination="IOv-70-WEp" id="Y7j-Fb-7mW"/>
+                        <outlet property="wordSoundSwitch" destination="Buk-Rz-vU6" id="s4r-9s-0T1"/>
+                        <outlet property="wordSoundView" destination="5KS-22-kkb" id="NDo-Gt-JPl"/>
+                        <outlet property="x2HoursLabel" destination="gC9-kd-aH2" id="XUq-nH-tgY"/>
+                        <outlet property="x2Label" destination="G5n-SO-dDt" id="45F-o5-yDt"/>
                         <outlet property="x2button" destination="n41-ZJ-o5O" id="Flf-BI-0Wr"/>
-                        <outlet property="x2text" destination="G5n-SO-dDt" id="45F-o5-yDt"/>
-                        <outlet property="x2time" destination="gC9-kd-aH2" id="XUq-nH-tgY"/>
                         <outlet property="x2view" destination="hgi-ou-lv9" id="dYE-4G-kLC"/>
                     </connections>
                 </viewController>
@@ -1844,15 +1850,15 @@
         <segue reference="9Cg-1r-QhJ"/>
         <segue reference="pzT-n7-INo"/>
         <segue reference="bhg-Vj-Bf9"/>
-        <segue reference="4n2-fs-eP8"/>
-        <segue reference="Gqj-eb-Cz0"/>
+        <segue reference="ys5-yi-eYE"/>
+        <segue reference="vPV-zd-Pre"/>
         <segue reference="IiH-a1-RE8"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
+        <image name="arrow.clockwise" catalog="system" width="32" height="32"/>
         <image name="coin" width="170.5" height="170.5"/>
         <image name="confetti" width="170.5" height="170.5"/>
-        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="house.fill" catalog="system" width="32" height="32"/>
         <image name="x2" width="101" height="101"/>
         <namedColor name="bblueColor">
             <color red="0.10999999940395355" green="0.73299998044967651" blue="0.9179999828338623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

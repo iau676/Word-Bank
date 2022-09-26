@@ -15,6 +15,7 @@ class LevelUpController: UIViewController {
 
     var wordBrain = WordBrain()
     @IBOutlet weak var darkView: UIView!
+    @IBOutlet weak var levelUpLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
     
@@ -26,6 +27,7 @@ class LevelUpController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureColor()
         setupContinueButton()
         levelLabel.text = UserDefault.level.getString()
     }
@@ -62,6 +64,13 @@ class LevelUpController: UIViewController {
     }
     
     //MARK: - Helpers
+    
+    func configureColor() {
+        levelUpLabel.textColor = Colors.cellRight
+        levelLabel.textColor = Colors.cellRight
+        continueButton.changeBackgroundColor(to: .darkGray)
+        continueButton.setTitleColor(Colors.cellRight, for: .normal)
+    }
     
     func dismissView(){
         let when = DispatchTime.now() + 0.1

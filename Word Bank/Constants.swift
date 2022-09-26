@@ -10,8 +10,8 @@ import UIKit
 enum Colors {
     static let darkBackground            = UIColor(white: 0.1, alpha: 0.4)
     static let black                     = UIColor(hex: "#1C1C1C")
-    static let cellRight                 = UIColor(hex: "#DFDEDE")
-    static let cellLeft                  = UIColor(hex: "#F5F5F5")
+    static let cellRight                 = UIColor(hex: "#F5F5F5")
+    static let cellLeft                  = UIColor(hex: "#DFDEDE")
     static let blueBottom                = UIColor(hex: "#88D1F0")
     static let yyellow                   = UIColor(hex: "#FFC047")
     static let yellowBottom              = UIColor(hex: "#FFD387")

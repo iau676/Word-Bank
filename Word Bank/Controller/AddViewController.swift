@@ -43,6 +43,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         wordBrain.loadItemArray()
         setupViews()
         setupButtons()
+        configureColor()
         setupTxtFields()
         checkEditStatus()
         preventInterrupt()
@@ -133,6 +134,16 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - Helpers
+    
+    func configureColor(){
+        textView.backgroundColor = Colors.cellLeft
+        engTxtField.textColor = Colors.black
+        trTxtField.textColor = Colors.black
+        engTxtField.backgroundColor = Colors.cellRight
+        trTxtField.backgroundColor = Colors.cellRight
+        addButton.changeBackgroundColor(to: .darkGray)
+        addButton.setTitleColor(Colors.cellRight, for: .normal)
+    }
     
     func checkAction(){
         if engTxtField.text!.count > 0 || trTxtField.text!.count > 0 {

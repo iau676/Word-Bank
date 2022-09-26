@@ -13,6 +13,10 @@ extension UIButton {
         self.setBackgroundImage(nil, for: .normal)
     }
     
+    func changeBackgroundColor(to color: UIColor?){
+        self.backgroundColor = color
+    }
+    
     func setButtonCornerRadius(_ number: Int){
         self.layer.cornerRadius = CGFloat(number)
     }

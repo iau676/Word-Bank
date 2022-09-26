@@ -47,6 +47,7 @@ class WordsViewController: UIViewController {
         wordBrain.loadItemArray()
         wordBrain.loadHardItemArray()
         configurePageStatistic()
+        configureButton()
         setupNavigationBar()
         setupSearchBar()
         setupView()
@@ -237,10 +238,19 @@ class WordsViewController: UIViewController {
             "Wrong Answers: \(UserDefault.blueFalseCount.getInt())"
             ]
     }
+    
+    func configureButton(){
+        expandButton.changeBackgroundColor(to: Colors.cellRight)
+        startButton.changeBackgroundColor(to: Colors.raven)
+        startButton2.changeBackgroundColor(to: Colors.raven)
+        startButton3.changeBackgroundColor(to: Colors.raven)
+        startButton4.changeBackgroundColor(to: Colors.raven)
+    }
    
     func setupSearchBar() {
         searchBar.delegate = self
         searchBar.isHidden = true
+        
         // SearchBar text
         let textFieldInsideUISearchBar = searchBar.value(forKey: "searchField") as? UITextField
         textFieldInsideUISearchBar?.textColor = UIColor.black
@@ -401,7 +411,10 @@ extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! WordCell
         
-        tableView.backgroundColor = Colors.cellRight
+        cell.engView.backgroundColor = Colors.cellLeft
+        cell.trView.backgroundColor = Colors.cellRight
+        
+        tableView.backgroundColor = Colors.cellLeft
         tableView.separatorStyle = .singleLine
         if showWords == 1 {
             tableView.rowHeight = UITableView.automaticDimension

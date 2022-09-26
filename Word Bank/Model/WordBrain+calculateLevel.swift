@@ -18,6 +18,11 @@ extension WordBrain {
     
     func calculateLevel() -> Float {
         let lastSavedPoint = UserDefault.lastPoint.getInt()
+        if lastSavedPoint < 0 {
+            UserDefault.level.set(0)
+            UserDefault.needPoint.set(0-lastSavedPoint)
+            return 0
+        }
         switch lastSavedPoint {
         case levelPoints._1..<levelPoints._2:
             return setLevelAndReturnProgress(1, levelPoints._1, levelPoints._2)

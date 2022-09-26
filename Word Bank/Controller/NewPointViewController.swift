@@ -14,7 +14,8 @@ class NewPointViewController: UIViewController {
     //MARK: - IBOutlet
     
     @IBOutlet weak var darkView: UIView!
-    @IBOutlet weak var levelLabel: UILabel!
+    @IBOutlet weak var wordCountLabel: UILabel!
+    @IBOutlet weak var wordsLabel: UILabel!
     @IBOutlet weak var newPointLabel: UILabel!
     @IBOutlet weak var continueButton: UIButton!
     
@@ -28,8 +29,9 @@ class NewPointViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureColor()
         setupContinueButton()
-        levelLabel.text = userWordCount
+        wordCountLabel.text = userWordCount
         newPointLabel.text = textForLabel
     }
     
@@ -65,6 +67,14 @@ class NewPointViewController: UIViewController {
     }
     
     //MARK: - Helpers
+    
+    func configureColor() {
+        wordCountLabel.textColor = .darkGray
+        wordsLabel.textColor = .darkGray
+        newPointLabel.textColor = .darkGray
+        continueButton.changeBackgroundColor(to: .darkGray)
+        continueButton.setTitleColor(Colors.cellRight, for: .normal)
+    }
     
     func dismissView(){
         let when = DispatchTime.now() + 0.1

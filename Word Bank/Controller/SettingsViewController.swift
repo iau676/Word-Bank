@@ -13,26 +13,30 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - IBOutlet
     
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var centerView: UIView!
+    @IBOutlet weak var bottomView: UIView!
+    
     @IBOutlet weak var settingsView: UIView!
-    @IBOutlet weak var playSoundView: UIView!
-    @IBOutlet weak var fontView: UIView!
-    @IBOutlet weak var appSoundView: UIView!
-    @IBOutlet weak var appSoundText: UILabel!
-    @IBOutlet weak var soundSpeedView: UIView!
     @IBOutlet weak var x2view: UIView!
+    @IBOutlet weak var appSoundView: UIView!
+    @IBOutlet weak var wordSoundView: UIView!
+    @IBOutlet weak var soundSpeedView: UIView!
+    @IBOutlet weak var textSizeView: UIView!
     
-    @IBOutlet weak var x2text: UILabel!
-    @IBOutlet weak var x2time: UILabel!
-    @IBOutlet weak var settingsText: UILabel!
-    @IBOutlet weak var wordSoundText: UILabel!
-    @IBOutlet weak var soundSpeedText: UILabel!
-    @IBOutlet weak var sizeText: UILabel!
+    @IBOutlet weak var settingsLabel: UILabel!
+    @IBOutlet weak var x2Label: UILabel!
+    @IBOutlet weak var x2HoursLabel: UILabel!
+    @IBOutlet weak var appSoundLabel: UILabel!
+    @IBOutlet weak var wordSoundLabel: UILabel!
+    @IBOutlet weak var soundSpeedLabel: UILabel!
+    @IBOutlet weak var textSizeLabel: UILabel!
     
-    @IBOutlet weak var switchWordSound: UISwitch!
-    @IBOutlet weak var switchAppSound: UISwitch!
+    @IBOutlet weak var appSoundSwitch: UISwitch!
+    @IBOutlet weak var wordSoundSwitch: UISwitch!
     
-    @IBOutlet weak var textSegmentedControl: UISegmentedControl!
     @IBOutlet weak var soundSpeedSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var textSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var x2button: UIButton!
     @IBOutlet weak var soundSpeedButton: UIButton!
@@ -75,7 +79,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
-        assignSoundImageName()
+        configureColor()
         updateTextSize()
         setupCornerRadius()
         setupDefaults()
@@ -88,7 +92,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "goPicker" {
             if segue.destination is X2SettingViewController {
                 (segue.destination as? X2SettingViewController)?.onViewWillDisappear = { (id) -> Void in
-                    self.x2time.text = self.hours[id]
+                    self.x2HoursLabel.text = self.hours[id]
                     self.onViewWillDisappear?()// trigger function in ViewController
                 }
             }
@@ -135,7 +139,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         player.playSound(soundSpeed, "how are you?")
     }
     
-    
     @IBAction func speakerButtonPressed(_ sender: UIButton) {
         soundSpeedButton.flash()
         player.playSound(soundSpeed, "how are you?")
@@ -177,47 +180,59 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Helpers
     
-    func assignSoundImageName(){
-        switch traitCollection.userInterfaceStyle {
-        case .light, .unspecified:
-            soundImageName = "soundBlack"
-            break
-        case .dark:
-            soundImageName = "soundLeft"
-            break
-        default: break
-        }
+    func configureColor() {
+        topView.backgroundColor = .clear
+        centerView.backgroundColor = Colors.cellLeft
+        bottomView.backgroundColor = Colors.cellLeft
+        
+        settingsView.backgroundColor = Colors.cellLeft
+        x2view.backgroundColor = Colors.cellRight
+        appSoundView.backgroundColor = Colors.cellRight
+        wordSoundView.backgroundColor = Colors.cellRight
+        soundSpeedView.backgroundColor = Colors.cellRight
+        textSizeView.backgroundColor = Colors.cellRight
+        
+        settingsLabel.textColor = Colors.black
+        x2Label.textColor = Colors.black
+        x2HoursLabel.textColor = Colors.black
+        appSoundLabel.textColor = Colors.black
+        wordSoundLabel.textColor = Colors.black
+        soundSpeedLabel.textColor = Colors.black
+        textSizeLabel.textColor = Colors.black
+        
+        x2button.changeBackgroundColor(to: .clear)
+        soundSpeedButton.changeBackgroundColor(to: .clear)
     }
-    
+
     func setupButton(_ button: UIButton){
-        button.setImage(imageName: soundImageName, width: 30, height: 30)
+        button.setImage(imageName: "soundBlack", width: 30, height: 30)
     }
     
     func setupCornerRadius(){
-        playSoundView.layer.cornerRadius = 8
-        fontView.layer.cornerRadius = 8
+        wordSoundView.layer.cornerRadius = 8
+        textSizeView.layer.cornerRadius = 8
         x2view.layer.cornerRadius = 8
         appSoundView.layer.cornerRadius = 8
         soundSpeedView.layer.cornerRadius = 8
         
-        settingsView.clipsToBounds = true
-        settingsView.layer.cornerRadius = 16
-        settingsView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        centerView.clipsToBounds = true
+        centerView.layer.cornerRadius = 16
+        centerView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
     
     func setupDefaults(){
         if UserDefault.playSound.getInt() == 1 {
-            switchWordSound.isOn = false
+            wordSoundSwitch.isOn = false
             changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
         } else {
-            switchWordSound.isOn = true
+            wordSoundSwitch.isOn = true
             changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
         }
         
         if UserDefault.playAppSound.getInt() == 1 {
-            switchAppSound.isOn = false
+            appSoundSwitch.isOn = false
         } else {
-            switchAppSound.isOn = true
+            appSoundSwitch.isOn = true
         }
         
         if UserDefault.textSize.getInt() == 0 {
@@ -225,7 +240,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             UserDefault.soundSpeed.set(0.3)
         }
         
-        x2time.text = hours[UserDefault.userSelectedHour.getInt()]
+        x2HoursLabel.text = hours[UserDefault.userSelectedHour.getInt()]
         
         soundSpeed = UserDefault.soundSpeed.getDouble()
         switch soundSpeed {
@@ -270,13 +285,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     func updateTextSize(){
         textSize = UserDefault.textSize.getCGFloat()
         
-        updateLabelTextSize(settingsText)
-        updateLabelTextSize(wordSoundText)
-        updateLabelTextSize(sizeText)
-        updateLabelTextSize(x2text)
-        updateLabelTextSize(x2time)
-        updateLabelTextSize(appSoundText)
-        updateLabelTextSize(soundSpeedText)
+        updateLabelTextSize(settingsLabel)
+        updateLabelTextSize(wordSoundLabel)
+        updateLabelTextSize(textSizeLabel)
+        updateLabelTextSize(x2Label)
+        updateLabelTextSize(x2HoursLabel)
+        updateLabelTextSize(appSoundLabel)
+        updateLabelTextSize(soundSpeedLabel)
   
         updateSegmentedControlTextSize(textSegmentedControl)
         updateSegmentedControlTextSize(soundSpeedSegmentedControl)

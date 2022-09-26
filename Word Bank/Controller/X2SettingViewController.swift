@@ -52,6 +52,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
+        configureColor()
         saveButton.layer.cornerRadius = 8
         pickerView.dataSource = self
         pickerView.delegate = self
@@ -139,6 +140,13 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     //MARK: - Helpers
+    
+    func configureColor() {
+        infoLabel.textColor = Colors.black
+        lastEditLabel.textColor = Colors.black
+        saveButton.changeBackgroundColor(to: Colors.cellLeft)
+        saveButton.setTitleColor(Colors.black, for: .normal)
+    }
     
     override func updateViewConstraints() {
         self.view.frame.size.height = UIScreen.main.bounds.height - 120

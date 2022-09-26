@@ -19,7 +19,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var progressBar2: UIProgressView!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var userPointButton: UIButton!
-    @IBOutlet weak var pointButton: UIButton!
+    @IBOutlet weak var bubbleButton: UIButton!
     @IBOutlet weak var soundButton: UIButton!
     @IBOutlet weak var textFieldStackView: UIStackView!
     @IBOutlet weak var hintLabel: UILabel!
@@ -73,6 +73,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         textField.delegate = self
         
         setupView()
+        configureColor()
         
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
@@ -156,7 +157,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         if answerForStart23.lowercased() == sender.text!.lowercased() {
             checkAnswerQ(nil,sender.text!)
             textField.text = ""
-            pointButton.setImage(imageName: "empty", width: 0, height: 0)
+            bubbleButton.setImage(imageName: "empty", width: 0, height: 0)
             wordBrain.answerTrue()
         }
     }
@@ -173,7 +174,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func hourButtonPressed(_ sender: UIButton) {
-        pointButton.bounce()
+        bubbleButton.bounce()
         player.playSound(soundSpeed, answerForStart23)
     }
     
@@ -195,12 +196,12 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                 updateViewAppearance(optionView, isHidden: true)
                 self.arrowButtonAtAnswerView.isHidden = true
             }
-            pointButton.setTitle("", for: UIControl.State.normal)
+            bubbleButton.setTitle("", for: UIControl.State.normal)
             
             if whichStartPressed == 3 {
-                pointButton.setImage(imageName: "sound", width: 66, height: 66)
+                bubbleButton.setImage(imageName: "sound", width: 66, height: 66)
             } else {
-                pointButton.isHidden=true
+                bubbleButton.isHidden=true
             }
          
             failNumber = UserDefault.failNumber.getValue() as? [Int] ?? [Int]()
@@ -235,7 +236,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             
             refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
             refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
-            pointButton.setBackgroundImage(nil, for: UIControl.State.normal)
+            bubbleButton.setBackgroundImage(nil, for: UIControl.State.normal)
             
         } else {
             questionCount = 0
@@ -251,10 +252,10 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     @objc func hideBubbleButton(){
         if whichStartPressed == 3 {
-            pointButton.setTitle("", for: UIControl.State.normal)
-            pointButton.setImage(imageName: "sound", width: 66, height: 66)
+            bubbleButton.setTitle("", for: UIControl.State.normal)
+            bubbleButton.setImage(imageName: "sound", width: 66, height: 66)
         } else {
-            pointButton.isHidden = true
+            bubbleButton.isHidden = true
         }
         
         if whichStartPressed == 2 {
@@ -270,7 +271,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         let imgName = timer.userInfo!
         let imagePath:String? = Bundle.main.path(forResource: (imgName as! String), ofType: "png")
         let image:UIImage? = UIImage(contentsOfFile: imagePath!)
-        pointButton.setBackgroundImage(image, for: UIControl.State.normal)
+        bubbleButton.setBackgroundImage(image, for: UIControl.State.normal)
     }
 
     //MARK: - Helpers
@@ -280,9 +281,21 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    func configureColor(){
+        questionLabel.textColor = Colors.d6d6d6
+        hintLabel.textColor = Colors.d6d6d6
+        answer1Button.setTitleColor(Colors.d6d6d6, for: .normal)
+        answer2Button.setTitleColor(Colors.d6d6d6, for: .normal)
+        userPointButton.changeBackgroundColor(to: Colors.d6d6d6)
+        progressBar.tintColor = Colors.d6d6d6
+        progressBar.tintColor = Colors.d6d6d6
+        textField.backgroundColor = Colors.d6d6d6
+        textField.textColor = Colors.black
+    }
+    
     func setupView(){
         
-        pointButton.isHidden = true
+        bubbleButton.isHidden = true
         
         if whichStartPressed == 1 {
             textFieldStackView.isHidden = true
@@ -301,7 +314,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         
         if whichStartPressed == 3 {
             questionLabel.isHidden = true
-            pointButton.isHidden = false
+            bubbleButton.isHidden = false
         }
         
         // 1 is false, 0 is true
@@ -401,7 +414,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         
         answer1Button.isEnabled = false
         answer2Button.isEnabled = false
-        pointButton.isHidden = false
+        bubbleButton.isHidden = false
         questionLabel.text = ""
         
         userPoint = UserDefault.exercisePoint.getInt()
@@ -435,9 +448,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             }
             
             sender?.backgroundColor = Colors.green
-            pointButton.setTitleColor(Colors.green, for: .normal)
+            bubbleButton.setTitleColor(Colors.green, for: .normal)
             userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
-            pointButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
+            bubbleButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
             
             timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "greenBubble")
             timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "greenBubble2")
@@ -455,9 +468,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             }
            
             sender?.backgroundColor = Colors.red
-            pointButton.setTitleColor(Colors.red, for: .normal)
+            bubbleButton.setTitleColor(Colors.red, for: .normal)
             userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
-            pointButton.setTitle(String(-userPoint), for: UIControl.State.normal)
+            bubbleButton.setTitle(String(-userPoint), for: UIControl.State.normal)
             
             timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "redBubble")
             timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "redBubble2")
@@ -480,11 +493,11 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         let lastPoint = UserDefault.lastPoint.getInt()
         
         questionLabel.isHidden = true
-        pointButton.isHidden = false
+        bubbleButton.isHidden = false
         
-        pointButton.setTitleColor(Colors.red, for: .normal)
-        pointButton.setImage(imageName: "empty", width: 0, height: 0)
-        pointButton.setTitle(String(-1), for: UIControl.State.normal)
+        bubbleButton.setTitleColor(Colors.red, for: .normal)
+        bubbleButton.setImage(imageName: "empty", width: 0, height: 0)
+        bubbleButton.setTitle(String(-1), for: UIControl.State.normal)
         userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)
         
         scheduledTimer(timeInterval: 0.4, #selector(hideBubbleButton))
