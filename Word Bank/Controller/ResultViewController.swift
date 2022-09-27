@@ -119,7 +119,7 @@ class ResultViewController: UIViewController {
         }
     }
     
-    //MARK: - Helpers
+    //MARK: - Helpers    
     
     func configureColor() {
         mainView.backgroundColor = Colors.raven
@@ -254,7 +254,7 @@ extension ResultViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! WordCell
         
         updateCellLabelText(cell, indexPath.row)
-        updateLastCellCornerRadius(cell, indexPath.row)
+        updateCellCornerRadius(cell, indexPath.row)
         updateCellForListeningExercise(cell)
         updateCellLabelTextSize(cell)
         updateCellLabelTextColor(cell)
@@ -355,13 +355,13 @@ extension ResultViewController: UITableViewDataSource {
         return combination
     }
     
-    func updateLastCellCornerRadius(_ cell: WordCell, _ index: Int){
+    func updateCellCornerRadius(_ cell: WordCell, _ index: Int){
+        if index == 0 {
+            cell.updateTopCornerRadius(16)
+        }
+
         if index == userAnswer.count - 1 {
-            cell.engView.layer.cornerRadius = 16
-            cell.engView.layer.maskedCorners = [.layerMinXMaxYCorner]
-            cell.trView.layer.cornerRadius = 16
-            cell.trView.layer.maskedCorners = [.layerMaxXMaxYCorner]
-            cell.backgroundColor = .clear
+            cell.updateBottomCornerRadius(16)
         }
     }
 }
