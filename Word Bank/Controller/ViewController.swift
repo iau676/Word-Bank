@@ -156,6 +156,20 @@ class ViewController: UIViewController {
             showOnboarding()
         }
         
+        //version 2.0.2
+        if UserDefault.exerciseCount.getValue() == nil {
+            UserDefault.allTrueCount.set(UserDefault.blueAllTrue.getInt()+1)
+            
+            UserDefault.testCount.set(UserDefault.start1count.getInt()+1)
+            UserDefault.writingCount.set(UserDefault.start2count.getInt()+1)
+            UserDefault.listeningCount.set(UserDefault.start3count.getInt()+1)
+            UserDefault.cardCount.set(UserDefault.start4count.getInt()+1)
+            
+            UserDefault.exerciseCount.set(UserDefault.blueExerciseCount.getInt()+1)
+            UserDefault.trueCount.set(UserDefault.blueTrueCount.getInt()+1)
+            UserDefault.falseCount.set(UserDefault.blueFalseCount.getInt()+1)
+        }
+        
         let when = DispatchTime.now() + 5
         DispatchQueue.main.asyncAfter(deadline: when){
             self.wordBrain.loadItemArray()

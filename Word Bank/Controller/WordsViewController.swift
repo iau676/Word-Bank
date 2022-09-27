@@ -233,9 +233,9 @@ class WordsViewController: UIViewController {
         
         pageStatistic = [
             "Total Words: \(UserDefault.userWordCount.getInt())" ,
-            "Completed Exercises: \(UserDefault.blueExerciseCount.getInt())",
-            "Correct Answers: \(UserDefault.blueTrueCount.getInt())",
-            "Wrong Answers: \(UserDefault.blueFalseCount.getInt())"
+            "Completed Exercises: \(UserDefault.exerciseCount.getInt())",
+            "Correct Answers: \(UserDefault.trueCount.getInt())",
+            "Wrong Answers: \(UserDefault.falseCount.getInt())"
             ]
     }
     

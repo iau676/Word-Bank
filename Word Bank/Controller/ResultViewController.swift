@@ -180,11 +180,11 @@ class ResultViewController: UIViewController {
     
     func updateStatistic() {
         if UserDefault.whichButton.getString() == "blue" {
-            UserDefault.blueExerciseCount.set(UserDefault.blueExerciseCount.getInt()+1)
-            UserDefault.blueTrueCount.set(UserDefault.blueTrueCount.getInt()+numberOfTrue)
-            UserDefault.blueFalseCount.set(UserDefault.blueFalseCount.getInt()+(userAnswer.count-numberOfTrue))
+            UserDefault.exerciseCount.set(UserDefault.exerciseCount.getInt()+1)
+            UserDefault.trueCount.set(UserDefault.trueCount.getInt()+numberOfTrue)
+            UserDefault.falseCount.set(UserDefault.falseCount.getInt()+(userAnswer.count-numberOfTrue))
             if numberOfTrue == userAnswer.count {
-                UserDefault.blueAllTrue.set(UserDefault.blueAllTrue.getInt()+1)
+                UserDefault.allTrueCount.set(UserDefault.allTrueCount.getInt()+1)
             }
             updateExerciseCount()
         }
@@ -193,16 +193,16 @@ class ResultViewController: UIViewController {
     func updateExerciseCount() {
         switch whichStartPressed {
         case 1:
-            UserDefault.start1count.set(UserDefault.start1count.getInt()+1)
+            UserDefault.testCount.set(UserDefault.testCount.getInt()+1)
             break
         case 2:
-            UserDefault.start2count.set(UserDefault.start2count.getInt()+1)
+            UserDefault.writingCount.set(UserDefault.writingCount.getInt()+1)
             break
         case 3:
-            UserDefault.start3count.set(UserDefault.start3count.getInt()+1)
+            UserDefault.listeningCount.set(UserDefault.listeningCount.getInt()+1)
             break
         case 4:
-            UserDefault.start4count.set(UserDefault.start4count.getInt()+1)
+            UserDefault.cardCount.set(UserDefault.cardCount.getInt()+1)
             break
         default: break
         }

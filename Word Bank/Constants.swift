@@ -63,6 +63,24 @@ enum UserDefault {
     static var rightOnceBool             = UserDefaultsManager(key: "rightOnceBool")
     static var arrayForResultViewENG     = UserDefaultsManager(key: "arrayForResultViewENG")
     static var arrayForResultViewTR      = UserDefaultsManager(key: "arrayForResultViewTR")
+    
+    static var engEdit                   = UserDefaultsManager(key: "engEdit")
+    static var trEdit                    = UserDefaultsManager(key: "trEdit")
+    
+    static var allTrueCount               = UserDefaultsManager(key: "allTrueCount")
+    
+    static var testCount                 = UserDefaultsManager(key: "testCount")
+    static var writingCount              = UserDefaultsManager(key: "writingCount")
+    static var listeningCount            = UserDefaultsManager(key: "listeningCount")
+    static var cardCount                 = UserDefaultsManager(key: "cardCount")
+    
+    static var userWordCount             = UserDefaultsManager(key: "userWordCount")
+    static var exerciseCount             = UserDefaultsManager(key: "exerciseCount")
+    static var trueCount                 = UserDefaultsManager(key: "trueCount")
+    static var falseCount                = UserDefaultsManager(key: "falseCount")
+    
+    //will delete next version
+    
     static var blueAllTrue               = UserDefaultsManager(key: "blueAllTrue")
     
     static var start1count               = UserDefaultsManager(key: "start1count")
@@ -70,11 +88,7 @@ enum UserDefault {
     static var start3count               = UserDefaultsManager(key: "start3count")
     static var start4count               = UserDefaultsManager(key: "start4count")
     
-    static var userWordCount             = UserDefaultsManager(key: "userWordCount")
     static var blueExerciseCount         = UserDefaultsManager(key: "blueExerciseCount")
     static var blueTrueCount             = UserDefaultsManager(key: "blueTrueCount")
     static var blueFalseCount            = UserDefaultsManager(key: "blueFalseCount")
-    
-    static var engEdit                   = UserDefaultsManager(key: "engEdit")
-    static var trEdit                    = UserDefaultsManager(key: "trEdit")
 }

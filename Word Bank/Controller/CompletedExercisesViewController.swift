@@ -23,7 +23,7 @@ class CompletedExercisesViewController: UIViewController {
 
     lazy var notesLabel: UILabel = {
         let label = UILabel()
-        label.text = "Test: \(UserDefault.start1count.getInt())\n\nWriting: \(UserDefault.start2count.getInt())\n\nListening: \(UserDefault.start3count.getInt())\n\nCard: \(UserDefault.start4count.getInt())"
+        label.text = "Test: \(UserDefault.testCount.getInt())\n\nWriting: \(UserDefault.writingCount.getInt())\n\nListening: \(UserDefault.listeningCount.getInt())\n\nCard: \(UserDefault.cardCount.getInt())"
         label.font = UIFont(name: "AvenirNext-DemiBold", size: UserDefault.textSize.getCGFloat())
         label.textColor = UIColor.black
         label.numberOfLines = 0

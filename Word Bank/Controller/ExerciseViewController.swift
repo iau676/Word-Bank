@@ -396,7 +396,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         progressBar.progress = progrs
         progressBar2.progress = progrs
         
-        var userPoint = 0
+        var exercisePoint = 0
         var userGotItRight = true
         
         if whichStartPressed == 1 {
@@ -417,25 +417,25 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         bubbleButton.isHidden = false
         questionLabel.text = ""
         
-        userPoint = UserDefault.exercisePoint.getInt()
+        exercisePoint = UserDefault.exercisePoint.getInt()
         
-        print("userPoint> \(userPoint)")
+        print("userPoint> \(exercisePoint)")
         
         switch whichStartPressed {
         case 0:
-            userPoint = 1
+            exercisePoint = 1
             break
         case 2:
-            userPoint += 10
+            exercisePoint += 10
             break
         case 3:
-            userPoint += 20
+            exercisePoint += 20
             break
         default: break
         }
         
         if UserDefault.lastHour.getInt() == UserDefault.userSelectedHour.getInt() {
-            userPoint *= 2
+            exercisePoint *= 2
         }
         
         if userGotItRight {
@@ -449,15 +449,15 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             
             sender?.backgroundColor = Colors.green
             bubbleButton.setTitleColor(Colors.green, for: .normal)
-            userPointButton.setTitle(String((lastPoint+userPoint).withCommas()), for: UIControl.State.normal)
-            bubbleButton.setTitle(String("+\(userPoint)"), for: UIControl.State.normal)
+            userPointButton.setTitle(String((lastPoint+exercisePoint).withCommas()), for: UIControl.State.normal)
+            bubbleButton.setTitle(String("+\(exercisePoint)"), for: UIControl.State.normal)
             
             timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "greenBubble")
             timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "greenBubble2")
             timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "greenBubble3")
             timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "greenBubble4")
             
-            UserDefault.lastPoint.set(lastPoint+userPoint)
+            UserDefault.lastPoint.set(lastPoint+exercisePoint)
         } else {
             player.playMP3("false")
             
@@ -469,15 +469,15 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
            
             sender?.backgroundColor = Colors.red
             bubbleButton.setTitleColor(Colors.red, for: .normal)
-            userPointButton.setTitle(String((lastPoint-userPoint).withCommas()), for: UIControl.State.normal)
-            bubbleButton.setTitle(String(-userPoint), for: UIControl.State.normal)
+            userPointButton.setTitle(String((lastPoint-exercisePoint).withCommas()), for: UIControl.State.normal)
+            bubbleButton.setTitle(String(-exercisePoint), for: UIControl.State.normal)
             
             timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "redBubble")
             timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "redBubble2")
             timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "redBubble3")
             timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "redBubble4")
             
-            UserDefault.lastPoint.set(lastPoint-userPoint)
+            UserDefault.lastPoint.set(lastPoint-exercisePoint)
         }
       
         wordBrain.nextQuestion()
