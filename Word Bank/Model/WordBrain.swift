@@ -287,6 +287,10 @@ struct WordBrain {
                 hardItemArray.remove(at: questionNumber)
                 UserDefault.hardWordsCount.set(UserDefault.hardWordsCount.getInt()-1)
             }
+        } else {
+            context.delete(hardItemArray[questionNumber])
+            hardItemArray.remove(at: questionNumber)
+            UserDefault.hardWordsCount.set(UserDefault.hardWordsCount.getInt()-1)
         }
         saveContext()
         return hardItemArray.count < 2 ? true : false
