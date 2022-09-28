@@ -349,12 +349,18 @@ class WordsViewController: UIViewController {
     }
     
     func check2Items(){
-        if itemArray.count < 2 {
+        let checkCount = (whichButton == "blue") ? itemArray.count : hardItemArray.count
+        
+        if checkCount < 2 {
             let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 self.showWords = 1
                 self.updateView()
-                self.performSegue(withIdentifier: "goAdd", sender: self)
+                if self.whichButton == "blue" {
+                    self.performSegue(withIdentifier: "goAdd", sender: self)
+                } else {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
             }
             alert.addAction(action)
             present(alert, animated: true, completion: nil)

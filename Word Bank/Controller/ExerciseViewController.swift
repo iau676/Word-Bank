@@ -226,9 +226,13 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                 break
             case 2:
                 textField.becomeFirstResponder()
+                progressBar.isHidden = true
+                arrowButtonAtAnswerView.isHidden = true
                 break
             case 3:
                 player.playSound(soundSpeed, answerForStart23)
+                progressBar.isHidden = true
+                arrowButtonAtAnswerView.isHidden = true
                 textField.becomeFirstResponder()
                 break
             default: break
