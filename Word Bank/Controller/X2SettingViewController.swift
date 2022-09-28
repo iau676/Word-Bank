@@ -18,6 +18,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var lastEditLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var allowNotificationButton: UIButton!
     
     //MARK: - Variables
     
@@ -53,22 +54,12 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     override func viewDidLoad() {
         configureColor()
-        saveButton.layer.cornerRadius = 8
-        pickerView.dataSource = self
-        pickerView.delegate = self
-        pickerView.selectRow(UserDefault.userSelectedHour.getInt(), inComponent: 0, animated: true)
-        
-        let lastEdit = UserDefault.lastEditLabel.getString()
-        
-        if lastEdit != "empty" {
-            lastEditLabel.text = "Last changed on \(lastEdit)"
-        } else {
-            lastEditLabel.text = ""
-        }
-        
+        configureButtons()
+        configurePickerView()
+        configureLastEditLabel()
         updateInfoLabel()
+        checkNotificationAllowed()
     }
-    
 
     //MARK: - IBAction
     
@@ -116,6 +107,65 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
         updateInfoLabel()
     }
     
+    @IBAction func notificationButtonPressed(_ sender: UIButton) {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    //MARK: - Helpers
+    
+    func configureColor() {
+        infoLabel.textColor = Colors.black
+        lastEditLabel.textColor = Colors.black
+        saveButton.changeBackgroundColor(to: Colors.cellLeft)
+        saveButton.setTitleColor(Colors.black, for: .normal)
+    }
+    
+    func configureButtons(){
+        saveButton.setButtonCornerRadius(8)
+        allowNotificationButton.setButtonCornerRadius(8)
+    }
+    
+    func configurePickerView(){
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        pickerView.selectRow(UserDefault.userSelectedHour.getInt(), inComponent: 0, animated: true)
+    }
+    
+    func configureLastEditLabel(){
+        let lastEdit = UserDefault.lastEditLabel.getString()
+        
+        if lastEdit != "empty" {
+            lastEditLabel.text = "Last changed on \(lastEdit)"
+        } else {
+            lastEditLabel.text = ""
+        }
+    }
+    
+    override func updateViewConstraints() {
+        self.view.frame.size.height = UIScreen.main.bounds.height - 120
+        self.view.frame.origin.y =  120
+        self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
+        super.updateViewConstraints()
+    }
+    
+    func updateInfoLabel(){
+        infoLabel.text = "You will earn 2x points for each correct answer between \(hours[UserDefault.userSelectedHour.getInt()])  hours."
+    }
+    
+    func checkNotificationAllowed() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            if settings.authorizationStatus == .authorized {
+                DispatchQueue.main.async {
+                    self.allowNotificationButton.isHidden = true
+                }
+            } else {
+                self.allowNotificationButton.isHidden = false
+            }
+        }
+    }
+    
     //MARK: - pickerView
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -131,34 +181,12 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("user select \(hours[row])")
         userSelectedHour = row
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         return NSAttributedString(string: hours[row], attributes: [NSAttributedString.Key.foregroundColor: Colors.black!])
     }
-    
-    //MARK: - Helpers
-    
-    func configureColor() {
-        infoLabel.textColor = Colors.black
-        lastEditLabel.textColor = Colors.black
-        saveButton.changeBackgroundColor(to: Colors.cellLeft)
-        saveButton.setTitleColor(Colors.black, for: .normal)
-    }
-    
-    override func updateViewConstraints() {
-        self.view.frame.size.height = UIScreen.main.bounds.height - 120
-        self.view.frame.origin.y =  120
-        self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
-        super.updateViewConstraints()
-    }
-    
-    func updateInfoLabel(){
-        infoLabel.text = "You will earn 2x points for each correct answer between \(hours[UserDefault.userSelectedHour.getInt()])  hours."
-    }
-    
 }
 
 

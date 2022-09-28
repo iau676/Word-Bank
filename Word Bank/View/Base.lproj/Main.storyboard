@@ -1471,13 +1471,32 @@
                                 <color key="textColor" name="cellTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgS-UR-gkB">
+                                <rect key="frame" x="32" y="407" width="350" height="45"/>
+                                <color key="backgroundColor" name="rightCelerColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Cvx-dR-l8p"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Allow Notification">
+                                    <color key="titleColor" name="cellTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="notificationButtonPressed:" destination="evb-Qz-GqT" eventType="touchUpInside" id="KQY-SS-2qv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MCv-5u-sBY"/>
                         <color key="backgroundColor" name="leftCellColor"/>
                         <constraints>
+                            <constraint firstItem="cgS-UR-gkB" firstAttribute="top" secondItem="ex8-MH-O2G" secondAttribute="bottom" constant="16" id="D5B-b6-Sq2"/>
+                            <constraint firstItem="MCv-5u-sBY" firstAttribute="trailing" secondItem="cgS-UR-gkB" secondAttribute="trailing" constant="32" id="K1x-rR-qZG"/>
                             <constraint firstItem="MCv-5u-sBY" firstAttribute="trailing" secondItem="L55-Nq-7x4" secondAttribute="trailing" constant="32" id="LaO-Pa-gGO"/>
                             <constraint firstItem="ZKt-ta-q9I" firstAttribute="top" secondItem="L55-Nq-7x4" secondAttribute="bottom" constant="16" id="Nby-nR-MDG"/>
                             <constraint firstItem="ex8-MH-O2G" firstAttribute="leading" secondItem="MCv-5u-sBY" secondAttribute="leading" constant="32" id="Q3d-r2-OWH"/>
+                            <constraint firstItem="cgS-UR-gkB" firstAttribute="leading" secondItem="MCv-5u-sBY" secondAttribute="leading" constant="32" id="WTQ-aU-pRg"/>
                             <constraint firstItem="ex8-MH-O2G" firstAttribute="top" secondItem="ZKt-ta-q9I" secondAttribute="bottom" constant="16" id="cCF-bL-j9t"/>
                             <constraint firstItem="YmC-X0-1AC" firstAttribute="trailing" secondItem="MCv-5u-sBY" secondAttribute="trailing" id="fM4-Pa-L73"/>
                             <constraint firstItem="ZKt-ta-q9I" firstAttribute="leading" secondItem="MCv-5u-sBY" secondAttribute="leading" constant="16" id="fcu-yT-G1E"/>
@@ -1490,6 +1509,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="allowNotificationButton" destination="cgS-UR-gkB" id="1Yq-yU-Euk"/>
                         <outlet property="infoLabel" destination="ex8-MH-O2G" id="3tn-pH-1lf"/>
                         <outlet property="lastEditLabel" destination="ZKt-ta-q9I" id="UfI-ip-cnN"/>
                         <outlet property="pickerView" destination="YmC-X0-1AC" id="etx-uI-K2t"/>
