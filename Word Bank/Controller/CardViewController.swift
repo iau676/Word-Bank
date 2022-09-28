@@ -18,7 +18,6 @@ class CardViewController: UIViewController {
     //MARK: - Variables
     
     var wordBrain = WordBrain()
-    var quizCoreDataArray = [AddedList]()
     var itemArray: [Item] { return wordBrain.itemArray }
     var cardCounter = 0
     var questionNumber = 0

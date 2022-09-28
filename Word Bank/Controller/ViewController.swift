@@ -170,8 +170,11 @@ class ViewController: UIViewController {
             UserDefault.falseCount.set(UserDefault.blueFalseCount.getInt()+1)
         }
         
+        
+        
         let when = DispatchTime.now() + 5
         DispatchQueue.main.asyncAfter(deadline: when){
+            self.wordBrain.loadUser()
             self.wordBrain.loadItemArray()
             self.wordBrain.loadHardItemArray()
             
@@ -180,6 +183,21 @@ class ViewController: UIViewController {
             let wordCount = self.wordBrain.itemArray.count
             if wordCount == 0 {
                 self.scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
+            }
+            
+            if self.wordBrain.user.count < 1 {
+                self.wordBrain.createUser()
+            } else {
+                UserDefault.level.set(self.wordBrain.user[0].level)
+                UserDefault.lastPoint.set(self.wordBrain.user[0].lastPoint)
+                UserDefault.exerciseCount.set(self.wordBrain.user[0].exerciseCount)
+                UserDefault.allTrueCount.set(self.wordBrain.user[0].allTrueCount)
+                UserDefault.testCount.set(self.wordBrain.user[0].testCount)
+                UserDefault.writingCount.set(self.wordBrain.user[0].writingCount)
+                UserDefault.listeningCount.set(self.wordBrain.user[0].listeningCount)
+                UserDefault.cardCount.set(self.wordBrain.user[0].cardCount)
+                UserDefault.trueCount.set(self.wordBrain.user[0].trueCount)
+                UserDefault.falseCount.set(self.wordBrain.user[0].falseCount)
             }
         }
     }

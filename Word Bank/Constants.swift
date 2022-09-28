@@ -36,6 +36,19 @@ enum Colors {
 
 enum UserDefault {
     
+    static var level                     = UserDefaultsManager(key: "level")
+    static var lastPoint                 = UserDefaultsManager(key: "lastPoint")
+    
+    static var exerciseCount             = UserDefaultsManager(key: "exerciseCount")
+    static var testCount                 = UserDefaultsManager(key: "testCount")
+    static var writingCount              = UserDefaultsManager(key: "writingCount")
+    static var listeningCount            = UserDefaultsManager(key: "listeningCount")
+    static var cardCount                 = UserDefaultsManager(key: "cardCount")
+    
+    static var allTrueCount               = UserDefaultsManager(key: "allTrueCount")
+    static var trueCount                 = UserDefaultsManager(key: "trueCount")
+    static var falseCount                = UserDefaultsManager(key: "falseCount")
+    
     static var startPressed              = UserDefaultsManager(key: "startPressed")
     static var whichButton               = UserDefaultsManager(key: "whichButton")
     static var setNotificationFirstTime  = UserDefaultsManager(key: "setNotificationFirstTime")
@@ -43,10 +56,8 @@ enum UserDefault {
     static var userSelectedHour          = UserDefaultsManager(key: "userSelectedHour")
     static var lastEditLabel             = UserDefaultsManager(key: "lastEditLabel")
     
-    static var level                     = UserDefaultsManager(key: "level")
     static var needPoint                 = UserDefaultsManager(key: "needPoint")
     static var goLevelUp                 = UserDefaultsManager(key: "goLevelUp")
-    static var lastPoint                 = UserDefaultsManager(key: "lastPoint")
     static var selectedSegmentIndex      = UserDefaultsManager(key: "selectedSegmentIndex")
     static var soundSpeed                = UserDefaultsManager(key: "soundSpeed")
     static var playSound                 = UserDefaultsManager(key: "playSound")
@@ -57,6 +68,7 @@ enum UserDefault {
     static var userAnswers               = UserDefaultsManager(key: "userAnswers")
     static var failNumber                = UserDefaultsManager(key: "failNumber")
     static var failIndex                 = UserDefaultsManager(key: "failIndex")
+    static var userWordCount             = UserDefaultsManager(key: "userWordCount")
     static var hardWordsCount            = UserDefaultsManager(key: "hardWordsCount")
     
     static var rightOnce                 = UserDefaultsManager(key: "rightOnce")
@@ -67,27 +79,12 @@ enum UserDefault {
     static var engEdit                   = UserDefaultsManager(key: "engEdit")
     static var trEdit                    = UserDefaultsManager(key: "trEdit")
     
-    static var allTrueCount               = UserDefaultsManager(key: "allTrueCount")
-    
-    static var testCount                 = UserDefaultsManager(key: "testCount")
-    static var writingCount              = UserDefaultsManager(key: "writingCount")
-    static var listeningCount            = UserDefaultsManager(key: "listeningCount")
-    static var cardCount                 = UserDefaultsManager(key: "cardCount")
-    
-    static var userWordCount             = UserDefaultsManager(key: "userWordCount")
-    static var exerciseCount             = UserDefaultsManager(key: "exerciseCount")
-    static var trueCount                 = UserDefaultsManager(key: "trueCount")
-    static var falseCount                = UserDefaultsManager(key: "falseCount")
-    
     //will delete next version
-    
     static var blueAllTrue               = UserDefaultsManager(key: "blueAllTrue")
-    
     static var start1count               = UserDefaultsManager(key: "start1count")
     static var start2count               = UserDefaultsManager(key: "start2count")
     static var start3count               = UserDefaultsManager(key: "start3count")
     static var start4count               = UserDefaultsManager(key: "start4count")
-    
     static var blueExerciseCount         = UserDefaultsManager(key: "blueExerciseCount")
     static var blueTrueCount             = UserDefaultsManager(key: "blueTrueCount")
     static var blueFalseCount            = UserDefaultsManager(key: "blueFalseCount")

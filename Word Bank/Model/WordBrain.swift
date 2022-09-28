@@ -13,6 +13,7 @@ struct WordBrain {
         
     var itemArray = [Item]()
     var hardItemArray = [HardItem]()
+    var user = [User]()
     
     static let shareInstance = WordBrain()
     
@@ -45,6 +46,13 @@ struct WordBrain {
         Word(e: "4", t: "44")
     ]
     
+    mutating func createUser(){
+        let newUser = User(context: self.context)
+        newUser.date = Date()
+        newUser.uuid = UUID().uuidString
+        saveContext()
+    }
+
     mutating func addWord(english: String, meaning: String){
         let newItem = Item(context: self.context)
         newItem.eng = english
@@ -329,6 +337,15 @@ struct WordBrain {
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
             itemArray = try context.fetch(request)
+        } catch {
+           print("Error fetching data from context \(error)")
+        }
+    }
+    
+    mutating func loadUser(with request: NSFetchRequest<User> = User.fetchRequest()){
+        do {
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+            user = try context.fetch(request)
         } catch {
            print("Error fetching data from context \(error)")
         }

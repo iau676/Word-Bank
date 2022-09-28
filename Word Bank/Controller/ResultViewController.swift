@@ -55,6 +55,7 @@ class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         wordBrain.loadItemArray()
+        wordBrain.loadUser()
         configureColor()
         setupTableView()
         setupLabel()
@@ -62,6 +63,7 @@ class ResultViewController: UIViewController {
         calculateNumberOfTrue()
         checkLevelUp()
         updateStatistic()
+        updateUser()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -188,6 +190,19 @@ class ResultViewController: UIViewController {
             }
             updateExerciseCount()
         }
+    }
+    
+    func updateUser(){
+        wordBrain.user[0].level             = Int16(UserDefault.level.getInt())
+        wordBrain.user[0].lastPoint         = Int32(UserDefault.lastPoint.getInt())
+        wordBrain.user[0].exerciseCount     = Int16(UserDefault.exerciseCount.getInt())
+        wordBrain.user[0].allTrueCount      = Int16(UserDefault.allTrueCount.getInt())
+        wordBrain.user[0].testCount         = Int16(UserDefault.testCount.getInt())
+        wordBrain.user[0].writingCount      = Int16(UserDefault.writingCount.getInt())
+        wordBrain.user[0].listeningCount    = Int16(UserDefault.listeningCount.getInt())
+        wordBrain.user[0].cardCount         = Int16(UserDefault.cardCount.getInt())
+        wordBrain.user[0].trueCount         = Int16(UserDefault.trueCount.getInt())
+        wordBrain.user[0].falseCount        = Int16(UserDefault.falseCount.getInt())
     }
     
     func updateExerciseCount() {
