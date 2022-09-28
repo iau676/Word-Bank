@@ -51,12 +51,12 @@ class WordsViewController: UIViewController {
         setupNavigationBar()
         setupSearchBar()
         setupView()
-        setupButtons()
         hideKeyboardWhenTappedAround()
         updateSearchBarPlaceholder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        setupButtons()
         checkGoAddPage()
     }
      
@@ -106,17 +106,20 @@ class WordsViewController: UIViewController {
     @IBAction func startPressed(_ sender: Any) {
         UserDefault.startPressed.set(1)
         startButton.bounce()
+        startButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         check2Items()
     }
     
     @IBAction func startPressed2(_ sender: UIButton) {
         UserDefault.startPressed.set(2)
         startButton2.bounce()
+        startButton2.updateShadowHeight(withDuration: 0.15, height: 0.3)
         check2Items()
     }
     
     @IBAction func startPressed3(_ sender: UIButton) {
         startButton3.bounce()
+        startButton3.updateShadowHeight(withDuration: 0.15, height: 0.3)
         //0 is true, 1 is false
         if UserDefault.playSound.getInt() == 0 {
             UserDefault.startPressed.set(3)
@@ -134,7 +137,7 @@ class WordsViewController: UIViewController {
     @IBAction func startPressed4(_ sender: UIButton) {
         UserDefault.startPressed.set(4)
         startButton4.pulstate()
-        
+        startButton4.updateShadowHeight(withDuration: 0.15, height: 0.3)
         if itemArray.count < 2 {
             let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in

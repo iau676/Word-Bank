@@ -97,4 +97,9 @@ extension UIButton {
         }
     }
     
+    func updateShadowHeight(withDuration: CGFloat, height: CGFloat){
+        UIView.animate(withDuration: withDuration) {
+            self.layer.shadowOffset = CGSize(width: 0.0, height: height)
+        }
+    }
 }

@@ -92,6 +92,7 @@ class ViewController: UIViewController {
         UserDefault.whichButton.set("blue")
         goAddPage = 1
         greenButton.bounce()
+        greenButton.updateShadowHeight(withDuration: 0.19, height: 0.3)
         viewDidLayoutSubviews()
         goAfter100Milliseconds(identifier: "goWords")
     }
@@ -100,12 +101,14 @@ class ViewController: UIViewController {
         UserDefault.whichButton.set("blue")
         goAddPage = 0
         blueButton.bounce()
+        blueButton.updateShadowHeight(withDuration: 0.19, height: 0.3)
         goAfter100Milliseconds(identifier: "goWords")
     }
     
     @IBAction func yellowButtonPressed(_ sender: UIButton) {
         UserDefault.whichButton.set("yellow")
         yellowButton.bounce()
+        yellowButton.updateShadowHeight(withDuration: 0.19, height: 0.3)
         goAfter100Milliseconds(identifier: "goWords")
     }
 
