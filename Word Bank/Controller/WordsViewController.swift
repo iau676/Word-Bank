@@ -59,6 +59,10 @@ class WordsViewController: UIViewController {
         setupButtons()
         checkGoAddPage()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        goAddPage = 0
+    }
      
     //MARK: - prepare
     
@@ -337,7 +341,7 @@ class WordsViewController: UIViewController {
     }
 
     func checkGoAddPage(){
-        if goAddPage == 1 {
+        if goAddPage == 1 && whichButton == "blue"{
             showWords = 1
             updateView()
             performSegue(withIdentifier: "goAdd", sender: self)
