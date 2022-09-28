@@ -96,7 +96,6 @@ class WordsViewController: UIViewController {
             showWords = 0
         }
         updateView()
-        tableView.reloadData()
     }
     
     @IBAction func addBarButtonPressed(_ sender: UIBarButtonItem) {
@@ -141,7 +140,6 @@ class WordsViewController: UIViewController {
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 self.showWords = 1
                 self.updateView()
-                self.tableView.reloadData()
                 self.performSegue(withIdentifier: "goAdd", sender: self)
             }
             alert.addAction(action)
@@ -160,18 +158,18 @@ class WordsViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
             break
         case .left:
-            performSegue(withIdentifier: "goAdd", sender: self)
-            if showWords == 0 {
-                showWords = 1
-                updateView()
-                tableView.reloadData()
+            if whichButton == "blue" {
+                performSegue(withIdentifier: "goAdd", sender: self)
+                if showWords == 0 {
+                    showWords = 1
+                    updateView()
+                }
             }
             break
         case .down:
-            if showWords == 0 {
+            if showWords == 0 && whichButton == "blue" {
                 showWords = 1
                 updateView()
-                tableView.reloadData()
             }
             break
         default: break
@@ -221,6 +219,7 @@ class WordsViewController: UIViewController {
                 navigationItem.rightBarButtonItem = nil
             }
         }
+        tableView.reloadData()
     }
     
     func configurePageStatistic() {
@@ -337,7 +336,6 @@ class WordsViewController: UIViewController {
     func checkGoAddPage(){
         if goAddPage == 1 {
             showWords = 1
-            tableView.reloadData()
             updateView()
             performSegue(withIdentifier: "goAdd", sender: self)
         }
@@ -349,7 +347,6 @@ class WordsViewController: UIViewController {
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 self.showWords = 1
                 self.updateView()
-                self.tableView.reloadData()
                 self.performSegue(withIdentifier: "goAdd", sender: self)
             }
             alert.addAction(action)

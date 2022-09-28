@@ -173,6 +173,10 @@ class ViewController: UIViewController {
         let when = DispatchTime.now() + 5
         DispatchQueue.main.asyncAfter(deadline: when){
             self.wordBrain.loadItemArray()
+            self.wordBrain.loadHardItemArray()
+            
+            UserDefault.hardWordsCount.set(self.wordBrain.hardItemArray.count)
+            
             let wordCount = self.wordBrain.itemArray.count
             if wordCount == 0 {
                 self.scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
