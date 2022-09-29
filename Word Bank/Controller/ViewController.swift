@@ -241,7 +241,7 @@ class ViewController: UIViewController {
         greenButton.setImage(imageName: "new", width: 35, height: 35)
         blueButton.setImage(imageName: "bank", width: 40, height: 40)
         yellowButton.setImage(imageName: "hard", width: 35, height: 35)
-        settingsButton.setImage(imageName: "settingsImage", width: 23, height: 23)
+        settingsButton.setImage(imageName: "settingsImage", width: 35, height: 35)
     }
     
     func setupButtonShadow(_ button: UIButton, shadowColor: UIColor?){
