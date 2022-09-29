@@ -24,6 +24,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var blueButton: UIButton!
     @IBOutlet weak var greenButton: UIButton!
     @IBOutlet weak var yellowButton: UIButton!
+    @IBOutlet weak var greenButtonLabel: UILabel!
+    @IBOutlet weak var blueButtonLabel: UILabel!
+    @IBOutlet weak var yellowButtonLabel: UILabel!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
             
@@ -40,6 +43,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         fixSoundProblemForRealDevice()
         setupFirstLaunch()
+        configureColor()
         getHour()
     }
     
@@ -92,7 +96,7 @@ class ViewController: UIViewController {
         UserDefault.whichButton.set("blue")
         goAddPage = 1
         greenButton.bounce()
-        greenButton.updateShadowHeight(withDuration: 0.19, height: 0.3)
+        greenButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         viewDidLayoutSubviews()
         goAfter100Milliseconds(identifier: "goWords")
     }
@@ -101,14 +105,14 @@ class ViewController: UIViewController {
         UserDefault.whichButton.set("blue")
         goAddPage = 0
         blueButton.bounce()
-        blueButton.updateShadowHeight(withDuration: 0.19, height: 0.3)
+        blueButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goWords")
     }
     
     @IBAction func yellowButtonPressed(_ sender: UIButton) {
         UserDefault.whichButton.set("yellow")
         yellowButton.bounce()
-        yellowButton.updateShadowHeight(withDuration: 0.19, height: 0.3)
+        yellowButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goWords")
     }
 
@@ -117,7 +121,6 @@ class ViewController: UIViewController {
         if UserDefault.setNotificationFirstTime.getInt() == 0 {
             wordBrain.setNotification()
             UserDefault.setNotificationFirstTime.set(1)
-            print("SET NOTİFİCATİON<<")
         }
     }
     
@@ -173,8 +176,6 @@ class ViewController: UIViewController {
             UserDefault.falseCount.set(UserDefault.blueFalseCount.getInt()+1)
         }
         
-        
-        
         let when = DispatchTime.now() + 5
         DispatchQueue.main.asyncAfter(deadline: when){
             self.wordBrain.loadUser()
@@ -212,6 +213,18 @@ class ViewController: UIViewController {
                 print("Permission Denied")
             }
         }
+    }
+    
+    func configureColor() {
+        titleLabel.textColor = Colors.f6f6f6
+        levelLabel.textColor = Colors.f6f6f6
+        greenButtonLabel.textColor = Colors.f6f6f6
+        blueButtonLabel.textColor = Colors.f6f6f6
+        yellowButtonLabel.textColor = Colors.f6f6f6
+        greenButton.setTitleColor(Colors.green, for: .normal)
+        blueButton.setTitleColor(Colors.blue, for: .normal)
+        yellowButton.setTitleColor(Colors.yellow, for: .normal)
+        
     }
     
     func showOnboarding(){

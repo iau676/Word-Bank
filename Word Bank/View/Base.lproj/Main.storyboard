@@ -217,9 +217,11 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="blueButton" destination="thM-G9-AS5" id="31w-Pf-Oov"/>
+                        <outlet property="blueButtonLabel" destination="gIZ-eY-2rd" id="3pl-kF-m1R"/>
                         <outlet property="buttonView" destination="sP4-Gd-EeD" id="any-KG-hUQ"/>
                         <outlet property="darkView" destination="oPO-bV-g8q" id="q6W-S2-xp9"/>
                         <outlet property="greenButton" destination="nLx-0o-rj7" id="CSF-Qc-mdf"/>
+                        <outlet property="greenButtonLabel" destination="MFp-jY-NxG" id="G1S-oC-Ri5"/>
                         <outlet property="levelLabel" destination="8mr-hc-FgC" id="Mz8-U2-eUW"/>
                         <outlet property="levelStackView" destination="GxP-5g-pb6" id="3R9-cV-Ukf"/>
                         <outlet property="levelView" destination="9d0-rC-PJ7" id="0HC-bR-F0W"/>
@@ -229,6 +231,7 @@
                         <outlet property="x2button" destination="viW-so-7wD" id="Jnx-Wf-uJl"/>
                         <outlet property="x2view" destination="LfL-Kd-HUO" id="cSk-iX-DHS"/>
                         <outlet property="yellowButton" destination="Gjq-DL-7fV" id="T2m-zi-8AJ"/>
+                        <outlet property="yellowButtonLabel" destination="PNV-Tv-3dC" id="ERe-OU-Jx6"/>
                         <segue destination="Rlr-CF-jX5" kind="presentation" identifier="goLevelUp" modalPresentationStyle="overFullScreen" id="7eU-GJ-yCb"/>
                         <segue destination="9q6-8v-FQ1" kind="show" identifier="goWords" id="VaH-z8-7n4"/>
                     </connections>
@@ -766,18 +769,18 @@
             <objects>
                 <viewController id="9q6-8v-FQ1" customClass="WordsViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" ambiguous="YES" id="WVg-dI-ycn">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="UTr-xt-31a">
-                                <rect key="frame" x="16" y="78" width="343" height="732"/>
+                                <rect key="frame" x="16" y="110" width="343" height="720"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZfY-UE-MOw">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="38"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="37.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3Ef-aL-Ae9">
-                                        <rect key="frame" x="0.0" y="60" width="343" height="382.5"/>
+                                        <rect key="frame" x="0.0" y="59.5" width="343" height="375.5"/>
                                         <subviews>
                                             <searchBar contentMode="redraw" id="Z80-fQ-jgp">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
@@ -787,16 +790,16 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </searchBar>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S22-cM-lNf">
-                                                <rect key="frame" x="0.0" y="51" width="343" height="331.5"/>
+                                                <rect key="frame" x="0.0" y="51" width="343" height="324.5"/>
                                                 <color key="backgroundColor" name="rightCelerColor"/>
                                             </tableView>
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8J-qB-OBS">
-                                        <rect key="frame" x="0.0" y="464.5" width="343" height="267.5"/>
+                                        <rect key="frame" x="0.0" y="457" width="343" height="263"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cC0-0i-zOW">
-                                                <rect key="frame" x="0.0" y="81" width="343" height="105"/>
+                                                <rect key="frame" x="0.0" y="79" width="343" height="105"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="W19-qg-itD">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
@@ -1868,16 +1871,16 @@
     <inferredMetricsTieBreakers>
         <segue reference="9Cg-1r-QhJ"/>
         <segue reference="pzT-n7-INo"/>
-        <segue reference="bhg-Vj-Bf9"/>
-        <segue reference="ys5-yi-eYE"/>
+        <segue reference="VaH-z8-7n4"/>
+        <segue reference="7eU-GJ-yCb"/>
         <segue reference="Gqj-eb-Cz0"/>
         <segue reference="IiH-a1-RE8"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="arrow.clockwise" catalog="system" width="32" height="32"/>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="coin" width="170.5" height="170.5"/>
         <image name="confetti" width="170.5" height="170.5"/>
-        <image name="house.fill" catalog="system" width="32" height="32"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="x2" width="101" height="101"/>
         <namedColor name="bblueColor">
             <color red="0.10999999940395355" green="0.73299998044967651" blue="0.9179999828338623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -33,7 +33,6 @@ extension WordBrain {
                         return
                     }
                 }
-                print("id>>\(id)")
         }
     }
 }

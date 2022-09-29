@@ -152,7 +152,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func textChanged(_ sender: UITextField) {
-        print(answerForStart23)
         if answerForStart23.lowercased() == sender.text!.lowercased() {
             checkAnswerQ(nil,sender.text!)
             textField.text = ""
@@ -449,8 +448,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         questionLabel.text = ""
         
         exercisePoint = UserDefault.exercisePoint.getInt()
-        
-        print("userPoint> \(exercisePoint)")
         
         switch whichStartPressed {
         case 0:

@@ -153,7 +153,6 @@ struct WordBrain {
                         questionNumbers.append(i)
                     }
                 } else {
-                    //print("<*>\(HardItemArray)")
                     questionNumber = Int.random(in: 0..<hardItemArray.count)
                     for i in 0..<hardItemArray.count {
                         questionNumbers.append(i)
