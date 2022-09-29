@@ -68,7 +68,7 @@ class CardViewController: UIViewController {
         wordMeaning = itemArray[questionNumber].tr ?? "empty"
         cardCounter += 1
         lastPoint += 1
-        if cardCounter == 4 { //26
+        if cardCounter == 26 { //26
             performSegue(withIdentifier: "goToResult", sender: self)
         } else {
             UserDefault.lastPoint.set(lastPoint)

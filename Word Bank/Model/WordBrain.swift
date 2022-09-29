@@ -38,12 +38,12 @@ struct WordBrain {
     let notificationCenter = UNUserNotificationCenter.current()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let defaultWords = [
-//        Word(e: "hello", t: "merhaba"),
-//        Word(e: "world", t: "dünya")
-        Word(e: "1", t: "11"),
-        Word(e: "2", t: "22"),
-        Word(e: "3", t: "33"),
-        Word(e: "4", t: "44")
+        Word(e: "hello", t: "merhaba"),
+        Word(e: "hello", t: "hola"),
+        Word(e: "hello", t: "bonjour"),
+        Word(e: "hello", t: "guten tag"),
+        Word(e: "hello", t: "salve"),
+        Word(e: "hello", t: "konnichiwa")
     ]
     
     mutating func createUser(){

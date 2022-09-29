@@ -188,7 +188,11 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     func configureTextFields(){
         setupTxtField(txtFld: engTxtField, placeholder: "English")
         setupTxtField(txtFld: trTxtField, placeholder: "Meaning")
+        
         engTxtField.becomeFirstResponder()
+        
+        engTxtField.keyboardType = .asciiCapable
+        trTxtField.keyboardType = .asciiCapable
         
         switch UserDefault.userInterfaceStyle {
         case "dark":
