@@ -44,7 +44,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         setupViews()
         setupButtons()
         configureColor()
-        setupTxtFields()
+        configureTextFields()
         checkEditStatus()
         preventInterrupt()
         userWordCountIntVariable = UserDefault.userWordCount.getInt()
@@ -185,10 +185,20 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         coinButton.deleteBackgroundImage()
     }
     
-    func setupTxtFields(){
+    func configureTextFields(){
         setupTxtField(txtFld: engTxtField, placeholder: "English")
         setupTxtField(txtFld: trTxtField, placeholder: "Meaning")
         engTxtField.becomeFirstResponder()
+        
+        switch UserDefault.userInterfaceStyle {
+        case "dark":
+            engTxtField.keyboardAppearance = .dark
+            trTxtField.keyboardAppearance = .dark
+            break
+        default:
+            engTxtField.keyboardAppearance = .default
+            trTxtField.keyboardAppearance = .default
+        }
     }
     
     func setupButton(button: UIButton, buttonTitle: String, imageName: String, imageSize: CGFloat=0, cornerRadius: Int){

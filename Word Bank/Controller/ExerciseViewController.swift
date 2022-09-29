@@ -70,10 +70,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         title = " "
         getHour()
         
-        textField.delegate = self
-        
         setupView()
         configureColor()
+        configureTextField()
         
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
@@ -225,7 +224,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                 }
                 break
             case 2:
-                textField.becomeFirstResponder()
                 progressBar.isHidden = true
                 arrowButtonAtAnswerView.isHidden = true
                 break
@@ -233,7 +231,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                 player.playSound(soundSpeed, answerForStart23)
                 progressBar.isHidden = true
                 arrowButtonAtAnswerView.isHidden = true
-                textField.becomeFirstResponder()
                 break
             default: break
             }
@@ -295,6 +292,18 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         progressBar.tintColor = Colors.d6d6d6
         textField.backgroundColor = Colors.d6d6d6
         textField.textColor = Colors.black
+    }
+    
+    func configureTextField(){
+        switch UserDefault.userInterfaceStyle {
+        case "dark":
+            textField.keyboardAppearance = .dark
+            break
+        default:
+            textField.keyboardAppearance = .default
+        }
+        textField.delegate = self
+        textField.becomeFirstResponder()
     }
     
     func setupView(){

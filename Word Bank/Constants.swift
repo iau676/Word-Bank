@@ -36,6 +36,8 @@ enum Colors {
 
 enum UserDefault {
     
+    static var userInterfaceStyle        = ""
+    
     static var level                     = UserDefaultsManager(key: "level")
     static var lastPoint                 = UserDefaultsManager(key: "lastPoint")
     

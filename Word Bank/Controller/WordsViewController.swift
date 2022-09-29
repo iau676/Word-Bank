@@ -269,6 +269,14 @@ class WordsViewController: UIViewController {
         searchBar.clipsToBounds = true
         searchBar.layer.cornerRadius = 10
         searchBar.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        
+        switch UserDefault.userInterfaceStyle {
+        case "dark":
+            searchBar.keyboardAppearance = .dark
+            break
+        default:
+            searchBar.keyboardAppearance = .default
+        }
     }
     
     func setupCornerRadius() {
