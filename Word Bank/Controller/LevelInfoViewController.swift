@@ -29,7 +29,7 @@ class LevelInfoViewController: UIViewController {
     
     lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = Colors.d6d6d6
+        view.backgroundColor = Colors.f6f6f6
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         return view

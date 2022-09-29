@@ -56,6 +56,7 @@ class WordsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        UserDefault.selectedSegmentIndex.set(0)
         setupButtons()
         checkGoAddPage()
     }

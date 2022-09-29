@@ -99,7 +99,7 @@ extension CardViewController: UITableViewDataSource {
         cell.engView.isHidden = true
         cell.trLabel.textAlignment = .center
         cell.trView.backgroundColor = Colors.raven
-        cell.trLabel.textColor = Colors.d6d6d6
+        cell.trLabel.textColor = Colors.f6f6f6
         cell.trLabel.attributedText = writeAnswerCell(wordEnglish, wordMeaning)
         return cell
     }
@@ -114,7 +114,7 @@ extension CardViewController: UITableViewDataSource {
         
         let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size:textSize+12)]
         
-        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: Colors.d6d6d6, NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
+        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: Colors.f6f6f6, NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
         
         let english = NSMutableAttributedString(string: "\(eng)\n\n", attributes: boldFontAttributes as [NSAttributedString.Key : Any])
         

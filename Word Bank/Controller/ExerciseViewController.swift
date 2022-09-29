@@ -265,7 +265,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func updateHintLabelColor() {
-        hintLabel.textColor = Colors.d6d6d6
+        hintLabel.textColor = Colors.f6f6f6
     }
     
     @objc func updateImg(_ timer: Timer){
@@ -283,14 +283,17 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     func configureColor(){
-        questionLabel.textColor = Colors.d6d6d6
-        hintLabel.textColor = Colors.d6d6d6
-        answer1Button.setTitleColor(Colors.d6d6d6, for: .normal)
-        answer2Button.setTitleColor(Colors.d6d6d6, for: .normal)
-        userPointButton.changeBackgroundColor(to: Colors.d6d6d6)
-        progressBar.tintColor = Colors.d6d6d6
-        progressBar.tintColor = Colors.d6d6d6
-        textField.backgroundColor = Colors.d6d6d6
+        questionLabel.textColor = Colors.f6f6f6
+        hintLabel.textColor = Colors.f6f6f6
+        answer1Button.setTitleColor(Colors.f6f6f6, for: .normal)
+        answer2Button.setTitleColor(Colors.f6f6f6, for: .normal)
+        userPointButton.changeBackgroundColor(to: Colors.f6f6f6)
+        arrowButtonAtAnswerView.tintColor = Colors.f6f6f6
+        arrowButtonAtOptionView.tintColor = Colors.f6f6f6
+        soundButton.tintColor = Colors.f6f6f6
+        progressBar.tintColor = Colors.f6f6f6
+        progressBar.tintColor = Colors.f6f6f6
+        textField.backgroundColor = Colors.f6f6f6
         textField.textColor = Colors.black
     }
     
@@ -303,7 +306,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             textField.keyboardAppearance = .default
         }
         textField.delegate = self
-        textField.becomeFirstResponder()
+        if whichStartPressed != 1 {
+            textField.becomeFirstResponder()
+        }
     }
     
     func setupView(){
