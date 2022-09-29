@@ -40,7 +40,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var hint = ""
     var letterCounter = 0
     var showOptions = 0
-    var totalQuestionNumber = 5
+    var totalQuestionNumber = 25
     var failNumber: [Int] = []
     var failIndex: [Int] = []
     var itemArray: [Item] { return wordBrain.itemArray }
