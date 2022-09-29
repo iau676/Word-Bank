@@ -8,9 +8,9 @@
 import Foundation
 
 extension String {
-    
-    subscript(i: Int) -> String {
-        return String(self[index(startIndex, offsetBy: i)])
+
+    subscript(offset: Int) -> Character {
+        self[index(startIndex, offsetBy: offset)]
     }
     
     func strikeThrough() -> NSAttributedString {
@@ -21,5 +21,21 @@ extension String {
         range: NSRange(location: 0, length: attributeString.length))
 
         return attributeString
+    }
+    
+    func replace(_ index: Int, _ newChar: String) -> String {
+        let nchar: Character = newChar[0]
+        var chars = Array(self)     // gets an array of characters
+        chars[index] = nchar
+        let modifiedString = String(chars)
+        return modifiedString
+    }
+    
+    func replace(string:String, replacement:String) -> String {
+        return self.replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)
+    }
+
+    func removeWhitespace() -> String {
+        return self.replace(string: " ", replacement: "")
     }
 }

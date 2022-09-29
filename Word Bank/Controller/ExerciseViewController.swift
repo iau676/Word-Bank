@@ -380,20 +380,33 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     func getLetter(){
-        let str = wordBrain.getAnswer()
+        let answer = wordBrain.getAnswer()
+        let answerWithoutSpace = answer.replace(string: " ", replacement: "")
+        var skeleton = ""
+        var skeletonArr = [Int]()
         
-        if letterCounter < str.count {
-            hint = "\(hint+str[letterCounter])"
-            
-            letterCounter += 1
-            
-            let number = str.count-letterCounter
-            var hintSpace = ""
-            
-            for _ in 0..<number {
-                hintSpace = "\(hintSpace) _"
+        for i in 0..<answer.count {
+            if answer[i] != " " {
+                skeleton.append(" _")
+            } else {
+                skeleton.append("  ")
             }
-            hintLabel.text = "\(hint+hintSpace)"
+        }
+        
+        for i in 0..<skeleton.count {
+            if skeleton[i] == "_" {
+                skeletonArr.append(i)
+            }
+        }
+        
+        if letterCounter == 0 {
+            hint = skeleton
+        }
+        
+        if letterCounter < skeletonArr.count {
+            hint = hint.replace(skeletonArr[letterCounter], "\(answerWithoutSpace[letterCounter])")
+            letterCounter += 1
+            hintLabel.text = hint
             decreaseOnePoint()
             player.playMP3("beep")
         } else {
