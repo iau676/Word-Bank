@@ -53,7 +53,7 @@ class OnboardingContainerViewController: UIViewController {
     }
     
     private func setup() {
-        view.backgroundColor = Colors.darkGrayShadow
+        view.backgroundColor = Colors.raven
         
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
@@ -76,7 +76,7 @@ class OnboardingContainerViewController: UIViewController {
     private func style() {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.setTitle("Close", for: [])
-        closeButton.tintColor = Colors.darkGrayShadow
+        closeButton.tintColor = Colors.black
         closeButton.addTarget(self, action: #selector(closeTapped), for: .primaryActionTriggered)
     }
     

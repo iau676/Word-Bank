@@ -149,7 +149,7 @@ class ResultViewController: UIViewController {
     
     func checkWhichExercise() {
         if whichStartPressed == 4 {
-            scoreLabelText = "By studying 25 words\nYou've earned 25 points!"
+            scoreLabelText = "By studying 20 words\nYou've earned 20 points!"
             numberOfTrue = userAnswer.count
             addedHardWordsLabel.isHidden = true
             showWordsButton.isHidden = true

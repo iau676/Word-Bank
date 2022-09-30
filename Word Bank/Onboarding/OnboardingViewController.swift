@@ -52,7 +52,7 @@ extension OnboardingViewController {
         // Label
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = .center
-        titleLabel.textColor = .black
+        titleLabel.textColor = Colors.black
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.numberOfLines = 0

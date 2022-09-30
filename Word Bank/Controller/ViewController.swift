@@ -191,6 +191,16 @@ class ViewController: UIViewController {
             
             if self.wordBrain.user.count < 1 {
                 self.wordBrain.createUser()
+                UserDefault.level.set(0)
+                UserDefault.lastPoint.set(0)
+                UserDefault.exerciseCount.set(0)
+                UserDefault.allTrueCount.set(0)
+                UserDefault.testCount.set(0)
+                UserDefault.writingCount.set(0)
+                UserDefault.listeningCount.set(0)
+                UserDefault.cardCount.set(0)
+                UserDefault.trueCount.set(0)
+                UserDefault.falseCount.set(0)
             } else {
                 UserDefault.level.set(self.wordBrain.user[0].level)
                 UserDefault.lastPoint.set(self.wordBrain.user[0].lastPoint)
