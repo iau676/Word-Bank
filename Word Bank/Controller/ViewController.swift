@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var x2view: UIView!
     @IBOutlet weak var x2button: UIButton!
     @IBOutlet weak var levelLabel: UILabel!
+    @IBOutlet weak var exerciseButton: UIButton!
     @IBOutlet weak var blueButton: UIButton!
     @IBOutlet weak var greenButton: UIButton!
     @IBOutlet weak var yellowButton: UIButton!
@@ -115,7 +116,13 @@ class ViewController: UIViewController {
         yellowButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goWords")
     }
-
+    
+    @IBAction func exerciseButtonPressed(_ sender: UIButton) {
+        UserDefault.whichButton.set("purple")
+        exerciseButton.bounce()
+        exerciseButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
+    }
+    
     @IBAction func setNotificationFirstTime(_ sender: UIButton) {
         //works after any button pressed
         if UserDefault.setNotificationFirstTime.getInt() == 0 {
@@ -249,18 +256,22 @@ class ViewController: UIViewController {
     }
     
     func setupButtons(){
+        greenButton.backgroundColor = UIColor.purple
         greenButton.backgroundColor = Colors.green
         blueButton.backgroundColor = Colors.blue
         yellowButton.backgroundColor = Colors.yellow
         
+        setupButtonShadow(exerciseButton, shadowColor: .purple)
         setupButtonShadow(greenButton, shadowColor: Colors.greenShadow)
         setupButtonShadow(blueButton, shadowColor: Colors.blueShadow)
         setupButtonShadow(yellowButton, shadowColor: Colors.yellowShadow)
 
+        exerciseButton.setButtonCornerRadius(15)
         greenButton.setButtonCornerRadius(15)
         blueButton.setButtonCornerRadius(15)
         yellowButton.setButtonCornerRadius(15)
         
+        exerciseButton.setImage(imageName: "wheelicon", width: 35, height: 35)
         greenButton.setImage(imageName: "new", width: 35, height: 35)
         blueButton.setImage(imageName: "bank", width: 40, height: 40)
         yellowButton.setImage(imageName: "hard", width: 35, height: 35)
