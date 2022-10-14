@@ -255,7 +255,6 @@
                         <outlet property="x2view" destination="LfL-Kd-HUO" id="cSk-iX-DHS"/>
                         <outlet property="yellowButton" destination="Gjq-DL-7fV" id="T2m-zi-8AJ"/>
                         <outlet property="yellowButtonLabel" destination="PNV-Tv-3dC" id="ERe-OU-Jx6"/>
-                        <segue destination="Rlr-CF-jX5" kind="presentation" identifier="goLevelUp" modalPresentationStyle="overFullScreen" id="7eU-GJ-yCb"/>
                         <segue destination="9q6-8v-FQ1" kind="show" identifier="goWords" id="VaH-z8-7n4"/>
                         <segue destination="hrk-6E-n2d" kind="show" identifier="goExercise" id="Bzt-WS-VLR"/>
                     </connections>
@@ -278,7 +277,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" indicatorStyle="black" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0tG-Y5-3pc">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" name="quizBackground"/>
                             </tableView>
                         </subviews>
@@ -482,7 +481,7 @@
                         <outlet property="showWordsButton" destination="wbW-fW-3JH" id="Hir-tW-6tE"/>
                         <outlet property="tableView" destination="s8f-Gj-Kbj" id="mbK-d2-I6g"/>
                         <outlet property="videoView" destination="ZBm-fj-LAJ" id="bIM-tx-Rck"/>
-                        <segue destination="zXo-IR-Z84" kind="show" identifier="goToMyQuiz" id="pzT-n7-INo"/>
+                        <segue destination="zXo-IR-Z84" kind="show" identifier="goQuiz" id="pzT-n7-INo"/>
                         <segue destination="Rlr-CF-jX5" kind="presentation" identifier="goLevelUp" modalPresentationStyle="overFullScreen" id="4n2-fs-eP8"/>
                         <segue destination="R4c-Ok-iJX" kind="show" identifier="goCard" id="IiH-a1-RE8"/>
                         <segue destination="AKU-mg-roz" kind="presentation" identifier="goNewPoint" modalPresentationStyle="fullScreen" id="9Cg-1r-QhJ"/>
@@ -979,7 +978,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="MO0-Gk-Rr8"/>
                     <connections>
-                        <segue destination="zXo-IR-Z84" kind="presentation" identifier="goExercise" id="tHB-ck-37g"/>
+                        <segue destination="zXo-IR-Z84" kind="show" identifier="goExercise" id="tHB-ck-37g"/>
+                        <segue destination="R4c-Ok-iJX" kind="show" identifier="goCard" id="e8W-Se-cBp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p1y-FP-gGg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1297,7 +1297,6 @@
                         <outlet property="userPointButton" destination="Cfy-VY-zG6" id="lOl-qd-hcJ"/>
                         <outlet property="wordViewConstrait" destination="mMb-3v-ybb" id="Qb0-Av-hB3"/>
                         <segue destination="oeL-n5-M7B" kind="show" identifier="goToResult" id="Gqj-eb-Cz0"/>
-                        <segue destination="9q6-8v-FQ1" kind="show" identifier="goMyWords" id="bhg-Vj-Bf9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kew-lx-IJD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1913,11 +1912,10 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="9Cg-1r-QhJ"/>
-        <segue reference="tHB-ck-37g"/>
-        <segue reference="VaH-z8-7n4"/>
-        <segue reference="7eU-GJ-yCb"/>
+        <segue reference="pzT-n7-INo"/>
+        <segue reference="4n2-fs-eP8"/>
         <segue reference="Gqj-eb-Cz0"/>
-        <segue reference="cEH-UA-HgG"/>
+        <segue reference="e8W-Se-cBp"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>

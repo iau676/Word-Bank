@@ -117,7 +117,7 @@ class ResultViewController: UIViewController {
         if whichStartPressed == 4 {
             performSegue(withIdentifier: "goCard", sender: self)
         } else {
-            performSegue(withIdentifier: "goToMyQuiz", sender: self)
+            performSegue(withIdentifier: "goQuiz", sender: self)
         }
     }
     

@@ -72,6 +72,7 @@ enum UserDefault {
     static var failIndex                 = UserDefaultsManager(key: "failIndex")
     static var userWordCount             = UserDefaultsManager(key: "userWordCount")
     static var hardWordsCount            = UserDefaultsManager(key: "hardWordsCount")
+    static var spinWheelCount            = UserDefaultsManager(key: "spinWheelCount")
     
     static var rightOnce                 = UserDefaultsManager(key: "rightOnce")
     static var rightOnceBool             = UserDefaultsManager(key: "rightOnceBool")

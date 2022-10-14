@@ -61,6 +61,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var wordBrain = WordBrain()
     var whichButton: String { return UserDefault.whichButton.getString() }
     var whichStartPressed : Int { return UserDefault.startPressed.getInt() }
+    var wheelPressed = 0
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     //MARK: - Life Cycle
@@ -177,7 +178,11 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        self.navigationController?.popViewController(animated: true)
+        if wheelPressed == 1 {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
         
     //MARK: - Selectors
