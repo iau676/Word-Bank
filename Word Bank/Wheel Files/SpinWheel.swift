@@ -335,7 +335,30 @@ class SpinWheel: SKSpriteNode {
             continueButton.zPosition = 5
             backgroundBlocker.addChild(continueButton)
         } else {
-           
+            
+            var newIndex = 1
+            
+            switch winnningIndex {
+            case 0:
+                newIndex = 2
+            case 1:
+                newIndex = 1
+            case 2:
+                newIndex = 2
+            case 3:
+                newIndex = 1
+            case 4:
+                newIndex = 3
+            case 5:
+                newIndex = 4
+            case 6:
+                newIndex = 3
+            default:
+                break
+            }
+            
+            let index:[String: Int] = ["index": newIndex]
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "presentExercise"), object: nil, userInfo: index)
         }
     }
     

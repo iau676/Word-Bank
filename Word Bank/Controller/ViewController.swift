@@ -118,16 +118,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func exerciseButtonPressed(_ sender: UIButton) {
-        UserDefault.whichButton.set("purple")
+        UserDefault.whichButton.set("blue")
         exerciseButton.bounce()
         exerciseButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
-        
-        let when = DispatchTime.now() + 0.1
-        DispatchQueue.main.asyncAfter(deadline: when){
-            let vc = WheelViewController()
-            vc.modalPresentationStyle = .popover
-            self.present(vc, animated: true)
-        }
+        goAfter100Milliseconds(identifier: "goExercise")
     }
     
     @IBAction func setNotificationFirstTime(_ sender: UIButton) {

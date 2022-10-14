@@ -252,7 +252,9 @@ class ResultViewController: UIViewController {
         UserDefault.goLevelUp.set(0)
         
         if newLevel - lastLevel > 0 {
-            performSegue(withIdentifier: "goLevelUp", sender: self)
+            DispatchQueue.main.async(){
+                self.performSegue(withIdentifier: "goLevelUp", sender: self)
+            }
         }
     }
 }
