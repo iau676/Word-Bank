@@ -26,6 +26,18 @@
 		7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7039B87927A6A04700519D39 /* CircularProgressView.swift */; };
 		704B055528364098006C7F96 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* Word.swift */; };
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
+		705D92D528F895BA001C4F38 /* WheelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92D428F895BA001C4F38 /* WheelViewController.swift */; };
+		705D92E328F89625001C4F38 /* PushButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92D728F89623001C4F38 /* PushButton.swift */; };
+		705D92E428F89625001C4F38 /* bubble_pop.aac in Resources */ = {isa = PBXBuildFile; fileRef = 705D92D828F89623001C4F38 /* bubble_pop.aac */; };
+		705D92E628F89625001C4F38 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92DA28F89624001C4F38 /* GameScene.swift */; };
+		705D92E728F89625001C4F38 /* sparkle.png in Resources */ = {isa = PBXBuildFile; fileRef = 705D92DB28F89624001C4F38 /* sparkle.png */; };
+		705D92E828F89625001C4F38 /* SparkleBlast.sks in Resources */ = {isa = PBXBuildFile; fileRef = 705D92DC28F89624001C4F38 /* SparkleBlast.sks */; };
+		705D92E928F89625001C4F38 /* error.aac in Resources */ = {isa = PBXBuildFile; fileRef = 705D92DD28F89624001C4F38 /* error.aac */; };
+		705D92EA28F89625001C4F38 /* woosh.aac in Resources */ = {isa = PBXBuildFile; fileRef = 705D92DE28F89624001C4F38 /* woosh.aac */; };
+		705D92EB28F89625001C4F38 /* SpinWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92DF28F89624001C4F38 /* SpinWheel.swift */; };
+		705D92EC28F89625001C4F38 /* victory.aac in Resources */ = {isa = PBXBuildFile; fileRef = 705D92E028F89624001C4F38 /* victory.aac */; };
+		705D92ED28F89625001C4F38 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92E128F89625001C4F38 /* CGFloat+Extensions.swift */; };
+		705D92F028F8A49B001C4F38 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 705D92EF28F8A49B001C4F38 /* GameScene.sks */; };
 		706A9A24275A6FF800E64ECC /* greenBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A20275A6FF800E64ECC /* greenBubble.png */; };
 		706A9A25275A6FF800E64ECC /* greenBubble3.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A21275A6FF800E64ECC /* greenBubble3.png */; };
 		706A9A26275A6FF800E64ECC /* greenBubble4.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A22275A6FF800E64ECC /* greenBubble4.png */; };
@@ -89,6 +101,18 @@
 		7039B87927A6A04700519D39 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		704B055428364098006C7F96 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
+		705D92D428F895BA001C4F38 /* WheelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelViewController.swift; sourceTree = "<group>"; };
+		705D92D728F89623001C4F38 /* PushButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushButton.swift; sourceTree = "<group>"; };
+		705D92D828F89623001C4F38 /* bubble_pop.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = bubble_pop.aac; sourceTree = "<group>"; };
+		705D92DA28F89624001C4F38 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		705D92DB28F89624001C4F38 /* sparkle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sparkle.png; sourceTree = "<group>"; };
+		705D92DC28F89624001C4F38 /* SparkleBlast.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SparkleBlast.sks; sourceTree = "<group>"; };
+		705D92DD28F89624001C4F38 /* error.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = error.aac; sourceTree = "<group>"; };
+		705D92DE28F89624001C4F38 /* woosh.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = woosh.aac; sourceTree = "<group>"; };
+		705D92DF28F89624001C4F38 /* SpinWheel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheel.swift; sourceTree = "<group>"; };
+		705D92E028F89624001C4F38 /* victory.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = victory.aac; sourceTree = "<group>"; };
+		705D92E128F89625001C4F38 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		705D92EF28F8A49B001C4F38 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		706A9A20275A6FF800E64ECC /* greenBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble.png; sourceTree = "<group>"; };
 		706A9A21275A6FF800E64ECC /* greenBubble3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble3.png; sourceTree = "<group>"; };
 		706A9A22275A6FF800E64ECC /* greenBubble4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble4.png; sourceTree = "<group>"; };
@@ -161,6 +185,7 @@
 				70175BC327E71F170053CBDB /* CardViewController.swift */,
 				702A978227EB378A00AEECF7 /* X2SettingViewController.swift */,
 				70F5903C289822C4008D4FE1 /* X2HourViewController.swift */,
+				705D92D428F895BA001C4F38 /* WheelViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -217,6 +242,24 @@
 			path = "UIKit+Extensions";
 			sourceTree = "<group>";
 		};
+		705D92EE28F897F7001C4F38 /* Wheel Files */ = {
+			isa = PBXGroup;
+			children = (
+				705D92D828F89623001C4F38 /* bubble_pop.aac */,
+				705D92E128F89625001C4F38 /* CGFloat+Extensions.swift */,
+				705D92DD28F89624001C4F38 /* error.aac */,
+				705D92EF28F8A49B001C4F38 /* GameScene.sks */,
+				705D92DA28F89624001C4F38 /* GameScene.swift */,
+				705D92D728F89623001C4F38 /* PushButton.swift */,
+				705D92DB28F89624001C4F38 /* sparkle.png */,
+				705D92DC28F89624001C4F38 /* SparkleBlast.sks */,
+				705D92DF28F89624001C4F38 /* SpinWheel.swift */,
+				705D92E028F89624001C4F38 /* victory.aac */,
+				705D92DE28F89624001C4F38 /* woosh.aac */,
+			);
+			path = "Wheel Files";
+			sourceTree = "<group>";
+		};
 		706CBAA627592F8D008B4773 = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +280,7 @@
 		706CBAB127592F8D008B4773 /* Word Bank */ = {
 			isa = PBXGroup;
 			children = (
+				705D92EE28F897F7001C4F38 /* Wheel Files */,
 				701FA77628DFDC28001ADA07 /* Word Bank.entitlements */,
 				706CBAB227592F8D008B4773 /* AppDelegate.swift */,
 				706CBAB427592F8D008B4773 /* SceneDelegate.swift */,
@@ -367,17 +411,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				7081AB0527CCD3CB00E2996A /* newpoint.mp4 in Resources */,
+				705D92F028F8A49B001C4F38 /* GameScene.sks in Resources */,
 				707106EF275A1E42005532D0 /* redBubble3.png in Resources */,
 				706CBAC227592F8E008B4773 /* LaunchScreen.storyboard in Resources */,
 				706A9A27275A6FF800E64ECC /* greenBubble2.png in Resources */,
+				705D92EA28F89625001C4F38 /* woosh.aac in Resources */,
+				705D92E928F89625001C4F38 /* error.aac in Resources */,
 				707106F2275A1E42005532D0 /* redBubble2.png in Resources */,
 				7081AB0727CCFA4300E2996A /* dog.mp4 in Resources */,
+				705D92E428F89625001C4F38 /* bubble_pop.aac in Resources */,
 				702577DC280748DD0009FF65 /* kumbaram.png in Resources */,
 				709D3548276331FF001C3E56 /* Sounds in Resources */,
+				705D92E728F89625001C4F38 /* sparkle.png in Resources */,
 				706A9A25275A6FF800E64ECC /* greenBubble3.png in Resources */,
 				7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */,
+				705D92EC28F89625001C4F38 /* victory.aac in Resources */,
 				707106F1275A1E42005532D0 /* redBubble4.png in Resources */,
 				706CBAD727593993008B4773 /* WordCell.xib in Resources */,
+				705D92E828F89625001C4F38 /* SparkleBlast.sks in Resources */,
 				702577DE280748E50009FF65 /* launch.png in Resources */,
 				707106F0275A1E42005532D0 /* redBubble.png in Resources */,
 				706A9A24275A6FF800E64ECC /* greenBubble.png in Resources */,
@@ -405,6 +456,7 @@
 				7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */,
 				70175BC427E71F170053CBDB /* CardViewController.swift in Sources */,
 				706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */,
+				705D92ED28F89625001C4F38 /* CGFloat+Extensions.swift in Sources */,
 				7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */,
 				707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */,
 				7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */,
@@ -429,8 +481,12 @@
 				70F5903D289822C4008D4FE1 /* X2HourViewController.swift in Sources */,
 				708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */,
 				702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */,
+				705D92E328F89625001C4F38 /* PushButton.swift in Sources */,
 				7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */,
+				705D92EB28F89625001C4F38 /* SpinWheel.swift in Sources */,
+				705D92E628F89625001C4F38 /* GameScene.swift in Sources */,
 				701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */,
+				705D92D528F895BA001C4F38 /* WheelViewController.swift in Sources */,
 				709ED6A72899312800A34007 /* Constants.swift in Sources */,
 				70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */,
 				704B055528364098006C7F96 /* Word.swift in Sources */,
