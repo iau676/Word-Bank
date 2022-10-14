@@ -81,6 +81,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         updateUI()
         wordBrain.sortFails()
         
+        configureBackBarButton()
         preventInterrupt()
     }
 
@@ -103,6 +104,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
   
     //MARK: - IBAction
+    
     @IBAction func answerPressed(_ sender: UIButton) {
         checkAnswerQ(sender,sender.currentTitle!)
     }
@@ -278,6 +280,14 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         let image:UIImage? = UIImage(contentsOfFile: imagePath!)
         bubbleButton.setBackgroundImage(image, for: UIControl.State.normal)
     }
+    
+    @objc func backButtonPressed(sender : UIButton) {
+        if wheelPressed == 1 {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
 
     //MARK: - Helpers
     
@@ -313,6 +323,19 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         if whichStartPressed != 1 {
             textField.becomeFirstResponder()
         }
+    }
+    
+    func configureBackBarButton(){
+        let backButton: UIButton = UIButton()
+        let image = UIImage(named: "arrow_back");
+        backButton.setImage(image, for: .normal)
+        backButton.setTitle(" Back", for: .normal);
+        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
+        backButton.setTitleColor(.black, for: .normal)
+        backButton.sizeToFit()
+        backButton.addTarget(self, action: #selector (backButtonPressed(sender:)), for: .touchUpInside)
+        let barButton = UIBarButtonItem(customView: backButton)
+        self.navigationItem.leftBarButtonItem = barButton
     }
     
     func setupView(){

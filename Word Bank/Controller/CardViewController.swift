@@ -22,6 +22,7 @@ class CardViewController: UIViewController {
     var cardCounter = 0
     var questionNumber = 0
     var lastPoint = 0
+    var wheelPressed = 0
     var wordEnglish = ""
     var wordMeaning = ""
     
@@ -33,6 +34,7 @@ class CardViewController: UIViewController {
         setupTableView()
         wordBrain.loadItemArray()
         updateWord()
+        configureBackBarButton()
     }
     
     //MARK: - prepare
@@ -84,6 +86,27 @@ class CardViewController: UIViewController {
                           animations: {
                             self.tableView.isHidden = false
                       })
+    }
+    
+    func configureBackBarButton(){
+        let backButton: UIButton = UIButton()
+        let image = UIImage(named: "arrow_back");
+        backButton.setImage(image, for: .normal)
+        backButton.setTitle(" Back", for: .normal);
+        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
+        backButton.setTitleColor(.black, for: .normal)
+        backButton.sizeToFit()
+        backButton.addTarget(self, action: #selector (backButtonPressed(sender:)), for: .touchUpInside)
+        let barButton = UIBarButtonItem(customView: backButton)
+        self.navigationItem.leftBarButtonItem = barButton
+    }
+    
+    @objc func backButtonPressed(sender : UIButton) {
+        if wheelPressed == 1 {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }
 

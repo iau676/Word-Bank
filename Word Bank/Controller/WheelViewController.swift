@@ -10,9 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class WheelViewController: UIViewController {
-    
-    var popToRootViewController = 0
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(goExercise(_:)), name: Notification.Name(rawValue: "presentExercise"), object: nil)
@@ -22,17 +20,9 @@ class WheelViewController: UIViewController {
         scene?.scaleMode = .aspectFill
         vieW?.presentScene(scene!, transition: SKTransition.flipHorizontal(withDuration: 0.42))
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if popToRootViewController == 1 {
-            self.navigationController?.popToRootViewController(animated: false)
-        }
-    }
-    
+
     @objc func goExercise(_ notification: Notification) {
         if let index = notification.userInfo?["index"] as? Int {
-            popToRootViewController = 1
             UserDefault.startPressed.set(index)
             let goView = (index == 4) ? "goCard" : "goExercise"
             let when = DispatchTime.now() + 0.7
@@ -45,6 +35,11 @@ class WheelViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goExercise" {
             let destinationVC = segue.destination as! ExerciseViewController
+            destinationVC.wheelPressed = 1
+        }
+        
+        if segue.identifier == "goCard" {
+            let destinationVC = segue.destination as! CardViewController
             destinationVC.wheelPressed = 1
         }
     }
