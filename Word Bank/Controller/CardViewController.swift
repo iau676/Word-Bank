@@ -16,7 +16,7 @@ class CardViewController: UIViewController {
     var itemArray: [Item] { return wordBrain.itemArray }
     let cardView = UIView()
     let cardView2 = UIView()
-    let engLabel = UILabel()
+    let cardLabel = UILabel()
     let imageView = UIImageView()
     var divisor: CGFloat!
     var cardCenter: CGPoint!
@@ -26,6 +26,7 @@ class CardViewController: UIViewController {
     var wheelPressed = 0
     var wordEnglish = ""
     var wordMeaning = ""
+    var isOpen = false
     
     //MARK: - Life Cycle
     
@@ -63,12 +64,12 @@ class CardViewController: UIViewController {
         cardView2.backgroundColor = Colors.raven
         cardView2.layer.cornerRadius = 16
         
-        engLabel.translatesAutoresizingMaskIntoConstraints = false
-        engLabel.textColor = .white
-        engLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
-        engLabel.textAlignment = .center
-        engLabel.lineBreakMode = .byWordWrapping
-        engLabel.numberOfLines = 0
+        cardLabel.translatesAutoresizingMaskIntoConstraints = false
+        cardLabel.textColor = .white
+        cardLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+        cardLabel.textAlignment = .center
+        cardLabel.lineBreakMode = .byWordWrapping
+        cardLabel.numberOfLines = 0
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0
@@ -77,8 +78,7 @@ class CardViewController: UIViewController {
     func layout(){
         
         cardView.addSubview(imageView)
-        cardView.addSubview(engLabel)
-        cardView.addSubview(imageView)
+        cardView.addSubview(cardLabel)
         
         view.addSubview(cardView2)
         view.addSubview(cardView)
@@ -101,16 +101,19 @@ class CardViewController: UIViewController {
             imageView.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
             
-            engLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
-            engLabel.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
-            engLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
-            engLabel.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
+            cardLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
+            cardLabel.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
+            cardLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
+            cardLabel.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
         ])
     }
     
     func addGestureRecognizer(){
         let swipeGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         cardView.addGestureRecognizer(swipeGesture)
+        
+        let flipCardGesture = UITapGestureRecognizer(target: self, action:  #selector (self.flipCard(_:)))
+        cardView.addGestureRecognizer(flipCardGesture)
     }
     
     func resetCard(_ card: UIView) {
@@ -118,6 +121,7 @@ class CardViewController: UIViewController {
         self.imageView.alpha = 0
         self.cardView.alpha = 1
         self.cardView.transform = .identity
+        self.isOpen = false
     }
     
     func updateCard(_ card: UIView){
@@ -140,8 +144,8 @@ class CardViewController: UIViewController {
         wordMeaning = itemArray[questionNumber].tr ?? "empty"
         cardCounter += 1
         lastPoint += 1
-        engLabel.text = wordEnglish
-        if cardCounter == 26 { //26
+        cardLabel.text = wordEnglish
+        if cardCounter == 21 { //21
             performSegue(withIdentifier: "goToResult", sender: self)
         } else {
             UserDefault.lastPoint.set(lastPoint)
@@ -206,6 +210,18 @@ class CardViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
         } else {
             self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @objc func flipCard(_ sender:UITapGestureRecognizer){
+        if isOpen {
+            isOpen = false
+            cardLabel.text = wordEnglish
+            UIView.transition(with: cardView, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+        } else {
+            isOpen = true
+            cardLabel.text = wordMeaning
+            UIView.transition(with: cardView, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
         }
     }
 }
