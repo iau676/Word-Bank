@@ -275,21 +275,9 @@
                     <view key="view" contentMode="scaleToFill" id="6vK-5d-cBl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" indicatorStyle="black" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0tG-Y5-3pc">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" name="quizBackground"/>
-                            </tableView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="RVV-bz-iHl"/>
-                        <color key="backgroundColor" name="quizBackground"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="0tG-Y5-3pc" firstAttribute="top" secondItem="RVV-bz-iHl" secondAttribute="top" id="dbE-Nu-XtI"/>
-                            <constraint firstItem="0tG-Y5-3pc" firstAttribute="leading" secondItem="RVV-bz-iHl" secondAttribute="leading" id="eOk-td-Dwf"/>
-                            <constraint firstItem="RVV-bz-iHl" firstAttribute="bottom" secondItem="0tG-Y5-3pc" secondAttribute="bottom" id="gUA-hp-6Qv"/>
-                            <constraint firstItem="RVV-bz-iHl" firstAttribute="trailing" secondItem="0tG-Y5-3pc" secondAttribute="trailing" id="oFz-aN-TjI"/>
-                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Bfl-Th-C2X" appends="YES" id="vuF-kc-Kut"/>
                             <outletCollection property="gestureRecognizers" destination="s1J-Nj-H8Z" appends="YES" id="ABx-QF-XzX"/>
@@ -297,22 +285,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="mp1-a7-saR"/>
                     <connections>
-                        <outlet property="mainView" destination="6vK-5d-cBl" id="993-PB-zVb"/>
-                        <outlet property="tableView" destination="0tG-Y5-3pc" id="dHD-dD-uXA"/>
                         <segue destination="oeL-n5-M7B" kind="show" identifier="goToResult" id="vPV-zd-Pre"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JmO-NU-hO7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="left" id="Bfl-Th-C2X">
-                    <connections>
-                        <action selector="swipeGesture:" destination="R4c-Ok-iJX" id="wag-aO-n1S"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="up" id="s1J-Nj-H8Z">
-                    <connections>
-                        <action selector="swipeGesture:" destination="R4c-Ok-iJX" id="L7o-7s-uLn"/>
-                    </connections>
-                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="Bfl-Th-C2X"/>
+                <swipeGestureRecognizer direction="up" id="s1J-Nj-H8Z"/>
             </objects>
             <point key="canvasLocation" x="5600" y="-645"/>
         </scene>
@@ -1914,7 +1892,7 @@
         <segue reference="9Cg-1r-QhJ"/>
         <segue reference="pzT-n7-INo"/>
         <segue reference="4n2-fs-eP8"/>
-        <segue reference="Gqj-eb-Cz0"/>
+        <segue reference="vPV-zd-Pre"/>
         <segue reference="e8W-Se-cBp"/>
     </inferredMetricsTieBreakers>
     <resources>

@@ -10,15 +10,16 @@ import CoreData
 
 class CardViewController: UIViewController {
     
-    //MARK: - IBOutlet
-    
-    @IBOutlet var mainView: UIView!
-    @IBOutlet weak var tableView: UITableView!
-    
     //MARK: - Variables
     
     var wordBrain = WordBrain()
     var itemArray: [Item] { return wordBrain.itemArray }
+    let cardView = UIView()
+    let cardView2 = UIView()
+    let engLabel = UILabel()
+    let imageView = UIImageView()
+    var divisor: CGFloat!
+    var cardCenter: CGPoint!
     var cardCounter = 0
     var questionNumber = 0
     var lastPoint = 0
@@ -30,11 +31,14 @@ class CardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        lastPoint = UserDefault.lastPoint.getInt()
-        setupTableView()
         wordBrain.loadItemArray()
+        lastPoint = UserDefault.lastPoint.getInt()
+        style()
+        layout()
         updateWord()
+        addGestureRecognizer()
         configureBackBarButton()
+        divisor = (view.frame.width/2)/0.61
     }
     
     //MARK: - prepare
@@ -43,25 +47,91 @@ class CardViewController: UIViewController {
         if segue.identifier == "goToResult" {
             let destinationVC = segue.destination as! ResultViewController
             destinationVC.cardCounter = cardCounter
-            //destinationVC.itemArray = itemArray
+        }
+    }
+
+    //MARK: - Helpers
+    
+    func style(){
+        view.backgroundColor = Colors.ravenShadow
+        
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        cardView.backgroundColor = Colors.raven
+        cardView.layer.cornerRadius = 16
+        
+        cardView2.translatesAutoresizingMaskIntoConstraints = false
+        cardView2.backgroundColor = Colors.raven
+        cardView2.layer.cornerRadius = 16
+        
+        engLabel.translatesAutoresizingMaskIntoConstraints = false
+        engLabel.textColor = .white
+        engLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+        engLabel.textAlignment = .center
+        engLabel.lineBreakMode = .byWordWrapping
+        engLabel.numberOfLines = 0
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.alpha = 0
+    }
+    
+    func layout(){
+        
+        cardView.addSubview(imageView)
+        cardView.addSubview(engLabel)
+        cardView.addSubview(imageView)
+        
+        view.addSubview(cardView2)
+        view.addSubview(cardView)
+        
+        let navigationBarHeight = navigationController?.navigationBar.frame.height ?? 0
+        
+        NSLayoutConstraint.activate([
+            cardView.topAnchor.constraint(equalTo: view.topAnchor, constant: navigationBarHeight+16),
+            cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            cardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+            
+            cardView2.topAnchor.constraint(equalTo: view.topAnchor, constant: navigationBarHeight+16),
+            cardView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            cardView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            cardView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+            
+            imageView.widthAnchor.constraint(equalToConstant: 100),
+            imageView.heightAnchor.constraint(equalToConstant: 100),
+            imageView.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
+            
+            engLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
+            engLabel.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
+            engLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
+            engLabel.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
+        ])
+    }
+    
+    func addGestureRecognizer(){
+        let swipeGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        cardView.addGestureRecognizer(swipeGesture)
+    }
+    
+    func resetCard(_ card: UIView) {
+        card.center = cardCenter
+        self.imageView.alpha = 0
+        self.cardView.alpha = 1
+        self.cardView.transform = .identity
+    }
+    
+    func updateCard(_ card: UIView){
+        card.alpha = 0
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3){
+            self.resetCard(card)
+            self.updateWord()
         }
     }
     
-    //MARK: - IBAction
-    
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        updateWord()
-        swipeAnimation()
-        tableView.reloadData()
-    }
-    
-    //MARK: - Helpers
-    
-    func setupTableView(){
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
-        tableView.tableFooterView = UIView()
+    func addHardWord(){
+        if itemArray[questionNumber].addedHardWords == false {
+            wordBrain.addWordToHardWords(questionNumber)
+        }
     }
     
     func updateWord(){
@@ -70,22 +140,12 @@ class CardViewController: UIViewController {
         wordMeaning = itemArray[questionNumber].tr ?? "empty"
         cardCounter += 1
         lastPoint += 1
+        engLabel.text = wordEnglish
         if cardCounter == 26 { //26
             performSegue(withIdentifier: "goToResult", sender: self)
         } else {
             UserDefault.lastPoint.set(lastPoint)
         }
-        self.swipeAnimation()
-        self.tableView.reloadData()
-    }
-    
-    func swipeAnimation() {
-        tableView.isHidden = true
-        UIView.transition(with: tableView, duration: 0.8,
-                          options: .transitionCurlUp,
-                          animations: {
-                            self.tableView.isHidden = false
-                      })
     }
     
     func configureBackBarButton(){
@@ -101,93 +161,51 @@ class CardViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = barButton
     }
     
+    //MARK: - Selectors
+    
+    @objc func respondToSwipeGesture(_ sender: UIPanGestureRecognizer) {
+        let card = sender.view!
+        if cardCenter == nil { cardCenter = card.center }
+        let point = sender.translation(in: view)
+        let xFromCenter = card.center.x - view.center.x
+        card.center = CGPoint(x: view.center.x + point.x, y: view.center.y + point.y)
+        
+        card.transform = CGAffineTransform(rotationAngle: xFromCenter/divisor)
+        
+        if xFromCenter > 0 {
+            imageView.image = UIImage(named: "checkGreen")
+        } else {
+            imageView.image = UIImage(named: "hard")?.withTintColor(Colors.yellow ?? .yellow).withRenderingMode(.alwaysOriginal)
+        }
+        
+        imageView.alpha = abs(xFromCenter) / view.center.x
+        
+        if sender.state == UIGestureRecognizer.State.ended {
+            if card.center.x <  75 {
+                //move off the left side
+                UIView.animate(withDuration: 0.3, animations: {
+                    card.center = CGPoint(x: card.center.x - 200, y: card.center.y + 75)
+                    self.updateCard(card)
+                    self.addHardWord()
+                })
+                return
+            } else if card.center.x > (view.frame.width - 75) {
+                //move off the right side
+                UIView.animate(withDuration: 0.3, animations: {
+                    card.center = CGPoint(x: card.center.x + 200, y: card.center.y + 75)
+                    self.updateCard(card)
+                })
+                return
+            }
+            resetCard(card)
+        }
+    }
+    
     @objc func backButtonPressed(sender : UIButton) {
         if wheelPressed == 1 {
             self.navigationController?.popToRootViewController(animated: true)
         } else {
             self.navigationController?.popViewController(animated: true)
         }
-    }
-}
-
-    //MARK: - Show Words
-
-extension CardViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! WordCell
-        cell.engView.isHidden = true
-        cell.trLabel.textAlignment = .center
-        cell.trView.backgroundColor = Colors.raven
-        cell.trLabel.textColor = Colors.f6f6f6
-        cell.trLabel.attributedText = writeAnswerCell(wordEnglish, wordMeaning)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.height
-    }
-    
-    func writeAnswerCell(_ eng: String, _ tr: String) -> NSMutableAttributedString{
-        
-        let textSize = UserDefault.textSize.getCGFloat()
-        
-        let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size:textSize+12)]
-        
-        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: Colors.f6f6f6, NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
-        
-        let english = NSMutableAttributedString(string: "\(eng)\n\n", attributes: boldFontAttributes as [NSAttributedString.Key : Any])
-        
-        let meaning =  NSMutableAttributedString(string: "\(tr)\n", attributes: normalFontAttributes as [NSAttributedString.Key : Any])
-     
-        let combination = NSMutableAttributedString()
-            
-        combination.append(english)
-        combination.append(meaning)
-    
-        return combination
-    }
-}
-
-    //MARK: - Swipe Cell
-
-extension CardViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    func tableView(_ tableView: UITableView,
-                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?{
-        let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            self.showAlert(title: "Added to Hard Words")
-            self.wordBrain.addWordToHardWords(self.questionNumber)
-            success(true)
-        })
-        addAction.setImage(imageName: "plus", width: 25, height: 25)
-        addAction.setBackgroundColor(Colors.yellow)
-        
-        if itemArray[questionNumber].addedHardWords == true {
-            showAlert(title: "Already Added")
-            return UISwipeActionsConfiguration()
-        }
-        return UISwipeActionsConfiguration(actions: [addAction])
-    }
-
-    func showAlert(title: String){
-        let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
-        let when = DispatchTime.now() + 0.5
-        DispatchQueue.main.asyncAfter(deadline: when){
-            alert.dismiss(animated: true, completion: nil)
-            self.updateWord()
-        }
-        self.present(alert, animated: true, completion: nil)
     }
 }
