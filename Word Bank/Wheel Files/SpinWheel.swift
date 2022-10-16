@@ -54,7 +54,7 @@ class SpinWheel: SKSpriteNode {
     func setup() {
         setupSounds()
         
-        let background = SKSpriteNode(color: .purple, size: self.size)
+        let background = SKSpriteNode(color: Colors.purple ?? .purple, size: self.size)
         background.zPosition = -1
         addChild(background)
 

@@ -119,6 +119,7 @@ class ViewController: UIViewController {
     
     @IBAction func exerciseButtonPressed(_ sender: UIButton) {
         UserDefault.whichButton.set("blue")
+        UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
         exerciseButton.bounce()
         exerciseButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goExercise")
@@ -257,12 +258,12 @@ class ViewController: UIViewController {
     }
     
     func setupButtons(){
-        greenButton.backgroundColor = UIColor.purple
+        exerciseButton.backgroundColor = .systemPurple
         greenButton.backgroundColor = Colors.green
         blueButton.backgroundColor = Colors.blue
         yellowButton.backgroundColor = Colors.yellow
         
-        setupButtonShadow(exerciseButton, shadowColor: .purple)
+        setupButtonShadow(exerciseButton, shadowColor: Colors.purpleShadow)
         setupButtonShadow(greenButton, shadowColor: Colors.greenShadow)
         setupButtonShadow(blueButton, shadowColor: Colors.blueShadow)
         setupButtonShadow(yellowButton, shadowColor: Colors.yellowShadow)
