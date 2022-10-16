@@ -64,7 +64,7 @@ class SpinWheel: SKSpriteNode {
             ["12331", "secondStartImage", "", "90", "134"],
             ["12331", "firstStartImage", "", "135", "179"],
             ["12331", "thirdStartImage", "", "180", "224"],
-            ["12331", "cardWheel", "", "225", "269"],
+            ["12331", "card", "", "225", "269"],
             ["12331", "thirdStartImage", "", "270", "314"],
             ["a present", "wheel_prize_present", "", "315", "360"]
         ]

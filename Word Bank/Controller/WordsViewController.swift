@@ -250,7 +250,7 @@ class WordsViewController: UIViewController {
         setupButtonImage(startButton, imageName: "firstStartImage", width: 30, height: 15)
         setupButtonImage(startButton2, imageName: "secondStartImage", width: 30, height: 15)
         setupButtonImage(startButton3, imageName: "thirdStartImage", width: 30, height: 15)
-        setupButtonImage(startButton4, imageName: "card", width: 20, height: 20)
+        setupButtonImage(startButton4, imageName: "card", width: 30, height: 15)
         
         setupButtonShadow(startButton)
         setupButtonShadow(startButton2)
