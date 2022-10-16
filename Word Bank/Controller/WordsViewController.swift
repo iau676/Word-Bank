@@ -20,17 +20,13 @@ class WordsViewController: UIViewController {
     @IBOutlet weak var startButton4: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var emptyView: UIView!
-    @IBOutlet weak var emptyViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewConstraint: NSLayoutConstraint!
-    @IBOutlet weak var expandButton: UIButton!
     
     //MARK: - Variables
     
     var goEdit = 0
     var editIndex = 0
     var goAddPage = 0
-    var showWords = 0
     var expandIconName = "expand"
     var notExpandIconName = "notExpand"
     var wordBrain = WordBrain()
@@ -38,7 +34,6 @@ class WordsViewController: UIViewController {
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     var whichButton: String	{ return UserDefault.whichButton.getString() }
-    var pageStatistic = [String]()
     
     //MARK: - Life Cycle
     
@@ -46,7 +41,6 @@ class WordsViewController: UIViewController {
         super.viewDidLoad()
         wordBrain.loadItemArray()
         wordBrain.loadHardItemArray()
-        configurePageStatistic()
         configureButton()
         setupNavigationBar()
         setupSearchBar()
@@ -94,15 +88,6 @@ class WordsViewController: UIViewController {
     
     //MARK: - IBAction
     
-    @IBAction func expandButtonPressed(_ sender: UIButton) {
-        if showWords == 0 {
-            showWords = 1
-        } else {
-            showWords = 0
-        }
-        updateView()
-    }
-    
     @IBAction func addBarButtonPressed(_ sender: UIBarButtonItem) {
         goAddPage = 1
         checkGoAddPage()
@@ -146,8 +131,6 @@ class WordsViewController: UIViewController {
         if itemArray.count < 2 {
             let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
-                self.showWords = 1
-                self.updateView()
                 self.performSegue(withIdentifier: "goAdd", sender: self)
             }
             alert.addAction(action)
@@ -166,19 +149,7 @@ class WordsViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
             break
         case .left:
-            if whichButton == "blue" {
-                performSegue(withIdentifier: "goAdd", sender: self)
-                if showWords == 0 {
-                    showWords = 1
-                    updateView()
-                }
-            }
-            break
-        case .down:
-            if showWords == 0 && whichButton == "blue" {
-                showWords = 1
-                updateView()
-            }
+            if whichButton == "blue" { performSegue(withIdentifier: "goAdd", sender: self) }
             break
         default: break
         }
@@ -192,62 +163,27 @@ class WordsViewController: UIViewController {
         tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
         tableView.tableFooterView = UIView()
 
-        if whichButton != "blue" {
-            showWords = 1
-            updateView()
-        }
-        
+        updateView()
         setupBackgroundColor()
         setupCornerRadius()
     }
     
     func updateView(){
-        if showWords == 0 {
-            expandButton.setImage(imageName: expandIconName, width: 35, height: 25)
-            emptyView.updateViewVisibility(false)
-            searchBar.updateSearchBarVisibility(true)
-            updateTableViewConstraintMultiplier(0.7)
-            
-            tableView.frame = CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.size.width, height: CGFloat(66*pageStatistic.count-1));
-    
-            tableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        updateTableViewConstraintMultiplier(0.1)
+        
+        if whichButton == "blue" {
+            searchBar.updateSearchBarVisibility(false)
+            tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         } else {
-            expandButton.setImage(imageName: notExpandIconName, width: 35, height: 25)
-            emptyView.updateViewVisibility(true)
-            updateTableViewConstraintMultiplier(0.2)
-            
-            if whichButton == "blue" {
-                searchBar.updateSearchBarVisibility(false)
-                tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-            } else {
-                searchBar.updateSearchBarVisibility(true)
-                tableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-                startButton4.isHidden = true
-                expandButton.isHidden = true
-                navigationItem.rightBarButtonItem = nil
-            }
+            searchBar.updateSearchBarVisibility(true)
+            tableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            startButton4.isHidden = true
+            navigationItem.rightBarButtonItem = nil
         }
         tableView.reloadData()
     }
     
-    func configurePageStatistic() {
-        
-        if UserDefault.userWordCount.getInt() != itemArray.count {
-            let wordCount = itemArray.count
-            UserDefault.userWordCount.set(wordCount)
-            wordBrain.calculateExercisePoint(userWordCount: wordCount)
-        }
-        
-        pageStatistic = [
-            "Total Words: \(UserDefault.userWordCount.getInt())" ,
-            "Completed Exercises: \(UserDefault.exerciseCount.getInt())",
-            "Correct Answers: \(UserDefault.trueCount.getInt())",
-            "Wrong Answers: \(UserDefault.falseCount.getInt())"
-            ]
-    }
-    
     func configureButton(){
-        expandButton.changeBackgroundColor(to: Colors.cellRight)
         startButton.changeBackgroundColor(to: Colors.raven)
         startButton2.changeBackgroundColor(to: Colors.raven)
         startButton3.changeBackgroundColor(to: Colors.raven)
@@ -285,7 +221,6 @@ class WordsViewController: UIViewController {
         startButton2.setButtonCornerRadius(10)
         startButton3.setButtonCornerRadius(10)
         startButton4.setButtonCornerRadius(10)
-        expandButton.setButtonCornerRadius(10)
         tableView.setViewCornerRadius(10)
     }
     
@@ -297,7 +232,6 @@ class WordsViewController: UIViewController {
         } else {
             gradient.colors = [Colors.yellow!.cgColor, Colors.yellowBottom!.cgColor]
         }
-        
         mainView.layer.insertSublayer(gradient, at: 0)
     }
     
@@ -317,7 +251,6 @@ class WordsViewController: UIViewController {
         setupButtonImage(startButton2, imageName: "secondStartImage", width: 30, height: 15)
         setupButtonImage(startButton3, imageName: "thirdStartImage", width: 30, height: 15)
         setupButtonImage(startButton4, imageName: "card", width: 20, height: 20)
-        setupButtonImage(expandButton, imageName: expandIconName, width: 35-textSize, height: 25-textSize)
         
         setupButtonShadow(startButton)
         setupButtonShadow(startButton2)
@@ -351,8 +284,6 @@ class WordsViewController: UIViewController {
 
     func checkGoAddPage(){
         if goAddPage == 1 && whichButton == "blue"{
-            showWords = 1
-            updateView()
             performSegue(withIdentifier: "goAdd", sender: self)
         }
     }
@@ -363,7 +294,6 @@ class WordsViewController: UIViewController {
         if checkCount < 2 {
             let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
-                self.showWords = 1
                 self.updateView()
                 if self.whichButton == "blue" {
                     self.performSegue(withIdentifier: "goAdd", sender: self)
@@ -422,7 +352,7 @@ extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         updateSearchBarPlaceholder()
         if whichButton == "blue" {
-            return (showWords == 1 ?  itemArray.count == 0 ? 1 : itemArray.count  : pageStatistic.count)
+            return itemArray.count
         } else {
             showAlertIfHardWordsEmpty()
             return hardItemArray.count
@@ -437,40 +367,26 @@ extension WordsViewController: UITableViewDataSource {
         
         tableView.backgroundColor = Colors.cellLeft
         tableView.separatorStyle = .singleLine
-        if showWords == 1 {
-            tableView.rowHeight = UITableView.automaticDimension
-            tableView.isScrollEnabled = true
-            cell.engView.isHidden = false
-            cell.trView.isHidden = false
-            
-            if itemArray.count > 0 {
-                if whichButton == "blue" {
-                    cell.engLabel.text = itemArray[indexPath.row].eng
-                    cell.trLabel.text = itemArray[indexPath.row].tr
-                } else {
-                    cell.engLabel.text = hardItemArray[indexPath.row].eng
-                    cell.trLabel.text = hardItemArray[indexPath.row].tr
-                }
-                
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.isScrollEnabled = true
+        cell.engView.isHidden = false
+        cell.trView.isHidden = false
+        
+        if itemArray.count > 0 {
+            if whichButton == "blue" {
+                cell.engLabel.text = itemArray[indexPath.row].eng
+                cell.trLabel.text = itemArray[indexPath.row].tr
             } else {
-                cell.trView.isHidden = true
-                cell.engLabel.text = ""
-                tableView.separatorStyle = .none
+                cell.engLabel.text = hardItemArray[indexPath.row].eng
+                cell.trLabel.text = hardItemArray[indexPath.row].tr
             }
+            
         } else {
-            cell.engView.isHidden = true
-            cell.trView.isHidden = false
-            //Fatal error: Index out of range
-            //problem text size 17 and 10 words when press expand button
-            if indexPath.row < 4 {
-                cell.trLabel.text = pageStatistic[indexPath.row]
-            }
-            tableView.backgroundColor = UIColor.clear
-            tableView.rowHeight = 66
-            tableView.isScrollEnabled = false
-            // tableView contentSize
-            tableView.frame = CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.size.width, height: CGFloat(66*pageStatistic.count-1));
+            cell.trView.isHidden = true
+            cell.engLabel.text = ""
+            tableView.separatorStyle = .none
         }
+
         cell.updateLabelTextSize(cell.engLabel, textSize)
         cell.updateLabelTextSize(cell.trLabel, textSize)
         return cell
@@ -547,7 +463,7 @@ extension WordsViewController: UITableViewDelegate {
         addAction.setImage(imageName: "plus", width: 25, height: 25)
         addAction.setBackgroundColor(Colors.yellow)
         
-        if showWords == 1 && whichButton == "blue" {
+        if whichButton == "blue" {
             if self.itemArray[indexPath.row].addedHardWords == true {
                 return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
             }
@@ -561,11 +477,6 @@ extension WordsViewController: UITableViewDelegate {
 extension WordsViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1 && showWords == 0 {
-            let vc = CompletedExercisesViewController()
-            vc.modalPresentationStyle = .overCurrentContext
-            self.present(vc, animated: false)
-        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
