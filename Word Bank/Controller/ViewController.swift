@@ -13,23 +13,22 @@ class ViewController: UIViewController {
     
     //MARK: - IBOutlet
     
-    @IBOutlet weak var darkView: UIView!
-    @IBOutlet weak var levelStackView: UIStackView!
-    @IBOutlet weak var titleView: UIView!
-    @IBOutlet weak var buttonView: UIView!
-    @IBOutlet weak var levelView: UIView!
-    @IBOutlet weak var x2view: UIView!
-    @IBOutlet weak var x2button: UIButton!
-    @IBOutlet weak var levelLabel: UILabel!
-    @IBOutlet weak var exerciseButton: UIButton!
-    @IBOutlet weak var blueButton: UIButton!
-    @IBOutlet weak var greenButton: UIButton!
-    @IBOutlet weak var yellowButton: UIButton!
-    @IBOutlet weak var greenButtonLabel: UILabel!
-    @IBOutlet weak var blueButtonLabel: UILabel!
-    @IBOutlet weak var yellowButtonLabel: UILabel!
-    @IBOutlet weak var settingsButton: UIButton!
-    @IBOutlet weak var titleLabel: UILabel!
+    let titleLabel = UILabel()
+    let levelLabel = UILabel()
+    
+    let exerciseButton = UIButton()
+    let greenButton = UIButton()
+    let blueButton = UIButton()
+    let yellowButton = UIButton()
+    let settingsButton = UIButton()
+    
+    let exerciseButtonLabel = UILabel()
+    let greenButtonLabel = UILabel()
+    let blueButtonLabel = UILabel()
+    let yellowButtonLabel = UILabel()
+    
+    let xButton = UIButton()
+    let xLabel = UILabel()
             
     //MARK: - Variables
     
@@ -46,6 +45,8 @@ class ViewController: UIViewController {
         setupFirstLaunch()
         configureColor()
         getHour()
+        style()
+        layout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +59,14 @@ class ViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        cp.center =  CGPoint(x: super.view.center.x, y:  levelView.center.y)
+        super.viewDidLayoutSubviews()
+        
+        let x = super.view.bounds.height
+        let y = exerciseButton.frame.origin.y
+        let z = (x - (x - y))/2 + 32
+        
+        cp.center = CGPoint(x: super.view.center.x, y: z)
+        levelLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: cp.center.y).isActive = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -85,47 +93,7 @@ class ViewController: UIViewController {
    
     //MARK: - IBAction
     
-    @IBAction func x2ButtonPressed(_ sender: Any) {
-        let vc = X2HourViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false)
-    }
-    
-    
-    @IBAction func greenButtonPressed(_ sender: UIButton) {
-        UserDefault.startPressed.set(1)
-        UserDefault.whichButton.set("blue")
-        goAddPage = 1
-        greenButton.bounce()
-        greenButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
-        viewDidLayoutSubviews()
-        goAfter100Milliseconds(identifier: "goWords")
-    }
-    
-    @IBAction func blueButtonPressed(_ sender: UIButton) {
-        UserDefault.whichButton.set("blue")
-        goAddPage = 0
-        blueButton.bounce()
-        blueButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
-        goAfter100Milliseconds(identifier: "goWords")
-    }
-    
-    @IBAction func yellowButtonPressed(_ sender: UIButton) {
-        UserDefault.whichButton.set("yellow")
-        yellowButton.bounce()
-        yellowButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
-        goAfter100Milliseconds(identifier: "goWords")
-    }
-    
-    @IBAction func exerciseButtonPressed(_ sender: UIButton) {
-        UserDefault.whichButton.set("blue")
-        UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
-        exerciseButton.bounce()
-        exerciseButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
-        goAfter100Milliseconds(identifier: "goExercise")
-    }
-    
-    @IBAction func setNotificationFirstTime(_ sender: UIButton) {
+    func setNotificationFirstTime() {
         //works after any button pressed
         if UserDefault.setNotificationFirstTime.getInt() == 0 {
             wordBrain.setNotification()
@@ -138,6 +106,49 @@ class ViewController: UIViewController {
     }
     
     //MARK: - Selectors
+    
+    @objc func exerciseButtonPressed(gesture: UISwipeGestureRecognizer) {
+        UserDefault.whichButton.set("blue")
+        UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
+        exerciseButton.bounce()
+        exerciseButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
+        goAfter100Milliseconds(identifier: "goExercise")
+    }
+    
+    @objc func greenButtonPressed(gesture: UISwipeGestureRecognizer) {
+        UserDefault.startPressed.set(1)
+        UserDefault.whichButton.set("blue")
+        goAddPage = 1
+        greenButton.bounce()
+        greenButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
+        viewDidLayoutSubviews()
+        goAfter100Milliseconds(identifier: "goWords")
+    }
+    
+    @objc func blueButtonPressed(gesture: UISwipeGestureRecognizer) {
+        UserDefault.whichButton.set("blue")
+        goAddPage = 0
+        blueButton.bounce()
+        blueButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
+        goAfter100Milliseconds(identifier: "goWords")
+    }
+    
+    @objc func yellowButtonPressed(gesture: UISwipeGestureRecognizer) {
+        UserDefault.whichButton.set("yellow")
+        yellowButton.bounce()
+        yellowButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
+        goAfter100Milliseconds(identifier: "goWords")
+    }
+    
+    @objc func settingsButtonPressed(gesture: UISwipeGestureRecognizer) {
+        goAfter100Milliseconds(identifier: "goSettings")
+    }
+    
+    @objc func xButtonPressed(gesture: UISwipeGestureRecognizer) {
+        let vc = X2HourViewController()
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false)
+    }
     
     @objc func checkAction(sender : UITapGestureRecognizer) {
         let vc = LevelInfoViewController()
@@ -237,13 +248,10 @@ class ViewController: UIViewController {
     func configureColor() {
         titleLabel.textColor = Colors.f6f6f6
         levelLabel.textColor = Colors.f6f6f6
+        exerciseButtonLabel.textColor = Colors.f6f6f6
         greenButtonLabel.textColor = Colors.f6f6f6
         blueButtonLabel.textColor = Colors.f6f6f6
         yellowButtonLabel.textColor = Colors.f6f6f6
-        greenButton.setTitleColor(Colors.green, for: .normal)
-        blueButton.setTitleColor(Colors.blue, for: .normal)
-        yellowButton.setTitleColor(Colors.yellow, for: .normal)
-        
     }
     
     func showOnboarding(){
@@ -278,6 +286,7 @@ class ViewController: UIViewController {
         blueButton.setImage(imageName: "bank", width: 40, height: 40)
         yellowButton.setImage(imageName: "hard", width: 35, height: 35)
         settingsButton.setImage(imageName: "settingsImage", width: 35, height: 35)
+        xButton.setImage(imageName: "x2", width: 45, height: 45)
     }
     
     func setupButtonShadow(_ button: UIButton, shadowColor: UIColor?){
@@ -304,8 +313,7 @@ class ViewController: UIViewController {
         levelLabel.text = UserDefault.level.getString()
         
         cp.trackColor = UIColor.white
-        cp.progressColor = Colors.pink!
-        self.view.addSubview(cp)
+        cp.progressColor = Colors.pink ?? .systemPink
         cp.setProgressWithAnimation(duration: 1.0, value: progressValue)
         
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
@@ -314,10 +322,10 @@ class ViewController: UIViewController {
 
     func check2xTime(){
         if UserDefault.lastHour.getInt() == UserDefault.userSelectedHour.getInt() {
-            x2view.isHidden = false
-            x2button.pulstate()
+            //xButton.isHidden = false
+            xButton.pulstate()
         } else {
-            x2view.isHidden = true
+            //xButton.isHidden = true
         }
     }
     
@@ -335,5 +343,138 @@ class ViewController: UIViewController {
         } catch {
             assertionFailure("Failed to configure `AVAAudioSession`: \(error.localizedDescription)")
         }
+    }
+}
+
+extension ViewController {
+    
+    func style() {
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = .white
+        titleLabel.text = "Word Bank"
+        titleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 23)
+        titleLabel.numberOfLines = 1
+        
+        levelLabel.translatesAutoresizingMaskIntoConstraints = false
+        levelLabel.font = UIFont(name: "ArialRoundedMTBold", size: 39)
+        levelLabel.numberOfLines = 1
+        
+        exerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        exerciseButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)
+        
+        greenButton.translatesAutoresizingMaskIntoConstraints = false
+        greenButton.addTarget(self, action: #selector(greenButtonPressed), for: .primaryActionTriggered)
+        
+        blueButton.translatesAutoresizingMaskIntoConstraints = false
+        blueButton.addTarget(self, action: #selector(blueButtonPressed), for: .primaryActionTriggered)
+        
+        yellowButton.translatesAutoresizingMaskIntoConstraints = false
+        yellowButton.addTarget(self, action: #selector(yellowButtonPressed), for: .primaryActionTriggered)
+        
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
+        
+        exerciseButtonLabel.translatesAutoresizingMaskIntoConstraints = false
+        exerciseButtonLabel.text = "Exercise"
+        exerciseButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        exerciseButtonLabel.numberOfLines = 1
+        
+        greenButtonLabel.translatesAutoresizingMaskIntoConstraints = false
+        greenButtonLabel.text = "New Word"
+        greenButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        greenButtonLabel.numberOfLines = 1
+        
+        blueButtonLabel.translatesAutoresizingMaskIntoConstraints = false
+        blueButtonLabel.text = "Words"
+        blueButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        blueButtonLabel.numberOfLines = 1
+        
+        yellowButtonLabel.translatesAutoresizingMaskIntoConstraints = false
+        yellowButtonLabel.text = "Hard Words"
+        yellowButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        yellowButtonLabel.numberOfLines = 1
+        
+        xButton.translatesAutoresizingMaskIntoConstraints = false
+        xButton.addTarget(self, action: #selector(xButtonPressed), for: .primaryActionTriggered)
+        
+        xLabel.translatesAutoresizingMaskIntoConstraints = false
+        xLabel.textColor = Colors.f6f6f6
+        xLabel.text = "2x"
+        xLabel.font = UIFont(name: "ArialRoundedMTBold", size: 39)
+        xLabel.numberOfLines = 1
+    }
+    
+    func layout() {
+        view.addSubview(titleLabel)
+        view.addSubview(cp)
+        view.addSubview(levelLabel)
+        view.addSubview(exerciseButton)
+        view.addSubview(exerciseButtonLabel)
+        view.addSubview(greenButton)
+        view.addSubview(greenButtonLabel)
+        view.addSubview(blueButton)
+        view.addSubview(blueButtonLabel)
+        view.addSubview(yellowButton)
+        view.addSubview(yellowButtonLabel)
+        view.addSubview(settingsButton)
+        view.addSubview(xButton)
+        view.addSubview(xLabel)
+        
+        NSLayoutConstraint.activate([
+            
+            titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 56),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                
+            levelLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            exerciseButton.bottomAnchor.constraint(equalTo: greenButton.topAnchor, constant: -40),
+            exerciseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            exerciseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            exerciseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            exerciseButtonLabel.centerYAnchor.constraint(equalTo: exerciseButton.bottomAnchor, constant: 20),
+            exerciseButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            greenButton.bottomAnchor.constraint(equalTo: blueButton.topAnchor, constant: -40),
+            greenButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            greenButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            greenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            greenButtonLabel.centerYAnchor.constraint(equalTo: greenButton.bottomAnchor, constant: 20),
+            greenButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            blueButton.bottomAnchor.constraint(equalTo: yellowButton.topAnchor, constant: -40),
+            blueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            blueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            blueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            blueButtonLabel.centerYAnchor.constraint(equalTo: blueButton.bottomAnchor, constant: 20),
+            blueButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            yellowButton.bottomAnchor.constraint(equalTo: settingsButton.topAnchor, constant: -40),
+            yellowButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            yellowButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            yellowButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            yellowButtonLabel.centerYAnchor.constraint(equalTo: yellowButton.bottomAnchor, constant: 20),
+            yellowButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            settingsButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+            settingsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            xButton.centerYAnchor.constraint(equalTo: cp.centerYAnchor),
+            xButton.centerXAnchor.constraint(equalTo: cp.centerXAnchor, constant: -100),
+            
+            xLabel.centerXAnchor.constraint(equalTo: xButton.centerXAnchor),
+            xLabel.centerYAnchor.constraint(equalTo: xButton.centerYAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            exerciseButton.heightAnchor.constraint(equalToConstant: 45),
+            greenButton.heightAnchor.constraint(equalToConstant: 45),
+            blueButton.heightAnchor.constraint(equalToConstant: 45),
+            yellowButton.heightAnchor.constraint(equalToConstant: 45),
+            settingsButton.heightAnchor.constraint(equalToConstant: 45),
+        ])
     }
 }
