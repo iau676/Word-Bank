@@ -33,6 +33,10 @@ class ViewController: UIViewController {
     let dailyQuestProgress = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 37.0, height: 37.0))
     let dailyQuestButton = UIButton()
     let dailyQuestLabel = UILabel()
+    
+    let stackView = UIStackView()
+    let awardButton = UIButton()
+    let statisticButton = UIButton()
             
     //MARK: - Variables
     
@@ -291,7 +295,9 @@ class ViewController: UIViewController {
         greenButton.setImage(imageName: "new", width: 35, height: 35)
         blueButton.setImage(imageName: "bank", width: 40, height: 40)
         yellowButton.setImage(imageName: "hard", width: 35, height: 35)
-        settingsButton.setImage(imageName: "settingsImage", width: 35, height: 35)
+        settingsButton.setImage(imageName: "settingsImage", width: 25, height: 25)
+        awardButton.setImage(imageName: "award", width: 27, height: 27)
+        statisticButton.setImage(imageName: "statistic", width: 25, height: 25)
         xButton.setImage(imageName: "x2", width: 45, height: 45)
         dailyQuestButton.setImage(imageName: "x2", width: 37, height: 37)
     }
@@ -385,6 +391,10 @@ extension ViewController {
         settingsButton.translatesAutoresizingMaskIntoConstraints = false
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
         
+        awardButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        statisticButton.translatesAutoresizingMaskIntoConstraints = false
+        
         exerciseButtonLabel.translatesAutoresizingMaskIntoConstraints = false
         exerciseButtonLabel.text = "Exercise"
         exerciseButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
@@ -419,6 +429,11 @@ extension ViewController {
         dailyQuestLabel.textColor = Colors.f6f6f6
         dailyQuestLabel.text = "?"
         dailyQuestLabel.font = UIFont(name: "ArialRoundedMTBold", size: 25)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 16
+        stackView.distribution = .fillEqually
     }
     
     func layout() {
@@ -433,12 +448,17 @@ extension ViewController {
         view.addSubview(blueButtonLabel)
         view.addSubview(yellowButton)
         view.addSubview(yellowButtonLabel)
-        view.addSubview(settingsButton)
         view.addSubview(xButton)
         view.addSubview(xLabel)
         view.addSubview(dailyQuestProgress)
         view.addSubview(dailyQuestButton)
         view.addSubview(dailyQuestLabel)
+        
+        stackView.addArrangedSubview(settingsButton)
+        stackView.addArrangedSubview(awardButton)
+        stackView.addArrangedSubview(statisticButton)
+        
+        view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
             
@@ -471,16 +491,13 @@ extension ViewController {
             blueButtonLabel.centerYAnchor.constraint(equalTo: blueButton.bottomAnchor, constant: 20),
             blueButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            yellowButton.bottomAnchor.constraint(equalTo: settingsButton.topAnchor, constant: -40),
+            yellowButton.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -40),
             yellowButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             yellowButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             yellowButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             yellowButtonLabel.centerYAnchor.constraint(equalTo: yellowButton.bottomAnchor, constant: 20),
             yellowButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            settingsButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
-            settingsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             xButton.centerYAnchor.constraint(equalTo: cp.centerYAnchor),
             xButton.centerXAnchor.constraint(equalTo: cp.centerXAnchor, constant: -100),
@@ -493,6 +510,11 @@ extension ViewController {
             
             dailyQuestLabel.centerXAnchor.constraint(equalTo: dailyQuestButton.centerXAnchor),
             dailyQuestLabel.centerYAnchor.constraint(equalTo: dailyQuestButton.centerYAnchor),
+            
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
@@ -500,7 +522,8 @@ extension ViewController {
             greenButton.heightAnchor.constraint(equalToConstant: 45),
             blueButton.heightAnchor.constraint(equalToConstant: 45),
             yellowButton.heightAnchor.constraint(equalToConstant: 45),
-            settingsButton.heightAnchor.constraint(equalToConstant: 45),
+            //settingsButton.heightAnchor.constraint(equalToConstant: 45),
+            stackView.heightAnchor.constraint(equalToConstant: 45)
         ])
     }
 }
