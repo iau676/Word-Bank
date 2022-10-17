@@ -29,6 +29,10 @@ class ViewController: UIViewController {
     
     let xButton = UIButton()
     let xLabel = UILabel()
+    
+    let dailyQuestProgress = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 37.0, height: 37.0))
+    let dailyQuestButton = UIButton()
+    let dailyQuestLabel = UILabel()
             
     //MARK: - Variables
     
@@ -67,6 +71,8 @@ class ViewController: UIViewController {
         
         cp.center = CGPoint(x: super.view.center.x, y: z)
         levelLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: cp.center.y).isActive = true
+        
+        dailyQuestProgress.center = CGPoint(x: cp.center.x+100, y: z)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -287,6 +293,7 @@ class ViewController: UIViewController {
         yellowButton.setImage(imageName: "hard", width: 35, height: 35)
         settingsButton.setImage(imageName: "settingsImage", width: 35, height: 35)
         xButton.setImage(imageName: "x2", width: 45, height: 45)
+        dailyQuestButton.setImage(imageName: "x2", width: 37, height: 37)
     }
     
     func setupButtonShadow(_ button: UIButton, shadowColor: UIColor?){
@@ -315,6 +322,10 @@ class ViewController: UIViewController {
         cp.trackColor = UIColor.white
         cp.progressColor = Colors.pink ?? .systemPink
         cp.setProgressWithAnimation(duration: 1.0, value: progressValue)
+        
+        dailyQuestProgress.trackColor = UIColor.white
+        dailyQuestProgress.progressColor = Colors.pink ?? .systemPink
+        dailyQuestProgress.setProgressWithAnimation(duration: 1.0, value: 0.3)
         
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
         cp.addGestureRecognizer(gesture)
@@ -400,8 +411,14 @@ extension ViewController {
         xLabel.translatesAutoresizingMaskIntoConstraints = false
         xLabel.textColor = Colors.f6f6f6
         xLabel.text = "2x"
-        xLabel.font = UIFont(name: "ArialRoundedMTBold", size: 39)
-        xLabel.numberOfLines = 1
+        xLabel.font = UIFont(name: "ArialRoundedMTBold", size: 25)
+        
+        dailyQuestButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        dailyQuestLabel.translatesAutoresizingMaskIntoConstraints = false
+        dailyQuestLabel.textColor = Colors.f6f6f6
+        dailyQuestLabel.text = "?"
+        dailyQuestLabel.font = UIFont(name: "ArialRoundedMTBold", size: 25)
     }
     
     func layout() {
@@ -419,6 +436,9 @@ extension ViewController {
         view.addSubview(settingsButton)
         view.addSubview(xButton)
         view.addSubview(xLabel)
+        view.addSubview(dailyQuestProgress)
+        view.addSubview(dailyQuestButton)
+        view.addSubview(dailyQuestLabel)
         
         NSLayoutConstraint.activate([
             
@@ -467,6 +487,12 @@ extension ViewController {
             
             xLabel.centerXAnchor.constraint(equalTo: xButton.centerXAnchor),
             xLabel.centerYAnchor.constraint(equalTo: xButton.centerYAnchor),
+            
+            dailyQuestButton.centerYAnchor.constraint(equalTo: cp.centerYAnchor),
+            dailyQuestButton.centerXAnchor.constraint(equalTo: cp.centerXAnchor, constant: +100),
+            
+            dailyQuestLabel.centerXAnchor.constraint(equalTo: dailyQuestButton.centerXAnchor),
+            dailyQuestLabel.centerYAnchor.constraint(equalTo: dailyQuestButton.centerYAnchor),
         ])
         
         NSLayoutConstraint.activate([
