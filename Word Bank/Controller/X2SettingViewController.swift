@@ -14,11 +14,12 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     //MARK: - IBOutlet
 
     var wordBrain = WordBrain()
-    @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var lastEditLabel: UILabel!
-    @IBOutlet weak var infoLabel: UILabel!
-    @IBOutlet weak var allowNotificationButton: UIButton!
+    
+    let pickerView = UIPickerView()
+    let saveButton = UIButton()
+    let lastEditLabel = UILabel()
+    let infoLabel = UILabel()
+    let allowNotificationButton = UIButton()
     
     //MARK: - Variables
     
@@ -57,13 +58,22 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
         configureButtons()
         configurePickerView()
         configureLastEditLabel()
-        updateInfoLabel()
         checkNotificationAllowed()
+        style()
+        updateInfoLabel()
+        layout()
     }
-
-    //MARK: - IBAction
     
-    @IBAction func saveButtonPressed(_ sender: UIButton) {
+    override func updateViewConstraints() {
+        self.view.frame.size.height = UIScreen.main.bounds.height - 120
+        self.view.frame.origin.y =  120
+        self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
+        super.updateViewConstraints()
+    }
+    
+    //MARK: - Selectors
+    
+    @objc func saveButtonPressed(_ sender: UIButton) {
         
         // subtract date from now
         let dateComponents = Calendar.current.dateComponents([.day], from: UserDefault.x2Time.getValue() as! Date, to: Date())
@@ -107,7 +117,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
         updateInfoLabel()
     }
     
-    @IBAction func notificationButtonPressed(_ sender: UIButton) {
+    @objc func notificationButtonPressed(_ sender: UIButton) {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
@@ -127,12 +137,6 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
         allowNotificationButton.setButtonCornerRadius(8)
     }
     
-    func configurePickerView(){
-        pickerView.dataSource = self
-        pickerView.delegate = self
-        pickerView.selectRow(UserDefault.userSelectedHour.getInt(), inComponent: 0, animated: true)
-    }
-    
     func configureLastEditLabel(){
         let lastEdit = UserDefault.lastEditLabel.getString()
         
@@ -141,13 +145,6 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
         } else {
             lastEditLabel.text = ""
         }
-    }
-    
-    override func updateViewConstraints() {
-        self.view.frame.size.height = UIScreen.main.bounds.height - 120
-        self.view.frame.origin.y =  120
-        self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
-        super.updateViewConstraints()
     }
     
     func updateInfoLabel(){
@@ -161,12 +158,20 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
                     self.allowNotificationButton.isHidden = true
                 }
             } else {
-                self.allowNotificationButton.isHidden = false
+                DispatchQueue.main.async {
+                    self.allowNotificationButton.isHidden = false
+                }
             }
         }
     }
     
     //MARK: - pickerView
+    
+    func configurePickerView(){
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        pickerView.selectRow(UserDefault.userSelectedHour.getInt(), inComponent: 0, animated: true)
+    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -189,4 +194,66 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
 }
 
-
+extension X2SettingViewController {
+    
+    func style() {
+        view.backgroundColor = Colors.cellLeft
+        
+        pickerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.backgroundColor = .darkGray
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(.white, for: .normal)
+        saveButton.titleLabel?.font =  UIFont(name: "AvenirNext-Regular", size: 17)
+        saveButton.addTarget(self, action: #selector(saveButtonPressed(_:)), for: .primaryActionTriggered)
+        
+        lastEditLabel.translatesAutoresizingMaskIntoConstraints = false
+        lastEditLabel.textColor = Colors.black
+        lastEditLabel.textAlignment = .center
+        lastEditLabel.numberOfLines = 0
+        lastEditLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.textColor = Colors.black
+        infoLabel.textAlignment = .center
+        infoLabel.numberOfLines = 0
+        infoLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        
+        allowNotificationButton.translatesAutoresizingMaskIntoConstraints = false
+        allowNotificationButton.backgroundColor = .darkGray
+        allowNotificationButton.setTitle("Allow Notification", for: .normal)
+        allowNotificationButton.setTitleColor(.white, for: .normal)
+        allowNotificationButton.titleLabel?.font =  UIFont(name: "AvenirNext-Regular", size: 17)
+        allowNotificationButton.addTarget(self, action: #selector(notificationButtonPressed(_:)), for: .primaryActionTriggered)
+    }
+    
+    func layout() {
+        view.addSubview(pickerView)
+        view.addSubview(saveButton)
+        view.addSubview(lastEditLabel)
+        view.addSubview(infoLabel)
+        view.addSubview(allowNotificationButton)
+        
+        NSLayoutConstraint.activate([
+            pickerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
+            pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            saveButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 16),
+            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            lastEditLabel.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 16),
+            lastEditLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            lastEditLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            infoLabel.topAnchor.constraint(equalTo: lastEditLabel.bottomAnchor, constant: 16),
+            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            allowNotificationButton.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 16),
+            allowNotificationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            allowNotificationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+        ])
+    }
+}

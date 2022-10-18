@@ -109,7 +109,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func xViewPressed(gesture: UISwipeGestureRecognizer) {
-        
+        let vc = X2SettingViewController()
+        vc.modalPresentationStyle = .popover
+        vc.popoverPresentationController?.sourceView = UIView()
+        present(vc, animated: true)
     }
 
     @objc func wordSoundChanged(_ sender: UISwitch) {
