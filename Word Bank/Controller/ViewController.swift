@@ -405,22 +405,18 @@ extension ViewController {
         exerciseButtonLabel.translatesAutoresizingMaskIntoConstraints = false
         exerciseButtonLabel.text = "Exercise"
         exerciseButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        exerciseButtonLabel.numberOfLines = 1
         
         greenButtonLabel.translatesAutoresizingMaskIntoConstraints = false
         greenButtonLabel.text = "New Word"
         greenButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        greenButtonLabel.numberOfLines = 1
         
         blueButtonLabel.translatesAutoresizingMaskIntoConstraints = false
         blueButtonLabel.text = "Words"
         blueButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        blueButtonLabel.numberOfLines = 1
         
         yellowButtonLabel.translatesAutoresizingMaskIntoConstraints = false
         yellowButtonLabel.text = "Hard Words"
         yellowButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        yellowButtonLabel.numberOfLines = 1
         
         xButton.translatesAutoresizingMaskIntoConstraints = false
         xButton.addTarget(self, action: #selector(xButtonPressed), for: .primaryActionTriggered)

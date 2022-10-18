@@ -51,6 +51,7 @@
 		706CBAC227592F8E008B4773 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 706CBAC027592F8E008B4773 /* LaunchScreen.storyboard */; };
 		706CBAD627593993008B4773 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAD427593993008B4773 /* WordCell.swift */; };
 		706CBAD727593993008B4773 /* WordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706CBAD527593993008B4773 /* WordCell.xib */; };
+		706D707D28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */; };
 		707106EF275A1E42005532D0 /* redBubble3.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EB275A1E41005532D0 /* redBubble3.png */; };
 		707106F0275A1E42005532D0 /* redBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EC275A1E41005532D0 /* redBubble.png */; };
 		707106F1275A1E42005532D0 /* redBubble4.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106ED275A1E41005532D0 /* redBubble4.png */; };
@@ -128,6 +129,7 @@
 		706CBAC327592F8E008B4773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		706CBAD427593993008B4773 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		706CBAD527593993008B4773 /* WordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordCell.xib; sourceTree = "<group>"; };
+		706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
 		707106EB275A1E41005532D0 /* redBubble3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble3.png; sourceTree = "<group>"; };
 		707106EC275A1E41005532D0 /* redBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble.png; sourceTree = "<group>"; };
 		707106ED275A1E41005532D0 /* redBubble4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble4.png; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				7011E3FF289571A100A42314 /* UIColor+Extensions.swift */,
 				7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */,
 				700814F328D3909200DF177D /* UIImage+Extensions.swift */,
+				706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */,
 			);
 			path = "UIKit+Extensions";
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */,
 				7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */,
 				707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */,
+				706D707D28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift in Sources */,
 				700C439927A856FD00D94497 /* LevelInfoViewController.swift in Sources */,
 				708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,

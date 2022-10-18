@@ -10,40 +10,39 @@ import AVFoundation
 import CoreData
 
 class SettingsViewController: UIViewController, UITextFieldDelegate {
+        
+    let xView = UIView()
+    let appSoundView = UIView()
+    let wordSoundView = UIView()
+    let soundSpeedView = UIView()
+    let textSizeView = UIView()
     
-    //MARK: - IBOutlet
+    let soundSpeedStackView = UIStackView()
+    let textSizeStackView = UIStackView()
     
-    @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var centerView: UIView!
-    @IBOutlet weak var bottomView: UIView!
+    let x2Label = UILabel()
+    let x2HoursLabel = UILabel()
+    let appSoundLabel = UILabel()
+    let wordSoundLabel = UILabel()
+    let soundSpeedLabel = UILabel()
+    let textSizeLabel = UILabel()
     
-    @IBOutlet weak var settingsView: UIView!
-    @IBOutlet weak var x2view: UIView!
-    @IBOutlet weak var appSoundView: UIView!
-    @IBOutlet weak var wordSoundView: UIView!
-    @IBOutlet weak var soundSpeedView: UIView!
-    @IBOutlet weak var textSizeView: UIView!
+    let appSoundSwitch = UISwitch()
+    let wordSoundSwitch = UISwitch()
     
-    @IBOutlet weak var settingsLabel: UILabel!
-    @IBOutlet weak var x2Label: UILabel!
-    @IBOutlet weak var x2HoursLabel: UILabel!
-    @IBOutlet weak var appSoundLabel: UILabel!
-    @IBOutlet weak var wordSoundLabel: UILabel!
-    @IBOutlet weak var soundSpeedLabel: UILabel!
-    @IBOutlet weak var textSizeLabel: UILabel!
+    let soundSpeedSegmentedControl = UISegmentedControl()
+    let textSegmentedControl = UISegmentedControl()
     
-    @IBOutlet weak var appSoundSwitch: UISwitch!
-    @IBOutlet weak var wordSoundSwitch: UISwitch!
+    let xButton = UIButton()
+    let soundSpeedButton = UIButton()
     
-    @IBOutlet weak var soundSpeedSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var textSegmentedControl: UISegmentedControl!
+    let tabBarStackView = UIStackView()
+    let homeButton = UIButton()
+    let dailyButton = UIButton()
+    let awardButton = UIButton()
+    let statisticButton = UIButton()
+    let settingsButton = UIButton()
     
-    @IBOutlet weak var x2button: UIButton!
-    @IBOutlet weak var soundSpeedButton: UIButton!
-    
-    @IBOutlet weak var viewConstraint: NSLayoutConstraint!
-    
-    //MARK: - Variable
     var player = Player()
     var wordBrain = WordBrain()
     var soundSpeed = 0.0
@@ -82,8 +81,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         configureColor()
         updateTextSize()
         setupCornerRadius()
-        setupDefaults()
         setupButton(soundSpeedButton)
+        configureTabBar()
+        configureNavigationBar()
+        style()
+        setupDefaults()
+        layout()
     }
     
     //MARK: - prepare
@@ -99,9 +102,17 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //MARK: - IBAction
+    //MARK: - Selectors
+    
+    @objc func homeButtonPressed(gesture: UISwipeGestureRecognizer) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func xViewPressed(gesture: UISwipeGestureRecognizer) {
+        
+    }
 
-    @IBAction func wordSoundChanged(_ sender: UISwitch) {
+    @objc func wordSoundChanged(_ sender: UISwitch) {
         if sender.isOn {
             UserDefault.playSound.set(0)
             changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
@@ -111,7 +122,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func appSoundChanged(_ sender: UISwitch) {
+    @objc func appSoundChanged(_ sender: UISwitch) {
         if sender.isOn {
             UserDefault.playAppSound.set(0)
         } else {
@@ -119,7 +130,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func soundSpeedChanged(_ sender: UISegmentedControl) {
+    @objc func soundSpeedChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             UserDefault.soundSpeed.set(0.3)
@@ -139,12 +150,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         player.playSound(soundSpeed, "how are you?")
     }
     
-    @IBAction func speakerButtonPressed(_ sender: UIButton) {
+    @objc func soundSpeedButtonPressed(_ sender: UIButton) {
         soundSpeedButton.flash()
         player.playSound(soundSpeed, "how are you?")
     }
     
-    @IBAction func textSizeChanged(_ sender: UISegmentedControl) {
+    @objc func textSizeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             UserDefault.textSize.set(9)
@@ -170,29 +181,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         updateTextSize()
     }
     
-    @IBAction func topViewPressed(_ sender: UIButton) {
-        dismissView()
-    }
-    
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        dismissView()
-    }
-    
     //MARK: - Helpers
     
     func configureColor() {
-        topView.backgroundColor = .clear
-        centerView.backgroundColor = Colors.cellLeft
-        bottomView.backgroundColor = Colors.cellLeft
         
-        settingsView.backgroundColor = Colors.cellLeft
-        x2view.backgroundColor = Colors.cellRight
         appSoundView.backgroundColor = Colors.cellRight
         wordSoundView.backgroundColor = Colors.cellRight
         soundSpeedView.backgroundColor = Colors.cellRight
         textSizeView.backgroundColor = Colors.cellRight
         
-        settingsLabel.textColor = Colors.black
         x2Label.textColor = Colors.black
         x2HoursLabel.textColor = Colors.black
         appSoundLabel.textColor = Colors.black
@@ -200,8 +197,39 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         soundSpeedLabel.textColor = Colors.black
         textSizeLabel.textColor = Colors.black
         
-        x2button.changeBackgroundColor(to: .clear)
         soundSpeedButton.changeBackgroundColor(to: .clear)
+    }
+    
+    func configureTabBar() {
+        tabBarStackView.translatesAutoresizingMaskIntoConstraints = false
+        tabBarStackView.axis = .horizontal
+        tabBarStackView.spacing = 0
+        tabBarStackView.distribution = .fillEqually
+        
+        homeButton.backgroundColor = .white
+        dailyButton.backgroundColor = .white
+        awardButton.backgroundColor = .white
+        statisticButton.backgroundColor = .white
+        settingsButton.backgroundColor = .white
+        
+        homeButton.setImageWithRenderingMode(imageName: "home", width: 25, height: 25, color: .darkGray)
+        dailyButton.setImageWithRenderingMode(imageName: "dailyQuest", width: 25, height: 25, color: .darkGray)
+        awardButton.setImageWithRenderingMode(imageName: "award", width: 27, height: 27, color: .darkGray)
+        statisticButton.setImageWithRenderingMode(imageName: "statistic", width: 25, height: 25, color: .darkGray)
+        settingsButton.setImageWithRenderingMode(imageName: "settingsImage", width: 25, height: 25, color: Colors.blue ?? .blue)
+    }
+    
+    func configureNavigationBar(){
+        let backButton: UIButton = UIButton()
+        let image = UIImage();
+        backButton.setImage(image, for: .normal)
+        backButton.setTitle("", for: .normal);
+        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
+        backButton.setTitleColor(.black, for: .normal)
+        backButton.sizeToFit()
+        let barButton = UIBarButtonItem(customView: backButton)
+        self.navigationItem.leftBarButtonItem = barButton
+        title = "Settings"
     }
 
     func setupButton(_ button: UIButton){
@@ -211,13 +239,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     func setupCornerRadius(){
         wordSoundView.layer.cornerRadius = 8
         textSizeView.layer.cornerRadius = 8
-        x2view.layer.cornerRadius = 8
         appSoundView.layer.cornerRadius = 8
         soundSpeedView.layer.cornerRadius = 8
-        
-        centerView.clipsToBounds = true
-        centerView.layer.cornerRadius = 16
-        centerView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
     
     func setupDefaults(){
@@ -285,7 +308,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     func updateTextSize(){
         textSize = UserDefault.textSize.getCGFloat()
         
-        updateLabelTextSize(settingsLabel)
         updateLabelTextSize(wordSoundLabel)
         updateLabelTextSize(textSizeLabel)
         updateLabelTextSize(x2Label)
@@ -317,9 +339,204 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             uiview.alpha = a
         })
     }
+}
+
+
+extension SettingsViewController {
     
-    override func updateViewConstraints() {
-        self.view.roundCorners(corners: [.topLeft, .topRight], radius: 16.0)
-        super.updateViewConstraints()
+    func style() {
+        view.backgroundColor = Colors.cellLeft
+        
+        xView.translatesAutoresizingMaskIntoConstraints = false
+        xView.backgroundColor = Colors.cellRight
+        xView.setViewCornerRadius(8)
+        let xViewGesture = UITapGestureRecognizer(target: self, action:  #selector(self.xViewPressed))
+        xView.addGestureRecognizer(xViewGesture)
+        
+        appSoundView.translatesAutoresizingMaskIntoConstraints = false
+        appSoundView.backgroundColor = Colors.cellRight
+        appSoundView.setViewCornerRadius(8)
+        
+        wordSoundView.translatesAutoresizingMaskIntoConstraints = false
+        wordSoundView.backgroundColor = Colors.cellRight
+        wordSoundView.setViewCornerRadius(8)
+        
+        soundSpeedView.translatesAutoresizingMaskIntoConstraints = false
+        soundSpeedView.backgroundColor = Colors.cellRight
+        soundSpeedView.setViewCornerRadius(8)
+        
+        textSizeView.translatesAutoresizingMaskIntoConstraints = false
+        textSizeView.backgroundColor = Colors.cellRight
+        textSizeView.setViewCornerRadius(8)
+        
+        soundSpeedStackView.translatesAutoresizingMaskIntoConstraints = false
+        soundSpeedStackView.axis = .vertical
+        soundSpeedStackView.spacing = 8
+        soundSpeedStackView.distribution = .fill
+        
+        textSizeStackView.translatesAutoresizingMaskIntoConstraints = false
+        textSizeStackView.axis = .vertical
+        textSizeStackView.spacing = 8
+        textSizeStackView.distribution = .fill
+        
+        homeButton.translatesAutoresizingMaskIntoConstraints = false
+        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: .primaryActionTriggered)
+        
+        x2Label.translatesAutoresizingMaskIntoConstraints = false
+        x2Label.textColor = Colors.black
+        x2Label.text = "2x Hour"
+        x2Label.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        
+        x2HoursLabel.translatesAutoresizingMaskIntoConstraints = false
+        x2HoursLabel.textColor = .darkGray
+        x2HoursLabel.textAlignment = .right
+        x2HoursLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        
+        appSoundLabel.translatesAutoresizingMaskIntoConstraints = false
+        appSoundLabel.textColor = Colors.black
+        appSoundLabel.text = "App Sound"
+        appSoundLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        
+        appSoundSwitch.translatesAutoresizingMaskIntoConstraints = false
+        appSoundSwitch.addTarget(self, action: #selector(appSoundChanged(_:)), for: UIControl.Event.valueChanged)
+        
+        wordSoundLabel.translatesAutoresizingMaskIntoConstraints = false
+        wordSoundLabel.textColor = Colors.black
+        wordSoundLabel.text = "Word Sound"
+        wordSoundLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        
+        wordSoundSwitch.translatesAutoresizingMaskIntoConstraints = false
+        wordSoundSwitch.addTarget(self, action: #selector(wordSoundChanged(_:)), for: UIControl.Event.valueChanged)
+        
+        soundSpeedLabel.translatesAutoresizingMaskIntoConstraints = false
+        soundSpeedLabel.textColor = Colors.black
+        soundSpeedLabel.text = "Sound Speed"
+        soundSpeedLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        
+        soundSpeedButton.translatesAutoresizingMaskIntoConstraints = false
+        soundSpeedButton.addTarget(self, action: #selector(soundSpeedButtonPressed), for: .primaryActionTriggered)
+        
+        soundSpeedSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        soundSpeedSegmentedControl.replaceSegments(segments: ["0.5", "1", "2"])
+        soundSpeedSegmentedControl.tintColor = .black
+        soundSpeedSegmentedControl.addTarget(self, action: #selector(soundSpeedChanged(_:)), for: UIControl.Event.valueChanged)
+        
+        textSizeLabel.translatesAutoresizingMaskIntoConstraints = false
+        textSizeLabel.textColor = Colors.black
+        textSizeLabel.text = "Text Size"
+        textSizeLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        
+        textSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        textSegmentedControl.replaceSegments(segments: ["9", "11", "13", "15", "17", "19", "21"])
+        textSegmentedControl.tintColor = .black
+        textSegmentedControl.addTarget(self, action: #selector(textSizeChanged(_:)), for: UIControl.Event.valueChanged)
+    }
+    
+    func layout() {
+        
+        tabBarStackView.addArrangedSubview(homeButton)
+        tabBarStackView.addArrangedSubview(dailyButton)
+        tabBarStackView.addArrangedSubview(awardButton)
+        tabBarStackView.addArrangedSubview(statisticButton)
+        tabBarStackView.addArrangedSubview(settingsButton)
+        
+        xView.addSubview(x2Label)
+        xView.addSubview(x2HoursLabel)
+        
+        appSoundView.addSubview(appSoundLabel)
+        appSoundView.addSubview(appSoundSwitch)
+        
+        wordSoundView.addSubview(wordSoundLabel)
+        wordSoundView.addSubview(wordSoundSwitch)
+        
+        soundSpeedStackView.addArrangedSubview(soundSpeedLabel)
+        soundSpeedStackView.addArrangedSubview(soundSpeedSegmentedControl)
+        
+        soundSpeedView.addSubview(soundSpeedStackView)
+        soundSpeedView.addSubview(soundSpeedButton)
+        
+        textSizeStackView.addArrangedSubview(textSizeLabel)
+        textSizeStackView.addArrangedSubview(textSegmentedControl)
+        
+        textSizeView.addSubview(textSizeStackView)
+        
+        view.addSubview(xView)
+        view.addSubview(appSoundView)
+        view.addSubview(wordSoundView)
+        view.addSubview(soundSpeedView)
+        view.addSubview(textSizeView)
+        view.addSubview(tabBarStackView)
+        
+        NSLayoutConstraint.activate([
+            
+            xView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.navigationController!.navigationBar.frame.height+45),
+            xView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            xView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            x2Label.topAnchor.constraint(equalTo: xView.topAnchor, constant: 8),
+            x2Label.leadingAnchor.constraint(equalTo: xView.leadingAnchor, constant: 16),
+            x2Label.bottomAnchor.constraint(equalTo: xView.bottomAnchor, constant: -8),
+            
+            x2HoursLabel.topAnchor.constraint(equalTo: xView.topAnchor, constant: 8),
+            x2HoursLabel.trailingAnchor.constraint(equalTo: xView.trailingAnchor, constant: -16),
+            x2HoursLabel.bottomAnchor.constraint(equalTo: xView.bottomAnchor, constant: -8),
+
+            appSoundView.topAnchor.constraint(equalTo: xView.bottomAnchor, constant: 16),
+            appSoundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            appSoundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            appSoundLabel.topAnchor.constraint(equalTo: appSoundView.topAnchor, constant: 8),
+            appSoundLabel.leadingAnchor.constraint(equalTo: appSoundView.leadingAnchor, constant: 16),
+            appSoundLabel.bottomAnchor.constraint(equalTo: appSoundView.bottomAnchor, constant: -8),
+            
+            appSoundSwitch.topAnchor.constraint(equalTo: appSoundView.topAnchor, constant: 4),
+            appSoundSwitch.trailingAnchor.constraint(equalTo: appSoundView.trailingAnchor, constant: -16),
+            
+            wordSoundView.topAnchor.constraint(equalTo: appSoundView.bottomAnchor, constant: 16),
+            wordSoundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            wordSoundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            wordSoundLabel.topAnchor.constraint(equalTo: wordSoundView.topAnchor, constant: 8),
+            wordSoundLabel.leadingAnchor.constraint(equalTo: wordSoundView.leadingAnchor, constant: 16),
+            wordSoundLabel.bottomAnchor.constraint(equalTo: wordSoundView.bottomAnchor, constant: -8),
+            
+            wordSoundSwitch.topAnchor.constraint(equalTo: wordSoundView.topAnchor, constant: 4),
+            wordSoundSwitch.trailingAnchor.constraint(equalTo: wordSoundView.trailingAnchor, constant: -16),
+            
+            soundSpeedView.topAnchor.constraint(equalTo: wordSoundView.bottomAnchor, constant: 16),
+            soundSpeedView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            soundSpeedView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            soundSpeedButton.topAnchor.constraint(equalTo: soundSpeedView.topAnchor, constant: 9),
+            soundSpeedButton.trailingAnchor.constraint(equalTo: soundSpeedView.trailingAnchor, constant: -16),
+            
+            soundSpeedStackView.topAnchor.constraint(equalTo: soundSpeedView.topAnchor, constant: 16),
+            soundSpeedStackView.leadingAnchor.constraint(equalTo: soundSpeedView.leadingAnchor, constant: 16),
+            soundSpeedStackView.trailingAnchor.constraint(equalTo: soundSpeedView.trailingAnchor, constant: -16),
+            soundSpeedStackView.bottomAnchor.constraint(equalTo: soundSpeedView.bottomAnchor, constant: -16),
+            
+            textSizeView.topAnchor.constraint(equalTo: soundSpeedView.bottomAnchor, constant: 16),
+            textSizeView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            textSizeView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            textSizeStackView.topAnchor.constraint(equalTo: textSizeView.topAnchor, constant: 16),
+            textSizeStackView.leadingAnchor.constraint(equalTo: textSizeView.leadingAnchor, constant: 16),
+            textSizeStackView.trailingAnchor.constraint(equalTo: textSizeView.trailingAnchor, constant: -16),
+            textSizeStackView.bottomAnchor.constraint(equalTo: textSizeView.bottomAnchor, constant: -16),
+            
+            tabBarStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            tabBarStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            tabBarStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0),
+            tabBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            tabBarStackView.heightAnchor.constraint(equalToConstant: 66),
+            xView.heightAnchor.constraint(equalToConstant: 40),
+            appSoundView.heightAnchor.constraint(equalToConstant: 40),
+            wordSoundView.heightAnchor.constraint(equalToConstant: 40),
+            soundSpeedView.heightAnchor.constraint(equalToConstant: 90),
+            textSizeView.heightAnchor.constraint(equalToConstant: 90),
+        ])
     }
 }
