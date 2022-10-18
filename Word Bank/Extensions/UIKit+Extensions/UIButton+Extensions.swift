@@ -85,6 +85,11 @@ extension UIButton {
             UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }, for: .normal)
     }
     
+    func setImageWithRenderingMode(imageName: String, width: CGFloat, height: CGFloat, color: UIColor){
+        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).imageResized(to: CGSize(width: width, height: height)).withTintColor(color)
+        self.setImage(image, for: .normal)
+    }
+    
     func bounce() {
         UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut, .allowUserInteraction]) { [weak self] in
             self?.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)

@@ -20,7 +20,6 @@ class ViewController: UIViewController {
     let greenButton = UIButton()
     let blueButton = UIButton()
     let yellowButton = UIButton()
-    let settingsButton = UIButton()
     
     let exerciseButtonLabel = UILabel()
     let greenButtonLabel = UILabel()
@@ -30,14 +29,13 @@ class ViewController: UIViewController {
     let xButton = UIButton()
     let xLabel = UILabel()
     
-    let dailyQuestProgress = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 37.0, height: 37.0))
-    let dailyQuestButton = UIButton()
-    let dailyQuestLabel = UILabel()
-    
-    let stackView = UIStackView()
+    let tabBarStackView = UIStackView()
+    let homeButton = UIButton()
+    let dailyButton = UIButton()
     let awardButton = UIButton()
     let statisticButton = UIButton()
-            
+    let settingsButton = UIButton()
+    
     //MARK: - Variables
     
     var wordBrain = WordBrain()
@@ -52,6 +50,7 @@ class ViewController: UIViewController {
         fixSoundProblemForRealDevice()
         setupFirstLaunch()
         configureColor()
+        configureTabBar()
         getHour()
         style()
         layout()
@@ -75,8 +74,6 @@ class ViewController: UIViewController {
         
         cp.center = CGPoint(x: super.view.center.x, y: z)
         levelLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: cp.center.y).isActive = true
-        
-        dailyQuestProgress.center = CGPoint(x: cp.center.x+100, y: z)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -264,6 +261,25 @@ class ViewController: UIViewController {
         yellowButtonLabel.textColor = Colors.f6f6f6
     }
     
+    func configureTabBar() {
+        tabBarStackView.translatesAutoresizingMaskIntoConstraints = false
+        tabBarStackView.axis = .horizontal
+        tabBarStackView.spacing = 0
+        tabBarStackView.distribution = .fillEqually
+        
+        homeButton.backgroundColor = .white
+        dailyButton.backgroundColor = .white
+        awardButton.backgroundColor = .white
+        statisticButton.backgroundColor = .white
+        settingsButton.backgroundColor = .white
+        
+        homeButton.setImageWithRenderingMode(imageName: "home", width: 25, height: 25, color: Colors.blue ?? .blue)
+        dailyButton.setImageWithRenderingMode(imageName: "dailyQuest", width: 25, height: 25, color: .darkGray)
+        awardButton.setImageWithRenderingMode(imageName: "award", width: 27, height: 27, color: .darkGray)
+        statisticButton.setImageWithRenderingMode(imageName: "statistic", width: 25, height: 25, color: .darkGray)
+        settingsButton.setImageWithRenderingMode(imageName: "settingsImage", width: 25, height: 25, color: .darkGray)
+    }
+    
     func showOnboarding(){
         navigationController?.pushViewController(OnboardingContainerViewController(), animated: true)
     }
@@ -274,7 +290,7 @@ class ViewController: UIViewController {
             self.performSegue(withIdentifier: identifier, sender: self)
         }
     }
-    
+ 
     func setupButtons(){
         exerciseButton.backgroundColor = .systemPurple
         greenButton.backgroundColor = Colors.green
@@ -295,11 +311,8 @@ class ViewController: UIViewController {
         greenButton.setImage(imageName: "new", width: 35, height: 35)
         blueButton.setImage(imageName: "bank", width: 40, height: 40)
         yellowButton.setImage(imageName: "hard", width: 35, height: 35)
-        settingsButton.setImage(imageName: "settingsImage", width: 25, height: 25)
-        awardButton.setImage(imageName: "award", width: 27, height: 27)
-        statisticButton.setImage(imageName: "statistic", width: 25, height: 25)
+        
         xButton.setImage(imageName: "x2", width: 45, height: 45)
-        dailyQuestButton.setImage(imageName: "x2", width: 37, height: 37)
     }
     
     func setupButtonShadow(_ button: UIButton, shadowColor: UIColor?){
@@ -329,20 +342,18 @@ class ViewController: UIViewController {
         cp.progressColor = Colors.pink ?? .systemPink
         cp.setProgressWithAnimation(duration: 1.0, value: progressValue)
         
-        dailyQuestProgress.trackColor = UIColor.white
-        dailyQuestProgress.progressColor = Colors.pink ?? .systemPink
-        dailyQuestProgress.setProgressWithAnimation(duration: 1.0, value: 0.3)
-        
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
         cp.addGestureRecognizer(gesture)
     }
 
     func check2xTime(){
         if UserDefault.lastHour.getInt() == UserDefault.userSelectedHour.getInt() {
-            //xButton.isHidden = false
+            xButton.isHidden = false
+            xLabel.isHidden = false
             xButton.pulstate()
         } else {
-            //xButton.isHidden = true
+            xButton.isHidden = true
+            xLabel.isHidden = true
         }
     }
     
@@ -391,10 +402,6 @@ extension ViewController {
         settingsButton.translatesAutoresizingMaskIntoConstraints = false
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
         
-        awardButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        statisticButton.translatesAutoresizingMaskIntoConstraints = false
-        
         exerciseButtonLabel.translatesAutoresizingMaskIntoConstraints = false
         exerciseButtonLabel.text = "Exercise"
         exerciseButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
@@ -422,18 +429,6 @@ extension ViewController {
         xLabel.textColor = Colors.f6f6f6
         xLabel.text = "2x"
         xLabel.font = UIFont(name: "ArialRoundedMTBold", size: 25)
-        
-        dailyQuestButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        dailyQuestLabel.translatesAutoresizingMaskIntoConstraints = false
-        dailyQuestLabel.textColor = Colors.f6f6f6
-        dailyQuestLabel.text = "?"
-        dailyQuestLabel.font = UIFont(name: "ArialRoundedMTBold", size: 25)
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.spacing = 16
-        stackView.distribution = .fillEqually
     }
     
     func layout() {
@@ -450,18 +445,16 @@ extension ViewController {
         view.addSubview(yellowButtonLabel)
         view.addSubview(xButton)
         view.addSubview(xLabel)
-        view.addSubview(dailyQuestProgress)
-        view.addSubview(dailyQuestButton)
-        view.addSubview(dailyQuestLabel)
         
-        stackView.addArrangedSubview(settingsButton)
-        stackView.addArrangedSubview(awardButton)
-        stackView.addArrangedSubview(statisticButton)
+        tabBarStackView.addArrangedSubview(homeButton)
+        tabBarStackView.addArrangedSubview(dailyButton)
+        tabBarStackView.addArrangedSubview(awardButton)
+        tabBarStackView.addArrangedSubview(statisticButton)
+        tabBarStackView.addArrangedSubview(settingsButton)
         
-        view.addSubview(stackView)
+        view.addSubview(tabBarStackView)
         
         NSLayoutConstraint.activate([
-            
             titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 56),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 
@@ -491,7 +484,7 @@ extension ViewController {
             blueButtonLabel.centerYAnchor.constraint(equalTo: blueButton.bottomAnchor, constant: 20),
             blueButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            yellowButton.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -40),
+            yellowButton.bottomAnchor.constraint(equalTo: tabBarStackView.topAnchor, constant: -40),
             yellowButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             yellowButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             yellowButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -505,16 +498,10 @@ extension ViewController {
             xLabel.centerXAnchor.constraint(equalTo: xButton.centerXAnchor),
             xLabel.centerYAnchor.constraint(equalTo: xButton.centerYAnchor),
             
-            dailyQuestButton.centerYAnchor.constraint(equalTo: cp.centerYAnchor),
-            dailyQuestButton.centerXAnchor.constraint(equalTo: cp.centerXAnchor, constant: +100),
-            
-            dailyQuestLabel.centerXAnchor.constraint(equalTo: dailyQuestButton.centerXAnchor),
-            dailyQuestLabel.centerYAnchor.constraint(equalTo: dailyQuestButton.centerYAnchor),
-            
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            tabBarStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            tabBarStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            tabBarStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0),
+            tabBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
@@ -522,8 +509,7 @@ extension ViewController {
             greenButton.heightAnchor.constraint(equalToConstant: 45),
             blueButton.heightAnchor.constraint(equalToConstant: 45),
             yellowButton.heightAnchor.constraint(equalToConstant: 45),
-            //settingsButton.heightAnchor.constraint(equalToConstant: 45),
-            stackView.heightAnchor.constraint(equalToConstant: 45)
+            tabBarStackView.heightAnchor.constraint(equalToConstant: 66)
         ])
     }
 }
