@@ -32,8 +32,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var goEdit = 0
     var editIndex = 0
     var userWordCountInt = 0
-    var textForLabel = ""
-    var userWordCount = ""
     var userWordCountIntVariable = 0 //fix userdefaults slow problem
     let coinImage = UIImage(named: "coin.png")!
     
@@ -52,16 +50,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         onViewWillDisappear?()
-    }
-    
-    //MARK: - prepare
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goNewPoint" {
-            let destinationVC = segue.destination as! NewPointViewController
-            destinationVC.textForLabel = textForLabel
-            destinationVC.userWordCount = userWordCount
-        }
     }
     
     //MARK: - IBAction
@@ -127,9 +115,9 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         let newPoint = UserDefault.exercisePoint.getInt()
         
         if newPoint != lastPoint {
-            textForLabel = "You will get +\(newPoint-10) points for each correct answer."
-            userWordCount = String(userWordCountIntVariable)
-            performSegue(withIdentifier: "goNewPoint", sender: self)
+            let vc = NewPointViewController()
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
         }
     }
     

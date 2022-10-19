@@ -90,16 +90,6 @@ class ResultViewController: UIViewController {
         return true
     }
     
-    //MARK: - prepare
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goNewPoint" {
-            let destinationVC = segue.destination as! NewPointViewController
-            destinationVC.textForLabel = textForLabel
-            destinationVC.userWordCount = userWordCount
-        }
-    }
-    
     //MARK: - IBAction
     
     @IBAction func showWordsButtonPressed(_ sender: UIButton) {
