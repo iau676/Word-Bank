@@ -216,10 +216,35 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         settingsButton.backgroundColor = .white
         
         homeButton.setImageWithRenderingMode(imageName: "home", width: 25, height: 25, color: .darkGray)
-        dailyButton.setImageWithRenderingMode(imageName: "dailyQuest", width: 25, height: 25, color: .darkGray)
+        dailyButton.setImageWithRenderingMode(imageName: "dailyQuest", width: 26, height: 26, color: .darkGray)
         awardButton.setImageWithRenderingMode(imageName: "award", width: 27, height: 27, color: .darkGray)
         statisticButton.setImageWithRenderingMode(imageName: "statistic", width: 25, height: 25, color: .darkGray)
         settingsButton.setImageWithRenderingMode(imageName: "settingsImage", width: 25, height: 25, color: Colors.blue ?? .blue)
+        
+        homeButton.setTitle("Home", for: .normal)
+        homeButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        homeButton.setTitleColor(.darkGray, for: .normal)
+        homeButton.alignTextBelow()
+        
+        dailyButton.setTitle("Daily", for: .normal)
+        dailyButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        dailyButton.setTitleColor(.darkGray, for: .normal)
+        dailyButton.alignTextBelow()
+        
+        awardButton.setTitle("Awards", for: .normal)
+        awardButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        awardButton.setTitleColor(.darkGray, for: .normal)
+        awardButton.alignTextBelow()
+        
+        statisticButton.setTitle("Statistics", for: .normal)
+        statisticButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        statisticButton.setTitleColor(.darkGray, for: .normal)
+        statisticButton.alignTextBelow()
+        
+        settingsButton.setTitle("Settings", for: .normal)
+        settingsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        settingsButton.setTitleColor(Colors.blue ?? .blue, for: .normal)
+        settingsButton.alignTextBelow()
     }
     
     func configureNavigationBar(){
