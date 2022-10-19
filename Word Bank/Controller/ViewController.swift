@@ -108,10 +108,6 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        performSegue(withIdentifier: "goSettings", sender: self)
-    }
-    
     //MARK: - Selectors
     
     @objc func exerciseButtonPressed(gesture: UISwipeGestureRecognizer) {

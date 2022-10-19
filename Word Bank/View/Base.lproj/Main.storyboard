@@ -20,9 +20,6 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="quizBackground"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="K8F-oa-Q7l" appends="YES" id="WpY-kx-Hj3"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="jWW-um-qG1"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -33,11 +30,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="up" id="K8F-oa-Q7l">
-                    <connections>
-                        <action selector="swipeGesture:" destination="BYZ-38-t0r" id="BoI-QT-0ZD"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3700" y="36.431784107946029"/>
         </scene>
@@ -542,7 +534,7 @@
         <scene sceneID="GkB-hd-Q59">
             <objects>
                 <viewController id="9q6-8v-FQ1" customClass="WordsViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="WVg-dI-ycn">
+                    <view key="view" contentMode="scaleToFill" id="WVg-dI-ycn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
