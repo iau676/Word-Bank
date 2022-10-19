@@ -14,7 +14,7 @@
 		7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */; };
 		7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FF289571A100A42314 /* UIColor+Extensions.swift */; };
 		7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */; };
-		7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7014743527AAB4EE005E1854 /* LevelUpController.swift */; };
+		7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7014743527AAB4EE005E1854 /* LevelUpViewController.swift */; };
 		701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701581BC27DE80D800796ADE /* SettingsViewController.swift */; };
 		70175BC427E71F170053CBDB /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175BC327E71F170053CBDB /* CardViewController.swift */; };
 		702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */; };
@@ -89,7 +89,7 @@
 		7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContextualAction+Extensions.swift"; sourceTree = "<group>"; };
 		7011E3FF289571A100A42314 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateExercisePoint.swift"; sourceTree = "<group>"; };
-		7014743527AAB4EE005E1854 /* LevelUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpController.swift; sourceTree = "<group>"; };
+		7014743527AAB4EE005E1854 /* LevelUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpViewController.swift; sourceTree = "<group>"; };
 		701581BC27DE80D800796ADE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		70175BC327E71F170053CBDB /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		701FA77628DFDC28001ADA07 /* Word Bank.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Word Bank.entitlements"; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 				708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */,
 				700C439827A856FD00D94497 /* LevelInfoViewController.swift */,
 				70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */,
-				7014743527AAB4EE005E1854 /* LevelUpController.swift */,
+				7014743527AAB4EE005E1854 /* LevelUpViewController.swift */,
 				7081AB0127CCD15700E2996A /* NewPointViewController.swift */,
 				701581BC27DE80D800796ADE /* SettingsViewController.swift */,
 				70175BC327E71F170053CBDB /* CardViewController.swift */,
@@ -451,7 +451,7 @@
 				70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */,
 				706CBAB727592F8D008B4773 /* ViewController.swift in Sources */,
 				708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */,
-				7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */,
+				7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */,
 				7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */,
 				706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */,
 				70C357E528882DFC00F3AD86 /* Player.swift in Sources */,

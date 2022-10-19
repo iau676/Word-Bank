@@ -253,7 +253,9 @@ class ResultViewController: UIViewController {
         
         if newLevel - lastLevel > 0 {
             DispatchQueue.main.async(){
-                self.performSegue(withIdentifier: "goLevelUp", sender: self)
+                let vc = LevelUpViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
             }
         }
     }
