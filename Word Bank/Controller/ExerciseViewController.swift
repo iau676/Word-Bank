@@ -56,7 +56,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var rightOnce = [Int]()
     var rightOnceBool = [Bool]()
     var arrayForResultViewUserAnswer = [String]()
-    var isWordAddedToHardWords = 0
     var player = Player()
     var wordBrain = WordBrain()
     var whichButton: String { return UserDefault.whichButton.getString() }
@@ -86,21 +85,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
 
     override func viewWillAppear(_ animated: Bool) { 
-        isWordAddedToHardWords = 0
-    }
-    
-    //MARK: - prepare
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToResult" {
-            let destinationVC = segue.destination as! ResultViewController
-            destinationVC.isWordAddedToHardWords = wordBrain.getIsWordAddedToHardWords()
-        }
-    }
-    
-    func preventInterrupt(){
-        // None of our movies should interrupt system music playback.
-            _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
+        UserDefault.addedHardWordsCount.set(0)
     }
   
     //MARK: - IBAction
@@ -115,30 +100,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func arrowButtonAtOptionViewPressed(_ sender: UIButton) {
         arrowButtonsPressed()
-    }
-    
-    func arrowButtonsPressed() {
-        if showOptions == 0 {
-            showOptions = 1
-            arrowButtonAtAnswerView.isHidden = true
-            arrowButtonAtOptionView.isHidden = false
-            updateViewAppearance(optionView, isHidden: false)
-            arrowButtonAtOptionView.setImage(imageName: "arrowRight", width: 30, height: 30)
-        } else {
-            showOptions = 0
-            arrowButtonAtAnswerView.isHidden = false
-            arrowButtonAtOptionView.isHidden = true
-            updateViewAppearance(optionView, isHidden: true)
-            arrowButtonAtOptionView.setImage(imageName: "arrowLeft", width: 30, height: 30)
-        }
-    }
-    
-    func updateViewAppearance(_ vieW: UIView, isHidden: Bool){
-        UIView.transition(with: vieW, duration: 0.6,
-                          options: .transitionCrossDissolve,
-                          animations: {
-                            vieW.isHidden = isHidden
-                      })
     }
     
     @IBAction func switchPressed(_ sender: UISwitch) {
@@ -251,12 +212,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         }
     }//updateUI
     
-    func refreshAnswerButton(_ button: UIButton, title: String) {
-        button.isEnabled = true
-        button.backgroundColor = UIColor.clear
-        button.setTitle(title, for: .normal)
-    }
-    
     @objc func hideBubbleButton(){
         if whichStartPressed == 3 {
             bubbleButton.setTitle("", for: UIControl.State.normal)
@@ -290,6 +245,36 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
 
     //MARK: - Helpers
+    
+    func arrowButtonsPressed() {
+        if showOptions == 0 {
+            showOptions = 1
+            arrowButtonAtAnswerView.isHidden = true
+            arrowButtonAtOptionView.isHidden = false
+            updateViewAppearance(optionView, isHidden: false)
+            arrowButtonAtOptionView.setImage(imageName: "arrowRight", width: 30, height: 30)
+        } else {
+            showOptions = 0
+            arrowButtonAtAnswerView.isHidden = false
+            arrowButtonAtOptionView.isHidden = true
+            updateViewAppearance(optionView, isHidden: true)
+            arrowButtonAtOptionView.setImage(imageName: "arrowLeft", width: 30, height: 30)
+        }
+    }
+    
+    func updateViewAppearance(_ vieW: UIView, isHidden: Bool){
+        UIView.transition(with: vieW, duration: 0.6,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            vieW.isHidden = isHidden
+                      })
+    }
+    
+    func refreshAnswerButton(_ button: UIButton, title: String) {
+        button.isEnabled = true
+        button.backgroundColor = UIColor.clear
+        button.setTitle(title, for: .normal)
+    }
     
     func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
         getLetter()
@@ -563,6 +548,11 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     func scheduledTimer(timeInterval: Double, _ selector : Selector) {
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
+    }
+    
+    func preventInterrupt(){
+        // None of our movies should interrupt system music playback.
+            _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
     }
 
 }

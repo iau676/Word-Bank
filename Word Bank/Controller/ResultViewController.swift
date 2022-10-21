@@ -23,7 +23,6 @@ class ResultViewController: UIViewController {
     var wordBrain = WordBrain()
     let player = Player()
     var itemArray: [Item] { return wordBrain.itemArray }
-    var isWordAddedToHardWords = 0
     var numberOfTrue = 0
     var lastLevel:Int = 0
     var newLevel:Int = 0
@@ -35,6 +34,7 @@ class ResultViewController: UIViewController {
     var arrayForResultViewENG: [String] { return UserDefault.arrayForResultViewENG.getValue() as? [String] ?? [String]() }
     var arrayForResultViewTR: [String] { return UserDefault.arrayForResultViewTR.getValue() as? [String] ?? [String]() }
     var arrayForResultViewUserAnswer: [String] { UserDefault.userAnswers.getValue() as? [String] ?? [String]() }
+    var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
     var selectedSegmentIndex: Int { return UserDefault.selectedSegmentIndex.getInt() }
     var whichStartPressed: Int { return UserDefault.startPressed.getInt() }
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
@@ -118,10 +118,10 @@ class ResultViewController: UIViewController {
     
     func updateHardWordText(){
         //print how many words added to hard words
-        if isWordAddedToHardWords > 0 {
+        if addedHardWordsCount > 0 {
             addedHardWordsButton.isHidden = false
-            let WordOrWords = (isWordAddedToHardWords == 1) ? "Word" : "Words"
-            addedHardWordsButton.setTitle("\(isWordAddedToHardWords) \(WordOrWords) Added to Hard Words", for: .normal)
+            let WordOrWords = (addedHardWordsCount == 1) ? "Word" : "Words"
+            addedHardWordsButton.setTitle("\(addedHardWordsCount) \(WordOrWords) Added to Hard Words", for: .normal)
         } else {
             addedHardWordsButton.isHidden = true
             addedHardWordsButton.setTitle("", for: .normal)
@@ -456,7 +456,7 @@ extension ResultViewController {
             refreshButton.heightAnchor.constraint(equalToConstant: 40),
         ])
         
-        if isWordAddedToHardWords > 0 {
+        if addedHardWordsCount > 0 {
             NSLayoutConstraint.activate([
                 tableView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -48)
             ])

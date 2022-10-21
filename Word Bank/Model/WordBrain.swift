@@ -25,7 +25,7 @@ struct WordBrain {
     var questionNumber = 0
     var changedQuestionNumber = 0
     var userSelectedSegmentIndex = 0
-    var isWordAddedToHardWords = 0
+    var addedHardWordsCount = 0
     var onlyHereNumber = 0
     var answer = 0
     var firstFalseIndex = -1
@@ -82,7 +82,8 @@ struct WordBrain {
         newItem.correctNumber = 5
         hardItemArray.append(newItem)
         
-        isWordAddedToHardWords = isWordAddedToHardWords + 1
+        addedHardWordsCount = addedHardWordsCount + 1
+        UserDefault.addedHardWordsCount.set(addedHardWordsCount)
         
         itemArray[index].addedHardWords = true
         let lastCount = UserDefault.hardWordsCount.getInt()
@@ -189,10 +190,6 @@ struct WordBrain {
         } else {
             return hardItemArray[questionNumber].eng!
         }
-    }
-
-    mutating func getIsWordAddedToHardWords() -> Int {
-        return isWordAddedToHardWords
     }
     
     mutating func getProgress() -> Float {
