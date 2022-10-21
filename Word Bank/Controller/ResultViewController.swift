@@ -27,7 +27,6 @@ class ResultViewController: UIViewController {
     var numberOfTrue = 0
     var lastLevel:Int = 0
     var newLevel:Int = 0
-    var cardCounter = 0
     var userWordCount = ""
     var scoreLabelText = ""
     

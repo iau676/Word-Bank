@@ -41,15 +41,6 @@ class CardViewController: UIViewController {
         configureBackBarButton()
         divisor = (view.frame.width/2)/0.61
     }
-    
-    //MARK: - prepare
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToResult" {
-            let destinationVC = segue.destination as! ResultViewController
-            destinationVC.cardCounter = cardCounter
-        }
-    }
 
     //MARK: - Helpers
     
