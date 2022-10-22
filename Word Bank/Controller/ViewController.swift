@@ -17,14 +17,14 @@ class ViewController: UIViewController {
     let levelLabel = UILabel()
     
     let exerciseButton = UIButton()
-    let greenButton = UIButton()
-    let blueButton = UIButton()
-    let yellowButton = UIButton()
+    let newWordsButton = UIButton()
+    let wordsButton = UIButton()
+    let hardWordsButton = UIButton()
     
     let exerciseButtonLabel = UILabel()
-    let greenButtonLabel = UILabel()
-    let blueButtonLabel = UILabel()
-    let yellowButtonLabel = UILabel()
+    let newWordButtonLabel = UILabel()
+    let wordsButtonLabel = UILabel()
+    let hardWordsButtonLabel = UILabel()
     
     let xButton = UIButton()
     let xLabel = UILabel()
@@ -111,35 +111,35 @@ class ViewController: UIViewController {
     //MARK: - Selectors
     
     @objc func exerciseButtonPressed(gesture: UISwipeGestureRecognizer) {
-        UserDefault.whichButton.set("blue")
+        UserDefault.whichButton.set("normal")
         UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
         exerciseButton.bounce()
         exerciseButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goExercise")
     }
     
-    @objc func greenButtonPressed(gesture: UISwipeGestureRecognizer) {
+    @objc func newWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         UserDefault.startPressed.set(1)
-        UserDefault.whichButton.set("blue")
+        UserDefault.whichButton.set("normal")
         goAddPage = 1
-        greenButton.bounce()
-        greenButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
+        newWordsButton.bounce()
+        newWordsButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         viewDidLayoutSubviews()
         goAfter100Milliseconds(identifier: "goWords")
     }
     
-    @objc func blueButtonPressed(gesture: UISwipeGestureRecognizer) {
-        UserDefault.whichButton.set("blue")
+    @objc func wordsButtonPressed(gesture: UISwipeGestureRecognizer) {
+        UserDefault.whichButton.set("normal")
         goAddPage = 0
-        blueButton.bounce()
-        blueButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
+        wordsButton.bounce()
+        wordsButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goWords")
     }
     
-    @objc func yellowButtonPressed(gesture: UISwipeGestureRecognizer) {
-        UserDefault.whichButton.set("yellow")
-        yellowButton.bounce()
-        yellowButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
+    @objc func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
+        UserDefault.whichButton.set("hard")
+        hardWordsButton.bounce()
+        hardWordsButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goWords")
     }
     
@@ -252,9 +252,9 @@ class ViewController: UIViewController {
         titleLabel.textColor = Colors.f6f6f6
         levelLabel.textColor = Colors.f6f6f6
         exerciseButtonLabel.textColor = Colors.f6f6f6
-        greenButtonLabel.textColor = Colors.f6f6f6
-        blueButtonLabel.textColor = Colors.f6f6f6
-        yellowButtonLabel.textColor = Colors.f6f6f6
+        newWordButtonLabel.textColor = Colors.f6f6f6
+        wordsButtonLabel.textColor = Colors.f6f6f6
+        hardWordsButtonLabel.textColor = Colors.f6f6f6
     }
     
     func configureTabBar() {
@@ -314,24 +314,24 @@ class ViewController: UIViewController {
  
     func setupButtons(){
         exerciseButton.backgroundColor = .systemPurple
-        greenButton.backgroundColor = Colors.green
-        blueButton.backgroundColor = Colors.blue
-        yellowButton.backgroundColor = Colors.yellow
+        newWordsButton.backgroundColor = Colors.green
+        wordsButton.backgroundColor = Colors.blue
+        hardWordsButton.backgroundColor = Colors.yellow
         
         setupButtonShadow(exerciseButton, shadowColor: Colors.purpleShadow)
-        setupButtonShadow(greenButton, shadowColor: Colors.greenShadow)
-        setupButtonShadow(blueButton, shadowColor: Colors.blueShadow)
-        setupButtonShadow(yellowButton, shadowColor: Colors.yellowShadow)
+        setupButtonShadow(newWordsButton, shadowColor: Colors.greenShadow)
+        setupButtonShadow(wordsButton, shadowColor: Colors.blueShadow)
+        setupButtonShadow(hardWordsButton, shadowColor: Colors.yellowShadow)
 
         exerciseButton.setButtonCornerRadius(15)
-        greenButton.setButtonCornerRadius(15)
-        blueButton.setButtonCornerRadius(15)
-        yellowButton.setButtonCornerRadius(15)
+        newWordsButton.setButtonCornerRadius(15)
+        wordsButton.setButtonCornerRadius(15)
+        hardWordsButton.setButtonCornerRadius(15)
         
         exerciseButton.setImage(imageName: "wheelicon", width: 35, height: 35)
-        greenButton.setImage(imageName: "new", width: 35, height: 35)
-        blueButton.setImage(imageName: "bank", width: 40, height: 40)
-        yellowButton.setImage(imageName: "hard", width: 35, height: 35)
+        newWordsButton.setImage(imageName: "new", width: 35, height: 35)
+        wordsButton.setImage(imageName: "bank", width: 40, height: 40)
+        hardWordsButton.setImage(imageName: "hard", width: 35, height: 35)
         
         xButton.setImage(imageName: "x2", width: 45, height: 45)
     }
@@ -411,14 +411,14 @@ extension ViewController {
         exerciseButton.translatesAutoresizingMaskIntoConstraints = false
         exerciseButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)
         
-        greenButton.translatesAutoresizingMaskIntoConstraints = false
-        greenButton.addTarget(self, action: #selector(greenButtonPressed), for: .primaryActionTriggered)
+        newWordsButton.translatesAutoresizingMaskIntoConstraints = false
+        newWordsButton.addTarget(self, action: #selector(newWordsButtonPressed), for: .primaryActionTriggered)
         
-        blueButton.translatesAutoresizingMaskIntoConstraints = false
-        blueButton.addTarget(self, action: #selector(blueButtonPressed), for: .primaryActionTriggered)
+        wordsButton.translatesAutoresizingMaskIntoConstraints = false
+        wordsButton.addTarget(self, action: #selector(wordsButtonPressed), for: .primaryActionTriggered)
         
-        yellowButton.translatesAutoresizingMaskIntoConstraints = false
-        yellowButton.addTarget(self, action: #selector(yellowButtonPressed), for: .primaryActionTriggered)
+        hardWordsButton.translatesAutoresizingMaskIntoConstraints = false
+        hardWordsButton.addTarget(self, action: #selector(hardWordsButtonPressed), for: .primaryActionTriggered)
         
         settingsButton.translatesAutoresizingMaskIntoConstraints = false
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
@@ -427,17 +427,17 @@ extension ViewController {
         exerciseButtonLabel.text = "Exercise"
         exerciseButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
         
-        greenButtonLabel.translatesAutoresizingMaskIntoConstraints = false
-        greenButtonLabel.text = "New Word"
-        greenButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        newWordButtonLabel.translatesAutoresizingMaskIntoConstraints = false
+        newWordButtonLabel.text = "New Word"
+        newWordButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
         
-        blueButtonLabel.translatesAutoresizingMaskIntoConstraints = false
-        blueButtonLabel.text = "Words"
-        blueButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        wordsButtonLabel.translatesAutoresizingMaskIntoConstraints = false
+        wordsButtonLabel.text = "Words"
+        wordsButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
         
-        yellowButtonLabel.translatesAutoresizingMaskIntoConstraints = false
-        yellowButtonLabel.text = "Hard Words"
-        yellowButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        hardWordsButtonLabel.translatesAutoresizingMaskIntoConstraints = false
+        hardWordsButtonLabel.text = "Hard Words"
+        hardWordsButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
         
         xButton.translatesAutoresizingMaskIntoConstraints = false
         xButton.addTarget(self, action: #selector(xButtonPressed), for: .primaryActionTriggered)
@@ -454,12 +454,12 @@ extension ViewController {
         view.addSubview(levelLabel)
         view.addSubview(exerciseButton)
         view.addSubview(exerciseButtonLabel)
-        view.addSubview(greenButton)
-        view.addSubview(greenButtonLabel)
-        view.addSubview(blueButton)
-        view.addSubview(blueButtonLabel)
-        view.addSubview(yellowButton)
-        view.addSubview(yellowButtonLabel)
+        view.addSubview(newWordsButton)
+        view.addSubview(newWordButtonLabel)
+        view.addSubview(wordsButton)
+        view.addSubview(wordsButtonLabel)
+        view.addSubview(hardWordsButton)
+        view.addSubview(hardWordsButtonLabel)
         view.addSubview(xButton)
         view.addSubview(xLabel)
         
@@ -477,7 +477,7 @@ extension ViewController {
                 
             levelLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            exerciseButton.bottomAnchor.constraint(equalTo: greenButton.topAnchor, constant: -40),
+            exerciseButton.bottomAnchor.constraint(equalTo: newWordsButton.topAnchor, constant: -40),
             exerciseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             exerciseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             exerciseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -485,29 +485,29 @@ extension ViewController {
             exerciseButtonLabel.centerYAnchor.constraint(equalTo: exerciseButton.bottomAnchor, constant: 20),
             exerciseButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            greenButton.bottomAnchor.constraint(equalTo: blueButton.topAnchor, constant: -40),
-            greenButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            greenButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            greenButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            newWordsButton.bottomAnchor.constraint(equalTo: wordsButton.topAnchor, constant: -40),
+            newWordsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            newWordsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            newWordsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            greenButtonLabel.centerYAnchor.constraint(equalTo: greenButton.bottomAnchor, constant: 20),
-            greenButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            newWordButtonLabel.centerYAnchor.constraint(equalTo: newWordsButton.bottomAnchor, constant: 20),
+            newWordButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            blueButton.bottomAnchor.constraint(equalTo: yellowButton.topAnchor, constant: -40),
-            blueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            blueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            blueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            wordsButton.bottomAnchor.constraint(equalTo: hardWordsButton.topAnchor, constant: -40),
+            wordsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            wordsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            wordsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            blueButtonLabel.centerYAnchor.constraint(equalTo: blueButton.bottomAnchor, constant: 20),
-            blueButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            wordsButtonLabel.centerYAnchor.constraint(equalTo: wordsButton.bottomAnchor, constant: 20),
+            wordsButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            yellowButton.bottomAnchor.constraint(equalTo: tabBarStackView.topAnchor, constant: -40),
-            yellowButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            yellowButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            yellowButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            hardWordsButton.bottomAnchor.constraint(equalTo: tabBarStackView.topAnchor, constant: -40),
+            hardWordsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            hardWordsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            hardWordsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            yellowButtonLabel.centerYAnchor.constraint(equalTo: yellowButton.bottomAnchor, constant: 20),
-            yellowButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            hardWordsButtonLabel.centerYAnchor.constraint(equalTo: hardWordsButton.bottomAnchor, constant: 20),
+            hardWordsButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             xButton.centerYAnchor.constraint(equalTo: cp.centerYAnchor),
             xButton.centerXAnchor.constraint(equalTo: cp.centerXAnchor, constant: -100),
@@ -523,9 +523,9 @@ extension ViewController {
         
         NSLayoutConstraint.activate([
             exerciseButton.heightAnchor.constraint(equalToConstant: 45),
-            greenButton.heightAnchor.constraint(equalToConstant: 45),
-            blueButton.heightAnchor.constraint(equalToConstant: 45),
-            yellowButton.heightAnchor.constraint(equalToConstant: 45),
+            newWordsButton.heightAnchor.constraint(equalToConstant: 45),
+            wordsButton.heightAnchor.constraint(equalToConstant: 45),
+            hardWordsButton.heightAnchor.constraint(equalToConstant: 45),
             tabBarStackView.heightAnchor.constraint(equalToConstant: 66)
         ])
     }

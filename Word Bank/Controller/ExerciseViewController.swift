@@ -182,7 +182,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             case 1:
                 if UserDefault.playSound.getInt() == 0 {
                     if UserDefault.selectedSegmentIndex.getInt() == 0 {
-                        if UserDefault.whichButton.getString() == "yellow" {
+                        if UserDefault.whichButton.getString() == "hard" {
                             player.playSound(soundSpeed, questionText)
                         } else {
                             player.playSound(soundSpeed, questionText)
@@ -446,7 +446,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             userGotItRight = wordBrain.checkAnswer(userAnswer: userAnswer)
         } else {
             userGotItRight = answerForStart23.lowercased() == userAnswer.lowercased()
-            if whichButton == "yellow" {
+            if whichButton == "hard" {
                 wordBrain.arrayForResultView()
             }
         }
@@ -482,7 +482,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         if userGotItRight {
             player.playMP3("true")
             
-            if whichButton == "blue" {
+            if whichButton == "normal" {
                 wordBrain.userGotItCorrect()
             } else {
                 if wordBrain.updateCorrectCountHardWord() { questionCount = totalQuestionNumber }
@@ -502,7 +502,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         } else {
             player.playMP3("false")
             
-            if whichButton == "blue" {
+            if whichButton == "normal" {
                 wordBrain.userGotItWrong()
             } else {
                 wordBrain.updateWrongCountHardWords()

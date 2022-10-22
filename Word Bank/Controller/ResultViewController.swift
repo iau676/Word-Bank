@@ -34,7 +34,7 @@ class ResultViewController: UIViewController {
     var arrayForResultViewENG: [String] { return UserDefault.arrayForResultViewENG.getValue() as? [String] ?? [String]() }
     var arrayForResultViewTR: [String] { return UserDefault.arrayForResultViewTR.getValue() as? [String] ?? [String]() }
     var arrayForResultViewUserAnswer: [String] { UserDefault.userAnswers.getValue() as? [String] ?? [String]() }
-    var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
+        var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
     var selectedSegmentIndex: Int { return UserDefault.selectedSegmentIndex.getInt() }
     var whichStartPressed: Int { return UserDefault.startPressed.getInt() }
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
@@ -109,7 +109,7 @@ class ResultViewController: UIViewController {
     }
     
     func updateRefreshButtonVisibility(){
-        if UserDefault.whichButton.getString() == "yellow" && UserDefault.hardWordsCount.getInt() < 2 {
+        if UserDefault.whichButton.getString() == "hard" && UserDefault.hardWordsCount.getInt() < 2 {
             refreshButton.isHidden = true
         } else {
             refreshButton.isHidden = false
@@ -140,7 +140,7 @@ class ResultViewController: UIViewController {
     }
     
     func updateStatistic() {
-        if UserDefault.whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "normal" {
             UserDefault.exerciseCount.set(UserDefault.exerciseCount.getInt()+1)
             UserDefault.trueCount.set(UserDefault.trueCount.getInt()+numberOfTrue)
             UserDefault.falseCount.set(UserDefault.falseCount.getInt()+(userAnswer.count-numberOfTrue))
@@ -254,7 +254,7 @@ extension ResultViewController: UITableViewDataSource {
     
     func updateCellLabelText(_ cell: WordCell, _ index: Int){
         let i = arrayOfIndex[index]
-        if UserDefault.whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "normal" {
             if selectedSegmentIndex == 0 {
                 cell.engLabel.text = itemArray[i].eng
                 cell.trLabel.text = itemArray[i].tr
@@ -304,7 +304,7 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
-        if UserDefault.whichButton.getString() == "blue" {
+        if UserDefault.whichButton.getString() == "normal" {
             cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
                                                           (selectedSegmentIndex == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
         } else {
@@ -359,10 +359,10 @@ extension ResultViewController: UITableViewDelegate {
             var word = ""
             
             switch UserDefault.whichButton.getString() {
-            case "blue":
+            case "normal":
                 word = itemArray[arrayOfIndex[indexPath.row]].eng ?? "empty"
                 break
-            case "yellow":
+            case "hard":
                 word =  arrayForResultViewENG[indexPath.row]
                 break
             default: break

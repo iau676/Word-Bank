@@ -149,7 +149,7 @@ class WordsViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
             break
         case .left:
-            if whichButton == "blue" { performSegue(withIdentifier: "goAdd", sender: self) }
+            if whichButton == "normal" { performSegue(withIdentifier: "goAdd", sender: self) }
             break
         default: break
         }
@@ -171,7 +171,7 @@ class WordsViewController: UIViewController {
     func updateView(){
         updateTableViewConstraintMultiplier(0.1)
         
-        if whichButton == "blue" {
+        if whichButton == "normal" {
             searchBar.updateSearchBarVisibility(false)
             tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         } else {
@@ -227,7 +227,7 @@ class WordsViewController: UIViewController {
     func setupBackgroundColor(){
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
-        if whichButton == "blue" {
+        if whichButton == "normal" {
             gradient.colors = [Colors.blue!.cgColor, Colors.blueBottom!.cgColor]
         } else {
             gradient.colors = [Colors.yellow!.cgColor, Colors.yellowBottom!.cgColor]
@@ -239,7 +239,7 @@ class WordsViewController: UIViewController {
         let backButton = UIBarButtonItem()
         backButton.title = "Back"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-        if whichButton == "blue" {
+        if whichButton == "normal" {
             title = "My Words"
         } else {
             title = "Hard Words"
@@ -283,19 +283,19 @@ class WordsViewController: UIViewController {
     }
 
     func checkGoAddPage(){
-        if goAddPage == 1 && whichButton == "blue"{
+        if goAddPage == 1 && whichButton == "normal"{
             performSegue(withIdentifier: "goAdd", sender: self)
         }
     }
     
     func check2Items(){
-        let checkCount = (whichButton == "blue") ? itemArray.count : hardItemArray.count
+        let checkCount = (whichButton == "normal") ? itemArray.count : hardItemArray.count
         
         if checkCount < 2 {
             let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 self.updateView()
-                if self.whichButton == "blue" {
+                if self.whichButton == "normal" {
                     self.performSegue(withIdentifier: "goAdd", sender: self)
                 } else {
                     self.navigationController?.popToRootViewController(animated: true)
@@ -351,7 +351,7 @@ extension WordsViewController: UISearchBarDelegate {
 extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         updateSearchBarPlaceholder()
-        if whichButton == "blue" {
+        if whichButton == "normal" {
             return itemArray.count
         } else {
             showAlertIfHardWordsEmpty()
@@ -373,7 +373,7 @@ extension WordsViewController: UITableViewDataSource {
         cell.trView.isHidden = false
         
         if itemArray.count > 0 {
-            if whichButton == "blue" {
+            if whichButton == "normal" {
                 cell.engLabel.text = itemArray[indexPath.row].eng
                 cell.trLabel.text = itemArray[indexPath.row].tr
             } else {
@@ -463,7 +463,7 @@ extension WordsViewController: UITableViewDelegate {
         addAction.setImage(imageName: "plus", width: 25, height: 25)
         addAction.setBackgroundColor(Colors.yellow)
         
-        if whichButton == "blue" {
+        if whichButton == "normal" {
             if self.itemArray[indexPath.row].addedHardWords == true {
                 return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
             }
