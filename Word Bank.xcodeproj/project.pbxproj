@@ -25,6 +25,7 @@
 		702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A978227EB378A00AEECF7 /* X2SettingViewController.swift */; };
 		7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7039B87927A6A04700519D39 /* CircularProgressView.swift */; };
 		704B055528364098006C7F96 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* Word.swift */; };
+		704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704F9377290711C50095BF0D /* UITextField+Extensions.swift */; };
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
 		705D92D528F895BA001C4F38 /* WheelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92D428F895BA001C4F38 /* WheelViewController.swift */; };
 		705D92E328F89625001C4F38 /* PushButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92D728F89623001C4F38 /* PushButton.swift */; };
@@ -101,6 +102,7 @@
 		702A978227EB378A00AEECF7 /* X2SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2SettingViewController.swift; sourceTree = "<group>"; };
 		7039B87927A6A04700519D39 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		704B055428364098006C7F96 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		704F9377290711C50095BF0D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
 		705D92D428F895BA001C4F38 /* WheelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelViewController.swift; sourceTree = "<group>"; };
 		705D92D728F89623001C4F38 /* PushButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushButton.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */,
 				700814F328D3909200DF177D /* UIImage+Extensions.swift */,
 				706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */,
+				704F9377290711C50095BF0D /* UITextField+Extensions.swift */,
 			);
 			path = "UIKit+Extensions";
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */,
 				707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */,
 				706D707D28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift in Sources */,
+				704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */,
 				700C439927A856FD00D94497 /* LevelInfoViewController.swift in Sources */,
 				708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,

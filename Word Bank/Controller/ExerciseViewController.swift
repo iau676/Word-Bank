@@ -498,8 +498,9 @@ extension ExerciseViewController {
         hintLabel.numberOfLines = 0
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
         textField.setViewCornerRadius(6)
+        textField.setLeftPaddingPoints(10)
+        textField.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
         
         textFieldStackView.translatesAutoresizingMaskIntoConstraints = false
         textFieldStackView.axis = .vertical
