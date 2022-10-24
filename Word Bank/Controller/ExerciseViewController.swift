@@ -11,35 +11,25 @@ import CoreData
 
 class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
-    //MARK: - IBOutlet
+    let userPointButton = UIButton()
+    let progressBarTop = UIProgressView()
+    let soundButton = UIButton()
     
-    @IBOutlet weak var questionLabel: UILabel!
-    @IBOutlet weak var answer1Button: UIButton!
-    @IBOutlet weak var answer2Button: UIButton!
-    @IBOutlet weak var progressBar2: UIProgressView!
-    @IBOutlet weak var progressBar: UIProgressView!
-    @IBOutlet weak var userPointButton: UIButton!
-    @IBOutlet weak var bubbleButton: UIButton!
-    @IBOutlet weak var soundButton: UIButton!
-    @IBOutlet weak var textFieldStackView: UIStackView!
-    @IBOutlet weak var hintLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var answerStackView: UIStackView!
-    @IBOutlet weak var wordViewConstrait: NSLayoutConstraint!
-    //only first question
-    @IBOutlet weak var arrowButtonAtAnswerView: UIButton!
-    @IBOutlet weak var arrowButtonAtOptionView: UIButton!
-    @IBOutlet weak var labelPlaySound: UILabel!
-    @IBOutlet weak var switchPlaySound: UISwitch!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var optionView: UIView!
-    @IBOutlet weak var optionStackView: UIStackView!
+    let bubbleButton = UIButton()
+    let questionLabel = UILabel()
     
-    //MARK: - Variables
+    let hintLabel = UILabel()
+    let textField = UITextField()
+    let textFieldStackView = UIStackView()
+    
+    let answer1Button = UIButton()
+    let answer2Button = UIButton()
+    let answerStackView = UIStackView()
+    
+    let progressBarBottom = UIProgressView()
     
     var hint = ""
     var letterCounter = 0
-    var showOptions = 0
     var totalQuestionNumber = 20
     var failNumber: [Int] = []
     var failIndex: [Int] = []
@@ -47,14 +37,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var questionCount = 0
     var timer = Timer()
-    var changedQuestionNumber = 0
-    var onlyHereNumber = 0
-    var answer = 0    
     var questionText = ""
     var answerForStart23 = ""
     var soundSpeed = Double()
-    var rightOnce = [Int]()
-    var rightOnceBool = [Bool]()
     var arrayForResultViewUserAnswer = [String]()
     var player = Player()
     var wordBrain = WordBrain()
@@ -70,6 +55,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         title = " "
         getHour()
         
+        style()
         setupView()
         configureColor()
         configureTextField()
@@ -87,35 +73,21 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) { 
         UserDefault.addedHardWordsCount.set(0)
     }
-  
-    //MARK: - IBAction
     
-    @IBAction func answerPressed(_ sender: UIButton) {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let x = textFieldStackView.center.y
+        let y = progressBarTop.center.y
+        layout(questionLabelHeight: x-y)
+    }
+  
+    //MARK: - Selectors
+    
+    @objc func answerPressed(_ sender: UIButton) {
         checkAnswerQ(sender,sender.currentTitle!)
     }
     
-    @IBAction func arrowButtonAtAnswerViewPressed(_ sender: UIButton) {
-        arrowButtonsPressed()
-    }
-    
-    @IBAction func arrowButtonAtOptionViewPressed(_ sender: UIButton) {
-        arrowButtonsPressed()
-    }
-    
-    @IBAction func switchPressed(_ sender: UISwitch) {
-        if sender.isOn {
-            UserDefault.playSound.set(0)
-        } else {
-            UserDefault.playSound.set(1)
-        }
-    }
-    
-    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
-        UserDefault.selectedSegmentIndex.set(sender.selectedSegmentIndex)
-        updateUI()
-    }
-    
-    @IBAction func textChanged(_ sender: UITextField) {
+    @objc func textChanged(_ sender: UITextField) {
         if answerForStart23.lowercased() == sender.text!.lowercased() {
             checkAnswerQ(nil,sender.text!)
             textField.text = ""
@@ -124,7 +96,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func soundButtonPressed(_ sender: UIButton) {
+    @objc func soundButtonPressed(_ sender: UIButton) {
         soundButton.bounce()
         if whichStartPressed == 1 {
             if UserDefault.selectedSegmentIndex.getInt() == 0 {
@@ -135,7 +107,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func hourButtonPressed(_ sender: UIButton) {
+    @objc func bubbleButtonPressed(_ sender: UIButton) {
         bubbleButton.bounce()
         player.playSound(soundSpeed, answerForStart23)
     }
@@ -147,8 +119,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             self.navigationController?.popViewController(animated: true)
         }
     }
-        
-    //MARK: - Selectors
     
     @objc func updateUI() {
         letterCounter = 0
@@ -157,11 +127,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
 
         if questionCount < totalQuestionNumber {
 
-            //it can change textField size if use in the other option
-            if  whichStartPressed == 1 && questionCount > 0 {
-                updateViewAppearance(optionView, isHidden: true)
-                self.arrowButtonAtAnswerView.isHidden = true
-            }
             bubbleButton.setTitle("", for: UIControl.State.normal)
             
             if whichStartPressed == 3 {
@@ -182,22 +147,17 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             case 1:
                 if UserDefault.playSound.getInt() == 0 {
                     if UserDefault.selectedSegmentIndex.getInt() == 0 {
-                        if UserDefault.whichButton.getString() == "hard" {
-                            player.playSound(soundSpeed, questionText)
-                        } else {
-                            player.playSound(soundSpeed, questionText)
-                        }
+                        player.playSound(soundSpeed, questionText)
                     }
                 }
+                progressBarTop.isHidden = true
                 break
             case 2:
-                progressBar.isHidden = true
-                arrowButtonAtAnswerView.isHidden = true
+                progressBarBottom.isHidden = true
                 break
             case 3:
                 player.playSound(soundSpeed, answerForStart23)
-                progressBar.isHidden = true
-                arrowButtonAtAnswerView.isHidden = true
+                progressBarBottom.isHidden = true
                 break
             default: break
             }
@@ -245,31 +205,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
 
     //MARK: - Helpers
-    
-    func arrowButtonsPressed() {
-        if showOptions == 0 {
-            showOptions = 1
-            arrowButtonAtAnswerView.isHidden = true
-            arrowButtonAtOptionView.isHidden = false
-            updateViewAppearance(optionView, isHidden: false)
-            arrowButtonAtOptionView.setImage(imageName: "arrowRight", width: 30, height: 30)
-        } else {
-            showOptions = 0
-            arrowButtonAtAnswerView.isHidden = false
-            arrowButtonAtOptionView.isHidden = true
-            updateViewAppearance(optionView, isHidden: true)
-            arrowButtonAtOptionView.setImage(imageName: "arrowLeft", width: 30, height: 30)
-        }
-    }
-    
-    func updateViewAppearance(_ vieW: UIView, isHidden: Bool){
-        UIView.transition(with: vieW, duration: 0.6,
-                          options: .transitionCrossDissolve,
-                          animations: {
-                            vieW.isHidden = isHidden
-                      })
-    }
-    
+
     func refreshAnswerButton(_ button: UIButton, title: String) {
         button.isEnabled = true
         button.backgroundColor = UIColor.clear
@@ -287,11 +223,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         answer1Button.setTitleColor(Colors.f6f6f6, for: .normal)
         answer2Button.setTitleColor(Colors.f6f6f6, for: .normal)
         userPointButton.changeBackgroundColor(to: Colors.f6f6f6)
-        arrowButtonAtAnswerView.tintColor = Colors.f6f6f6
-        arrowButtonAtOptionView.tintColor = Colors.f6f6f6
         soundButton.tintColor = Colors.f6f6f6
-        progressBar.tintColor = Colors.f6f6f6
-        progressBar.tintColor = Colors.f6f6f6
+        progressBarTop.tintColor = Colors.f6f6f6
+        progressBarTop.tintColor = Colors.f6f6f6
         textField.backgroundColor = Colors.f6f6f6
         textField.textColor = Colors.black
     }
@@ -329,17 +263,10 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         
         if whichStartPressed == 1 {
             textFieldStackView.isHidden = true
-            progressBar2.isHidden = true
             soundButton.setImage(imageName: "soundLeft", width: 40, height: 40)
         } else {
             answerStackView.isHidden = true
             soundButton.setImage(imageName: "question", width: 35, height: 35)
-            
-            let newConstraint = wordViewConstrait.constraintWithMultiplier(4)
-            wordViewConstrait.isActive = false
-            view.addConstraint(newConstraint)
-            view.layoutIfNeeded()
-            wordViewConstrait = newConstraint
         }
         
         if whichStartPressed == 3 {
@@ -347,15 +274,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             bubbleButton.isHidden = false
         }
         
-        // 1 is false, 0 is true
-        if UserDefault.playSound.getInt() == 1 {
-            switchPlaySound.isOn = false
-        } else {
-            switchPlaySound.isOn = true
-        }
-        
         soundSpeed = UserDefault.soundSpeed.getDouble()
-        segmentedControl.selectedSegmentIndex = UserDefault.selectedSegmentIndex.getInt()
         
         let textSize = UserDefault.textSize.getCGFloat()
         questionLabel.font = questionLabel.font.withSize(textSize)
@@ -363,22 +282,15 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         answer2Button.titleLabel?.font =  answer2Button.titleLabel?.font.withSize(textSize)
         userPointButton.titleLabel?.font =  userPointButton.titleLabel?.font.withSize(textSize)
         
-        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
-        
-        userPointButton.layer.cornerRadius = 12
         userPointButton.setTitle(String(UserDefault.lastPoint.getInt().withCommas()), for: UIControl.State.normal)
         
-        progressBar.progress = 0
-        progressBar2.progress = 0
+        progressBarTop.progress = 0
+        progressBarBottom.progress = 0
         questionLabel.numberOfLines = 6
         questionLabel.adjustsFontSizeToFitWidth = true
         
         setupAnswerButton(answer1Button)
         setupAnswerButton(answer2Button)
-        
-        arrowButtonAtAnswerView.setImage(imageName: "arrowLeft", width: 30, height: 30)
-        optionView.isHidden = true
-        showOptions = 0
     }//setupView
     
     func setupAnswerButton(_ button: UIButton) {
@@ -436,8 +348,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         getHour()
         questionCount += 1
         let progrs = wordBrain.getProgress()
-        progressBar.progress = progrs
-        progressBar2.progress = progrs
+        progressBarTop.progress = progrs
+        progressBarBottom.progress = progrs
         
         var exercisePoint = 0
         var userGotItRight = true
@@ -554,5 +466,117 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         // None of our movies should interrupt system music playback.
             _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
     }
+}
 
+extension ExerciseViewController {
+    
+    func style(){
+        userPointButton.translatesAutoresizingMaskIntoConstraints = false
+        userPointButton.setTitleColor(Colors.raven, for: .normal)
+        userPointButton.layer.cornerRadius = 12
+        
+        progressBarTop.translatesAutoresizingMaskIntoConstraints = false
+        progressBarTop.tintColor = Colors.f6f6f6
+        
+        soundButton.translatesAutoresizingMaskIntoConstraints = false
+        soundButton.addTarget(self, action: #selector(soundButtonPressed), for: .primaryActionTriggered)
+        
+        questionLabel.translatesAutoresizingMaskIntoConstraints = false
+        questionLabel.textColor = Colors.f6f6f6
+        questionLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        questionLabel.textAlignment = .center
+        questionLabel.numberOfLines = 0
+        
+        bubbleButton.translatesAutoresizingMaskIntoConstraints = false
+        bubbleButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 29)
+        bubbleButton.addTarget(self, action: #selector(bubbleButtonPressed), for: .primaryActionTriggered)
+        
+        hintLabel.translatesAutoresizingMaskIntoConstraints = false
+        hintLabel.textColor = Colors.f6f6f6
+        hintLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        hintLabel.textAlignment = .center
+        hintLabel.numberOfLines = 0
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
+        textField.setViewCornerRadius(6)
+        
+        textFieldStackView.translatesAutoresizingMaskIntoConstraints = false
+        textFieldStackView.axis = .vertical
+        textFieldStackView.distribution = .fillEqually
+        textFieldStackView.spacing = 16
+        
+        answerStackView.translatesAutoresizingMaskIntoConstraints = false
+        answerStackView.axis = .vertical
+        answerStackView.distribution = .fillEqually
+        answerStackView.spacing = 16
+        
+        answer1Button.translatesAutoresizingMaskIntoConstraints = false
+        answer1Button.addTarget(self, action: #selector(answerPressed), for: .primaryActionTriggered)
+        
+        answer2Button.translatesAutoresizingMaskIntoConstraints = false
+        answer2Button.addTarget(self, action: #selector(answerPressed), for: .primaryActionTriggered)
+        
+        progressBarBottom.translatesAutoresizingMaskIntoConstraints = false
+        progressBarBottom.tintColor = Colors.f6f6f6
+    }
+    
+    func layout(questionLabelHeight: CGFloat){
+        textFieldStackView.addArrangedSubview(hintLabel)
+        textFieldStackView.addArrangedSubview(textField)
+        
+        answerStackView.addArrangedSubview(answer1Button)
+        answerStackView.addArrangedSubview(answer2Button)
+        
+        view.addSubview(userPointButton)
+        view.addSubview(progressBarTop)
+        view.addSubview(soundButton)
+        view.addSubview(questionLabel)
+        view.addSubview(bubbleButton)
+        view.addSubview(textFieldStackView)
+        view.addSubview(answerStackView)
+        view.addSubview(progressBarBottom)
+        
+        NSLayoutConstraint.activate([
+            userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.navigationController!.navigationBar.frame.height + 16),
+            userPointButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            userPointButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            progressBarTop.topAnchor.constraint(equalTo: userPointButton.bottomAnchor, constant: 8),
+            progressBarTop.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            progressBarTop.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            soundButton.topAnchor.constraint(equalTo: progressBarTop.bottomAnchor, constant: 16),
+            soundButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            textFieldStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            textFieldStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            textFieldStackView.bottomAnchor.constraint(equalTo: answerStackView.topAnchor, constant: -16),
+            
+            answerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            answerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            answerStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66),
+            
+            questionLabel.topAnchor.constraint(equalTo: progressBarTop.bottomAnchor, constant: 16),
+            questionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            questionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            
+            bubbleButton.centerYAnchor.constraint(equalTo: questionLabel.centerYAnchor),
+            bubbleButton.centerXAnchor.constraint(equalTo: questionLabel.centerXAnchor),
+            
+            progressBarBottom.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+            progressBarBottom.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            progressBarBottom.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+        ])
+        
+        NSLayoutConstraint.activate([
+            soundButton.widthAnchor.constraint(equalToConstant: 40),
+            soundButton.heightAnchor.constraint(equalToConstant: 40),
+            bubbleButton.widthAnchor.constraint(equalToConstant: 90),
+            bubbleButton.heightAnchor.constraint(equalToConstant: 90),
+            questionLabel.heightAnchor.constraint(equalToConstant: questionLabelHeight),
+            answerStackView.heightAnchor.constraint(equalToConstant: 256),
+            textFieldStackView.heightAnchor.constraint(equalToConstant: 86),
+        ])
+    }
 }
