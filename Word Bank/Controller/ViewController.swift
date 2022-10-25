@@ -398,6 +398,8 @@ class ViewController: UIViewController {
 extension ViewController {
     
     func style() {
+        view.backgroundColor = Colors.raven
+        
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = .white
         titleLabel.text = "Word Bank"

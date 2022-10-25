@@ -8,27 +8,21 @@
 import UIKit
 import CoreData
 
-
 class WordsViewController: UIViewController {
     
-    //MARK: - IBOutlet
+    let searchBar = UISearchBar()
+    let tableView = UITableView()
+    let tableViewStackView = UIStackView()
     
-    @IBOutlet var mainView: UIView!
-    @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var startButton2: UIButton!
-    @IBOutlet weak var startButton3: UIButton!
-    @IBOutlet weak var startButton4: UIButton!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableViewConstraint: NSLayoutConstraint!
-    
-    //MARK: - Variables
+    let startButton = UIButton()
+    let startButton2 = UIButton()
+    let startButton3 = UIButton()
+    let startButton4 = UIButton()
+    let buttonStackView = UIStackView()
     
     var goEdit = 0
     var editIndex = 0
     var goAddPage = 0
-    var expandIconName = "expand"
-    var notExpandIconName = "notExpand"
     var wordBrain = WordBrain()
     var itemArray: [Item] { return wordBrain.itemArray }
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
@@ -41,6 +35,10 @@ class WordsViewController: UIViewController {
         super.viewDidLoad()
         wordBrain.loadItemArray()
         wordBrain.loadHardItemArray()
+        
+        style()
+        layout()
+        
         configureButton()
         setupNavigationBar()
         setupSearchBar()
@@ -86,28 +84,28 @@ class WordsViewController: UIViewController {
         }
     }
     
-    //MARK: - IBAction
+    //MARK: - Selectors
     
-    @IBAction func addBarButtonPressed(_ sender: UIBarButtonItem) {
+    @objc func addBarButtonPressed(_ sender: UIBarButtonItem) {
         goAddPage = 1
         checkGoAddPage()
     }
     
-    @IBAction func startPressed(_ sender: Any) {
+    @objc func startPressed(_ sender: Any) {
         UserDefault.startPressed.set(1)
         startButton.bounce()
         startButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         check2Items()
     }
     
-    @IBAction func startPressed2(_ sender: UIButton) {
+    @objc func startPressed2(_ sender: UIButton) {
         UserDefault.startPressed.set(2)
         startButton2.bounce()
         startButton2.updateShadowHeight(withDuration: 0.15, height: 0.3)
         check2Items()
     }
     
-    @IBAction func startPressed3(_ sender: UIButton) {
+    @objc func startPressed3(_ sender: UIButton) {
         startButton3.bounce()
         startButton3.updateShadowHeight(withDuration: 0.15, height: 0.3)
         //0 is true, 1 is false
@@ -124,7 +122,7 @@ class WordsViewController: UIViewController {
         }
     }
     
-    @IBAction func startPressed4(_ sender: UIButton) {
+    @objc func startPressed4(_ sender: UIButton) {
         UserDefault.startPressed.set(4)
         startButton4.pulstate()
         startButton4.updateShadowHeight(withDuration: 0.15, height: 0.3)
@@ -158,19 +156,12 @@ class WordsViewController: UIViewController {
     //MARK: - Helpers
     
     func setupView(){
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
-        tableView.tableFooterView = UIView()
-
         updateView()
         setupBackgroundColor()
         setupCornerRadius()
     }
     
     func updateView(){
-        updateTableViewConstraintMultiplier(0.1)
-        
         if whichButton == "normal" {
             searchBar.updateSearchBarVisibility(false)
             tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
@@ -232,7 +223,7 @@ class WordsViewController: UIViewController {
         } else {
             gradient.colors = [Colors.yellow!.cgColor, Colors.yellowBottom!.cgColor]
         }
-        mainView.layer.insertSublayer(gradient, at: 0)
+        view.layer.insertSublayer(gradient, at: 0)
     }
     
     func setupNavigationBar(){
@@ -269,18 +260,6 @@ class WordsViewController: UIViewController {
         button.layer.shadowRadius = 0.0
         button.layer.masksToBounds = false
     }
-        
-    func updateTableViewConstraintMultiplier(_ double: Double) {
-        UIView.transition(with: tableView, duration: 0.6,
-                          options: .transitionCrossDissolve,
-                          animations: {
-                            let newConstraint2 = self.tableViewConstraint.constraintWithMultiplier(double)
-                            self.tableViewConstraint.isActive = false
-                            self.view.addConstraint(newConstraint2)
-                            self.view.layoutIfNeeded()
-                            self.tableViewConstraint = newConstraint2
-                      })
-    }
 
     func checkGoAddPage(){
         if goAddPage == 1 && whichButton == "normal"{
@@ -312,7 +291,8 @@ class WordsViewController: UIViewController {
     }
 }
 
-//MARK: - Search Bar
+    //MARK: - Search Bar
+
 extension WordsViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -365,10 +345,6 @@ extension WordsViewController: UITableViewDataSource {
         cell.engView.backgroundColor = Colors.cellLeft
         cell.trView.backgroundColor = Colors.cellRight
         
-        tableView.backgroundColor = Colors.cellLeft
-        tableView.separatorStyle = .singleLine
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.isScrollEnabled = true
         cell.engView.isHidden = false
         cell.trView.isHidden = false
         
@@ -498,3 +474,78 @@ extension WordsViewController {
     }
 }
 
+extension WordsViewController {
+    func style(){
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addBarButtonPressed))
+        
+        tableViewStackView.translatesAutoresizingMaskIntoConstraints = false
+        tableViewStackView.axis = .vertical
+        tableViewStackView.spacing = 0
+        tableViewStackView.distribution = .fill
+        
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.barTintColor = Colors.cellLeft
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .singleLine
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.isScrollEnabled = true
+        tableView.backgroundColor = Colors.cellLeft
+        
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonStackView.axis = .horizontal
+        buttonStackView.spacing = 16
+        buttonStackView.distribution = .fillEqually
+        
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        startButton.addTarget(self, action: #selector(startPressed), for: .primaryActionTriggered)
+        
+        startButton2.translatesAutoresizingMaskIntoConstraints = false
+        startButton2.addTarget(self, action: #selector(startPressed2), for: .primaryActionTriggered)
+        
+        startButton3.translatesAutoresizingMaskIntoConstraints = false
+        startButton3.addTarget(self, action: #selector(startPressed3), for: .primaryActionTriggered)
+        
+        startButton4.translatesAutoresizingMaskIntoConstraints = false
+        startButton4.addTarget(self, action: #selector(startPressed4), for: .primaryActionTriggered)
+    }
+    
+    func layout(){
+        tableViewStackView.addArrangedSubview(searchBar)
+        tableViewStackView.addArrangedSubview(tableView)
+        
+        buttonStackView.addArrangedSubview(startButton)
+        buttonStackView.addArrangedSubview(startButton2)
+        buttonStackView.addArrangedSubview(startButton3)
+        buttonStackView.addArrangedSubview(startButton4)
+        
+        view.addSubview(tableViewStackView)
+        view.addSubview(buttonStackView)
+        
+        NSLayoutConstraint.activate([
+            tableViewStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.navigationController!.navigationBar.frame.height + 32),
+            tableViewStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            tableViewStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableViewStackView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -16),
+            
+            buttonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+        ])
+        
+        NSLayoutConstraint.activate([
+            buttonStackView.heightAnchor.constraint(equalToConstant: 55),
+        ])
+        
+        UIView.transition(with: tableView, duration: 0.6,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            self.view.layoutIfNeeded()
+            self.tableViewStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
+            self.buttonStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -32).isActive = true
+        })
+    }
+}

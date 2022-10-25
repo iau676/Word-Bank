@@ -471,6 +471,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
 extension ExerciseViewController {
     
     func style(){
+        view.backgroundColor = Colors.raven
+        
         userPointButton.translatesAutoresizingMaskIntoConstraints = false
         userPointButton.setTitleColor(Colors.raven, for: .normal)
         userPointButton.layer.cornerRadius = 12
@@ -539,7 +541,7 @@ extension ExerciseViewController {
         view.addSubview(progressBarBottom)
         
         NSLayoutConstraint.activate([
-            userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.navigationController!.navigationBar.frame.height + 16),
+            userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: (self.navigationController?.navigationBar.frame.height ?? 45) + 16),
             userPointButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userPointButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             

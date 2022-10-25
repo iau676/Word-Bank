@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="quizBackground"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                     </view>
                     <navigationItem key="navigationItem" id="jWW-um-qG1"/>
@@ -249,112 +248,12 @@
         <scene sceneID="GkB-hd-Q59">
             <objects>
                 <viewController id="9q6-8v-FQ1" customClass="WordsViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="WVg-dI-ycn">
+                    <view key="view" contentMode="scaleToFill" id="WVg-dI-ycn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="UTr-xt-31a">
-                                <rect key="frame" x="16" y="100" width="343" height="730"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3Ef-aL-Ae9">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="416.5"/>
-                                        <subviews>
-                                            <searchBar contentMode="redraw" id="Z80-fQ-jgp">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="56"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="tintColor" name="cellTextColor"/>
-                                                <color key="barTintColor" name="rightCelerColor"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </searchBar>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S22-cM-lNf">
-                                                <rect key="frame" x="0.0" y="56" width="343" height="360.5"/>
-                                                <color key="backgroundColor" name="rightCelerColor"/>
-                                            </tableView>
-                                        </subviews>
-                                    </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8J-qB-OBS">
-                                        <rect key="frame" x="0.0" y="438.5" width="343" height="291.5"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cC0-0i-zOW">
-                                                <rect key="frame" x="0.0" y="118" width="343" height="55"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="W19-qg-itD">
-                                                        <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UaY-5e-Lxw">
-                                                                <rect key="frame" x="0.0" y="0.0" width="74" height="55"/>
-                                                                <color key="backgroundColor" name="quizBackground"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="55" id="ZLd-XB-dmu"/>
-                                                                </constraints>
-                                                                <state key="normal">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="startPressed:" destination="9q6-8v-FQ1" eventType="touchUpInside" id="hRx-l9-njk"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fc-q7-KIC">
-                                                                <rect key="frame" x="90" y="0.0" width="73.5" height="55"/>
-                                                                <color key="backgroundColor" name="quizBackground"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="55" id="yXL-dN-GY8"/>
-                                                                </constraints>
-                                                                <state key="normal">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="startPressed2:" destination="9q6-8v-FQ1" eventType="touchUpInside" id="27I-pB-SeN"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1s-H5-hQZ">
-                                                                <rect key="frame" x="179.5" y="0.0" width="74" height="55"/>
-                                                                <color key="backgroundColor" name="quizBackground"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="55" id="xUS-IC-k2s"/>
-                                                                </constraints>
-                                                                <state key="normal">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="startPressed3:" destination="9q6-8v-FQ1" eventType="touchUpInside" id="qZw-ri-cgE"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="27k-Sf-0Go">
-                                                                <rect key="frame" x="269.5" y="0.0" width="73.5" height="55"/>
-                                                                <color key="backgroundColor" name="quizBackground"/>
-                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <connections>
-                                                                    <action selector="startPressed4:" destination="9q6-8v-FQ1" eventType="touchUpInside" id="8el-1Y-VbN"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="cC0-0i-zOW" firstAttribute="centerY" secondItem="j8J-qB-OBS" secondAttribute="centerY" id="W7i-yT-j4e"/>
-                                            <constraint firstItem="cC0-0i-zOW" firstAttribute="leading" secondItem="j8J-qB-OBS" secondAttribute="leading" id="hdb-hy-723"/>
-                                            <constraint firstAttribute="trailing" secondItem="cC0-0i-zOW" secondAttribute="trailing" id="xSh-Ph-1wu"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="j8J-qB-OBS" firstAttribute="height" secondItem="3Ef-aL-Ae9" secondAttribute="height" multiplier="0.7" id="rW8-Cw-JyM"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="5Tp-Me-Byh"/>
-                        <color key="backgroundColor" name="bblueColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="UTr-xt-31a" firstAttribute="top" secondItem="5Tp-Me-Byh" secondAttribute="top" constant="8" id="9R8-Ys-Y8t"/>
-                            <constraint firstItem="UTr-xt-31a" firstAttribute="leading" secondItem="5Tp-Me-Byh" secondAttribute="leading" constant="16" id="Ngq-kY-ztr"/>
-                            <constraint firstItem="5Tp-Me-Byh" firstAttribute="bottom" secondItem="UTr-xt-31a" secondAttribute="bottom" constant="32" id="WUN-lA-iDw"/>
-                            <constraint firstItem="5Tp-Me-Byh" firstAttribute="trailing" secondItem="UTr-xt-31a" secondAttribute="trailing" constant="16" id="p0S-Rn-Icq"/>
-                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="M76-If-vXd" appends="YES" id="1bH-c6-Idx"/>
                             <outletCollection property="gestureRecognizers" destination="mgj-lD-WY7" appends="YES" id="BPx-Dk-puc"/>
@@ -363,22 +262,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="Otp-ff-5WC">
                         <barButtonItem key="backBarButtonItem" title="Back" id="bZS-kS-GtQ"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Vl5-8r-wXf">
-                            <connections>
-                                <action selector="addBarButtonPressed:" destination="9q6-8v-FQ1" id="N0z-UZ-Zfz"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Vl5-8r-wXf"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="mainView" destination="WVg-dI-ycn" id="FTF-Es-CaF"/>
-                        <outlet property="searchBar" destination="Z80-fQ-jgp" id="oYm-Bp-c50"/>
-                        <outlet property="startButton" destination="UaY-5e-Lxw" id="RuG-QY-YVj"/>
-                        <outlet property="startButton2" destination="2fc-q7-KIC" id="lo9-v3-F2M"/>
-                        <outlet property="startButton3" destination="I1s-H5-hQZ" id="5Pg-fP-QNk"/>
-                        <outlet property="startButton4" destination="27k-Sf-0Go" id="Suo-lG-C6f"/>
-                        <outlet property="tableView" destination="S22-cM-lNf" id="M0U-Lt-afb"/>
-                        <outlet property="tableViewConstraint" destination="rW8-Cw-JyM" id="Rel-vG-m4r"/>
                         <segue destination="zXo-IR-Z84" kind="show" identifier="goToExercise" id="aqO-RI-dlc"/>
                         <segue destination="baS-AH-7tq" kind="presentation" identifier="goAdd" modalPresentationStyle="overFullScreen" id="cpH-Hy-G1G"/>
                         <segue destination="R4c-Ok-iJX" kind="show" identifier="goCard" id="cEH-UA-HgG"/>
@@ -411,7 +298,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="yeb-YD-eML"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <navigationItem key="navigationItem" id="MO0-Gk-Rr8"/>
                     <connections>
@@ -431,7 +318,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="A1K-5x-0La"/>
-                        <color key="backgroundColor" name="quizBackground"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="RBN-9D-4pL" appends="YES" id="bui-aU-XOc"/>
@@ -514,29 +401,20 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="pzT-n7-INo"/>
+        <segue reference="aqO-RI-dlc"/>
         <segue reference="Gqj-eb-Cz0"/>
-        <segue reference="IiH-a1-RE8"/>
+        <segue reference="cEH-UA-HgG"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="coin" width="170.5" height="170.5"/>
-        <namedColor name="bblueColor">
-            <color red="0.10999999940395355" green="0.73299998044967651" blue="0.9179999828338623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="cellTextColor">
             <color red="0.17254901960784313" green="0.17254901960784313" blue="0.17647058823529413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="leftCellColor">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="quizBackground">
-            <color red="0.19607843137254902" green="0.23921568627450981" blue="0.35294117647058826" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="rightCelerColor">
             <color red="0.8784313725490196" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
