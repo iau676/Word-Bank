@@ -11,17 +11,14 @@ import CoreData
 
 class AddViewController: UIViewController, UITextFieldDelegate {
     
-    //MARK: - IBOutlet
+    let coinButtonView = UIButton()
+    let coinButton = UIButton()
     
-    @IBOutlet var firstView: UIView!
-    @IBOutlet weak var darkView: UIView!
-    @IBOutlet weak var textView: UIView!
-    @IBOutlet weak var engTxtField: UITextField!
-    @IBOutlet weak var trTxtField: UITextField!
-    @IBOutlet weak var addButton: UIButton!
-    @IBOutlet weak var coinButton: UIButton!
-    
-    //MARK: - Variables
+    let textView = UIView()
+    let stackView = UIStackView()
+    let engTxtField = UITextField()
+    let trTxtField = UITextField()
+    let addButton = UIButton()
     
     var player = Player()
     var wordBrain = WordBrain()
@@ -39,10 +36,14 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         wordBrain.loadItemArray()
-        setupViews()
+        
+        style()
+        layout()
+        
         setupButtons()
         configureColor()
         configureTextFields()
+        addGestureRecognizer()
         checkEditStatus()
         preventInterrupt()
         userWordCountIntVariable = UserDefault.userWordCount.getInt()
@@ -51,10 +52,10 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         onViewWillDisappear?()
     }
+
+    //MARK: - Selectors
     
-    //MARK: - IBAction
-    
-    @IBAction func addButtonPressed(_ sender: Any) {
+    @objc func addButtonPressed(_ sender: Any) {
         addButton.bounce()
         if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
             player.playMP3("mario")
@@ -79,16 +80,13 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func topViewPressed(_ sender: UIButton) {
+    @objc func coinButtonViewPressed(_ sender: UIButton) {
         checkAction()
     }
     
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
+    @objc func swipeDownGesture(_ sender: UISwipeGestureRecognizer) {
         checkAction()
     }
-
-    
-    //MARK: - Selectors
     
     @objc func flipButton(){
         coinButton.setBackgroundImage(coinImage, for: .normal)
@@ -100,7 +98,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func dismissView(){
-        firstView.backgroundColor = UIColor.clear
+        view.backgroundColor = UIColor.clear
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -109,7 +107,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func goNewPoint(){
-        
         let lastPoint = UserDefault.exercisePoint.getInt()
         wordBrain.calculateExercisePoint(userWordCount: userWordCountIntVariable)
         let newPoint = UserDefault.exercisePoint.getInt()
@@ -124,7 +121,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Helpers
     
     func configureColor(){
-        textView.backgroundColor = Colors.cellLeft
         engTxtField.textColor = Colors.black
         trTxtField.textColor = Colors.black
         engTxtField.backgroundColor = Colors.cellRight
@@ -162,12 +158,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
             dismiss(animated: true, completion: nil)
         }
     }
-    
-    func setupViews(){
-        firstView.backgroundColor = Colors.darkBackground
-        textView.layer.cornerRadius = 12
-    }
-    
+
     func setupButtons(){
         setupButton(button: addButton, buttonTitle: "", imageName: "plus", imageSize: 23, cornerRadius: 6)
         coinButton.deleteBackgroundImage()
@@ -227,6 +218,15 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func addGestureRecognizer(){
+        let dismissView = UITapGestureRecognizer(target: self, action:  #selector(coinButtonViewPressed))
+        self.coinButtonView.addGestureRecognizer(dismissView)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownGesture))
+        swipeDown.direction = .down
+        view.addGestureRecognizer(swipeDown)
+    }
+    
     func preventInterrupt(){
         // None of our movies should interrupt system music playback.
             _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
@@ -242,3 +242,80 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
+extension AddViewController {
+    
+    func style(){
+        view.backgroundColor = Colors.darkBackground
+        
+        coinButtonView.translatesAutoresizingMaskIntoConstraints = false
+        
+        coinButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.backgroundColor = Colors.cellLeft
+        textView.setViewCornerRadius(10)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.distribution = .fillEqually
+        
+        engTxtField.translatesAutoresizingMaskIntoConstraints = false
+        engTxtField.placeholder = "English"
+        engTxtField.keyboardType = .asciiCapable
+        engTxtField.backgroundColor = Colors.cellRight
+        engTxtField.layer.cornerRadius = 8
+        engTxtField.setLeftPaddingPoints(10)
+        
+        trTxtField.translatesAutoresizingMaskIntoConstraints = false
+        trTxtField.placeholder = "Meaning"
+        trTxtField.keyboardType = .asciiCapable
+        trTxtField.backgroundColor = Colors.cellRight
+        trTxtField.layer.cornerRadius = 8
+        trTxtField.setLeftPaddingPoints(10)
+        
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        addButton.backgroundColor = .darkGray
+        addButton.layer.cornerRadius = 8
+        addButton.setTitle("+", for: .normal)
+        addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
+    }
+    
+    func layout(){
+        coinButtonView.addSubview(coinButton)
+        view.addSubview(coinButtonView)
+        
+        stackView.addArrangedSubview(engTxtField)
+        stackView.addArrangedSubview(trTxtField)
+        stackView.addArrangedSubview(addButton)
+        
+        textView.addSubview(stackView)
+        view.addSubview(textView)
+        
+        NSLayoutConstraint.activate([
+            coinButtonView.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
+            
+            coinButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            textView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            coinButtonView.heightAnchor.constraint(equalToConstant: view.frame.size.height-(view.center.y+130)),
+            coinButtonView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            
+            coinButton.heightAnchor.constraint(equalToConstant: 120),
+            coinButton.widthAnchor.constraint(equalToConstant: 120),
+            
+            textView.heightAnchor.constraint(equalToConstant: 214),
+            textView.widthAnchor.constraint(equalToConstant: view.frame.size.width-32),
+            
+            stackView.heightAnchor.constraint(equalToConstant: 182),
+        ])
+    }
+}
