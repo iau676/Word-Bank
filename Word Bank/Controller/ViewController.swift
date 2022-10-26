@@ -237,51 +237,7 @@ class ViewController: UIViewController {
         titleLabel.textColor = Colors.f6f6f6
         levelLabel.textColor = Colors.f6f6f6
     }
-    
-    func configureTabBar() {
-        tabBarStackView.translatesAutoresizingMaskIntoConstraints = false
-        tabBarStackView.axis = .horizontal
-        tabBarStackView.spacing = 0
-        tabBarStackView.distribution = .fillEqually
-        
-        homeButton.backgroundColor = .white
-        dailyButton.backgroundColor = .white
-        awardButton.backgroundColor = .white
-        statisticButton.backgroundColor = .white
-        settingsButton.backgroundColor = .white
-        
-        homeButton.setImageWithRenderingMode(imageName: "home", width: 25, height: 25, color: Colors.blue ?? .blue)
-        dailyButton.setImageWithRenderingMode(imageName: "dailyQuest", width: 26, height: 26, color: .darkGray)
-        awardButton.setImageWithRenderingMode(imageName: "award", width: 27, height: 27, color: .darkGray)
-        statisticButton.setImageWithRenderingMode(imageName: "statistic", width: 25, height: 25, color: .darkGray)
-        settingsButton.setImageWithRenderingMode(imageName: "settingsImage", width: 25, height: 25, color: .darkGray)
-        
-        homeButton.setTitle("Home", for: .normal)
-        homeButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        homeButton.setTitleColor(Colors.blue ?? .blue, for: .normal)
-        homeButton.alignTextBelow()
-        
-        dailyButton.setTitle("Daily", for: .normal)
-        dailyButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        dailyButton.setTitleColor(.darkGray, for: .normal)
-        dailyButton.alignTextBelow()
-        
-        awardButton.setTitle("Awards", for: .normal)
-        awardButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        awardButton.setTitleColor(.darkGray, for: .normal)
-        awardButton.alignTextBelow()
-        
-        statisticButton.setTitle("Statistics", for: .normal)
-        statisticButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        statisticButton.setTitleColor(.darkGray, for: .normal)
-        statisticButton.alignTextBelow()
-        
-        settingsButton.setTitle("Settings", for: .normal)
-        settingsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        settingsButton.setTitleColor(.darkGray, for: .normal)
-        settingsButton.alignTextBelow()
-    }
-    
+
     func showOnboarding(){
         navigationController?.pushViewController(OnboardingContainerViewController(), animated: true)
     }
@@ -415,9 +371,6 @@ extension ViewController {
         hardWordsButton.translatesAutoresizingMaskIntoConstraints = false
         hardWordsButton.addTarget(self, action: #selector(hardWordsButtonPressed), for: .primaryActionTriggered)
         
-        settingsButton.translatesAutoresizingMaskIntoConstraints = false
-        settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
-        
         xButton.translatesAutoresizingMaskIntoConstraints = false
         xButton.addTarget(self, action: #selector(xButtonPressed), for: .primaryActionTriggered)
         
@@ -445,14 +398,6 @@ extension ViewController {
         
         view.addSubview(xButton)
         view.addSubview(xLabel)
-        
-        tabBarStackView.addArrangedSubview(homeButton)
-        tabBarStackView.addArrangedSubview(dailyButton)
-        tabBarStackView.addArrangedSubview(awardButton)
-        tabBarStackView.addArrangedSubview(statisticButton)
-        tabBarStackView.addArrangedSubview(settingsButton)
-  
-        view.addSubview(tabBarStackView)
         
         cp.center = CGPoint(x: view.center.x, y: view.center.y-121)
         newWordCP.center = CGPoint(x: view.center.x, y: view.center.y)
@@ -484,11 +429,6 @@ extension ViewController {
             
             xLabel.centerXAnchor.constraint(equalTo: xButton.centerXAnchor),
             xLabel.centerYAnchor.constraint(equalTo: xButton.centerYAnchor),
-            
-            tabBarStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            tabBarStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tabBarStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0),
-            tabBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
@@ -496,6 +436,73 @@ extension ViewController {
             newWordsButton.heightAnchor.constraint(equalToConstant: 45),
             wordsButton.heightAnchor.constraint(equalToConstant: 45),
             hardWordsButton.heightAnchor.constraint(equalToConstant: 45),
+        ])
+    }
+}
+
+//MARK: - Tab Bar
+
+extension ViewController {
+    
+    func configureTabBar() {
+        tabBarStackView.translatesAutoresizingMaskIntoConstraints = false
+        tabBarStackView.axis = .horizontal
+        tabBarStackView.spacing = 0
+        tabBarStackView.distribution = .fillEqually
+        
+        homeButton.backgroundColor = .white
+        dailyButton.backgroundColor = .white
+        awardButton.backgroundColor = .white
+        statisticButton.backgroundColor = .white
+        settingsButton.backgroundColor = .white
+        
+        homeButton.setImageWithRenderingMode(imageName: "home", width: 25, height: 25, color: Colors.blue ?? .blue)
+        dailyButton.setImageWithRenderingMode(imageName: "dailyQuest", width: 26, height: 26, color: .darkGray)
+        awardButton.setImageWithRenderingMode(imageName: "award", width: 27, height: 27, color: .darkGray)
+        statisticButton.setImageWithRenderingMode(imageName: "statistic", width: 25, height: 25, color: .darkGray)
+        settingsButton.setImageWithRenderingMode(imageName: "settingsImage", width: 25, height: 25, color: .darkGray)
+        
+        homeButton.setTitle("Home", for: .normal)
+        homeButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        homeButton.setTitleColor(Colors.blue ?? .blue, for: .normal)
+        homeButton.alignTextBelow()
+        
+        dailyButton.setTitle("Daily", for: .normal)
+        dailyButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        dailyButton.setTitleColor(.darkGray, for: .normal)
+        dailyButton.alignTextBelow()
+        
+        awardButton.setTitle("Awards", for: .normal)
+        awardButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        awardButton.setTitleColor(.darkGray, for: .normal)
+        awardButton.alignTextBelow()
+        
+        statisticButton.setTitle("Statistics", for: .normal)
+        statisticButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        statisticButton.setTitleColor(.darkGray, for: .normal)
+        statisticButton.alignTextBelow()
+        
+        settingsButton.setTitle("Settings", for: .normal)
+        settingsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        settingsButton.setTitleColor(.darkGray, for: .normal)
+        settingsButton.alignTextBelow()
+        
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
+        
+        tabBarStackView.addArrangedSubview(homeButton)
+        tabBarStackView.addArrangedSubview(dailyButton)
+        tabBarStackView.addArrangedSubview(awardButton)
+        tabBarStackView.addArrangedSubview(statisticButton)
+        tabBarStackView.addArrangedSubview(settingsButton)
+  
+        view.addSubview(tabBarStackView)
+        
+        NSLayoutConstraint.activate([
+            tabBarStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            tabBarStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            tabBarStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0),
+            tabBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             tabBarStackView.heightAnchor.constraint(equalToConstant: 66)
         ])
     }
