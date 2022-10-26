@@ -16,6 +16,10 @@ class ViewController: UIViewController {
     let titleLabel = UILabel()
     let levelLabel = UILabel()
     
+    let leftLineView = UIView()
+    let centerLineView = UIView()
+    let rightLineView = UIView()
+    
     let exerciseButton = UIButton()
     let newWordsButton = UIButton()
     let wordsButton = UIButton()
@@ -34,8 +38,7 @@ class ViewController: UIViewController {
     //MARK: - Variables
     
     var wordBrain = WordBrain()
-    let cp = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    
+    let levelCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let newWordCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let wordsCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let exerciseCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
@@ -291,17 +294,17 @@ class ViewController: UIViewController {
         progressValue = wordBrain.calculateLevel()
         levelLabel.text = UserDefault.level.getString()
         
-        cp.trackColor = UIColor.white
-        cp.progressColor = Colors.pink ?? .systemPink
-        cp.setProgressWithAnimation(duration: 1.0, value: progressValue)
+        levelCP.trackColor = UIColor.white
+        levelCP.progressColor = Colors.pink ?? .systemPink
+        levelCP.setProgressWithAnimation(duration: 1.0, value: progressValue)
         
         newWordCP.trackColor = Colors.green ?? .green
         wordsCP.trackColor = Colors.blue ?? .blue
         exerciseCP.trackColor = Colors.purple ?? .purple
         hardCP.trackColor = Colors.yellow ?? .yellow
         
-        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
-        cp.addGestureRecognizer(gesture)
+        let goLevelInfo = UITapGestureRecognizer(target: self, action:  #selector(checkAction))
+        levelCP.addGestureRecognizer(goLevelInfo)
         
         let goNewWord = UITapGestureRecognizer(target: self, action:  #selector(newWordsButtonPressed))
         newWordCP.addGestureRecognizer(goNewWord)
@@ -359,6 +362,15 @@ extension ViewController {
         levelLabel.font = UIFont(name: "ArialRoundedMTBold", size: 39)
         levelLabel.numberOfLines = 1
         
+        leftLineView.translatesAutoresizingMaskIntoConstraints = false
+        leftLineView.backgroundColor = .white
+        
+        centerLineView.translatesAutoresizingMaskIntoConstraints = false
+        centerLineView.backgroundColor = .white
+        
+        rightLineView.translatesAutoresizingMaskIntoConstraints = false
+        rightLineView.backgroundColor = .white
+        
         exerciseButton.translatesAutoresizingMaskIntoConstraints = false
         exerciseButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)
         
@@ -383,9 +395,12 @@ extension ViewController {
     func layout() {
         view.addSubview(titleLabel)
         
-        view.addSubview(cp)
-        view.addSubview(levelLabel)
+        view.addSubview(leftLineView)
+        view.addSubview(centerLineView)
+        view.addSubview(rightLineView)
         
+        view.addSubview(levelCP)
+        view.addSubview(levelLabel)
         view.addSubview(exerciseCP)
         view.addSubview(newWordCP)
         view.addSubview(wordsCP)
@@ -399,7 +414,7 @@ extension ViewController {
         view.addSubview(xButton)
         view.addSubview(xLabel)
         
-        cp.center = CGPoint(x: view.center.x, y: view.center.y-121)
+        levelCP.center = CGPoint(x: view.center.x, y: view.center.y-121)
         newWordCP.center = CGPoint(x: view.center.x, y: view.center.y)
         wordsCP.center = CGPoint(x: view.center.x, y: view.center.y+121)
         exerciseCP.center = CGPoint(x: view.center.x+121, y: view.center.y)
@@ -407,10 +422,19 @@ extension ViewController {
         
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 56),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -2),
                 
             levelLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            levelLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: cp.center.y),
+            levelLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: levelCP.center.y),
+            
+            leftLineView.topAnchor.constraint(equalTo: view.topAnchor),
+            leftLineView.leadingAnchor.constraint(equalTo: hardCP.centerXAnchor),
+            
+            centerLineView.topAnchor.constraint(equalTo: view.topAnchor),
+            centerLineView.leadingAnchor.constraint(equalTo: wordsCP.centerXAnchor),
+            
+            rightLineView.topAnchor.constraint(equalTo: view.topAnchor),
+            rightLineView.leadingAnchor.constraint(equalTo: exerciseCP.centerXAnchor),
             
             exerciseButton.centerXAnchor.constraint(equalTo: exerciseCP.centerXAnchor),
             exerciseButton.centerYAnchor.constraint(equalTo: exerciseCP.centerYAnchor),
@@ -424,18 +448,22 @@ extension ViewController {
             hardWordsButton.centerXAnchor.constraint(equalTo: hardCP.centerXAnchor),
             hardWordsButton.centerYAnchor.constraint(equalTo: hardCP.centerYAnchor),
             
-            xButton.centerYAnchor.constraint(equalTo: cp.centerYAnchor),
-            xButton.centerXAnchor.constraint(equalTo: cp.centerXAnchor, constant: -100),
+            xButton.centerYAnchor.constraint(equalTo: levelCP.centerYAnchor),
+            xButton.centerXAnchor.constraint(equalTo: levelCP.centerXAnchor, constant: -100),
             
             xLabel.centerXAnchor.constraint(equalTo: xButton.centerXAnchor),
             xLabel.centerYAnchor.constraint(equalTo: xButton.centerYAnchor),
         ])
         
         NSLayoutConstraint.activate([
-            exerciseButton.heightAnchor.constraint(equalToConstant: 45),
-            newWordsButton.heightAnchor.constraint(equalToConstant: 45),
-            wordsButton.heightAnchor.constraint(equalToConstant: 45),
-            hardWordsButton.heightAnchor.constraint(equalToConstant: 45),
+            leftLineView.heightAnchor.constraint(equalToConstant: hardCP.center.y-50),
+            leftLineView.widthAnchor.constraint(equalToConstant: 1),
+            
+            centerLineView.heightAnchor.constraint(equalToConstant: wordsCP.center.y-50),
+            centerLineView.widthAnchor.constraint(equalToConstant: 1),
+            
+            rightLineView.heightAnchor.constraint(equalToConstant: exerciseCP.center.y-50),
+            rightLineView.widthAnchor.constraint(equalToConstant: 1),
         ])
     }
 }
