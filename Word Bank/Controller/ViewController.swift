@@ -21,11 +21,6 @@ class ViewController: UIViewController {
     let wordsButton = UIButton()
     let hardWordsButton = UIButton()
     
-    let exerciseButtonLabel = UILabel()
-    let newWordButtonLabel = UILabel()
-    let wordsButtonLabel = UILabel()
-    let hardWordsButtonLabel = UILabel()
-    
     let xButton = UIButton()
     let xLabel = UILabel()
     
@@ -40,6 +35,11 @@ class ViewController: UIViewController {
     
     var wordBrain = WordBrain()
     let cp = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    
+    let newWordCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    let wordsCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    let exerciseCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    let hardCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     
     var goAddPage = 0
     var progressValue:Float = 0.0
@@ -63,17 +63,6 @@ class ViewController: UIViewController {
         check2xTime()
         setupButtons()
         setupNavigationBar()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        let x = super.view.bounds.height
-        let y = exerciseButton.frame.origin.y
-        let z = (x - (x - y))/2 + 32
-        
-        cp.center = CGPoint(x: super.view.center.x, y: z)
-        levelLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: cp.center.y).isActive = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -114,7 +103,6 @@ class ViewController: UIViewController {
         UserDefault.whichButton.set("normal")
         UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
         exerciseButton.bounce()
-        exerciseButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goExercise")
     }
     
@@ -123,7 +111,6 @@ class ViewController: UIViewController {
         UserDefault.whichButton.set("normal")
         goAddPage = 1
         newWordsButton.bounce()
-        newWordsButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         viewDidLayoutSubviews()
         goAfter100Milliseconds(identifier: "goWords")
     }
@@ -132,14 +119,12 @@ class ViewController: UIViewController {
         UserDefault.whichButton.set("normal")
         goAddPage = 0
         wordsButton.bounce()
-        wordsButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goWords")
     }
     
     @objc func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         UserDefault.whichButton.set("hard")
         hardWordsButton.bounce()
-        hardWordsButton.updateShadowHeight(withDuration: 0.11, height: 0.3)
         goAfter100Milliseconds(identifier: "goWords")
     }
     
@@ -251,10 +236,6 @@ class ViewController: UIViewController {
     func configureColor() {
         titleLabel.textColor = Colors.f6f6f6
         levelLabel.textColor = Colors.f6f6f6
-        exerciseButtonLabel.textColor = Colors.f6f6f6
-        newWordButtonLabel.textColor = Colors.f6f6f6
-        wordsButtonLabel.textColor = Colors.f6f6f6
-        hardWordsButtonLabel.textColor = Colors.f6f6f6
     }
     
     func configureTabBar() {
@@ -313,20 +294,15 @@ class ViewController: UIViewController {
     }
  
     func setupButtons(){
-        exerciseButton.backgroundColor = .systemPurple
-        newWordsButton.backgroundColor = Colors.green
-        wordsButton.backgroundColor = Colors.blue
-        hardWordsButton.backgroundColor = Colors.yellow
-        
-        setupButtonShadow(exerciseButton, shadowColor: Colors.purpleShadow)
-        setupButtonShadow(newWordsButton, shadowColor: Colors.greenShadow)
-        setupButtonShadow(wordsButton, shadowColor: Colors.blueShadow)
-        setupButtonShadow(hardWordsButton, shadowColor: Colors.yellowShadow)
+        //exerciseButton.backgroundColor = .systemPurple
+        //newWordsButton.backgroundColor = Colors.green
+        //wordsButton.backgroundColor = Colors.blue
+        //hardWordsButton.backgroundColor = Colors.yellow
 
-        exerciseButton.setButtonCornerRadius(15)
-        newWordsButton.setButtonCornerRadius(15)
-        wordsButton.setButtonCornerRadius(15)
-        hardWordsButton.setButtonCornerRadius(15)
+        //exerciseButton.setButtonCornerRadius(15)
+        //newWordsButton.setButtonCornerRadius(15)
+        //wordsButton.setButtonCornerRadius(15)
+        //hardWordsButton.setButtonCornerRadius(15)
         
         exerciseButton.setImage(imageName: "wheelicon", width: 35, height: 35)
         newWordsButton.setImage(imageName: "new", width: 35, height: 35)
@@ -363,8 +339,25 @@ class ViewController: UIViewController {
         cp.progressColor = Colors.pink ?? .systemPink
         cp.setProgressWithAnimation(duration: 1.0, value: progressValue)
         
+        newWordCP.trackColor = Colors.green ?? .green
+        wordsCP.trackColor = Colors.blue ?? .blue
+        exerciseCP.trackColor = Colors.purple ?? .purple
+        hardCP.trackColor = Colors.yellow ?? .yellow
+        
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.checkAction))
         cp.addGestureRecognizer(gesture)
+        
+        let goNewWord = UITapGestureRecognizer(target: self, action:  #selector(newWordsButtonPressed))
+        newWordCP.addGestureRecognizer(goNewWord)
+        
+        let goWordsCP = UITapGestureRecognizer(target: self, action:  #selector(wordsButtonPressed))
+        wordsCP.addGestureRecognizer(goWordsCP)
+        
+        let goExerciseCP = UITapGestureRecognizer(target: self, action:  #selector(exerciseButtonPressed))
+        exerciseCP.addGestureRecognizer(goExerciseCP)
+        
+        let goHardCP = UITapGestureRecognizer(target: self, action:  #selector(hardWordsButtonPressed))
+        hardCP.addGestureRecognizer(goHardCP)
     }
 
     func check2xTime(){
@@ -425,22 +418,6 @@ extension ViewController {
         settingsButton.translatesAutoresizingMaskIntoConstraints = false
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
         
-        exerciseButtonLabel.translatesAutoresizingMaskIntoConstraints = false
-        exerciseButtonLabel.text = "Exercise"
-        exerciseButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        
-        newWordButtonLabel.translatesAutoresizingMaskIntoConstraints = false
-        newWordButtonLabel.text = "New Word"
-        newWordButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        
-        wordsButtonLabel.translatesAutoresizingMaskIntoConstraints = false
-        wordsButtonLabel.text = "Words"
-        wordsButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        
-        hardWordsButtonLabel.translatesAutoresizingMaskIntoConstraints = false
-        hardWordsButtonLabel.text = "Hard Words"
-        hardWordsButtonLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
-        
         xButton.translatesAutoresizingMaskIntoConstraints = false
         xButton.addTarget(self, action: #selector(xButtonPressed), for: .primaryActionTriggered)
         
@@ -452,16 +429,20 @@ extension ViewController {
     
     func layout() {
         view.addSubview(titleLabel)
+        
         view.addSubview(cp)
         view.addSubview(levelLabel)
+        
+        view.addSubview(exerciseCP)
+        view.addSubview(newWordCP)
+        view.addSubview(wordsCP)
+        view.addSubview(hardCP)
+        
         view.addSubview(exerciseButton)
-        view.addSubview(exerciseButtonLabel)
         view.addSubview(newWordsButton)
-        view.addSubview(newWordButtonLabel)
         view.addSubview(wordsButton)
-        view.addSubview(wordsButtonLabel)
         view.addSubview(hardWordsButton)
-        view.addSubview(hardWordsButtonLabel)
+        
         view.addSubview(xButton)
         view.addSubview(xLabel)
         
@@ -470,46 +451,33 @@ extension ViewController {
         tabBarStackView.addArrangedSubview(awardButton)
         tabBarStackView.addArrangedSubview(statisticButton)
         tabBarStackView.addArrangedSubview(settingsButton)
-        
+  
         view.addSubview(tabBarStackView)
+        
+        cp.center = CGPoint(x: view.center.x, y: view.center.y-121)
+        newWordCP.center = CGPoint(x: view.center.x, y: view.center.y)
+        wordsCP.center = CGPoint(x: view.center.x, y: view.center.y+121)
+        exerciseCP.center = CGPoint(x: view.center.x+121, y: view.center.y)
+        hardCP.center = CGPoint(x: view.center.x-121, y: view.center.y)
         
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 56),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 
             levelLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            levelLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: cp.center.y),
             
-            exerciseButton.bottomAnchor.constraint(equalTo: newWordsButton.topAnchor, constant: -40),
-            exerciseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            exerciseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            exerciseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            exerciseButtonLabel.centerYAnchor.constraint(equalTo: exerciseButton.bottomAnchor, constant: 20),
-            exerciseButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            exerciseButton.centerXAnchor.constraint(equalTo: exerciseCP.centerXAnchor),
+            exerciseButton.centerYAnchor.constraint(equalTo: exerciseCP.centerYAnchor),
             
-            newWordsButton.bottomAnchor.constraint(equalTo: wordsButton.topAnchor, constant: -40),
-            newWordsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            newWordsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            newWordsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            newWordButtonLabel.centerYAnchor.constraint(equalTo: newWordsButton.bottomAnchor, constant: 20),
-            newWordButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            wordsButton.bottomAnchor.constraint(equalTo: hardWordsButton.topAnchor, constant: -40),
-            wordsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            wordsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            wordsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            wordsButtonLabel.centerYAnchor.constraint(equalTo: wordsButton.bottomAnchor, constant: 20),
-            wordsButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            hardWordsButton.bottomAnchor.constraint(equalTo: tabBarStackView.topAnchor, constant: -40),
-            hardWordsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            hardWordsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            hardWordsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            newWordsButton.centerXAnchor.constraint(equalTo: newWordCP.centerXAnchor),
+            newWordsButton.centerYAnchor.constraint(equalTo: newWordCP.centerYAnchor),
             
-            hardWordsButtonLabel.centerYAnchor.constraint(equalTo: hardWordsButton.bottomAnchor, constant: 20),
-            hardWordsButtonLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            wordsButton.centerXAnchor.constraint(equalTo: wordsCP.centerXAnchor),
+            wordsButton.centerYAnchor.constraint(equalTo: wordsCP.centerYAnchor),
+            
+            hardWordsButton.centerXAnchor.constraint(equalTo: hardCP.centerXAnchor),
+            hardWordsButton.centerYAnchor.constraint(equalTo: hardCP.centerYAnchor),
             
             xButton.centerYAnchor.constraint(equalTo: cp.centerYAnchor),
             xButton.centerXAnchor.constraint(equalTo: cp.centerXAnchor, constant: -100),
