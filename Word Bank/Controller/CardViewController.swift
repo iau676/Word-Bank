@@ -110,6 +110,7 @@ class CardViewController: UIViewController {
     func resetCard(_ card: UIView) {
         card.center = cardCenter
         self.imageView.alpha = 0
+        self.cardLabel.alpha = 1
         self.cardView.alpha = 1
         self.cardView.transform = .identity
         self.isOpen = false
@@ -174,6 +175,7 @@ class CardViewController: UIViewController {
         }
         
         imageView.alpha = abs(xFromCenter) / view.center.x
+        cardLabel.alpha = 1 - abs(xFromCenter) / view.center.x
         
         if sender.state == UIGestureRecognizer.State.ended {
             if card.center.x <  75 {
