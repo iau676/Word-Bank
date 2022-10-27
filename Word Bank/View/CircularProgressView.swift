@@ -10,8 +10,8 @@ import UIKit
 
 class CircularProgressView: UIView {
 
-    fileprivate var progressLayer = CAShapeLayer()
-    fileprivate var trackLayer = CAShapeLayer()
+    var progressLayer = CAShapeLayer()
+    var trackLayer = CAShapeLayer()
     
     /*
     // Only override draw() if you perform custom drawing.

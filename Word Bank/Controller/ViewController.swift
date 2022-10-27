@@ -14,12 +14,12 @@ class ViewController: UIViewController {
     //MARK: - IBOutlet
     
     let titleLabel = UILabel()
-    let levelLabel = UILabel()
     
     let leftLineView = UIView()
     let centerLineView = UIView()
     let rightLineView = UIView()
     
+    let levelButton = UIButton()
     let exerciseButton = UIButton()
     let newWordsButton = UIButton()
     let wordsButton = UIButton()
@@ -52,7 +52,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         fixSoundProblemForRealDevice()
         
-        configureColor()
         configureTabBar()
         getHour()
         style()
@@ -107,47 +106,51 @@ class ViewController: UIViewController {
     
     //MARK: - Selectors
     
+    @objc func levelButtonPressed(sender : UITapGestureRecognizer) {
+        flipCP(button: levelButton, cp: levelCP)
+       
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.4){
+            let vc = LevelInfoViewController()
+            vc.modalPresentationStyle = .overCurrentContext
+            self.present(vc, animated: false)
+        }
+    }
+    
     @objc func exerciseButtonPressed(gesture: UISwipeGestureRecognizer) {
         UserDefault.whichButton.set("normal")
         UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
-        exerciseButton.bounce()
-        goAfter100Milliseconds(identifier: "goExercise")
+        flipCP(button: exerciseButton, cp: exerciseCP)
+        performSegue(identifier: "goExercise", second: 0.4)
     }
     
     @objc func newWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         UserDefault.startPressed.set(1)
         UserDefault.whichButton.set("normal")
         goAddPage = 1
-        newWordsButton.bounce()
         viewDidLayoutSubviews()
-        goAfter100Milliseconds(identifier: "goWords")
+        flipCP(button: newWordsButton, cp: newWordCP)
+        performSegue(identifier: "goWords", second: 0.4)
     }
     
     @objc func wordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         UserDefault.whichButton.set("normal")
         goAddPage = 0
-        wordsButton.bounce()
-        goAfter100Milliseconds(identifier: "goWords")
+        flipCP(button: wordsButton, cp: wordsCP)
+        performSegue(identifier: "goWords", second: 0.4)
     }
     
     @objc func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         UserDefault.whichButton.set("hard")
-        hardWordsButton.bounce()
-        goAfter100Milliseconds(identifier: "goWords")
+        flipCP(button: hardWordsButton, cp: hardCP)
+        performSegue(identifier: "goWords", second: 0.4)
     }
     
     @objc func settingsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        goAfter100Milliseconds(identifier: "goSettings")
+        performSegue(identifier: "goSettings", second: 0.0)
     }
     
     @objc func xButtonPressed(gesture: UISwipeGestureRecognizer) {
         let vc = X2HourViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false)
-    }
-    
-    @objc func checkAction(sender : UITapGestureRecognizer) {
-        let vc = LevelInfoViewController()
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: false)
     }
@@ -235,7 +238,6 @@ class ViewController: UIViewController {
         if UserDefault.keyboardHeight.getCGFloat() == 0 {
             getKeyboardHeight()
         }
- 
     }
     
     func askNotificationPermission(){
@@ -246,19 +248,29 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-    func configureColor() {
-        titleLabel.textColor = Colors.f6f6f6
-        levelLabel.textColor = Colors.f6f6f6
-    }
 
     func showOnboarding(){
         navigationController?.pushViewController(OnboardingContainerViewController(), animated: true)
     }
     
-    func goAfter100Milliseconds(identifier: String){
-        let when = DispatchTime.now() + 0.1
-        DispatchQueue.main.asyncAfter(deadline: when){
+    func flipCP(button: UIButton, cp: CircularProgressView){
+        cp.trackLayer.lineWidth = 3
+        cp.progressLayer.lineWidth = 3
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
+            UIView.transition(with: cp, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+            UIView.transition(with: button, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5){
+            UIView.transition(with: cp, duration: 0.2, options: .transitionCrossDissolve, animations: {
+                cp.trackLayer.lineWidth = 10
+                cp.progressLayer.lineWidth = 10
+            })
+        }
+    }
+    
+    func performSegue(identifier: String, second: Double){
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + second){
             self.performSegue(withIdentifier: identifier, sender: self)
         }
     }
@@ -303,7 +315,6 @@ class ViewController: UIViewController {
     
     func setupCircularProgress(){
         progressValue = wordBrain.calculateLevel()
-        levelLabel.text = UserDefault.level.getString()
         
         levelCP.trackColor = UIColor.white
         levelCP.progressColor = Colors.pink ?? .systemPink
@@ -314,7 +325,7 @@ class ViewController: UIViewController {
         exerciseCP.trackColor = Colors.purple ?? .purple
         hardCP.trackColor = Colors.yellow ?? .yellow
         
-        let goLevelInfo = UITapGestureRecognizer(target: self, action:  #selector(checkAction))
+        let goLevelInfo = UITapGestureRecognizer(target: self, action:  #selector(levelButtonPressed))
         levelCP.addGestureRecognizer(goLevelInfo)
         
         let goNewWord = UITapGestureRecognizer(target: self, action:  #selector(newWordsButtonPressed))
@@ -367,11 +378,8 @@ extension ViewController {
         titleLabel.textColor = .white
         titleLabel.text = "Word Bank"
         titleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 23)
+        titleLabel.textColor = Colors.f6f6f6
         titleLabel.numberOfLines = 1
-        
-        levelLabel.translatesAutoresizingMaskIntoConstraints = false
-        levelLabel.font = UIFont(name: "ArialRoundedMTBold", size: 39)
-        levelLabel.numberOfLines = 1
         
         leftLineView.translatesAutoresizingMaskIntoConstraints = false
         leftLineView.backgroundColor = .white
@@ -381,6 +389,11 @@ extension ViewController {
         
         rightLineView.translatesAutoresizingMaskIntoConstraints = false
         rightLineView.backgroundColor = .white
+        
+        levelButton.translatesAutoresizingMaskIntoConstraints = false
+        levelButton.addTarget(self, action: #selector(levelButtonPressed), for: .primaryActionTriggered)
+        levelButton.setTitle(UserDefault.level.getString(), for: .normal)
+        levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 39)
         
         exerciseButton.translatesAutoresizingMaskIntoConstraints = false
         exerciseButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)
@@ -411,12 +424,12 @@ extension ViewController {
         view.addSubview(rightLineView)
         
         view.addSubview(levelCP)
-        view.addSubview(levelLabel)
         view.addSubview(exerciseCP)
         view.addSubview(newWordCP)
         view.addSubview(wordsCP)
         view.addSubview(hardCP)
         
+        view.addSubview(levelButton)
         view.addSubview(exerciseButton)
         view.addSubview(newWordsButton)
         view.addSubview(wordsButton)
@@ -434,10 +447,7 @@ extension ViewController {
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 56),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -2),
-                
-            levelLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            levelLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: levelCP.center.y),
-            
+                        
             leftLineView.topAnchor.constraint(equalTo: view.topAnchor),
             leftLineView.leadingAnchor.constraint(equalTo: hardCP.centerXAnchor),
             
@@ -446,6 +456,9 @@ extension ViewController {
             
             rightLineView.topAnchor.constraint(equalTo: view.topAnchor),
             rightLineView.leadingAnchor.constraint(equalTo: exerciseCP.centerXAnchor),
+            
+            levelButton.centerXAnchor.constraint(equalTo: levelCP.centerXAnchor),
+            levelButton.centerYAnchor.constraint(equalTo: levelCP.centerYAnchor),
             
             exerciseButton.centerXAnchor.constraint(equalTo: exerciseCP.centerXAnchor),
             exerciseButton.centerYAnchor.constraint(equalTo: exerciseCP.centerYAnchor),
@@ -467,13 +480,13 @@ extension ViewController {
         ])
         
         NSLayoutConstraint.activate([
-            leftLineView.heightAnchor.constraint(equalToConstant: hardCP.center.y-50),
+            leftLineView.heightAnchor.constraint(equalToConstant: hardCP.center.y-40),
             leftLineView.widthAnchor.constraint(equalToConstant: 1),
             
-            centerLineView.heightAnchor.constraint(equalToConstant: wordsCP.center.y-50),
+            centerLineView.heightAnchor.constraint(equalToConstant: wordsCP.center.y-40),
             centerLineView.widthAnchor.constraint(equalToConstant: 1),
             
-            rightLineView.heightAnchor.constraint(equalToConstant: exerciseCP.center.y-50),
+            rightLineView.heightAnchor.constraint(equalToConstant: exerciseCP.center.y-40),
             rightLineView.widthAnchor.constraint(equalToConstant: 1),
         ])
     }
