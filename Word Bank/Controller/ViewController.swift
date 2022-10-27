@@ -51,7 +51,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         fixSoundProblemForRealDevice()
-        setupFirstLaunch()
+        
         configureColor()
         configureTabBar()
         getHour()
@@ -71,6 +71,11 @@ class ViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupFirstLaunch()
     }
     
     //MARK: - prepare
@@ -185,46 +190,52 @@ class ViewController: UIViewController {
             UserDefault.exerciseCount.set(UserDefault.blueExerciseCount.getInt()+1)
             UserDefault.trueCount.set(UserDefault.blueTrueCount.getInt()+1)
             UserDefault.falseCount.set(UserDefault.blueFalseCount.getInt()+1)
+            
+            let when = DispatchTime.now() + 5
+            DispatchQueue.main.asyncAfter(deadline: when){
+                self.wordBrain.loadUser()
+                self.wordBrain.loadItemArray()
+                self.wordBrain.loadHardItemArray()
+                
+                UserDefault.hardWordsCount.set(self.wordBrain.hardItemArray.count)
+                
+                let wordCount = self.wordBrain.itemArray.count
+                if wordCount == 0 {
+                    self.scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
+                }
+                
+                if self.wordBrain.user.count < 1 {
+                    self.wordBrain.createUser()
+                    UserDefault.level.set(0)
+                    UserDefault.lastPoint.set(0)
+                    UserDefault.exerciseCount.set(0)
+                    UserDefault.allTrueCount.set(0)
+                    UserDefault.testCount.set(0)
+                    UserDefault.writingCount.set(0)
+                    UserDefault.listeningCount.set(0)
+                    UserDefault.cardCount.set(0)
+                    UserDefault.trueCount.set(0)
+                    UserDefault.falseCount.set(0)
+                } else {
+                    UserDefault.level.set(self.wordBrain.user[0].level)
+                    UserDefault.lastPoint.set(self.wordBrain.user[0].lastPoint)
+                    UserDefault.exerciseCount.set(self.wordBrain.user[0].exerciseCount)
+                    UserDefault.allTrueCount.set(self.wordBrain.user[0].allTrueCount)
+                    UserDefault.testCount.set(self.wordBrain.user[0].testCount)
+                    UserDefault.writingCount.set(self.wordBrain.user[0].writingCount)
+                    UserDefault.listeningCount.set(self.wordBrain.user[0].listeningCount)
+                    UserDefault.cardCount.set(self.wordBrain.user[0].cardCount)
+                    UserDefault.trueCount.set(self.wordBrain.user[0].trueCount)
+                    UserDefault.falseCount.set(self.wordBrain.user[0].falseCount)
+                }
+            }
         }
         
-        let when = DispatchTime.now() + 5
-        DispatchQueue.main.asyncAfter(deadline: when){
-            self.wordBrain.loadUser()
-            self.wordBrain.loadItemArray()
-            self.wordBrain.loadHardItemArray()
-            
-            UserDefault.hardWordsCount.set(self.wordBrain.hardItemArray.count)
-            
-            let wordCount = self.wordBrain.itemArray.count
-            if wordCount == 0 {
-                self.scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
-            }
-            
-            if self.wordBrain.user.count < 1 {
-                self.wordBrain.createUser()
-                UserDefault.level.set(0)
-                UserDefault.lastPoint.set(0)
-                UserDefault.exerciseCount.set(0)
-                UserDefault.allTrueCount.set(0)
-                UserDefault.testCount.set(0)
-                UserDefault.writingCount.set(0)
-                UserDefault.listeningCount.set(0)
-                UserDefault.cardCount.set(0)
-                UserDefault.trueCount.set(0)
-                UserDefault.falseCount.set(0)
-            } else {
-                UserDefault.level.set(self.wordBrain.user[0].level)
-                UserDefault.lastPoint.set(self.wordBrain.user[0].lastPoint)
-                UserDefault.exerciseCount.set(self.wordBrain.user[0].exerciseCount)
-                UserDefault.allTrueCount.set(self.wordBrain.user[0].allTrueCount)
-                UserDefault.testCount.set(self.wordBrain.user[0].testCount)
-                UserDefault.writingCount.set(self.wordBrain.user[0].writingCount)
-                UserDefault.listeningCount.set(self.wordBrain.user[0].listeningCount)
-                UserDefault.cardCount.set(self.wordBrain.user[0].cardCount)
-                UserDefault.trueCount.set(self.wordBrain.user[0].trueCount)
-                UserDefault.falseCount.set(self.wordBrain.user[0].falseCount)
-            }
+        //version 2.0.3
+        if UserDefault.keyboardHeight.getCGFloat() == 0 {
+            getKeyboardHeight()
         }
+ 
     }
     
     func askNotificationPermission(){
@@ -533,5 +544,32 @@ extension ViewController {
             tabBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             tabBarStackView.heightAnchor.constraint(equalToConstant: 66)
         ])
+    }
+}
+
+//MARK: - Keyboard Height
+
+extension ViewController {
+    func getKeyboardHeight(){
+        let textField = UITextField()
+        view.addSubview(textField)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        textField.becomeFirstResponder()
+        textField.resignFirstResponder()
+        textField.removeFromSuperview()
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if UserDefault.keyboardHeight.getCGFloat() == 0 {
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                let keyboardHeight = CGFloat(keyboardSize.height)
+                UserDefault.keyboardHeight.set(keyboardHeight)
+            }
+        }
     }
 }

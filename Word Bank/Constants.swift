@@ -39,6 +39,7 @@ enum Colors {
 enum UserDefault {
     
     static var userInterfaceStyle        = ""
+    static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
     
     static var level                     = UserDefaultsManager(key: "level")
     static var lastPoint                 = UserDefaultsManager(key: "lastPoint")

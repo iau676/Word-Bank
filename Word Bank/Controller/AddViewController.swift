@@ -32,6 +32,9 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var userWordCountIntVariable = 0 //fix userdefaults slow problem
     let coinImage = UIImage(named: "coin.png")!
     
+    var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
+    let textViewHeight: CGFloat = 214
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -43,6 +46,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         setupButtons()
         configureColor()
         configureTextFields()
+        cofigureTextViewYAnchor()
         addGestureRecognizer()
         checkEditStatus()
         preventInterrupt()
@@ -52,7 +56,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         onViewWillDisappear?()
     }
-
+    
     //MARK: - Selectors
     
     @objc func addButtonPressed(_ sender: Any) {
@@ -181,6 +185,13 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         default:
             engTxtField.keyboardAppearance = .default
             trTxtField.keyboardAppearance = .default
+        }
+    }
+    
+    func cofigureTextViewYAnchor(){
+        if keyboardHeight+(textViewHeight/2) > view.frame.height/2 {
+            textView.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-120).isActive = true
+            stackView.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-120).isActive = true
         }
     }
     
