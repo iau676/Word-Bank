@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol LevelDelegate: AnyObject {
+    func updateLevelButtonTitle(isInt: Bool)
+}
+
 class LevelInfoViewController: UIViewController {
+    
+    var delegate: LevelDelegate?
+    
     // define lazy views
     lazy var levelLabel: UILabel = {
         let label = UILabel()
@@ -207,6 +214,9 @@ class LevelInfoViewController: UIViewController {
     }
     
     func animateDismissView() {
+        
+        self.delegate?.updateLevelButtonTitle(isInt: true)
+        
         // hide blur view
         dimmedView.alpha = maxDimmedAlpha
         UIView.animate(withDuration: 0.4) {

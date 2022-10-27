@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, LevelDelegate {
     
     //MARK: - IBOutlet
     
@@ -109,11 +109,11 @@ class ViewController: UIViewController {
     @objc func levelButtonPressed(sender : UITapGestureRecognizer) {
         flipCP(button: levelButton, cp: levelCP)
        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.4){
-            let vc = LevelInfoViewController()
-            vc.modalPresentationStyle = .overCurrentContext
-            self.present(vc, animated: false)
-        }
+        let vc = LevelInfoViewController()
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        self.updateLevelButtonTitle(isInt: false)
+        self.present(vc, animated: false)
     }
     
     @objc func exerciseButtonPressed(gesture: UISwipeGestureRecognizer) {
@@ -269,6 +269,19 @@ class ViewController: UIViewController {
         }
     }
     
+    func updateLevelButtonTitle(isInt: Bool) {
+        if isInt {
+            UIView.transition(with: self.levelButton, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
+                self.levelButton.setTitle(UserDefault.level.getString(), for: .normal)
+                self.levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 30)
+            }
+        } else {
+            self.levelButton.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
+            self.levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 20)
+        }
+    }
+    
     func performSegue(identifier: String, second: Double){
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + second){
             self.performSegue(withIdentifier: identifier, sender: self)
@@ -315,6 +328,7 @@ class ViewController: UIViewController {
     
     func setupCircularProgress(){
         progressValue = wordBrain.calculateLevel()
+        levelButton.setTitle(UserDefault.level.getString(), for: .normal)
         
         levelCP.trackColor = UIColor.white
         levelCP.progressColor = Colors.pink ?? .systemPink
@@ -392,8 +406,7 @@ extension ViewController {
         
         levelButton.translatesAutoresizingMaskIntoConstraints = false
         levelButton.addTarget(self, action: #selector(levelButtonPressed), for: .primaryActionTriggered)
-        levelButton.setTitle(UserDefault.level.getString(), for: .normal)
-        levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 39)
+        levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 30)
         
         exerciseButton.translatesAutoresizingMaskIntoConstraints = false
         exerciseButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)
