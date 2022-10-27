@@ -10,9 +10,7 @@ import AVFoundation
 import CoreData
 
 class ViewController: UIViewController, LevelDelegate {
-    
-    //MARK: - IBOutlet
-    
+        
     let titleLabel = UILabel()
     
     let leftLineView = UIView()
@@ -34,16 +32,14 @@ class ViewController: UIViewController, LevelDelegate {
     let awardButton = UIButton()
     let statisticButton = UIButton()
     let settingsButton = UIButton()
-    
-    //MARK: - Variables
-    
-    var wordBrain = WordBrain()
+        
     let levelCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let newWordCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let wordsCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let exerciseCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let hardCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     
+    var wordBrain = WordBrain()
     var goAddPage = 0
     var progressValue:Float = 0.0
     
@@ -51,7 +47,6 @@ class ViewController: UIViewController, LevelDelegate {
     
     override func viewDidLoad() {
         fixSoundProblemForRealDevice()
-        
         configureTabBar()
         getHour()
         style()
@@ -277,8 +272,10 @@ class ViewController: UIViewController, LevelDelegate {
                 self.levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 30)
             }
         } else {
-            self.levelButton.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
-            self.levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 20)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
+                self.levelButton.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
+                self.levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 20)
+            }
         }
     }
     
@@ -289,16 +286,6 @@ class ViewController: UIViewController, LevelDelegate {
     }
  
     func setupButtons(){
-        //exerciseButton.backgroundColor = .systemPurple
-        //newWordsButton.backgroundColor = Colors.green
-        //wordsButton.backgroundColor = Colors.blue
-        //hardWordsButton.backgroundColor = Colors.yellow
-
-        //exerciseButton.setButtonCornerRadius(15)
-        //newWordsButton.setButtonCornerRadius(15)
-        //wordsButton.setButtonCornerRadius(15)
-        //hardWordsButton.setButtonCornerRadius(15)
-        
         exerciseButton.setImage(imageName: "wheelicon", width: 35, height: 35)
         newWordsButton.setImage(imageName: "new", width: 35, height: 35)
         wordsButton.setImage(imageName: "bank", width: 40, height: 40)
@@ -316,14 +303,12 @@ class ViewController: UIViewController, LevelDelegate {
     }
     
     func setupNavigationBar(){
-        // back button color
-        self.navigationController?.navigationBar.tintColor = Colors.black
+        navigationController?.navigationBar.tintColor = Colors.black
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.black!]
     
-        //delete navigation bar background
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            self.navigationController?.navigationBar.shadowImage = UIImage()
-            self.navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
     }
     
     func setupCircularProgress(){
@@ -393,7 +378,6 @@ extension ViewController {
         titleLabel.text = "Word Bank"
         titleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 23)
         titleLabel.textColor = Colors.f6f6f6
-        titleLabel.numberOfLines = 1
         
         leftLineView.translatesAutoresizingMaskIntoConstraints = false
         leftLineView.backgroundColor = .white
