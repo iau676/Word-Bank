@@ -48,7 +48,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     var soundSpeed = 0.0
     var onViewWillDisappear: (()->())?
     var soundImageName = ""
-    var textSize : CGFloat = 0.0
+    var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
     let hours = ["00:00 - 01:00",
                  "01:00 - 02:00",
@@ -290,8 +290,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
 
     func updateTextSize(){
-        textSize = UserDefault.textSize.getCGFloat()
-        
         updateLabelTextSize(wordSoundLabel)
         updateLabelTextSize(textSizeLabel)
         updateLabelTextSize(x2Label)
@@ -365,17 +363,17 @@ extension SettingsViewController {
         x2Label.translatesAutoresizingMaskIntoConstraints = false
         x2Label.textColor = Colors.black
         x2Label.text = "2x Hour"
-        x2Label.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        x2Label.font = UIFont(name: "AvenirNext-Regular", size: textSize)
         
         x2HoursLabel.translatesAutoresizingMaskIntoConstraints = false
         x2HoursLabel.textColor = .darkGray
         x2HoursLabel.textAlignment = .right
-        x2HoursLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        x2HoursLabel.font = UIFont(name: "AvenirNext-Regular", size: textSize)
         
         appSoundLabel.translatesAutoresizingMaskIntoConstraints = false
         appSoundLabel.textColor = Colors.black
         appSoundLabel.text = "App Sound"
-        appSoundLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        appSoundLabel.font = UIFont(name: "AvenirNext-Regular", size: textSize)
         
         appSoundSwitch.translatesAutoresizingMaskIntoConstraints = false
         appSoundSwitch.addTarget(self, action: #selector(appSoundChanged(_:)), for: UIControl.Event.valueChanged)
@@ -383,7 +381,7 @@ extension SettingsViewController {
         wordSoundLabel.translatesAutoresizingMaskIntoConstraints = false
         wordSoundLabel.textColor = Colors.black
         wordSoundLabel.text = "Word Sound"
-        wordSoundLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        wordSoundLabel.font = UIFont(name: "AvenirNext-Regular", size: textSize)
         
         wordSoundSwitch.translatesAutoresizingMaskIntoConstraints = false
         wordSoundSwitch.addTarget(self, action: #selector(wordSoundChanged(_:)), for: UIControl.Event.valueChanged)
@@ -391,7 +389,7 @@ extension SettingsViewController {
         soundSpeedLabel.translatesAutoresizingMaskIntoConstraints = false
         soundSpeedLabel.textColor = Colors.black
         soundSpeedLabel.text = "Sound Speed"
-        soundSpeedLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        soundSpeedLabel.font = UIFont(name: "AvenirNext-Regular", size: textSize)
         
         soundSpeedButton.translatesAutoresizingMaskIntoConstraints = false
         soundSpeedButton.addTarget(self, action: #selector(soundSpeedButtonPressed), for: .primaryActionTriggered)
@@ -404,7 +402,7 @@ extension SettingsViewController {
         textSizeLabel.translatesAutoresizingMaskIntoConstraints = false
         textSizeLabel.textColor = Colors.black
         textSizeLabel.text = "Text Size"
-        textSizeLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        textSizeLabel.font = UIFont(name: "AvenirNext-Regular", size: textSize)
         
         textSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         textSegmentedControl.replaceSegments(segments: ["9", "11", "13", "15", "17", "19", "21"])

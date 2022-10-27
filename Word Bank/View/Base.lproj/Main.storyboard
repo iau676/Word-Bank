@@ -238,9 +238,6 @@
                             <constraint firstAttribute="bottom" secondItem="lxj-ap-W7w" secondAttribute="bottom" id="mOf-p6-2vW"/>
                             <constraint firstItem="lxj-ap-W7w" firstAttribute="trailing" secondItem="qew-xl-Ddk" secondAttribute="trailing" id="sI2-nH-1Ov"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="TXw-OV-ugg" appends="YES" id="jPA-2w-L4h"/>
-                        </connections>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="jV7-E4-s8p">
@@ -248,11 +245,6 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
-                <swipeGestureRecognizer direction="down" id="TXw-OV-ugg">
-                    <connections>
-                        <action selector="swipeGesture:" destination="7xT-ax-mw9" id="Er6-QD-foy"/>
-                    </connections>
-                </swipeGestureRecognizer>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MIJ-XV-NVL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3700" y="-640"/>

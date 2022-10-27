@@ -384,7 +384,7 @@ extension ResultViewController {
         confettiButton.setImage(imageName: "confetti", width: 66, height: 66)
         
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        scoreLabel.font = UIFont(name: "AvenirNext-Regular", size: 17)
+        scoreLabel.font = UIFont(name: "AvenirNext-Regular", size: textSize)
         scoreLabel.textAlignment = .center
         scoreLabel.numberOfLines = 1
         
@@ -397,7 +397,7 @@ extension ResultViewController {
         
         addedHardWordsButton.translatesAutoresizingMaskIntoConstraints = false
         addedHardWordsButton.backgroundColor = .clear
-        addedHardWordsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17)
+        addedHardWordsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: textSize)
         addedHardWordsButton.layer.cornerRadius = 10
         addedHardWordsButton.addTarget(self, action: #selector(showWordsButtonPressed(_:)), for: .primaryActionTriggered)
         
