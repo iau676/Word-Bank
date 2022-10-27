@@ -30,7 +30,9 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var editIndex = 0
     var userWordCountInt = 0
     var userWordCountIntVariable = 0 //fix userdefaults slow problem
-    let coinImage = UIImage(named: "coin.png")!
+    
+    var coinButtonImage: UIImage { return goEdit == 0 ? UIImage(named: "coin")! : UIImage(named: "checkGreen")!}
+    var coinButtonAnimation: UIView.AnimationOptions { return goEdit == 0 ? .transitionFlipFromTop : .transitionFlipFromLeft }
     
     var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
     let textViewHeight: CGFloat = 214
@@ -71,7 +73,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
             } else {
                 itemArray[editIndex].eng = engTxtField.text!
                 itemArray[editIndex].tr = trTxtField.text!
-                scheduledTimer(timeInterval: 0.9, #selector(dismissView))
+                scheduledTimer(timeInterval: 0.8, #selector(dismissView))
             }
             
             updateWordsPage?()
@@ -88,26 +90,17 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         checkAction()
     }
     
-    @objc func swipeDownGesture(_ sender: UISwipeGestureRecognizer) {
+    @objc func coinButtonPressed(_ sender: UIButton) {
         checkAction()
     }
     
-    @objc func flipButton(){
-        coinButton.setBackgroundImage(coinImage, for: .normal)
-        UIView.transition(with: coinButton, duration: 0.5, options: .transitionFlipFromTop, animations: nil, completion: nil)
-    }
-
-    @objc func deleteButtonBackgroundImage(){
-        coinButton.deleteBackgroundImage()
+    @objc func swipeDownGesture(_ sender: UISwipeGestureRecognizer) {
+        checkAction()
     }
     
     @objc func dismissView(){
         view.backgroundColor = UIColor.clear
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func animateDown(){
-        coinButton.animateDown()
     }
     
     @objc func goNewPoint(){
@@ -209,14 +202,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         )
     }
     
-    func flipCoinButton(){
-        coinButton.setBackgroundImage(coinImage, for: .normal)
-        UIView.transition(with: coinButton, duration: 0.2, options: .transitionFlipFromTop, animations: nil, completion: nil)
-        scheduledTimer(timeInterval: 0.3, #selector(flipButton))
-        scheduledTimer(timeInterval: 0.7, #selector(animateDown))
-        scheduledTimer(timeInterval: 1.5, #selector(deleteButtonBackgroundImage))
-    }
-    
     func scheduledTimer(timeInterval: Double, _ selector : Selector) {
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
     }
@@ -253,6 +238,32 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
+//MARK: - Flip Button
+
+extension AddViewController {
+    func flipCoinButton(){
+        coinButton.setBackgroundImage(coinButtonImage, for: .normal)
+        UIView.transition(with: coinButton, duration: 0.2, options: coinButtonAnimation, animations: nil, completion: nil)
+        scheduledTimer(timeInterval: 0.3, #selector(flipSecond))
+        scheduledTimer(timeInterval: 0.7, #selector(animateDown))
+        scheduledTimer(timeInterval: 1.5, #selector(deleteButtonBackgroundImage))
+    }
+    
+    @objc func flipSecond(){
+        UIView.transition(with: coinButton, duration: 0.5, options: coinButtonAnimation, animations: nil, completion: nil)
+    }
+    
+    @objc func animateDown(){
+        coinButton.animateDown()
+    }
+
+    @objc func deleteButtonBackgroundImage(){
+        coinButton.deleteBackgroundImage()
+    }
+}
+
+//MARK: - Layout
+
 extension AddViewController {
     
     func style(){
@@ -261,6 +272,7 @@ extension AddViewController {
         coinButtonView.translatesAutoresizingMaskIntoConstraints = false
         
         coinButton.translatesAutoresizingMaskIntoConstraints = false
+        coinButton.addTarget(self, action: #selector(coinButtonPressed), for: .touchUpInside)
         
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.backgroundColor = Colors.cellLeft
