@@ -25,13 +25,6 @@ class ViewController: UIViewController, LevelDelegate {
     
     let xButton = UIButton()
     let xLabel = UILabel()
-    
-    let tabBarStackView = UIStackView()
-    let homeButton = UIButton()
-    let dailyButton = UIButton()
-    let awardButton = UIButton()
-    let statisticButton = UIButton()
-    let settingsButton = UIButton()
         
     let levelCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let newWordCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
@@ -42,6 +35,14 @@ class ViewController: UIViewController, LevelDelegate {
     var wordBrain = WordBrain()
     var goAddPage = 0
     var progressValue:Float = 0.0
+    
+    //tabBar
+    let tabBarStackView = UIStackView()
+    let homeButton = UIButton()
+    let dailyButton = UIButton()
+    let awardButton = UIButton()
+    let statisticButton = UIButton()
+    let settingsButton = UIButton()
     
     //MARK: - Life Cycle
     
@@ -138,10 +139,6 @@ class ViewController: UIViewController, LevelDelegate {
         UserDefault.whichButton.set("hard")
         flipCP(button: hardWordsButton, cp: hardCP)
         performSegue(identifier: "goWords", second: 0.4)
-    }
-    
-    @objc func settingsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        performSegue(identifier: "goSettings", second: 0.0)
     }
     
     @objc func xButtonPressed(gesture: UISwipeGestureRecognizer) {
@@ -511,33 +508,40 @@ extension ViewController {
         statisticButton.setImageWithRenderingMode(imageName: "statistic", width: 25, height: 25, color: .darkGray)
         settingsButton.setImageWithRenderingMode(imageName: "settingsImage", width: 25, height: 25, color: .darkGray)
         
+        homeButton.translatesAutoresizingMaskIntoConstraints = false
         homeButton.setTitle("Home", for: .normal)
         homeButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         homeButton.setTitleColor(Colors.blue ?? .blue, for: .normal)
         homeButton.alignTextBelow()
         
+        dailyButton.translatesAutoresizingMaskIntoConstraints = false
         dailyButton.setTitle("Daily", for: .normal)
         dailyButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         dailyButton.setTitleColor(.darkGray, for: .normal)
         dailyButton.alignTextBelow()
+        dailyButton.addTarget(self, action: #selector(dailyButtonPressed), for: .primaryActionTriggered)
         
+        awardButton.translatesAutoresizingMaskIntoConstraints = false
         awardButton.setTitle("Awards", for: .normal)
         awardButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         awardButton.setTitleColor(.darkGray, for: .normal)
         awardButton.alignTextBelow()
+        awardButton.addTarget(self, action: #selector(awardButtonPressed), for: .primaryActionTriggered)
         
+        statisticButton.translatesAutoresizingMaskIntoConstraints = false
         statisticButton.setTitle("Statistics", for: .normal)
         statisticButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         statisticButton.setTitleColor(.darkGray, for: .normal)
         statisticButton.alignTextBelow()
+        statisticButton.addTarget(self, action: #selector(statisticButtonPressed), for: .primaryActionTriggered)
         
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
         settingsButton.setTitle("Settings", for: .normal)
         settingsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         settingsButton.setTitleColor(.darkGray, for: .normal)
         settingsButton.alignTextBelow()
-        
-        settingsButton.translatesAutoresizingMaskIntoConstraints = false
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
+        
         
         tabBarStackView.addArrangedSubview(homeButton)
         tabBarStackView.addArrangedSubview(dailyButton)
@@ -554,6 +558,23 @@ extension ViewController {
             tabBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             tabBarStackView.heightAnchor.constraint(equalToConstant: 66)
         ])
+    }
+    
+    @objc func dailyButtonPressed(gesture: UISwipeGestureRecognizer) {
+        
+    }
+    
+    @objc func awardButtonPressed(gesture: UISwipeGestureRecognizer) {
+       
+    }
+    
+    @objc func statisticButtonPressed(gesture: UISwipeGestureRecognizer) {
+        let vc = StatisticViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func settingsButtonPressed(gesture: UISwipeGestureRecognizer) {
+        performSegue(identifier: "goSettings", second: 0.0)
     }
 }
 

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -61,6 +61,8 @@
 		707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */; };
 		707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */; };
 		707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC38A288DAA4A00832F35 /* Int+Extensions.swift */; };
+		70803511290C393E00F1F93A /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 70803510290C393E00F1F93A /* Charts */; };
+		70803513290C3BA600F1F93A /* StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70803512290C3BA600F1F93A /* StatisticViewController.swift */; };
 		7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */; };
 		7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081AB0127CCD15700E2996A /* NewPointViewController.swift */; };
 		7081AB0527CCD3CB00E2996A /* newpoint.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0427CCD3CB00E2996A /* newpoint.mp4 */; };
@@ -140,6 +142,7 @@
 		707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		707EC38A288DAA4A00832F35 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
+		70803512290C3BA600F1F93A /* StatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewController.swift; sourceTree = "<group>"; };
 		7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7081AB0127CCD15700E2996A /* NewPointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPointViewController.swift; sourceTree = "<group>"; };
 		7081AB0427CCD3CB00E2996A /* newpoint.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = newpoint.mp4; sourceTree = "<group>"; };
@@ -167,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */,
+				70803511290C393E00F1F93A /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +189,7 @@
 				70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */,
 				7014743527AAB4EE005E1854 /* LevelUpViewController.swift */,
 				7081AB0127CCD15700E2996A /* NewPointViewController.swift */,
+				70803512290C3BA600F1F93A /* StatisticViewController.swift */,
 				701581BC27DE80D800796ADE /* SettingsViewController.swift */,
 				70175BC327E71F170053CBDB /* CardViewController.swift */,
 				702A978227EB378A00AEECF7 /* X2SettingViewController.swift */,
@@ -375,6 +380,9 @@
 			dependencies = (
 			);
 			name = "Word Bank";
+			packageProductDependencies = (
+				70803510290C393E00F1F93A /* Charts */,
+			);
 			productName = 23;
 			productReference = 706CBAAF27592F8D008B4773 /* Word Bank.app */;
 			productType = "com.apple.product-type.application";
@@ -402,6 +410,9 @@
 				Base,
 			);
 			mainGroup = 706CBAA627592F8D008B4773;
+			packageReferences = (
+				7080350F290C393E00F1F93A /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = 706CBAB027592F8D008B4773 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -466,6 +477,7 @@
 				7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */,
 				707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */,
 				7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */,
+				70803513290C3BA600F1F93A /* StatisticViewController.swift in Sources */,
 				707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */,
 				706D707D28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift in Sources */,
 				704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */,
@@ -709,6 +721,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7080350F290C393E00F1F93A /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		70803510290C393E00F1F93A /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7080350F290C393E00F1F93A /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		706CBABB27592F8D008B4773 /* _3.xcdatamodeld */ = {

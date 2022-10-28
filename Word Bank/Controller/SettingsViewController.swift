@@ -36,13 +36,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     let xButton = UIButton()
     let soundSpeedButton = UIButton()
     
-    let tabBarStackView = UIStackView()
-    let homeButton = UIButton()
-    let dailyButton = UIButton()
-    let awardButton = UIButton()
-    let statisticButton = UIButton()
-    let settingsButton = UIButton()
-    
     var player = Player()
     var wordBrain = WordBrain()
     var soundSpeed = 0.0
@@ -75,6 +68,14 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                  "22:00 - 23:00",
                  "23:00 - 00:00"]
     
+    //tabBar
+    let tabBarStackView = UIStackView()
+    let homeButton = UIButton()
+    let dailyButton = UIButton()
+    let awardButton = UIButton()
+    let statisticButton = UIButton()
+    let settingsButton = UIButton()
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -103,10 +104,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - Selectors
-    
-    @objc func homeButtonPressed(gesture: UISwipeGestureRecognizer) {
-        self.navigationController?.popToRootViewController(animated: true)
-    }
     
     @objc func xViewPressed(gesture: UISwipeGestureRecognizer) {
         let vc = X2SettingViewController()
@@ -408,6 +405,7 @@ extension SettingsViewController {
         textSegmentedControl.replaceSegments(segments: ["9", "11", "13", "15", "17", "19", "21"])
         textSegmentedControl.tintColor = .black
         textSegmentedControl.addTarget(self, action: #selector(textSizeChanged(_:)), for: UIControl.Event.valueChanged)
+        
     }
     
     func layout() {
@@ -506,6 +504,8 @@ extension SettingsViewController {
     }
 }
 
+//MARK: - Tab Bar
+
 extension SettingsViewController {
     
     func configureTabBar() {
@@ -526,33 +526,39 @@ extension SettingsViewController {
         statisticButton.setImageWithRenderingMode(imageName: "statistic", width: 25, height: 25, color: .darkGray)
         settingsButton.setImageWithRenderingMode(imageName: "settingsImage", width: 25, height: 25, color: Colors.blue ?? .blue)
         
+        homeButton.translatesAutoresizingMaskIntoConstraints = false
         homeButton.setTitle("Home", for: .normal)
         homeButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         homeButton.setTitleColor(.darkGray, for: .normal)
         homeButton.alignTextBelow()
+        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: .primaryActionTriggered)
         
+        homeButton.translatesAutoresizingMaskIntoConstraints = false
         dailyButton.setTitle("Daily", for: .normal)
         dailyButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         dailyButton.setTitleColor(.darkGray, for: .normal)
         dailyButton.alignTextBelow()
+        dailyButton.addTarget(self, action: #selector(dailyButtonPressed), for: .primaryActionTriggered)
         
+        homeButton.translatesAutoresizingMaskIntoConstraints = false
         awardButton.setTitle("Awards", for: .normal)
         awardButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         awardButton.setTitleColor(.darkGray, for: .normal)
         awardButton.alignTextBelow()
+        awardButton.addTarget(self, action: #selector(awardButtonPressed), for: .primaryActionTriggered)
         
+        homeButton.translatesAutoresizingMaskIntoConstraints = false
         statisticButton.setTitle("Statistics", for: .normal)
         statisticButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         statisticButton.setTitleColor(.darkGray, for: .normal)
         statisticButton.alignTextBelow()
+        statisticButton.addTarget(self, action: #selector(statisticButtonPressed), for: .primaryActionTriggered)
         
+        homeButton.translatesAutoresizingMaskIntoConstraints = false
         settingsButton.setTitle("Settings", for: .normal)
         settingsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         settingsButton.setTitleColor(Colors.blue ?? .blue, for: .normal)
         settingsButton.alignTextBelow()
-        
-        homeButton.translatesAutoresizingMaskIntoConstraints = false
-        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: .primaryActionTriggered)
         
         tabBarStackView.addArrangedSubview(homeButton)
         tabBarStackView.addArrangedSubview(dailyButton)
@@ -568,5 +574,22 @@ extension SettingsViewController {
             tabBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             tabBarStackView.heightAnchor.constraint(equalToConstant: 66)
         ])
+    }
+    
+    @objc func homeButtonPressed(gesture: UISwipeGestureRecognizer) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func dailyButtonPressed(gesture: UISwipeGestureRecognizer) {
+        
+    }
+    
+    @objc func awardButtonPressed(gesture: UISwipeGestureRecognizer) {
+        
+    }
+    
+    @objc func statisticButtonPressed(gesture: UISwipeGestureRecognizer) {
+        let vc = StatisticViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
