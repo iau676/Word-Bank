@@ -491,58 +491,24 @@ extension ViewController {
 extension ViewController {
     
     func configureTabBar() {
+        //style
         tabBarStackView.translatesAutoresizingMaskIntoConstraints = false
         tabBarStackView.axis = .horizontal
         tabBarStackView.spacing = 0
         tabBarStackView.distribution = .fillEqually
         
-        homeButton.backgroundColor = .white
-        dailyButton.backgroundColor = .white
-        awardButton.backgroundColor = .white
-        statisticButton.backgroundColor = .white
-        settingsButton.backgroundColor = .white
+        homeButton.configureForTabBar(imageName: "home", title: "Home", titleColor: Colors.blue ?? .blue, imageWidth: 25, imageHeight: 25)
+        dailyButton.configureForTabBar(imageName: "dailyQuest", title: "Daily", titleColor: .darkGray, imageWidth: 26, imageHeight: 26)
+        awardButton.configureForTabBar(imageName: "award", title: "Awards", titleColor: .darkGray, imageWidth: 27, imageHeight: 27)
+        statisticButton.configureForTabBar(imageName: "statistic", title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
+        settingsButton.configureForTabBar(imageName: "settingsImage", title: "Settings", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
         
-        homeButton.setImageWithRenderingMode(imageName: "home", width: 25, height: 25, color: Colors.blue ?? .blue)
-        dailyButton.setImageWithRenderingMode(imageName: "dailyQuest", width: 26, height: 26, color: .darkGray)
-        awardButton.setImageWithRenderingMode(imageName: "award", width: 27, height: 27, color: .darkGray)
-        statisticButton.setImageWithRenderingMode(imageName: "statistic", width: 25, height: 25, color: .darkGray)
-        settingsButton.setImageWithRenderingMode(imageName: "settingsImage", width: 25, height: 25, color: .darkGray)
-        
-        homeButton.translatesAutoresizingMaskIntoConstraints = false
-        homeButton.setTitle("Home", for: .normal)
-        homeButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        homeButton.setTitleColor(Colors.blue ?? .blue, for: .normal)
-        homeButton.alignTextBelow()
-        
-        dailyButton.translatesAutoresizingMaskIntoConstraints = false
-        dailyButton.setTitle("Daily", for: .normal)
-        dailyButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        dailyButton.setTitleColor(.darkGray, for: .normal)
-        dailyButton.alignTextBelow()
         dailyButton.addTarget(self, action: #selector(dailyButtonPressed), for: .primaryActionTriggered)
-        
-        awardButton.translatesAutoresizingMaskIntoConstraints = false
-        awardButton.setTitle("Awards", for: .normal)
-        awardButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        awardButton.setTitleColor(.darkGray, for: .normal)
-        awardButton.alignTextBelow()
         awardButton.addTarget(self, action: #selector(awardButtonPressed), for: .primaryActionTriggered)
-        
-        statisticButton.translatesAutoresizingMaskIntoConstraints = false
-        statisticButton.setTitle("Statistics", for: .normal)
-        statisticButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        statisticButton.setTitleColor(.darkGray, for: .normal)
-        statisticButton.alignTextBelow()
         statisticButton.addTarget(self, action: #selector(statisticButtonPressed), for: .primaryActionTriggered)
-        
-        settingsButton.translatesAutoresizingMaskIntoConstraints = false
-        settingsButton.setTitle("Settings", for: .normal)
-        settingsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
-        settingsButton.setTitleColor(.darkGray, for: .normal)
-        settingsButton.alignTextBelow()
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
         
-        
+        //layout
         tabBarStackView.addArrangedSubview(homeButton)
         tabBarStackView.addArrangedSubview(dailyButton)
         tabBarStackView.addArrangedSubview(awardButton)
@@ -559,7 +525,7 @@ extension ViewController {
             tabBarStackView.heightAnchor.constraint(equalToConstant: 66)
         ])
     }
-    
+
     @objc func dailyButtonPressed(gesture: UISwipeGestureRecognizer) {
         
     }
