@@ -553,7 +553,8 @@ extension SettingsViewController {
     }
     
     @objc func awardButtonPressed(gesture: UISwipeGestureRecognizer) {
-        
+        let vc = AwardsViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func statisticButtonPressed(gesture: UISwipeGestureRecognizer) {
