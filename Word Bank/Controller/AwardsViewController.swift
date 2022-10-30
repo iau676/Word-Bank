@@ -95,6 +95,33 @@ class AwardsViewController: UIViewController {
         button.backgroundColor = Colors.blue
         return button
     }()
+    
+    lazy var levelScoreLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "1/10"
+        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
+        label.textColor = Colors.black
+        return label
+    }()
+    
+    lazy var wordsScoreLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "1/10"
+        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
+        label.textColor = Colors.black
+        return label
+    }()
+    
+    lazy var exerciseScoreLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "1/10"
+        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
+        label.textColor = Colors.black
+        return label
+    }()
 
     fileprivate let levelCV:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -172,6 +199,10 @@ class AwardsViewController: UIViewController {
         view.addSubview(wordsButton)
         view.addSubview(exercisesButton)
         
+        view.addSubview(levelScoreLabel)
+        view.addSubview(wordsScoreLabel)
+        view.addSubview(exerciseScoreLabel)
+        
         NSLayoutConstraint.activate([
             levelCV.topAnchor.constraint(equalTo: view.topAnchor, constant: 90),
             levelCV.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
@@ -183,7 +214,10 @@ class AwardsViewController: UIViewController {
             
             levelButton.centerYAnchor.constraint(equalTo: levelLabel.centerYAnchor),
             levelButton.leadingAnchor.constraint(equalTo: levelLabel.trailingAnchor, constant: 8),
-            levelButton.heightAnchor.constraint(equalToConstant: 30),
+            levelButton.heightAnchor.constraint(equalToConstant: 29),
+            
+            levelScoreLabel.centerYAnchor.constraint(equalTo: levelLabel.centerYAnchor),
+            levelScoreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
         
         NSLayoutConstraint.activate([
@@ -197,7 +231,10 @@ class AwardsViewController: UIViewController {
             
             wordsButton.centerYAnchor.constraint(equalTo: wordsLabel.centerYAnchor),
             wordsButton.leadingAnchor.constraint(equalTo: wordsLabel.trailingAnchor, constant: 8),
-            wordsButton.heightAnchor.constraint(equalToConstant: 30),
+            wordsButton.heightAnchor.constraint(equalToConstant: 29),
+            
+            wordsScoreLabel.centerYAnchor.constraint(equalTo: wordsLabel.centerYAnchor),
+            wordsScoreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
        
         NSLayoutConstraint.activate([
@@ -211,7 +248,10 @@ class AwardsViewController: UIViewController {
             
             exercisesButton.centerYAnchor.constraint(equalTo: exercisesLabel.centerYAnchor),
             exercisesButton.leadingAnchor.constraint(equalTo: exercisesLabel.trailingAnchor, constant: 8),
-            exercisesButton.heightAnchor.constraint(equalToConstant: 30),
+            exercisesButton.heightAnchor.constraint(equalToConstant: 29),
+            
+            exerciseScoreLabel.centerYAnchor.constraint(equalTo: exercisesLabel.centerYAnchor),
+            exerciseScoreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
     }
     
