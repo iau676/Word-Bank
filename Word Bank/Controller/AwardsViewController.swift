@@ -39,95 +39,24 @@ class AwardsViewController: UIViewController {
         BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
     ]
     
-    lazy var levelLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "LEVEL"
-        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
-        label.textColor = Colors.black
-        return label
-    }()
+    private let levelLabel = UILabel()
+    private let wordsLabel = UILabel()
+    private let exercisesLabel = UILabel()
     
-    lazy var wordsLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "WORDS"
-        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
-        label.textColor = Colors.black
-        return label
-    }()
-    
-    lazy var exercisesLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "EXERCISES"
-        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
-        label.textColor = Colors.black
-        return label
-    }()
-    
-    lazy var levelButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("99", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
-        button.setButtonCornerRadius(8)
-        button.backgroundColor = Colors.blue
-        return button
-    }()
-    
-    lazy var wordsButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("99", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
-        button.setButtonCornerRadius(8)
-        button.backgroundColor = Colors.blue
-        return button
-    }()
-    
-    lazy var exercisesButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("99", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
-        button.setButtonCornerRadius(8)
-        button.backgroundColor = Colors.blue
-        return button
-    }()
-    
-    lazy var levelScoreLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "1/10"
-        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
-        label.textColor = Colors.black
-        return label
-    }()
-    
-    lazy var wordsScoreLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "1/10"
-        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
-        label.textColor = Colors.black
-        return label
-    }()
-    
-    lazy var exerciseScoreLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "1/10"
-        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
-        label.textColor = Colors.black
-        return label
-    }()
+    private let levelButton = UIButton()
+    private let wordsButton = UIButton()
+    private let exercisesButton = UIButton()
+
+    private let levelScoreLabel = UILabel()
+    private let wordsScoreLabel = UILabel()
+    private let exerciseScoreLabel = UILabel()
 
     fileprivate let levelCV:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = Colors.cellLeft
         cv.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         cv.showsHorizontalScrollIndicator = false
         return cv
@@ -138,6 +67,7 @@ class AwardsViewController: UIViewController {
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = Colors.cellLeft
         cv.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         cv.showsHorizontalScrollIndicator = false
         return cv
@@ -148,6 +78,7 @@ class AwardsViewController: UIViewController {
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = Colors.cellLeft
         cv.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
         cv.showsHorizontalScrollIndicator = false
         return cv
@@ -172,15 +103,24 @@ class AwardsViewController: UIViewController {
     private func style(){
         view.backgroundColor = Colors.cellLeft
         
-        levelCV.backgroundColor = Colors.cellLeft
+        configureLabel(levelLabel, "LEVEL")
+        configureLabel(wordsLabel, "WORDS")
+        configureLabel(exercisesLabel, "EXERCISES")
+        
+        configureButton(levelButton, "99")
+        configureButton(wordsButton, "99")
+        configureButton(exercisesButton, "99")
+        
+        configureLabel(levelScoreLabel, "1/10")
+        configureLabel(wordsScoreLabel, "1/10")
+        configureLabel(exerciseScoreLabel, "1/10")
+      
         levelCV.delegate = self
         levelCV.dataSource = self
         
-        wordsCV.backgroundColor = Colors.cellLeft
         wordsCV.delegate = self
         wordsCV.dataSource = self
         
-        exercisesCV.backgroundColor = Colors.cellLeft
         exercisesCV.delegate = self
         exercisesCV.dataSource = self
     }
@@ -253,6 +193,21 @@ class AwardsViewController: UIViewController {
             exerciseScoreLabel.centerYAnchor.constraint(equalTo: exercisesLabel.centerYAnchor),
             exerciseScoreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
+    }
+    
+    func configureLabel(_ label: UILabel, _ text: String){
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = text
+        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
+        label.textColor = Colors.black
+    }
+    
+    func configureButton(_ button: UIButton, _ text: String){
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(text, for: .normal)
+        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
+        button.setButtonCornerRadius(8)
+        button.backgroundColor = Colors.blue
     }
     
     func configureNavigationBar(){
