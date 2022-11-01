@@ -129,10 +129,10 @@ extension UIButton {
     }
     
     func moveImageTitleLeft() {
-           self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
-           self.contentHorizontalAlignment = .left
-           self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
-           self.contentHorizontalAlignment = .left
-           self.imageView?.contentMode = .scaleAspectFit
+        let imageSize: CGSize = self.imageView?.image?.size ?? CGSize(width: 25, height: 25)
+        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: imageSize.width, bottom: 0, right: 0)
+        self.contentHorizontalAlignment = .left
+        self.imageView?.contentMode = .scaleAspectFit
        }
 }
