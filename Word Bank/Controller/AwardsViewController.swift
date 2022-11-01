@@ -389,7 +389,8 @@ extension AwardsViewController {
     }
 
     @objc func dailyButtonPressed(gesture: UISwipeGestureRecognizer) {
-        
+        let vc = DailyViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
   
     @objc func statisticButtonPressed(gesture: UISwipeGestureRecognizer) {

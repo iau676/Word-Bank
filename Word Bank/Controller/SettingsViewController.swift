@@ -549,7 +549,8 @@ extension SettingsViewController {
     }
     
     @objc func dailyButtonPressed(gesture: UISwipeGestureRecognizer) {
-        
+        let vc = DailyViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func awardButtonPressed(gesture: UISwipeGestureRecognizer) {

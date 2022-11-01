@@ -127,4 +127,12 @@ extension UIButton {
         self.setImageWithRenderingMode(imageName: imageName, width: imageWidth, height: imageHeight, color: titleColor)
         self.alignTextBelow()
     }
+    
+    func moveImageTitleLeft() {
+           self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+           self.contentHorizontalAlignment = .left
+           self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
+           self.contentHorizontalAlignment = .left
+           self.imageView?.contentMode = .scaleAspectFit
+       }
 }

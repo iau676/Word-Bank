@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700814F328D3909200DF177D /* UIImage+Extensions.swift */; };
+		7009BDE729112BAA0068E2F6 /* DailyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7009BDE629112BAA0068E2F6 /* DailyViewController.swift */; };
 		700BC57F2892FE9E00903C04 /* WordBrain+calculateLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */; };
 		700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */; };
 		700C439927A856FD00D94497 /* LevelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700C439827A856FD00D94497 /* LevelInfoViewController.swift */; };
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		700814F328D3909200DF177D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		7009BDE629112BAA0068E2F6 /* DailyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewController.swift; sourceTree = "<group>"; };
 		700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateLevel.swift"; sourceTree = "<group>"; };
 		700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+LevelPoints.swift"; sourceTree = "<group>"; };
 		700C439827A856FD00D94497 /* LevelInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelInfoViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */,
 				7014743527AAB4EE005E1854 /* LevelUpViewController.swift */,
 				7081AB0127CCD15700E2996A /* NewPointViewController.swift */,
+				7009BDE629112BAA0068E2F6 /* DailyViewController.swift */,
 				7094D8C3290D25B5007E422F /* AwardsViewController.swift */,
 				70803512290C3BA600F1F93A /* StatisticViewController.swift */,
 				701581BC27DE80D800796ADE /* SettingsViewController.swift */,
@@ -473,6 +476,7 @@
 				708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */,
 				7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */,
 				7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */,
+				7009BDE729112BAA0068E2F6 /* DailyViewController.swift in Sources */,
 				706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */,
 				70C357E528882DFC00F3AD86 /* Player.swift in Sources */,
 				700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */,
