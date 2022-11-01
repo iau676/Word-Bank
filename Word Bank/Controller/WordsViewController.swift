@@ -14,11 +14,16 @@ class WordsViewController: UIViewController {
     let tableView = UITableView()
     let tableViewStackView = UIStackView()
     
-    let startButton = UIButton()
-    let startButton2 = UIButton()
-    let startButton3 = UIButton()
-    let startButton4 = UIButton()
+    let testExerciseButton = UIButton()
+    let writingExerciseButton = UIButton()
+    let listeningExerciseButton = UIButton()
+    let cardExerciseButton = UIButton()
     let buttonStackView = UIStackView()
+    
+    let testExerciseLabel = UILabel()
+    let writingExerciseLabel = UILabel()
+    let listeningExerciseLabel = UILabel()
+    let cardExerciseLabel = UILabel()
     
     var goEdit = 0
     var editIndex = 0
@@ -91,23 +96,23 @@ class WordsViewController: UIViewController {
         checkGoAddPage()
     }
     
-    @objc func startPressed(_ sender: Any) {
+    @objc func testExerciseButtonPressed(_ sender: Any) {
         UserDefault.startPressed.set(1)
-        startButton.bounce()
-        startButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
+        testExerciseButton.bounce()
+        testExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         check2Items()
     }
     
-    @objc func startPressed2(_ sender: UIButton) {
+    @objc func writingExerciseButtonPressed(_ sender: UIButton) {
         UserDefault.startPressed.set(2)
-        startButton2.bounce()
-        startButton2.updateShadowHeight(withDuration: 0.15, height: 0.3)
+        writingExerciseButton.bounce()
+        writingExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         check2Items()
     }
     
-    @objc func startPressed3(_ sender: UIButton) {
-        startButton3.bounce()
-        startButton3.updateShadowHeight(withDuration: 0.15, height: 0.3)
+    @objc func listeningExerciseButtonPressed(_ sender: UIButton) {
+        listeningExerciseButton.bounce()
+        listeningExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         //0 is true, 1 is false
         if UserDefault.playSound.getInt() == 0 {
             UserDefault.startPressed.set(3)
@@ -122,10 +127,10 @@ class WordsViewController: UIViewController {
         }
     }
     
-    @objc func startPressed4(_ sender: UIButton) {
+    @objc func cardExerciseButtonPressed(_ sender: UIButton) {
         UserDefault.startPressed.set(4)
-        startButton4.pulstate()
-        startButton4.updateShadowHeight(withDuration: 0.15, height: 0.3)
+        cardExerciseButton.pulstate()
+        cardExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         if itemArray.count < 2 {
             let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
@@ -168,17 +173,18 @@ class WordsViewController: UIViewController {
         } else {
             searchBar.updateSearchBarVisibility(true)
             tableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-            startButton4.isHidden = true
+            cardExerciseButton.isHidden = true
+            cardExerciseLabel.isHidden = true
             navigationItem.rightBarButtonItem = nil
         }
         tableView.reloadData()
     }
     
     func configureButton(){
-        startButton.changeBackgroundColor(to: Colors.raven)
-        startButton2.changeBackgroundColor(to: Colors.raven)
-        startButton3.changeBackgroundColor(to: Colors.raven)
-        startButton4.changeBackgroundColor(to: Colors.raven)
+        testExerciseButton.changeBackgroundColor(to: Colors.raven)
+        writingExerciseButton.changeBackgroundColor(to: Colors.raven)
+        listeningExerciseButton.changeBackgroundColor(to: Colors.raven)
+        cardExerciseButton.changeBackgroundColor(to: Colors.raven)
     }
    
     func setupSearchBar() {
@@ -208,11 +214,19 @@ class WordsViewController: UIViewController {
     }
     
     func setupCornerRadius() {
-        startButton.setButtonCornerRadius(10)
-        startButton2.setButtonCornerRadius(10)
-        startButton3.setButtonCornerRadius(10)
-        startButton4.setButtonCornerRadius(10)
+        testExerciseButton.setButtonCornerRadius(10)
+        writingExerciseButton.setButtonCornerRadius(10)
+        listeningExerciseButton.setButtonCornerRadius(10)
+        cardExerciseButton.setButtonCornerRadius(10)
         tableView.setViewCornerRadius(10)
+    }
+    
+    func configureLabel(_ label: UILabel, _ text: String){
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = Colors.black
+        label.text = text
+        label.font = UIFont(name: "AvenirNext-Regular", size: 13)
+        label.numberOfLines = 1
     }
     
     func setupBackgroundColor(){
@@ -238,15 +252,15 @@ class WordsViewController: UIViewController {
     }
     
     func setupButtons(){
-        setupButtonImage(startButton, imageName: "firstStartImage", width: 30, height: 15)
-        setupButtonImage(startButton2, imageName: "secondStartImage", width: 30, height: 15)
-        setupButtonImage(startButton3, imageName: "thirdStartImage", width: 30, height: 15)
-        setupButtonImage(startButton4, imageName: "card", width: 30, height: 15)
+        setupButtonImage(testExerciseButton, imageName: "firstStartImage", width: 30, height: 15)
+        setupButtonImage(writingExerciseButton, imageName: "secondStartImage", width: 30, height: 15)
+        setupButtonImage(listeningExerciseButton, imageName: "thirdStartImage", width: 30, height: 15)
+        setupButtonImage(cardExerciseButton, imageName: "card", width: 30, height: 15)
         
-        setupButtonShadow(startButton)
-        setupButtonShadow(startButton2)
-        setupButtonShadow(startButton3)
-        setupButtonShadow(startButton4)
+        setupButtonShadow(testExerciseButton)
+        setupButtonShadow(writingExerciseButton)
+        setupButtonShadow(listeningExerciseButton)
+        setupButtonShadow(cardExerciseButton)
     }
     
     func setupButtonImage(_ button: UIButton, imageName: String, width: CGFloat, height: CGFloat){
@@ -501,27 +515,37 @@ extension WordsViewController {
         buttonStackView.spacing = 16
         buttonStackView.distribution = .fillEqually
         
-        startButton.translatesAutoresizingMaskIntoConstraints = false
-        startButton.addTarget(self, action: #selector(startPressed), for: .primaryActionTriggered)
+        testExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        testExerciseButton.addTarget(self, action: #selector(testExerciseButtonPressed), for: .primaryActionTriggered)
         
-        startButton2.translatesAutoresizingMaskIntoConstraints = false
-        startButton2.addTarget(self, action: #selector(startPressed2), for: .primaryActionTriggered)
+        writingExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        writingExerciseButton.addTarget(self, action: #selector(writingExerciseButtonPressed), for: .primaryActionTriggered)
         
-        startButton3.translatesAutoresizingMaskIntoConstraints = false
-        startButton3.addTarget(self, action: #selector(startPressed3), for: .primaryActionTriggered)
+        listeningExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        listeningExerciseButton.addTarget(self, action: #selector(listeningExerciseButtonPressed), for: .primaryActionTriggered)
         
-        startButton4.translatesAutoresizingMaskIntoConstraints = false
-        startButton4.addTarget(self, action: #selector(startPressed4), for: .primaryActionTriggered)
+        cardExerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        cardExerciseButton.addTarget(self, action: #selector(cardExerciseButtonPressed), for: .primaryActionTriggered)
+        
+        configureLabel(testExerciseLabel, "Test")
+        configureLabel(writingExerciseLabel, "Writing")
+        configureLabel(listeningExerciseLabel, "Listening")
+        configureLabel(cardExerciseLabel, "Card")
     }
     
     func layout(){
         tableViewStackView.addArrangedSubview(searchBar)
         tableViewStackView.addArrangedSubview(tableView)
         
-        buttonStackView.addArrangedSubview(startButton)
-        buttonStackView.addArrangedSubview(startButton2)
-        buttonStackView.addArrangedSubview(startButton3)
-        buttonStackView.addArrangedSubview(startButton4)
+        buttonStackView.addArrangedSubview(testExerciseButton)
+        buttonStackView.addArrangedSubview(writingExerciseButton)
+        buttonStackView.addArrangedSubview(listeningExerciseButton)
+        buttonStackView.addArrangedSubview(cardExerciseButton)
+        
+        view.addSubview(testExerciseLabel)
+        view.addSubview(writingExerciseLabel)
+        view.addSubview(listeningExerciseLabel)
+        view.addSubview(cardExerciseLabel)
         
         view.addSubview(tableViewStackView)
         view.addSubview(buttonStackView)
@@ -534,6 +558,18 @@ extension WordsViewController {
             
             buttonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            testExerciseLabel.topAnchor.constraint(equalTo: testExerciseButton.bottomAnchor, constant: 8),
+            testExerciseLabel.centerXAnchor.constraint(equalTo: testExerciseButton.centerXAnchor),
+            
+            writingExerciseLabel.topAnchor.constraint(equalTo: writingExerciseButton.bottomAnchor, constant: 8),
+            writingExerciseLabel.centerXAnchor.constraint(equalTo: writingExerciseButton.centerXAnchor),
+            
+            listeningExerciseLabel.topAnchor.constraint(equalTo: listeningExerciseButton.bottomAnchor, constant: 8),
+            listeningExerciseLabel.centerXAnchor.constraint(equalTo: listeningExerciseButton.centerXAnchor),
+            
+            cardExerciseLabel.topAnchor.constraint(equalTo: cardExerciseButton.bottomAnchor, constant: 8),
+            cardExerciseLabel.centerXAnchor.constraint(equalTo: cardExerciseButton.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
@@ -543,9 +579,9 @@ extension WordsViewController {
         UIView.transition(with: tableView, duration: 0.6,
                           options: .transitionCrossDissolve,
                           animations: {
-                            self.view.layoutIfNeeded()
+            self.view.layoutIfNeeded()
             self.tableViewStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
-            self.buttonStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -32).isActive = true
+            self.buttonStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -48).isActive = true
         })
     }
 }
