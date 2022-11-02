@@ -11,9 +11,19 @@ class DailyViewController: UIViewController {
         
     private let secondView = UIView()
     
-    private let questOneButton = UIButton()
-    private let questTwoButton = UIButton()
-    private let questThreeButton = UIButton()
+    private let taskOneButton = UIButton()
+    private let taskOneButtonBlueLayer = UIButton()
+    private let taskOneButtonRavenLayer = UIButton()
+    
+    private let taskTwoButton = UIButton()
+    private let taskTwoButtonBlueLayer = UIButton()
+    private let taskTwoButtonRavenLayer = UIButton()
+    
+    private let taskThreeButton = UIButton()
+    private let taskThreeButtonBlueLayer = UIButton()
+    private let taskThreeButtonRavenLayer = UIButton()
+    
+    private var taskButtonWidth:CGFloat = 0
     
     private let prizeButton = UIButton()
 
@@ -33,6 +43,11 @@ class DailyViewController: UIViewController {
         configureTabBar()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        taskButtonWidth = taskThreeButton.frame.width
+    }
+    
     private func style(){
         view.backgroundColor = Colors.cellLeft
         
@@ -40,29 +55,49 @@ class DailyViewController: UIViewController {
         secondView.backgroundColor = Colors.cellRight
         secondView.setViewCornerRadius(10)
         
-        configureButton(questOneButton, "Complete 10 Test Exercise")
-        configureButton(questTwoButton, "Complete 10 Writing Exercise")
-        configureButton(questThreeButton, "Complete 10 Listening Exercise")
+        configureButton(taskOneButton, "Complete 10 Test Exercise")
+        configureButton(taskTwoButton, "Complete 10 Writing Exercise")
+        configureButton(taskThreeButton, "Complete 10 Listening Exercise")
         configureButton(prizeButton, "")
         
-        questOneButton.setImageWithRenderingMode(imageName: "checkGreen", width: 25, height: 25, color: .white)
-        questTwoButton.setImageWithRenderingMode(imageName: "checkGreen", width: 25, height: 25, color: .white)
-        questThreeButton.setImageWithRenderingMode(imageName: "checkGreen", width: 25, height: 25, color: .white)
+        taskOneButton.setImageWithRenderingMode(imageName: "checkGreen", width: 25, height: 25, color: .white)
+        taskTwoButton.setImageWithRenderingMode(imageName: "checkGreen", width: 25, height: 25, color: .white)
+        taskThreeButton.setImageWithRenderingMode(imageName: "checkGreen", width: 25, height: 25, color: .white)
         
-        questOneButton.moveImageTitleLeft()
-        questTwoButton.moveImageTitleLeft()
-        questThreeButton.moveImageTitleLeft()
+        taskOneButton.moveImageTitleLeft()
+        taskTwoButton.moveImageTitleLeft()
+        taskThreeButton.moveImageTitleLeft()
+        
+        taskOneButton.addTarget(self, action: #selector(taskOneButtonPressed), for: .primaryActionTriggered)
+        taskTwoButton.addTarget(self, action: #selector(taskTwoButtonPressed), for: .primaryActionTriggered)
+        taskThreeButton.addTarget(self, action: #selector(taskThreeButtonPressed), for: .primaryActionTriggered)
         
         prizeButton.setImage(imageName: "wheel_prize_present", width: 128, height: 128)
         prizeButton.backgroundColor = .clear
         prizeButton.alpha = 0.5
+        
+        configureLayerButton(taskOneButtonBlueLayer, Colors.blue)
+        configureLayerButton(taskOneButtonRavenLayer, Colors.raven)
+        
+        configureLayerButton(taskTwoButtonBlueLayer, Colors.blue)
+        configureLayerButton(taskTwoButtonRavenLayer, Colors.raven)
+        
+        configureLayerButton(taskThreeButtonBlueLayer, Colors.blue)
+        configureLayerButton(taskThreeButtonRavenLayer, Colors.raven)
     }
     
     private func layout(){
-
-        secondView.addSubview(questOneButton)
-        secondView.addSubview(questTwoButton)
-        secondView.addSubview(questThreeButton)
+        secondView.addSubview(taskOneButtonRavenLayer)
+        secondView.addSubview(taskOneButtonBlueLayer)
+        secondView.addSubview(taskOneButton)
+        
+        secondView.addSubview(taskTwoButtonRavenLayer)
+        secondView.addSubview(taskTwoButtonBlueLayer)
+        secondView.addSubview(taskTwoButton)
+        
+        secondView.addSubview(taskThreeButtonRavenLayer)
+        secondView.addSubview(taskThreeButtonBlueLayer)
+        secondView.addSubview(taskThreeButton)
         
         secondView.addSubview(prizeButton)
         
@@ -76,32 +111,87 @@ class DailyViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            questOneButton.topAnchor.constraint(equalTo: secondView.topAnchor, constant: 32),
-            questOneButton.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
-            questOneButton.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
-            questOneButton.heightAnchor.constraint(equalToConstant: 66),
+            taskOneButtonRavenLayer.topAnchor.constraint(equalTo: secondView.topAnchor, constant: 32),
+            taskOneButtonRavenLayer.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
+            taskOneButtonRavenLayer.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
+            taskOneButtonRavenLayer.heightAnchor.constraint(equalToConstant: 66),
+            
+            taskOneButtonBlueLayer.topAnchor.constraint(equalTo: taskOneButtonRavenLayer.topAnchor),
+            taskOneButtonBlueLayer.leadingAnchor.constraint(equalTo: taskOneButtonRavenLayer.leadingAnchor),
+            taskOneButtonBlueLayer.trailingAnchor.constraint(equalTo: taskOneButtonRavenLayer.trailingAnchor, constant: -279),
+            taskOneButtonBlueLayer.heightAnchor.constraint(equalTo: taskOneButtonRavenLayer.heightAnchor),
+            
+            taskOneButton.topAnchor.constraint(equalTo: taskOneButtonRavenLayer.topAnchor),
+            taskOneButton.leadingAnchor.constraint(equalTo: taskOneButtonRavenLayer.leadingAnchor),
+            taskOneButton.trailingAnchor.constraint(equalTo: taskOneButtonRavenLayer.trailingAnchor),
+            taskOneButton.heightAnchor.constraint(equalTo: taskOneButtonRavenLayer.heightAnchor)
         ])
        
         NSLayoutConstraint.activate([
-            questTwoButton.topAnchor.constraint(equalTo: questOneButton.bottomAnchor, constant: 16),
-            questTwoButton.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
-            questTwoButton.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
-            questTwoButton.heightAnchor.constraint(equalToConstant: 66),
+            taskTwoButtonRavenLayer.topAnchor.constraint(equalTo: taskOneButtonRavenLayer.bottomAnchor, constant: 16),
+            taskTwoButtonRavenLayer.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
+            taskTwoButtonRavenLayer.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
+            taskTwoButtonRavenLayer.heightAnchor.constraint(equalToConstant: 66),
+            
+            taskTwoButtonBlueLayer.topAnchor.constraint(equalTo: taskTwoButtonRavenLayer.topAnchor),
+            taskTwoButtonBlueLayer.leadingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.leadingAnchor),
+            taskTwoButtonBlueLayer.trailingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.trailingAnchor, constant: -139),
+            taskTwoButtonBlueLayer.heightAnchor.constraint(equalTo: taskTwoButtonRavenLayer.heightAnchor),
+            
+            taskTwoButton.topAnchor.constraint(equalTo: taskTwoButtonRavenLayer.topAnchor),
+            taskTwoButton.leadingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.leadingAnchor),
+            taskTwoButton.trailingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.trailingAnchor),
+            taskTwoButton.heightAnchor.constraint(equalTo: taskTwoButtonRavenLayer.heightAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            questThreeButton.topAnchor.constraint(equalTo: questTwoButton.bottomAnchor, constant: 16),
-            questThreeButton.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
-            questThreeButton.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
-            questThreeButton.heightAnchor.constraint(equalToConstant: 66),
+            taskThreeButtonRavenLayer.topAnchor.constraint(equalTo: taskTwoButtonRavenLayer.bottomAnchor, constant:16),
+            taskThreeButtonRavenLayer.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
+            taskThreeButtonRavenLayer.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
+            taskThreeButtonRavenLayer.heightAnchor.constraint(equalToConstant: 66),
+            
+            taskThreeButtonBlueLayer.topAnchor.constraint(equalTo: taskThreeButtonRavenLayer.topAnchor),
+            taskThreeButtonBlueLayer.leadingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.leadingAnchor),
+            taskThreeButtonBlueLayer.trailingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.trailingAnchor, constant: -27),
+            taskThreeButtonBlueLayer.heightAnchor.constraint(equalTo: taskThreeButtonRavenLayer.heightAnchor),
+            
+            taskThreeButton.topAnchor.constraint(equalTo: taskThreeButtonRavenLayer.topAnchor),
+            taskThreeButton.leadingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.leadingAnchor),
+            taskThreeButton.trailingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.trailingAnchor),
+            taskThreeButton.heightAnchor.constraint(equalTo: taskThreeButtonRavenLayer.heightAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            prizeButton.topAnchor.constraint(equalTo: questThreeButton.bottomAnchor, constant: 32),
+            prizeButton.topAnchor.constraint(equalTo: taskThreeButtonRavenLayer.bottomAnchor, constant: 32),
             prizeButton.centerXAnchor.constraint(equalTo: secondView.centerXAnchor),
             prizeButton.widthAnchor.constraint(equalToConstant: 128),
             prizeButton.heightAnchor.constraint(equalToConstant: 128),
         ])
+    }
+    
+    @objc func taskOneButtonPressed(){
+        UserDefault.startPressed.set(1)
+        pushExerciseViewController()
+    }
+    
+    @objc func taskTwoButtonPressed(){
+        UserDefault.startPressed.set(2)
+        pushExerciseViewController()
+    }
+    
+    @objc func taskThreeButtonPressed(){
+        UserDefault.startPressed.set(3)
+        pushExerciseViewController()
+    }
+    
+    func pushExerciseViewController(){
+        self.navigationController?.pushViewController(ExerciseViewController(), animated: true)
+    }
+    
+    func configureLayerButton(_ button: UIButton, _ color: UIColor?) {
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setButtonCornerRadius(8)
+        button.backgroundColor = color
     }
     
     func configureButton(_ button: UIButton, _ text: String){
@@ -109,7 +199,7 @@ class DailyViewController: UIViewController {
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
         button.setButtonCornerRadius(8)
-        button.backgroundColor = Colors.blue
+       // button.backgroundColor = UIColor(hex: "#d9d9d9")
     }
     
     func configureNavigationBar(){
