@@ -23,6 +23,8 @@ class ViewController: UIViewController, LevelDelegate {
     let wordsButton = UIButton()
     let hardWordsButton = UIButton()
     
+    let dropButton = UIButton()
+    
     let xButton = UIButton()
     let xLabel = UILabel()
         
@@ -120,6 +122,11 @@ class ViewController: UIViewController, LevelDelegate {
     }
     
     @objc func newWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
+        
+        newWordsButton.setImage(imageName: "onlyHand", width: 35, height: 35)
+        dropButton.setImage(imageName: "drop", width: 7, height: 7)
+        dropButton.animateDropDown()
+        
         UserDefault.startPressed.set(1)
         UserDefault.whichButton.set("normal")
         goAddPage = 1
@@ -287,6 +294,7 @@ class ViewController: UIViewController, LevelDelegate {
         newWordsButton.setImage(imageName: "new", width: 35, height: 35)
         wordsButton.setImage(imageName: "bank", width: 40, height: 40)
         hardWordsButton.setImage(imageName: "hard", width: 35, height: 35)
+        dropButton.setImage(imageName: "empty", width: 7, height: 7)
         
         xButton.setImage(imageName: "x2", width: 45, height: 45)
     }
@@ -404,6 +412,8 @@ extension ViewController {
         xButton.translatesAutoresizingMaskIntoConstraints = false
         xButton.addTarget(self, action: #selector(xButtonPressed), for: .primaryActionTriggered)
         
+        dropButton.translatesAutoresizingMaskIntoConstraints = false
+        
         xLabel.translatesAutoresizingMaskIntoConstraints = false
         xLabel.textColor = Colors.f6f6f6
         xLabel.text = "2x"
@@ -428,6 +438,8 @@ extension ViewController {
         view.addSubview(newWordsButton)
         view.addSubview(wordsButton)
         view.addSubview(hardWordsButton)
+        
+        view.addSubview(dropButton)
         
         view.addSubview(xButton)
         view.addSubview(xLabel)
@@ -465,6 +477,9 @@ extension ViewController {
             
             hardWordsButton.centerXAnchor.constraint(equalTo: hardCP.centerXAnchor),
             hardWordsButton.centerYAnchor.constraint(equalTo: hardCP.centerYAnchor),
+            
+            dropButton.centerXAnchor.constraint(equalTo: newWordCP.centerXAnchor, constant: 1),
+            dropButton.centerYAnchor.constraint(equalTo: newWordCP.centerYAnchor, constant: 16),
             
             xButton.centerYAnchor.constraint(equalTo: levelCP.centerYAnchor),
             xButton.centerXAnchor.constraint(equalTo: levelCP.centerXAnchor, constant: -100),

@@ -61,13 +61,26 @@ extension UIButton {
         layer.add(shake, forKey: nil)
     }
     
-    func animateDown(){
+    func animateCoinDown(){
         let animation = CABasicAnimation(keyPath: "position")
         animation.fromValue = CGPoint(x: center.x , y: center.y)
         animation.toValue = CGPoint(x: center.x, y:  4*center.y)
         animation.duration = 1
         animation.fillMode = .forwards
         layer.add(animation, forKey: nil)
+    }
+    
+    func animateDropDown(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.fromValue = CGPoint(x: center.x , y: center.y)
+        animation.toValue = CGPoint(x: center.x, y:  center.y+99)
+        animation.duration = 0.5
+        animation.fillMode = .forwards
+        layer.add(animation, forKey: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.45){
+            self.setImage(imageName: "empty", width: 7, height: 7)
+        }
     }
     
     func alignVertical(spacing: CGFloat = 6.0) {

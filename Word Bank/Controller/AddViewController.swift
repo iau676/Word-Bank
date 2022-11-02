@@ -254,7 +254,7 @@ extension AddViewController {
     }
     
     @objc func animateDown(){
-        coinButton.animateDown()
+        coinButton.animateCoinDown()
     }
 
     @objc func deleteButtonBackgroundImage(){
