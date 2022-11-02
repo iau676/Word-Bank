@@ -22,12 +22,8 @@ class ViewController: UIViewController, LevelDelegate {
     let newWordsButton = UIButton()
     let wordsButton = UIButton()
     let hardWordsButton = UIButton()
-    
     let dropButton = UIButton()
-    
-    let xButton = UIButton()
-    let xLabel = UILabel()
-        
+            
     let levelCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let newWordCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     let wordsCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
@@ -146,12 +142,6 @@ class ViewController: UIViewController, LevelDelegate {
         UserDefault.whichButton.set("hard")
         flipCP(button: hardWordsButton, cp: hardCP)
         performSegue(identifier: "goWords", second: 0.4)
-    }
-    
-    @objc func xButtonPressed(gesture: UISwipeGestureRecognizer) {
-        let vc = X2HourViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: false)
     }
     
     @objc func appendDefaultWords() {
@@ -295,8 +285,6 @@ class ViewController: UIViewController, LevelDelegate {
         wordsButton.setImage(imageName: "bank", width: 40, height: 40)
         hardWordsButton.setImage(imageName: "hard", width: 35, height: 35)
         dropButton.setImage(imageName: "empty", width: 7, height: 7)
-        
-        xButton.setImage(imageName: "x2", width: 45, height: 45)
     }
     
     func setupButtonShadow(_ button: UIButton, shadowColor: UIColor?){
@@ -347,12 +335,9 @@ class ViewController: UIViewController, LevelDelegate {
 
     func check2xTime(){
         if UserDefault.lastHour.getInt() == UserDefault.userSelectedHour.getInt() {
-            xButton.isHidden = false
-            xLabel.isHidden = false
-            xButton.pulstate()
+          
         } else {
-            xButton.isHidden = true
-            xLabel.isHidden = true
+            
         }
     }
     
@@ -409,15 +394,7 @@ extension ViewController {
         hardWordsButton.translatesAutoresizingMaskIntoConstraints = false
         hardWordsButton.addTarget(self, action: #selector(hardWordsButtonPressed), for: .primaryActionTriggered)
         
-        xButton.translatesAutoresizingMaskIntoConstraints = false
-        xButton.addTarget(self, action: #selector(xButtonPressed), for: .primaryActionTriggered)
-        
         dropButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        xLabel.translatesAutoresizingMaskIntoConstraints = false
-        xLabel.textColor = Colors.f6f6f6
-        xLabel.text = "2x"
-        xLabel.font = UIFont(name: "ArialRoundedMTBold", size: 25)
     }
     
     func layout() {
@@ -438,11 +415,7 @@ extension ViewController {
         view.addSubview(newWordsButton)
         view.addSubview(wordsButton)
         view.addSubview(hardWordsButton)
-        
         view.addSubview(dropButton)
-        
-        view.addSubview(xButton)
-        view.addSubview(xLabel)
         
         levelCP.center = CGPoint(x: view.center.x, y: view.center.y-121)
         newWordCP.center = CGPoint(x: view.center.x, y: view.center.y)
@@ -480,12 +453,6 @@ extension ViewController {
             
             dropButton.centerXAnchor.constraint(equalTo: newWordCP.centerXAnchor, constant: 1),
             dropButton.centerYAnchor.constraint(equalTo: newWordCP.centerYAnchor, constant: 16),
-            
-            xButton.centerYAnchor.constraint(equalTo: levelCP.centerYAnchor),
-            xButton.centerXAnchor.constraint(equalTo: levelCP.centerXAnchor, constant: -100),
-            
-            xLabel.centerXAnchor.constraint(equalTo: xButton.centerXAnchor),
-            xLabel.centerYAnchor.constraint(equalTo: xButton.centerYAnchor),
         ])
         
         NSLayoutConstraint.activate([
