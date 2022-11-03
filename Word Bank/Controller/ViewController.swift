@@ -111,7 +111,7 @@ class ViewController: UIViewController, LevelDelegate {
     }
     
     @objc func exerciseButtonPressed(gesture: UISwipeGestureRecognizer) {
-        UserDefault.whichButton.set("normal")
+        UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
         flipCP(button: exerciseButton, cp: exerciseCP)
         performSegue(identifier: "goExercise", second: 0.4)
@@ -119,12 +119,12 @@ class ViewController: UIViewController, LevelDelegate {
     
     @objc func newWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         
-        newWordsButton.setImage(imageName: "onlyHand", width: 35, height: 35)
-        dropButton.setImage(imageName: "drop", width: 7, height: 7)
+        newWordsButton.setImage(image: Images.onlyHand, width: 35, height: 35)
+        dropButton.setImage(image: Images.drop, width: 7, height: 7)
         dropButton.animateDropDown()
         
         UserDefault.startPressed.set(1)
-        UserDefault.whichButton.set("normal")
+        UserDefault.whichButton.set(ExerciseType.normal)
         goAddPage = 1
         viewDidLayoutSubviews()
         flipCP(button: newWordsButton, cp: newWordCP)
@@ -132,14 +132,14 @@ class ViewController: UIViewController, LevelDelegate {
     }
     
     @objc func wordsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        UserDefault.whichButton.set("normal")
+        UserDefault.whichButton.set(ExerciseType.normal)
         goAddPage = 0
         flipCP(button: wordsButton, cp: wordsCP)
         performSegue(identifier: "goWords", second: 0.4)
     }
     
     @objc func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        UserDefault.whichButton.set("hard")
+        UserDefault.whichButton.set(ExerciseType.hard)
         flipCP(button: hardWordsButton, cp: hardCP)
         performSegue(identifier: "goWords", second: 0.4)
     }
@@ -280,11 +280,11 @@ class ViewController: UIViewController, LevelDelegate {
     }
  
     func setupButtons(){
-        exerciseButton.setImage(imageName: "wheelicon", width: 35, height: 35)
-        newWordsButton.setImage(imageName: "new", width: 35, height: 35)
-        wordsButton.setImage(imageName: "bank", width: 40, height: 40)
-        hardWordsButton.setImage(imageName: "hard", width: 35, height: 35)
-        dropButton.setImage(imageName: "empty", width: 7, height: 7)
+        exerciseButton.setImage(image: Images.wheelicon, width: 35, height: 35)
+        newWordsButton.setImage(image: Images.new, width: 35, height: 35)
+        wordsButton.setImage(image: Images.bank, width: 40, height: 40)
+        hardWordsButton.setImage(image: Images.hard, width: 35, height: 35)
+        dropButton.setImage(image: UIImage(), width: 7, height: 7)
     }
     
     func setupButtonShadow(_ button: UIButton, shadowColor: UIColor?){
@@ -479,11 +479,11 @@ extension ViewController {
         tabBarStackView.spacing = 0
         tabBarStackView.distribution = .fillEqually
         
-        homeButton.configureForTabBar(imageName: "home", title: "Home", titleColor: Colors.blue ?? .blue, imageWidth: 25, imageHeight: 25)
-        dailyButton.configureForTabBar(imageName: "dailyQuest", title: "Daily", titleColor: .darkGray, imageWidth: 26, imageHeight: 26)
-        awardButton.configureForTabBar(imageName: "award", title: "Awards", titleColor: .darkGray, imageWidth: 27, imageHeight: 27)
-        statisticButton.configureForTabBar(imageName: "statistic", title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        settingsButton.configureForTabBar(imageName: "settingsImage", title: "Settings", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
+        homeButton.configureForTabBar(image: Images.home, title: "Home", titleColor: Colors.blue ?? .blue, imageWidth: 25, imageHeight: 25)
+        dailyButton.configureForTabBar(image: Images.daily, title: "Daily", titleColor: .darkGray, imageWidth: 26, imageHeight: 26)
+        awardButton.configureForTabBar(image: Images.award, title: "Awards", titleColor: .darkGray, imageWidth: 27, imageHeight: 27)
+        statisticButton.configureForTabBar(image: Images.statistic, title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
+        settingsButton.configureForTabBar(image: Images.settings, title: "Settings", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
         
         dailyButton.addTarget(self, action: #selector(dailyButtonPressed), for: .primaryActionTriggered)
         awardButton.addTarget(self, action: #selector(awardButtonPressed), for: .primaryActionTriggered)

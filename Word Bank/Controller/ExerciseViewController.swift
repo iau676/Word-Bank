@@ -30,7 +30,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     var hint = ""
     var letterCounter = 0
-    var totalQuestionNumber = 20
+    var totalQuestionNumber = 5
     var failNumber: [Int] = []
     var failIndex: [Int] = []
     var itemArray: [Item] { return wordBrain.itemArray }
@@ -91,7 +91,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         if answerForStart23.lowercased() == sender.text!.lowercased() {
             checkAnswerQ(nil,sender.text!)
             textField.text = ""
-            bubbleButton.setImage(imageName: "empty", width: 0, height: 0)
+            bubbleButton.setImage(image: UIImage(), width: 0, height: 0)
             wordBrain.answerTrue()
         }
     }
@@ -130,7 +130,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             bubbleButton.setTitle("", for: UIControl.State.normal)
             
             if whichStartPressed == 3 {
-                bubbleButton.setImage(imageName: "sound", width: 66, height: 66)
+                bubbleButton.setImage(image: Images.sound, width: 66, height: 66)
             } else {
                 bubbleButton.isHidden=true
             }
@@ -175,7 +175,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     @objc func hideBubbleButton(){
         if whichStartPressed == 3 {
             bubbleButton.setTitle("", for: UIControl.State.normal)
-            bubbleButton.setImage(imageName: "sound", width: 66, height: 66)
+            bubbleButton.setImage(image: Images.sound, width: 66, height: 66)
         } else {
             bubbleButton.isHidden = true
         }
@@ -246,7 +246,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     func configureBackBarButton(){
         let backButton: UIButton = UIButton()
-        let image = UIImage(named: "arrow_back");
+        let image = Images.arrow_back
         backButton.setImage(image, for: .normal)
         backButton.setTitle(" Back", for: .normal);
         backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
@@ -263,10 +263,10 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         
         if whichStartPressed == 1 {
             textFieldStackView.isHidden = true
-            soundButton.setImage(imageName: "soundLeft", width: 40, height: 40)
+            soundButton.setImage(image: Images.soundLeft, width: 40, height: 40)
         } else {
             answerStackView.isHidden = true
-            soundButton.setImage(imageName: "question", width: 35, height: 35)
+            soundButton.setImage(image: Images.question, width: 35, height: 35)
         }
         
         if whichStartPressed == 3 {
@@ -332,7 +332,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             letterCounter += 1
             hintLabel.text = hint
             decreaseOnePoint()
-            player.playMP3("beep")
+            player.playMP3(Sounds.beep)
         } else {
             hintLabel.textColor = Colors.green
             hintLabel.flash()
@@ -358,7 +358,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             userGotItRight = wordBrain.checkAnswer(userAnswer: userAnswer)
         } else {
             userGotItRight = answerForStart23.lowercased() == userAnswer.lowercased()
-            if whichButton == "hard" {
+            if whichButton == ExerciseType.hard {
                 wordBrain.arrayForResultView()
             }
         }
@@ -392,9 +392,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         }
         
         if userGotItRight {
-            player.playMP3("true")
+            player.playMP3(Sounds.truee)
             
-            if whichButton == "normal" {
+            if whichButton == ExerciseType.normal {
                 wordBrain.userGotItCorrect()
             } else {
                 if wordBrain.updateCorrectCountHardWord() { questionCount = totalQuestionNumber }
@@ -412,9 +412,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             
             UserDefault.lastPoint.set(lastPoint+exercisePoint)
         } else {
-            player.playMP3("false")
+            player.playMP3(Sounds.falsee)
             
-            if whichButton == "normal" {
+            if whichButton == ExerciseType.normal {
                 wordBrain.userGotItWrong()
             } else {
                 wordBrain.updateWrongCountHardWords()
@@ -449,7 +449,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         bubbleButton.isHidden = false
         
         bubbleButton.setTitleColor(Colors.red, for: .normal)
-        bubbleButton.setImage(imageName: "empty", width: 0, height: 0)
+        bubbleButton.setImage(image: UIImage(), width: 0, height: 0)
         bubbleButton.setTitle(String(-1), for: UIControl.State.normal)
         userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)
         

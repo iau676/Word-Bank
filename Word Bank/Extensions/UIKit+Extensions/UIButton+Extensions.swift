@@ -79,7 +79,7 @@ extension UIButton {
         layer.add(animation, forKey: nil)
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.45){
-            self.setImage(imageName: "empty", width: 7, height: 7)
+            self.setImage(image: UIImage(), width: 7, height: 7)
         }
     }
     
@@ -93,13 +93,13 @@ extension UIButton {
                 }
     }
     
-    func setImage(imageName: String, width: CGFloat, height: CGFloat){
+    func setImage(image: UIImage?, width: CGFloat, height: CGFloat){
         self.setImage(UIGraphicsImageRenderer(size: CGSize(width: width, height: height)).image { _ in
-            UIImage(named: imageName)?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }, for: .normal)
+            image?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }, for: .normal)
     }
     
-    func setImageWithRenderingMode(imageName: String, width: CGFloat, height: CGFloat, color: UIColor){
-        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).imageResized(to: CGSize(width: width, height: height)).withTintColor(color)
+    func setImageWithRenderingMode(image: UIImage?, width: CGFloat, height: CGFloat, color: UIColor){
+        let image = image?.withRenderingMode(.alwaysTemplate).imageResized(to: CGSize(width: width, height: height)).withTintColor(color)
         self.setImage(image, for: .normal)
     }
     
@@ -131,13 +131,13 @@ extension UIButton {
         }
     }
     
-    func configureForTabBar(imageName: String, title: String, titleColor: UIColor, imageWidth: CGFloat, imageHeight: CGFloat){
+    func configureForTabBar(image: UIImage?, title: String, titleColor: UIColor, imageWidth: CGFloat, imageHeight: CGFloat){
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .white
         self.setTitle(title, for: .normal)
         self.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
         self.setTitleColor(titleColor, for: .normal)
-        self.setImageWithRenderingMode(imageName: imageName, width: imageWidth, height: imageHeight, color: titleColor)
+        self.setImageWithRenderingMode(image: image, width: imageWidth, height: imageHeight, color: titleColor)
         self.alignTextBelow()
     }
     

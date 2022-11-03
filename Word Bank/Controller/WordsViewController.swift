@@ -152,7 +152,7 @@ class WordsViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
             break
         case .left:
-            if whichButton == "normal" { performSegue(withIdentifier: "goAdd", sender: self) }
+            if whichButton == ExerciseType.normal { performSegue(withIdentifier: "goAdd", sender: self) }
             break
         default: break
         }
@@ -167,7 +167,7 @@ class WordsViewController: UIViewController {
     }
     
     func updateView(){
-        if whichButton == "normal" {
+        if whichButton == ExerciseType.normal {
             searchBar.updateSearchBarVisibility(false)
             tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         } else {
@@ -232,7 +232,7 @@ class WordsViewController: UIViewController {
     func setupBackgroundColor(){
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
-        if whichButton == "normal" {
+        if whichButton == ExerciseType.normal {
             gradient.colors = [Colors.blue!.cgColor, Colors.blueBottom!.cgColor]
         } else {
             gradient.colors = [Colors.yellow!.cgColor, Colors.yellowBottom!.cgColor]
@@ -244,7 +244,7 @@ class WordsViewController: UIViewController {
         let backButton = UIBarButtonItem()
         backButton.title = "Back"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-        if whichButton == "normal" {
+        if whichButton == ExerciseType.normal {
             title = "My Words"
         } else {
             title = "Hard Words"
@@ -252,10 +252,10 @@ class WordsViewController: UIViewController {
     }
     
     func setupButtons(){
-        setupButtonImage(testExerciseButton, imageName: "firstStartImage", width: 30, height: 15)
-        setupButtonImage(writingExerciseButton, imageName: "secondStartImage", width: 30, height: 15)
-        setupButtonImage(listeningExerciseButton, imageName: "thirdStartImage", width: 30, height: 15)
-        setupButtonImage(cardExerciseButton, imageName: "card", width: 30, height: 15)
+        setupButtonImage(testExerciseButton, image: Images.testExercise, width: 30, height: 15)
+        setupButtonImage(writingExerciseButton, image: Images.writingExercise, width: 30, height: 15)
+        setupButtonImage(listeningExerciseButton, image: Images.listeningExercise, width: 30, height: 15)
+        setupButtonImage(cardExerciseButton, image: Images.cardExercise, width: 30, height: 15)
         
         setupButtonShadow(testExerciseButton)
         setupButtonShadow(writingExerciseButton)
@@ -263,8 +263,8 @@ class WordsViewController: UIViewController {
         setupButtonShadow(cardExerciseButton)
     }
     
-    func setupButtonImage(_ button: UIButton, imageName: String, width: CGFloat, height: CGFloat){
-        button.setImage(imageName: imageName, width: width+textSize, height: height+textSize)
+    func setupButtonImage(_ button: UIButton, image: UIImage?, width: CGFloat, height: CGFloat){
+        button.setImage(image: image, width: width+textSize, height: height+textSize)
     }
     
     func setupButtonShadow(_ button: UIButton) {
@@ -276,19 +276,19 @@ class WordsViewController: UIViewController {
     }
 
     func checkGoAddPage(){
-        if goAddPage == 1 && whichButton == "normal"{
+        if goAddPage == 1 && whichButton == ExerciseType.normal{
             performSegue(withIdentifier: "goAdd", sender: self)
         }
     }
     
     func check2Items(){
-        let checkCount = (whichButton == "normal") ? itemArray.count : hardItemArray.count
+        let checkCount = (whichButton == ExerciseType.normal) ? itemArray.count : hardItemArray.count
         
         if checkCount < 2 {
             let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default) { (action) in
                 self.updateView()
-                if self.whichButton == "normal" {
+                if self.whichButton == ExerciseType.normal {
                     self.performSegue(withIdentifier: "goAdd", sender: self)
                 } else {
                     self.navigationController?.popToRootViewController(animated: true)
@@ -345,7 +345,7 @@ extension WordsViewController: UISearchBarDelegate {
 extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         updateSearchBarPlaceholder()
-        if whichButton == "normal" {
+        if whichButton == ExerciseType.normal {
             return itemArray.count
         } else {
             showAlertIfHardWordsEmpty()
@@ -363,7 +363,7 @@ extension WordsViewController: UITableViewDataSource {
         cell.trView.isHidden = false
         
         if itemArray.count > 0 {
-            if whichButton == "normal" {
+            if whichButton == ExerciseType.normal {
                 cell.engLabel.text = itemArray[indexPath.row].eng
                 cell.trLabel.text = itemArray[indexPath.row].tr
             } else {
@@ -421,7 +421,7 @@ extension WordsViewController: UITableViewDelegate {
             self.present(alert, animated: true, completion: nil)
             success(true)
         })
-        deleteAction.setImage(imageName: "bin", width: 25, height: 25)
+        deleteAction.setImage(image: Images.bin, width: 25, height: 25)
         deleteAction.setBackgroundColor(UIColor.systemRed)
         
         let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
@@ -434,7 +434,7 @@ extension WordsViewController: UITableViewDelegate {
             self.performSegue(withIdentifier: "goAdd", sender: self)
             success(true)
         })
-        editAction.setImage(imageName: "edit", width: 25, height: 25)
+        editAction.setImage(image: Images.edit, width: 25, height: 25)
         editAction.setBackgroundColor(Colors.lightBlue)
         
         let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
@@ -450,10 +450,10 @@ extension WordsViewController: UITableViewDelegate {
             }
             success(true)
         })
-        addAction.setImage(imageName: "plus", width: 25, height: 25)
+        addAction.setImage(image: Images.plus, width: 25, height: 25)
         addAction.setBackgroundColor(Colors.yellow)
         
-        if whichButton == "normal" {
+        if whichButton == ExerciseType.normal {
             if self.itemArray[indexPath.row].addedHardWords == true {
                 return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
             }

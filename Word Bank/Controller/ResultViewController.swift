@@ -82,8 +82,7 @@ class ResultViewController: UIViewController {
         
     //MARK: - Selectors
     
-    @objc func showWordsButtonPressed(_ sender: UIButton) {
-        self.tableView.reloadData()
+    @objc func addedHardWordsButtonPressed(_ sender: UIButton) {
     }
     
     @objc func homeButtonPressed(_ sender: UIButton) {
@@ -108,7 +107,7 @@ class ResultViewController: UIViewController {
     }
     
     func updateRefreshButtonVisibility(){
-        if UserDefault.whichButton.getString() == "hard" && UserDefault.hardWordsCount.getInt() < 2 {
+        if UserDefault.whichButton.getString() == ExerciseType.hard && UserDefault.hardWordsCount.getInt() < 2 {
             refreshButton.isHidden = true
         } else {
             refreshButton.isHidden = false
@@ -139,14 +138,14 @@ class ResultViewController: UIViewController {
     }
     
     func updateStatistic() {
-        if UserDefault.whichButton.getString() == "normal" {
+        if UserDefault.whichButton.getString() == ExerciseType.normal {
             UserDefault.exerciseCount.set(UserDefault.exerciseCount.getInt()+1)
             UserDefault.trueCount.set(UserDefault.trueCount.getInt()+numberOfTrue)
             UserDefault.falseCount.set(UserDefault.falseCount.getInt()+(userAnswer.count-numberOfTrue))
             if numberOfTrue == userAnswer.count {
                 UserDefault.allTrueCount.set(UserDefault.allTrueCount.getInt()+1)
             }
-            updateExerciseCount(exerciseType: "normal")
+            updateExerciseCount(exerciseType: ExerciseType.normal)
             updateUser()
         }
     }
@@ -168,19 +167,19 @@ class ResultViewController: UIViewController {
         switch whichStartPressed {
         case 1:
             UserDefault.testCount.set(UserDefault.testCount.getInt()+1)
-            wordBrain.addExercise(name: "test", type: exerciseType)
+            wordBrain.addExercise(name: ExerciseName.test, type: exerciseType)
             break
         case 2:
             UserDefault.writingCount.set(UserDefault.writingCount.getInt()+1)
-            wordBrain.addExercise(name: "writing", type: exerciseType)
+            wordBrain.addExercise(name: ExerciseName.writing, type: exerciseType)
             break
         case 3:
             UserDefault.listeningCount.set(UserDefault.listeningCount.getInt()+1)
-            wordBrain.addExercise(name: "listening", type: exerciseType)
+            wordBrain.addExercise(name: ExerciseName.listening, type: exerciseType)
             break
         case 4:
             UserDefault.cardCount.set(UserDefault.cardCount.getInt()+1)
-            wordBrain.addExercise(name: "card", type: exerciseType)
+            wordBrain.addExercise(name: ExerciseName.card, type: exerciseType)
             break
         default: break
         }
@@ -199,7 +198,7 @@ class ResultViewController: UIViewController {
             //showWordsButton.isHidden = whichStartPressed == 4 ?  true : false
             tableView.backgroundColor = .clear
             player.observeAppEvents()
-            player.setupPlayerIfNeeded(view: view, videoName: "newpoint")
+            player.setupPlayerIfNeeded(view: view, videoName: Videos.alltrue)
             player.restartVideo()
             confettiButton.isHidden = true
             scoreLabel.text = scoreLabelText
@@ -258,7 +257,7 @@ extension ResultViewController: UITableViewDataSource {
     
     func updateCellLabelText(_ cell: WordCell, _ index: Int){
         let i = arrayOfIndex[index]
-        if UserDefault.whichButton.getString() == "normal" {
+        if UserDefault.whichButton.getString() == ExerciseType.normal {
             if selectedSegmentIndex == 0 {
                 cell.engLabel.text = itemArray[i].eng
                 cell.trLabel.text = itemArray[i].tr
@@ -308,7 +307,7 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
-        if UserDefault.whichButton.getString() == "normal" {
+        if UserDefault.whichButton.getString() == ExerciseType.normal {
             cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
                                                           (selectedSegmentIndex == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
         } else {
@@ -363,10 +362,10 @@ extension ResultViewController: UITableViewDelegate {
             var word = ""
             
             switch UserDefault.whichButton.getString() {
-            case "normal":
+            case ExerciseType.normal:
                 word = itemArray[arrayOfIndex[indexPath.row]].eng ?? "empty"
                 break
-            case "hard":
+            case ExerciseType.hard:
                 word =  arrayForResultViewENG[indexPath.row]
                 break
             default: break
@@ -385,10 +384,10 @@ extension ResultViewController {
     
     func style(){
         confettiButton.translatesAutoresizingMaskIntoConstraints = false
-        confettiButton.setImage(imageName: "confetti", width: 66, height: 66)
+        confettiButton.setImage(image: Images.confetti, width: 66, height: 66)
         
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        scoreLabel.font = UIFont(name: "AvenirNext-Regular", size: textSize)
+        scoreLabel.font = UIFont(name: "AvenirNext-Medium", size: textSize+5)
         scoreLabel.textAlignment = .center
         scoreLabel.numberOfLines = 1
         
@@ -403,7 +402,7 @@ extension ResultViewController {
         addedHardWordsButton.backgroundColor = .clear
         addedHardWordsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: textSize)
         addedHardWordsButton.layer.cornerRadius = 10
-        addedHardWordsButton.addTarget(self, action: #selector(showWordsButtonPressed(_:)), for: .primaryActionTriggered)
+        addedHardWordsButton.addTarget(self, action: #selector(addedHardWordsButtonPressed(_:)), for: .primaryActionTriggered)
         
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         buttonStackView.axis = .horizontal

@@ -31,7 +31,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var userWordCountInt = 0
     var userWordCountIntVariable = 0 //fix userdefaults slow problem
     
-    var coinButtonImage: UIImage { return goEdit == 0 ? UIImage(named: "coin")! : UIImage(named: "checkGreen")!}
+    var coinButtonImage: UIImage { return goEdit == 0 ? Images.coin! : Images.check!}
     var coinButtonAnimation: UIView.AnimationOptions { return goEdit == 0 ? .transitionFlipFromTop : .transitionFlipFromLeft }
     
     var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
@@ -64,7 +64,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     @objc func addButtonPressed(_ sender: Any) {
         addButton.bounce()
         if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
-            player.playMP3("mario")
+            player.playMP3(Sounds.mario)
             if goEdit == 0 {
                 wordBrain.addWord(english: engTxtField.text!, meaning: trTxtField.text!)
                 UserDefault.userWordCount.set(userWordCountIntVariable+1)
@@ -157,7 +157,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
 
     func setupButtons(){
-        setupButton(button: addButton, buttonTitle: "", imageName: "plus", imageSize: 23, cornerRadius: 6)
+        setupButton(button: addButton, buttonTitle: "", image: Images.plus, imageSize: 23, cornerRadius: 6)
         coinButton.deleteBackgroundImage()
     }
     
@@ -188,9 +188,9 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func setupButton(button: UIButton, buttonTitle: String, imageName: String, imageSize: CGFloat=0, cornerRadius: Int){
+    func setupButton(button: UIButton, buttonTitle: String, image: UIImage?, imageSize: CGFloat=0, cornerRadius: Int){
         button.setTitle(buttonTitle, for: .normal)
-        button.setImage(imageName: imageName, width: imageSize, height: imageSize)
+        button.setImage(image: image, width: imageSize, height: imageSize)
         button.layer.cornerRadius = CGFloat(cornerRadius)
     }
     
@@ -210,7 +210,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         if goEdit == 1 {
             engTxtField.text = UserDefault.engEdit.getString()
             trTxtField.text = UserDefault.trEdit.getString()
-            setupButton(button: addButton, buttonTitle: "Save", imageName: "empty", imageSize: 0, cornerRadius: 6)
+            setupButton(button: addButton, buttonTitle: "Save", image: UIImage(), imageSize: 0, cornerRadius: 6)
         }
     }
     

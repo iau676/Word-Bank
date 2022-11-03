@@ -33,7 +33,7 @@ class NewPointViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         player.observeAppEvents()
-        player.setupPlayerIfNeeded(view: view, videoName: "dog")
+        player.setupPlayerIfNeeded(view: view, videoName: Videos.newpoint)
         player.restartVideo()
     }
     

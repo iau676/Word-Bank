@@ -59,13 +59,13 @@ class SpinWheel: SKSpriteNode {
         addChild(background)
 
         slots = [
-            ["123", "secondStartImage", "", "0", "44"],
-            ["12331", "firstStartImage", "", "45", "89"],
-            ["12331", "secondStartImage", "", "90", "134"],
-            ["12331", "firstStartImage", "", "135", "179"],
-            ["12331", "thirdStartImage", "", "180", "224"],
-            ["12331", "card", "", "225", "269"],
-            ["12331", "thirdStartImage", "", "270", "314"],
+            ["123", "writingExercise", "", "0", "44"],
+            ["12331","testExercise", "", "45", "89"],
+            ["12331", "writingExercise", "", "90", "134"],
+            ["12331", "testExercise", "", "135", "179"],
+            ["12331", "listeningExercise", "", "180", "224"],
+            ["12331", "cardExercise", "", "225", "269"],
+            ["12331", "listeningExercise", "", "270", "314"],
             ["a present", "wheel_prize_present", "", "315", "360"]
         ]
         createWheel()

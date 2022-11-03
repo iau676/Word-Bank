@@ -146,7 +146,7 @@ class CardViewController: UIViewController {
     
     func configureBackBarButton(){
         let backButton: UIButton = UIButton()
-        let image = UIImage(named: "arrow_back");
+        let image = Images.arrow_back
         backButton.setImage(image, for: .normal)
         backButton.setTitle(" Back", for: .normal);
         backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
@@ -169,9 +169,9 @@ class CardViewController: UIViewController {
         card.transform = CGAffineTransform(rotationAngle: xFromCenter/divisor)
         
         if xFromCenter > 0 {
-            imageView.image = UIImage(named: "checkGreen")
+            imageView.image = Images.check
         } else {
-            imageView.image = UIImage(named: "hard")?.withTintColor(Colors.yellow ?? .yellow).withRenderingMode(.alwaysOriginal)
+            imageView.image = Images.hard?.withTintColor(Colors.yellow ?? .yellow).withRenderingMode(.alwaysOriginal)
         }
         
         imageView.alpha = abs(xFromCenter) / view.center.x

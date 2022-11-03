@@ -36,6 +36,69 @@ enum Colors {
     static let darkGrayShadow            = UIColor(hex: "#444444")
 }
 
+enum ExerciseName {
+    static let test                      = "test"
+    static let writing                   = "writing"
+    static let listening                 = "listening"
+    static let card                      = "card"
+}
+
+enum ExerciseType {
+    static let normal                    = "normal"
+    static let hard                      = "hard"
+}
+
+enum Videos {
+    static let levelup                   = "levelup"
+    static let newpoint                  = "newpoint"
+    static let alltrue                   = "alltrue"
+}
+
+enum Sounds {
+    static let mario                     = "mario"
+    static let falsee                    = "false"
+    static let truee                     = "true"
+    static let beep                      = "beep"
+}
+
+
+enum Images {
+    static let check                     = UIImage(named: "check")
+    static let wheel_prize_present       = UIImage(named: "wheel_prize_present")
+    static let confetti                  = UIImage(named: "confetti")
+    static let arrow_back                = UIImage(named: "arrow_back")
+    static let coin                      = UIImage(named: "coin")
+    
+    static let home                      = UIImage(named: "home")
+    static let daily                     = UIImage(named: "daily")
+    static let award                     = UIImage(named: "award")
+    static let statistic                 = UIImage(named: "statistic")
+    static let settings                  = UIImage(named: "settings")
+    static let banner                    = UIImage(named: "banner")
+    
+    static let wheelicon                 = UIImage(named: "wheelicon")
+    static let new                       = UIImage(named: "new")
+    static let bank                      = UIImage(named: "bank")
+    static let hard                      = UIImage(named: "hard")
+    
+    static let onlyHand                  = UIImage(named: "onlyHand")
+    static let drop                      = UIImage(named: "drop")
+    
+    static let testExercise              = UIImage(named: "testExercise")
+    static let writingExercise           = UIImage(named: "writingExercise")
+    static let listeningExercise         = UIImage(named: "listeningExercise")
+    static let cardExercise              = UIImage(named: "cardExercise")
+    
+    static let sound                     = UIImage(named: "sound")
+    static let soundLeft                 = UIImage(named: "soundLeft")
+    static let soundBlack                = UIImage(named: "soundBlack")
+    static let question                  = UIImage(named: "question")
+    
+    static let plus                      = UIImage(named: "plus")
+    static let edit                      = UIImage(named: "edit")
+    static let bin                       = UIImage(named: "bin")
+}
+
 enum UserDefault {
     
     static var userInterfaceStyle        = ""

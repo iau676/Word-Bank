@@ -32,7 +32,7 @@ class LevelUpViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         player.observeAppEvents()
-        player.setupPlayerIfNeeded(view: view, videoName: "levelup")
+        player.setupPlayerIfNeeded(view: view, videoName: Videos.levelup)
         player.restartVideo()
     }
     

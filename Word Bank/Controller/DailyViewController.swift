@@ -64,9 +64,9 @@ class DailyViewController: UIViewController {
         configureButton(taskThreeButton, "Complete 10 Listening Exercise")
         configureButton(prizeButton, "")
         
-        taskOneButton.setImageWithRenderingMode(imageName: "checkGreen", width: 25, height: 25, color: .white)
-        taskTwoButton.setImageWithRenderingMode(imageName: "checkGreen", width: 25, height: 25, color: .white)
-        taskThreeButton.setImageWithRenderingMode(imageName: "checkGreen", width: 25, height: 25, color: .white)
+        taskOneButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
+        taskTwoButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
+        taskThreeButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
         
         taskOneButton.moveImageTitleLeft()
         taskTwoButton.moveImageTitleLeft()
@@ -76,7 +76,7 @@ class DailyViewController: UIViewController {
         taskTwoButton.addTarget(self, action: #selector(taskTwoButtonPressed), for: .primaryActionTriggered)
         taskThreeButton.addTarget(self, action: #selector(taskThreeButtonPressed), for: .primaryActionTriggered)
         
-        prizeButton.setImage(imageName: "wheel_prize_present", width: 128, height: 128)
+        prizeButton.setImage(image: Images.wheel_prize_present, width: 128, height: 128)
         prizeButton.backgroundColor = .clear
         prizeButton.alpha = 0.5
         
@@ -107,9 +107,9 @@ class DailyViewController: UIViewController {
         
         view.addSubview(secondView)
         
-        let taskOneBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict["test"] ?? 10)
-        let taskTwoBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict["writing"] ?? 10)
-        let taskThreeBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict["listening"] ?? 10)
+        let taskOneBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict[ExerciseName.test] ?? 0)
+        let taskTwoBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict[ExerciseName.writing] ?? 0)
+        let taskThreeBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict[ExerciseName.listening] ?? 0)
         
         NSLayoutConstraint.activate([
             secondView.topAnchor.constraint(equalTo: view.topAnchor, constant: 66),
@@ -247,11 +247,11 @@ extension DailyViewController {
         tabBarStackView.spacing = 0
         tabBarStackView.distribution = .fillEqually
         
-        homeButton.configureForTabBar(imageName: "home", title: "Home", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        dailyButton.configureForTabBar(imageName: "dailyQuest", title: "Daily", titleColor: Colors.blue ?? .blue, imageWidth: 26, imageHeight: 26)
-        awardButton.configureForTabBar(imageName: "award", title: "Awards", titleColor: .darkGray, imageWidth: 27, imageHeight: 27)
-        statisticButton.configureForTabBar(imageName: "statistic", title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        settingsButton.configureForTabBar(imageName: "settingsImage", title: "Settings", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
+        homeButton.configureForTabBar(image: Images.home, title: "Home", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
+        dailyButton.configureForTabBar(image: Images.daily, title: "Daily", titleColor: Colors.blue ?? .blue, imageWidth: 26, imageHeight: 26)
+        awardButton.configureForTabBar(image: Images.award, title: "Awards", titleColor: .darkGray, imageWidth: 27, imageHeight: 27)
+        statisticButton.configureForTabBar(image: Images.statistic, title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
+        settingsButton.configureForTabBar(image: Images.settings, title: "Settings", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
         
         homeButton.addTarget(self, action: #selector(homeButtonPressed), for: .primaryActionTriggered)
         awardButton.addTarget(self, action: #selector(awardsButtonPressed), for: .primaryActionTriggered)

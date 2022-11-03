@@ -66,8 +66,8 @@
 		70803513290C3BA600F1F93A /* StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70803512290C3BA600F1F93A /* StatisticViewController.swift */; };
 		7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */; };
 		7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081AB0127CCD15700E2996A /* NewPointViewController.swift */; };
-		7081AB0527CCD3CB00E2996A /* newpoint.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0427CCD3CB00E2996A /* newpoint.mp4 */; };
-		7081AB0727CCFA4300E2996A /* dog.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0627CCFA4300E2996A /* dog.mp4 */; };
+		7081AB0527CCD3CB00E2996A /* alltrue.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0427CCD3CB00E2996A /* alltrue.mp4 */; };
+		7081AB0727CCFA4300E2996A /* newpoint.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0627CCFA4300E2996A /* newpoint.mp4 */; };
 		708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD87288719D300E09AE1 /* Date+Extensions.swift */; };
 		708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD89288719F900E09AE1 /* UIView+Extensions.swift */; };
 		708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C0E1327A8894F00E9105F /* AddViewController.swift */; };
@@ -149,8 +149,8 @@
 		70803512290C3BA600F1F93A /* StatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewController.swift; sourceTree = "<group>"; };
 		7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7081AB0127CCD15700E2996A /* NewPointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPointViewController.swift; sourceTree = "<group>"; };
-		7081AB0427CCD3CB00E2996A /* newpoint.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = newpoint.mp4; sourceTree = "<group>"; };
-		7081AB0627CCFA4300E2996A /* dog.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dog.mp4; sourceTree = "<group>"; };
+		7081AB0427CCD3CB00E2996A /* alltrue.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = alltrue.mp4; sourceTree = "<group>"; };
+		7081AB0627CCFA4300E2996A /* newpoint.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = newpoint.mp4; sourceTree = "<group>"; };
 		708AFD87288719D300E09AE1 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		708AFD89288719F900E09AE1 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		708C0E1327A8894F00E9105F /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
@@ -332,8 +332,8 @@
 		70C357E62888330600F3AD86 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
-				7081AB0427CCD3CB00E2996A /* newpoint.mp4 */,
-				7081AB0627CCFA4300E2996A /* dog.mp4 */,
+				7081AB0427CCD3CB00E2996A /* alltrue.mp4 */,
+				7081AB0627CCFA4300E2996A /* newpoint.mp4 */,
 				7056C49D27AACA3100D0CA24 /* levelup.mp4 */,
 			);
 			path = Videos;
@@ -436,7 +436,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7081AB0527CCD3CB00E2996A /* newpoint.mp4 in Resources */,
+				7081AB0527CCD3CB00E2996A /* alltrue.mp4 in Resources */,
 				705D92F028F8A49B001C4F38 /* GameScene.sks in Resources */,
 				707106EF275A1E42005532D0 /* redBubble3.png in Resources */,
 				706CBAC227592F8E008B4773 /* LaunchScreen.storyboard in Resources */,
@@ -444,7 +444,7 @@
 				705D92EA28F89625001C4F38 /* woosh.aac in Resources */,
 				705D92E928F89625001C4F38 /* error.aac in Resources */,
 				707106F2275A1E42005532D0 /* redBubble2.png in Resources */,
-				7081AB0727CCFA4300E2996A /* dog.mp4 in Resources */,
+				7081AB0727CCFA4300E2996A /* newpoint.mp4 in Resources */,
 				705D92E428F89625001C4F38 /* bubble_pop.aac in Resources */,
 				702577DC280748DD0009FF65 /* kumbaram.png in Resources */,
 				709D3548276331FF001C3E56 /* Sounds in Resources */,

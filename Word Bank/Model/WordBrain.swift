@@ -118,7 +118,7 @@ struct WordBrain {
         loadItemArray()
 
         // these will be return a function
-        if UserDefault.whichButton.getString() == "normal" {
+        if UserDefault.whichButton.getString() == ExerciseType.normal {
                     
                     if itemArray.count > 200 {
                         switch whichQuestion {
@@ -178,7 +178,7 @@ struct WordBrain {
         questionNumbersCopy = questionNumbers
         questionNumbersCopy.remove(at: questionNumber)
   
-        if UserDefault.whichButton.getString() == "normal" {
+        if UserDefault.whichButton.getString() == ExerciseType.normal {
             if startPressed == 1 {
                 return selectedSegmentIndex == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr!
             } else {
@@ -194,7 +194,7 @@ struct WordBrain {
     } //getQuestionText
     
     func getAnswer() -> String{
-        if UserDefault.whichButton.getString() == "normal" {
+        if UserDefault.whichButton.getString() == ExerciseType.normal {
             return itemArray[questionNumber].eng!
         } else {
             return hardItemArray[questionNumber].eng!
@@ -208,7 +208,7 @@ struct WordBrain {
 
     mutating func getAnswer(_ sender: Int) -> String {
         if changedQuestionNumber % 2 == sender {
-            if UserDefault.whichButton.getString() == "normal" {
+            if UserDefault.whichButton.getString() == ExerciseType.normal {
                 return userSelectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
             } else {
                 return userSelectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
@@ -218,7 +218,7 @@ struct WordBrain {
                 answer = Int.random(in: 0..<questionNumbersCopy.count)
                 let temp = questionNumbersCopy[answer]
                      
-                if UserDefault.whichButton.getString() == "normal" {
+                if UserDefault.whichButton.getString() == ExerciseType.normal {
                     return userSelectedSegmentIndex == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
                 } else {
                     return userSelectedSegmentIndex == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
@@ -230,7 +230,7 @@ struct WordBrain {
     }
     
     mutating func nextQuestion() {
-        if UserDefault.whichButton.getString() == "normal" {
+        if UserDefault.whichButton.getString() == ExerciseType.normal {
             if questionNumber + 1 < itemArray.count {
                 questionNumber += 1
             } else {
@@ -247,7 +247,7 @@ struct WordBrain {
     
     mutating func checkAnswer(userAnswer: String) -> Bool {
         var trueAnswer = ""
-        if UserDefault.whichButton.getString() == "normal" {
+        if UserDefault.whichButton.getString() == ExerciseType.normal {
              trueAnswer = userSelectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
         } else {
              trueAnswer = userSelectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!

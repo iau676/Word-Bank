@@ -297,7 +297,7 @@ class CustomCell: UICollectionViewCell {
         button.setTitle("", for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
         button.backgroundColor = .clear
-        button.setImageWithRenderingMode(imageName: "banner", width: 100, height: 70, color: UIColor(hex: "#b9b9b9") ?? .darkGray)
+        button.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: UIColor(hex: "#b9b9b9") ?? .darkGray)
         return button
     }()
     
@@ -355,11 +355,11 @@ extension AwardsViewController {
         tabBarStackView.spacing = 0
         tabBarStackView.distribution = .fillEqually
         
-        homeButton.configureForTabBar(imageName: "home", title: "Home", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        dailyButton.configureForTabBar(imageName: "dailyQuest", title: "Daily", titleColor: .darkGray, imageWidth: 26, imageHeight: 26)
-        awardButton.configureForTabBar(imageName: "award", title: "Awards", titleColor: Colors.blue ?? .blue, imageWidth: 27, imageHeight: 27)
-        statisticButton.configureForTabBar(imageName: "statistic", title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        settingsButton.configureForTabBar(imageName: "settingsImage", title: "Settings", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
+        homeButton.configureForTabBar(image: Images.home, title: "Home", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
+        dailyButton.configureForTabBar(image: Images.daily, title: "Daily", titleColor: .darkGray, imageWidth: 26, imageHeight: 26)
+        awardButton.configureForTabBar(image: Images.award, title: "Awards", titleColor: Colors.blue ?? .blue, imageWidth: 27, imageHeight: 27)
+        statisticButton.configureForTabBar(image: Images.statistic, title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
+        settingsButton.configureForTabBar(image: Images.settings, title: "Settings", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
         
         homeButton.addTarget(self, action: #selector(homeButtonPressed), for: .primaryActionTriggered)
         dailyButton.addTarget(self, action: #selector(dailyButtonPressed), for: .primaryActionTriggered)
