@@ -22,10 +22,12 @@ class DailyViewController: UIViewController {
     private let taskThreeButton = UIButton()
     private let taskThreeButtonBlueLayer = UIButton()
     private let taskThreeButtonRavenLayer = UIButton()
-    
-    private var taskButtonWidth:CGFloat = 0
-    
+
     private let prizeButton = UIButton()
+    
+    private var wordBrain = WordBrain()
+    private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
+    private var exerciseDict = [String: Int]()
 
     //tabBar
     let tabBarStackView = UIStackView()
@@ -37,15 +39,17 @@ class DailyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        wordBrain.loadExerciseArray()
         configureNavigationBar()
         style()
-        layout()
         configureTabBar()
+        findCompletedExercises()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        taskButtonWidth = taskThreeButton.frame.width
+        let taskButtonWidth = taskOneButton.frame.width
+        layout(taskButtonWidth: taskButtonWidth)
     }
     
     private func style(){
@@ -86,7 +90,7 @@ class DailyViewController: UIViewController {
         configureLayerButton(taskThreeButtonRavenLayer, Colors.raven)
     }
     
-    private func layout(){
+    private func layout(taskButtonWidth: CGFloat){
         secondView.addSubview(taskOneButtonRavenLayer)
         secondView.addSubview(taskOneButtonBlueLayer)
         secondView.addSubview(taskOneButton)
@@ -103,6 +107,10 @@ class DailyViewController: UIViewController {
         
         view.addSubview(secondView)
         
+        let taskOneBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict["test"] ?? 10)
+        let taskTwoBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict["writing"] ?? 10)
+        let taskThreeBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict["listening"] ?? 10)
+        
         NSLayoutConstraint.activate([
             secondView.topAnchor.constraint(equalTo: view.topAnchor, constant: 66),
             secondView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
@@ -118,7 +126,7 @@ class DailyViewController: UIViewController {
             
             taskOneButtonBlueLayer.topAnchor.constraint(equalTo: taskOneButtonRavenLayer.topAnchor),
             taskOneButtonBlueLayer.leadingAnchor.constraint(equalTo: taskOneButtonRavenLayer.leadingAnchor),
-            taskOneButtonBlueLayer.trailingAnchor.constraint(equalTo: taskOneButtonRavenLayer.trailingAnchor, constant: -279),
+            taskOneButtonBlueLayer.trailingAnchor.constraint(equalTo: taskOneButtonRavenLayer.trailingAnchor, constant: -taskOneBlueLayerWidth),
             taskOneButtonBlueLayer.heightAnchor.constraint(equalTo: taskOneButtonRavenLayer.heightAnchor),
             
             taskOneButton.topAnchor.constraint(equalTo: taskOneButtonRavenLayer.topAnchor),
@@ -135,7 +143,7 @@ class DailyViewController: UIViewController {
             
             taskTwoButtonBlueLayer.topAnchor.constraint(equalTo: taskTwoButtonRavenLayer.topAnchor),
             taskTwoButtonBlueLayer.leadingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.leadingAnchor),
-            taskTwoButtonBlueLayer.trailingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.trailingAnchor, constant: -139),
+            taskTwoButtonBlueLayer.trailingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.trailingAnchor, constant: -taskTwoBlueLayerWidth),
             taskTwoButtonBlueLayer.heightAnchor.constraint(equalTo: taskTwoButtonRavenLayer.heightAnchor),
             
             taskTwoButton.topAnchor.constraint(equalTo: taskTwoButtonRavenLayer.topAnchor),
@@ -152,7 +160,7 @@ class DailyViewController: UIViewController {
             
             taskThreeButtonBlueLayer.topAnchor.constraint(equalTo: taskThreeButtonRavenLayer.topAnchor),
             taskThreeButtonBlueLayer.leadingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.leadingAnchor),
-            taskThreeButtonBlueLayer.trailingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.trailingAnchor, constant: -27),
+            taskThreeButtonBlueLayer.trailingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.trailingAnchor, constant: -taskThreeBlueLayerWidth),
             taskThreeButtonBlueLayer.heightAnchor.constraint(equalTo: taskThreeButtonRavenLayer.heightAnchor),
             
             taskThreeButton.topAnchor.constraint(equalTo: taskThreeButtonRavenLayer.topAnchor),
@@ -182,6 +190,17 @@ class DailyViewController: UIViewController {
     @objc func taskThreeButtonPressed(){
         UserDefault.startPressed.set(3)
         pushExerciseViewController()
+    }
+    
+    func findCompletedExercises(){
+        for i in 0..<exerciseArray.count {
+            let todayDate = Date().getFormattedDate(format: "yyyy-MM-dd")
+            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+            let exerciseName = exerciseArray[i].name ?? ""
+            if exerciseDate == todayDate {
+                exerciseDict.updateValue((exerciseDict[exerciseName] ?? 0)+1, forKey: exerciseName)
+            }
+        }
     }
     
     func pushExerciseViewController(){
