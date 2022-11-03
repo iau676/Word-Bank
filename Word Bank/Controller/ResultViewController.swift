@@ -54,7 +54,6 @@ class ResultViewController: UIViewController {
         calculateNumberOfTrue()
         checkLevelUp()
         updateStatistic()
-        updateUser()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,7 +146,8 @@ class ResultViewController: UIViewController {
             if numberOfTrue == userAnswer.count {
                 UserDefault.allTrueCount.set(UserDefault.allTrueCount.getInt()+1)
             }
-            updateExerciseCount()
+            updateExerciseCount(exerciseType: "normal")
+            updateUser()
         }
     }
     
@@ -164,19 +164,23 @@ class ResultViewController: UIViewController {
         wordBrain.user[0].falseCount        = Int16(UserDefault.falseCount.getInt())
     }
     
-    func updateExerciseCount() {
+    func updateExerciseCount(exerciseType: String) {
         switch whichStartPressed {
         case 1:
             UserDefault.testCount.set(UserDefault.testCount.getInt()+1)
+            wordBrain.addExercise(name: "test", type: exerciseType)
             break
         case 2:
             UserDefault.writingCount.set(UserDefault.writingCount.getInt()+1)
+            wordBrain.addExercise(name: "writing", type: exerciseType)
             break
         case 3:
             UserDefault.listeningCount.set(UserDefault.listeningCount.getInt()+1)
+            wordBrain.addExercise(name: "listening", type: exerciseType)
             break
         case 4:
             UserDefault.cardCount.set(UserDefault.cardCount.getInt()+1)
+            wordBrain.addExercise(name: "card", type: exerciseType)
             break
         default: break
         }

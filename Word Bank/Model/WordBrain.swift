@@ -14,6 +14,7 @@ struct WordBrain {
     var itemArray = [Item]()
     var hardItemArray = [HardItem]()
     var user = [User]()
+    var exerciseArray = [Exercise]()
     
     static let shareInstance = WordBrain()
     
@@ -59,6 +60,16 @@ struct WordBrain {
         newItem.uuid = UUID().uuidString
         newItem.isCreatedFromUser = true
         self.itemArray.append(newItem)
+        saveContext()
+    }
+    
+    mutating func addExercise(name: String, type: String){
+        let newExercise = Exercise(context: self.context)
+        newExercise.name = name
+        newExercise.type = type
+        newExercise.date = Date()
+        newExercise.uuid = UUID().uuidString
+        self.exerciseArray.append(newExercise)
         saveContext()
     }
     
@@ -340,6 +351,15 @@ struct WordBrain {
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
             user = try context.fetch(request)
+        } catch {
+           print("Error fetching data from context \(error)")
+        }
+    }
+    
+    mutating func loadExerciseArray(with request: NSFetchRequest<Exercise> = Exercise.fetchRequest()){
+        do {
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+            exerciseArray = try context.fetch(request)
         } catch {
            print("Error fetching data from context \(error)")
         }
