@@ -200,7 +200,7 @@ struct WordBrain {
             return hardItemArray[questionNumber].eng!
         }
     }
-    
+        
     mutating func getProgress() -> Float {
         onlyHereNumber += 1
         return Float(onlyHereNumber) / Float(20.0)
@@ -371,5 +371,35 @@ struct WordBrain {
         } catch {
            print("Error saving context \(error)")
         }
+    }
+}
+
+
+//MARK: - Card Exercise
+
+extension WordBrain {
+    mutating func getWordEnglish() -> String {
+        questionNumber = Int.random(in: 0..<itemArray.count)
+        rightOncee.append(questionNumber)
+        UserDefault.rightOnce.set(rightOncee)
+        return itemArray[questionNumber].eng ?? ""
+    }
+    
+    func getWordMeaning() -> String {
+        return itemArray[questionNumber].tr ?? ""
+    }
+    
+    func getQuestionNumber() -> Int {
+        return questionNumber
+    }
+    
+    mutating func userSwipeRight(){
+        rightOnceBooll.append(true)
+        UserDefault.rightOnceBool.set(rightOnceBooll)
+    }
+    
+    mutating func userSwipeLeft(){
+        rightOnceBooll.append(false)
+        UserDefault.rightOnceBool.set(rightOnceBooll)
     }
 }

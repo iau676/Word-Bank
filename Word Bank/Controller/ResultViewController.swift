@@ -34,7 +34,7 @@ class ResultViewController: UIViewController {
     var arrayForResultViewENG: [String] { return UserDefault.arrayForResultViewENG.getValue() as? [String] ?? [String]() }
     var arrayForResultViewTR: [String] { return UserDefault.arrayForResultViewTR.getValue() as? [String] ?? [String]() }
     var arrayForResultViewUserAnswer: [String] { UserDefault.userAnswers.getValue() as? [String] ?? [String]() }
-        var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
+    var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
     var selectedSegmentIndex: Int { return UserDefault.selectedSegmentIndex.getInt() }
     var whichStartPressed: Int { return UserDefault.startPressed.getInt() }
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
@@ -61,6 +61,7 @@ class ResultViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         updateRefreshButtonVisibility()
         checkWhichExercise()
+        updateHardWordText()
         checkAllTrue()
     }
     
@@ -128,10 +129,8 @@ class ResultViewController: UIViewController {
     
     func checkWhichExercise() {
         if whichStartPressed == 4 {
-            scoreLabelText = "By studying 20 words\nYou've earned 20 points!"
             numberOfTrue = userAnswer.count
         } else {
-            updateHardWordText()
             scoreLabel.text = "\(numberOfTrue)/\(userAnswer.count)"
             scoreLabelText = "All Correct!"
         }
@@ -302,17 +301,25 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func updateCellViewBackgroundForWrong(_ cell: WordCell){
-        cell.engView.backgroundColor = Colors.red
-        cell.trView.backgroundColor = Colors.lightRed
+        if whichStartPressed == 4 {
+            cell.engView.backgroundColor = Colors.yellow
+            cell.trView.backgroundColor = Colors.lightYellow
+        } else {
+            cell.engView.backgroundColor = Colors.red
+            cell.trView.backgroundColor = Colors.lightRed
+        }
+        
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
-        if UserDefault.whichButton.getString() == ExerciseType.normal {
-            cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
-                                                          (selectedSegmentIndex == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
-        } else {
-            cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
-                                                          (selectedSegmentIndex == 0) ? arrayForResultViewTR[i] : arrayForResultViewENG[i])
+        if whichStartPressed != 4 {
+            if UserDefault.whichButton.getString() == ExerciseType.normal {
+                cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
+                                                              (selectedSegmentIndex == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
+            } else {
+                cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
+                                                              (selectedSegmentIndex == 0) ? arrayForResultViewTR[i] : arrayForResultViewENG[i])
+            }
         }
     }
     
@@ -443,8 +450,7 @@ extension ResultViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             tableView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -16),
             
-            
-            addedHardWordsButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 8),
+            addedHardWordsButton.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -8),
             addedHardWordsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             addedHardWordsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
 

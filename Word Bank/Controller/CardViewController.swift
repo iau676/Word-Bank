@@ -22,7 +22,6 @@ class CardViewController: UIViewController {
     var cardCenter: CGPoint!
     var cardCounter = 0
     var questionNumber = 0
-    var lastPoint = 0
     var wheelPressed = 0
     var wordEnglish = ""
     var wordMeaning = ""
@@ -33,7 +32,7 @@ class CardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         wordBrain.loadItemArray()
-        lastPoint = UserDefault.lastPoint.getInt()
+        UserDefault.addedHardWordsCount.set(0)
         style()
         layout()
         updateWord()
@@ -62,22 +61,21 @@ class CardViewController: UIViewController {
     }
     
     func addHardWord(){
+        let questionNumber = wordBrain.getQuestionNumber()
         if itemArray[questionNumber].addedHardWords == false {
             wordBrain.addWordToHardWords(questionNumber)
         }
     }
     
     func updateWord(){
-        questionNumber = Int.random(in: 0..<itemArray.count)
-        wordEnglish = itemArray[questionNumber].eng ?? "empty"
-        wordMeaning = itemArray[questionNumber].tr ?? "empty"
-        cardCounter += 1
-        lastPoint += 1
-        cardLabel.text = wordEnglish
-        if cardCounter == 21 { //21
+        if cardCounter == 20 {
             performSegue(withIdentifier: "goToResult", sender: self)
         } else {
-            UserDefault.lastPoint.set(lastPoint)
+            questionNumber = Int.random(in: 0..<itemArray.count)
+            wordEnglish = wordBrain.getWordEnglish()
+            wordMeaning = wordBrain.getWordMeaning()
+            cardCounter += 1
+            cardLabel.text = wordEnglish
         }
     }
     
@@ -214,6 +212,7 @@ extension CardViewController {
                     card.center = CGPoint(x: card.center.x - 200, y: card.center.y + 75)
                     self.updateCard(card)
                     self.addHardWord()
+                    self.wordBrain.userSwipeLeft()
                 })
                 return
             } else if card.center.x > (view.frame.width - 75) {
@@ -221,6 +220,7 @@ extension CardViewController {
                 UIView.animate(withDuration: 0.3, animations: {
                     card.center = CGPoint(x: card.center.x + 200, y: card.center.y + 75)
                     self.updateCard(card)
+                    self.wordBrain.userSwipeRight()
                 })
                 return
             }
