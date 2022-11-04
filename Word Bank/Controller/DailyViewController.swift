@@ -28,6 +28,7 @@ class DailyViewController: UIViewController {
     private var wordBrain = WordBrain()
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
     private var exerciseDict = [String: Int]()
+    private let todayDate = Date().getFormattedDate(format: "yyyy-MM-dd")
 
     //tabBar
     let tabBarStackView = UIStackView()
@@ -44,6 +45,7 @@ class DailyViewController: UIViewController {
         style()
         configureTabBar()
         findCompletedExercises()
+        updateButtons()
     }
     
     override func viewDidLayoutSubviews() {
@@ -79,6 +81,8 @@ class DailyViewController: UIViewController {
         prizeButton.setImage(image: Images.wheel_prize_present, width: 128, height: 128)
         prizeButton.backgroundColor = .clear
         prizeButton.alpha = 0.5
+        prizeButton.isEnabled = false
+        prizeButton.addTarget(self, action: #selector(prizeButtonPressed), for: .primaryActionTriggered)
         
         configureLayerButton(taskOneButtonBlueLayer, Colors.blue)
         configureLayerButton(taskOneButtonRavenLayer, Colors.raven)
@@ -192,13 +196,29 @@ class DailyViewController: UIViewController {
         pushExerciseViewController()
     }
     
+    @objc func prizeButtonPressed(){
+        UserDefault.userGotPrize.set(todayDate)
+    }
+    
     func findCompletedExercises(){
         for i in 0..<exerciseArray.count {
-            let todayDate = Date().getFormattedDate(format: "yyyy-MM-dd")
             let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
             let exerciseName = exerciseArray[i].name ?? ""
             if exerciseDate == todayDate {
                 exerciseDict.updateValue((exerciseDict[exerciseName] ?? 0)+1, forKey: exerciseName)
+            }
+        }
+    }
+    
+    func updateButtons(){
+        let testExerciseCount = exerciseDict[ExerciseName.test] ?? 0
+        let writingExerciseCount = exerciseDict[ExerciseName.writing] ?? 0
+        let listeningExerciseCount = exerciseDict[ExerciseName.listening] ?? 0
+        
+        if testExerciseCount >= 10 && writingExerciseCount >= 10 && listeningExerciseCount >= 10 {
+            if UserDefault.userGotPrize.getString() != todayDate {
+                prizeButton.alpha = 1
+                prizeButton.isEnabled = true
             }
         }
     }

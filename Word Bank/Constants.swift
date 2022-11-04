@@ -103,6 +103,7 @@ enum UserDefault {
     
     static var userInterfaceStyle        = ""
     static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
+    static var userGotPrize              = UserDefaultsManager(key: "userGotPrize")
     
     static var level                     = UserDefaultsManager(key: "level")
     static var lastPoint                 = UserDefaultsManager(key: "lastPoint")
