@@ -59,12 +59,12 @@ class SpinWheel: SKSpriteNode {
         addChild(background)
 
         slots = [
-            ["123", "writingExercise", "", "0", "44"],
+            ["123", "cardExercise", "", "0", "44"],
             ["12331","testExercise", "", "45", "89"],
             ["12331", "writingExercise", "", "90", "134"],
             ["12331", "testExercise", "", "135", "179"],
             ["12331", "listeningExercise", "", "180", "224"],
-            ["12331", "cardExercise", "", "225", "269"],
+            ["12331", "writingExercise", "", "225", "269"],
             ["12331", "listeningExercise", "", "270", "314"],
             ["a present", "wheel_prize_present", "", "315", "360"]
         ]
@@ -340,7 +340,7 @@ class SpinWheel: SKSpriteNode {
             
             switch winnningIndex {
             case 0:
-                newIndex = 2
+                newIndex = 4
             case 1:
                 newIndex = 1
             case 2:
@@ -350,7 +350,7 @@ class SpinWheel: SKSpriteNode {
             case 4:
                 newIndex = 3
             case 5:
-                newIndex = 4
+                newIndex = 2
             case 6:
                 newIndex = 3
             default:

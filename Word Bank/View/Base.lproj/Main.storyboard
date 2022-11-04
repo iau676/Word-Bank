@@ -42,10 +42,6 @@
                         <viewLayoutGuide key="safeArea" id="RVV-bz-iHl"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="Bfl-Th-C2X" appends="YES" id="vuF-kc-Kut"/>
-                            <outletCollection property="gestureRecognizers" destination="s1J-Nj-H8Z" appends="YES" id="ABx-QF-XzX"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="mp1-a7-saR"/>
                     <connections>
@@ -53,8 +49,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JmO-NU-hO7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="left" id="Bfl-Th-C2X"/>
-                <swipeGestureRecognizer direction="up" id="s1J-Nj-H8Z"/>
             </objects>
             <point key="canvasLocation" x="5600" y="-645"/>
         </scene>
@@ -94,11 +88,6 @@
                     <nil key="title"/>
                 </navigationItem>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="coV-Zn-V4F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="down" id="ZqW-RT-lC8">
-                    <connections>
-                        <action selector="swipeGesture:" destination="baS-AH-7tq" id="mXQ-RQ-DUi"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4641" y="-646"/>
         </scene>
@@ -112,11 +101,6 @@
                         <viewLayoutGuide key="safeArea" id="5Tp-Me-Byh"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="M76-If-vXd" appends="YES" id="1bH-c6-Idx"/>
-                            <outletCollection property="gestureRecognizers" destination="mgj-lD-WY7" appends="YES" id="BPx-Dk-puc"/>
-                            <outletCollection property="gestureRecognizers" destination="kmr-Qb-IL1" appends="YES" id="utX-db-KYO"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Otp-ff-5WC">
                         <barButtonItem key="backBarButtonItem" title="Back" id="bZS-kS-GtQ"/>
@@ -130,21 +114,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a8H-DZ-e6j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="M76-If-vXd">
-                    <connections>
-                        <action selector="swipeGesture:" destination="9q6-8v-FQ1" id="1i3-nR-TGq"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="mgj-lD-WY7">
-                    <connections>
-                        <action selector="swipeGesture:" destination="9q6-8v-FQ1" id="7GQ-gS-brH"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="down" id="kmr-Qb-IL1">
-                    <connections>
-                        <action selector="swipeGesture:" destination="9q6-8v-FQ1" id="qBY-7u-woz"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4669.5652173913049" y="35.491071428571423"/>
         </scene>
@@ -178,9 +147,6 @@
                         <viewLayoutGuide key="safeArea" id="A1K-5x-0La"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="RBN-9D-4pL" appends="YES" id="bui-aU-XOc"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Pp4-Ue-pZe">
                         <barButtonItem key="backBarButtonItem" title="Back" id="ekA-Cb-6lt"/>
@@ -190,11 +156,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kew-lx-IJD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="RBN-9D-4pL">
-                    <connections>
-                        <action selector="swipeGesture:" destination="zXo-IR-Z84" id="Hth-84-FbF"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="5599" y="36"/>
         </scene>

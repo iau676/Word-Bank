@@ -44,6 +44,83 @@ class CardViewController: UIViewController {
 
     //MARK: - Helpers
     
+    func resetCard(_ card: UIView) {
+        card.center = cardCenter
+        self.imageView.alpha = 0
+        self.cardLabel.alpha = 1
+        self.cardView.alpha = 1
+        self.cardView.transform = .identity
+        self.isOpen = false
+    }
+    
+    func updateCard(_ card: UIView){
+        card.alpha = 0
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3){
+            self.resetCard(card)
+            self.updateWord()
+        }
+    }
+    
+    func addHardWord(){
+        if itemArray[questionNumber].addedHardWords == false {
+            wordBrain.addWordToHardWords(questionNumber)
+        }
+    }
+    
+    func updateWord(){
+        questionNumber = Int.random(in: 0..<itemArray.count)
+        wordEnglish = itemArray[questionNumber].eng ?? "empty"
+        wordMeaning = itemArray[questionNumber].tr ?? "empty"
+        cardCounter += 1
+        lastPoint += 1
+        cardLabel.text = wordEnglish
+        if cardCounter == 21 { //21
+            performSegue(withIdentifier: "goToResult", sender: self)
+        } else {
+            UserDefault.lastPoint.set(lastPoint)
+        }
+    }
+    
+    func configureBackBarButton(){
+        let backButton: UIButton = UIButton()
+        let image = Images.arrow_back
+        backButton.setImage(image, for: .normal)
+        backButton.setTitle(" Back", for: .normal);
+        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
+        backButton.setTitleColor(.black, for: .normal)
+        backButton.sizeToFit()
+        backButton.addTarget(self, action: #selector (backButtonPressed(sender:)), for: .touchUpInside)
+        let barButton = UIBarButtonItem(customView: backButton)
+        self.navigationItem.leftBarButtonItem = barButton
+    }
+    
+    //MARK: - Selectors
+    
+    @objc func backButtonPressed(sender : UIButton) {
+        if wheelPressed == 1 {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @objc func flipCard(_ sender:UITapGestureRecognizer){
+        if isOpen {
+            isOpen = false
+            cardLabel.text = wordEnglish
+            UIView.transition(with: cardView, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+        } else {
+            isOpen = true
+            cardLabel.text = wordMeaning
+            UIView.transition(with: cardView, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
+        }
+    }
+}
+
+//MARK: - Layout
+
+extension CardViewController {
+    
     func style(){
         view.backgroundColor = Colors.ravenShadow
         
@@ -98,6 +175,11 @@ class CardViewController: UIViewController {
             cardLabel.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
         ])
     }
+}
+
+//MARK: - Swipe Gesture
+
+extension CardViewController {
     
     func addGestureRecognizer(){
         let swipeGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
@@ -106,58 +188,6 @@ class CardViewController: UIViewController {
         let flipCardGesture = UITapGestureRecognizer(target: self, action:  #selector (self.flipCard(_:)))
         cardView.addGestureRecognizer(flipCardGesture)
     }
-    
-    func resetCard(_ card: UIView) {
-        card.center = cardCenter
-        self.imageView.alpha = 0
-        self.cardLabel.alpha = 1
-        self.cardView.alpha = 1
-        self.cardView.transform = .identity
-        self.isOpen = false
-    }
-    
-    func updateCard(_ card: UIView){
-        card.alpha = 0
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3){
-            self.resetCard(card)
-            self.updateWord()
-        }
-    }
-    
-    func addHardWord(){
-        if itemArray[questionNumber].addedHardWords == false {
-            wordBrain.addWordToHardWords(questionNumber)
-        }
-    }
-    
-    func updateWord(){
-        questionNumber = Int.random(in: 0..<itemArray.count)
-        wordEnglish = itemArray[questionNumber].eng ?? "empty"
-        wordMeaning = itemArray[questionNumber].tr ?? "empty"
-        cardCounter += 1
-        lastPoint += 1
-        cardLabel.text = wordEnglish
-        if cardCounter == 21 { //21
-            performSegue(withIdentifier: "goToResult", sender: self)
-        } else {
-            UserDefault.lastPoint.set(lastPoint)
-        }
-    }
-    
-    func configureBackBarButton(){
-        let backButton: UIButton = UIButton()
-        let image = Images.arrow_back
-        backButton.setImage(image, for: .normal)
-        backButton.setTitle(" Back", for: .normal);
-        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
-        backButton.setTitleColor(.black, for: .normal)
-        backButton.sizeToFit()
-        backButton.addTarget(self, action: #selector (backButtonPressed(sender:)), for: .touchUpInside)
-        let barButton = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = barButton
-    }
-    
-    //MARK: - Selectors
     
     @objc func respondToSwipeGesture(_ sender: UIPanGestureRecognizer) {
         let card = sender.view!
@@ -195,26 +225,6 @@ class CardViewController: UIViewController {
                 return
             }
             resetCard(card)
-        }
-    }
-    
-    @objc func backButtonPressed(sender : UIButton) {
-        if wheelPressed == 1 {
-            self.navigationController?.popToRootViewController(animated: true)
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
-    @objc func flipCard(_ sender:UITapGestureRecognizer){
-        if isOpen {
-            isOpen = false
-            cardLabel.text = wordEnglish
-            UIView.transition(with: cardView, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
-        } else {
-            isOpen = true
-            cardLabel.text = wordMeaning
-            UIView.transition(with: cardView, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
         }
     }
 }

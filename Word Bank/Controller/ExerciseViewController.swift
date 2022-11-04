@@ -67,6 +67,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         wordBrain.sortFails()
         
         configureBackBarButton()
+        addGestureRecognizer()
         preventInterrupt()
     }
 
@@ -110,14 +111,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     @objc func bubbleButtonPressed(_ sender: UIButton) {
         bubbleButton.bounce()
         player.playSound(soundSpeed, answerForStart23)
-    }
-    
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        if wheelPressed == 1 {
-            self.navigationController?.popToRootViewController(animated: true)
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
     }
     
     @objc func updateUI() {
@@ -581,5 +574,23 @@ extension ExerciseViewController {
             answerStackView.heightAnchor.constraint(equalToConstant: 256),
             textFieldStackView.heightAnchor.constraint(equalToConstant: 86),
         ])
+    }
+}
+
+//MARK: - Swipe Gesture
+
+extension ExerciseViewController {
+    func addGestureRecognizer(){
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRightGesture))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
+        if wheelPressed == 1 {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }

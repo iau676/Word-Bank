@@ -93,11 +93,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     @objc func coinButtonPressed(_ sender: UIButton) {
         checkAction()
     }
-    
-    @objc func swipeDownGesture(_ sender: UISwipeGestureRecognizer) {
-        checkAction()
-    }
-    
+        
     @objc func dismissView(){
         view.backgroundColor = UIColor.clear
         self.dismiss(animated: true, completion: nil)
@@ -124,36 +120,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         trTxtField.backgroundColor = Colors.cellRight
         addButton.changeBackgroundColor(to: .darkGray)
         addButton.setTitleColor(Colors.cellRight, for: .normal)
-    }
-    
-    func checkAction(){
-        if engTxtField.text!.count > 0 || trTxtField.text!.count > 0 {
-            let alert = UIAlertController(title: "Your changes could not be saved", message: "", preferredStyle: .alert)
-
-            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
-                alert.dismiss(animated: true, completion: nil)
-            }
-            
-            alert.addAction(action)
-            alert.addAction(actionCancel)
-            
-            if goEdit == 1 {
-                if engTxtField.text != UserDefault.engEdit.getString() ||
-                    trTxtField.text != UserDefault.trEdit.getString() {
-                    present(alert, animated: true, completion: nil)
-                } else {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            } else {
-                present(alert, animated: true, completion: nil)
-            }
-        } else {
-            dismiss(animated: true, completion: nil)
-        }
     }
 
     func setupButtons(){
@@ -214,15 +180,36 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func addGestureRecognizer(){
-        let dismissView = UITapGestureRecognizer(target: self, action:  #selector(coinButtonViewPressed))
-        self.coinButtonView.addGestureRecognizer(dismissView)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownGesture))
-        swipeDown.direction = .down
-        view.addGestureRecognizer(swipeDown)
+    func checkAction(){
+        if engTxtField.text!.count > 0 || trTxtField.text!.count > 0 {
+            let alert = UIAlertController(title: "Your changes could not be saved", message: "", preferredStyle: .alert)
+
+            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }
+            
+            alert.addAction(action)
+            alert.addAction(actionCancel)
+            
+            if goEdit == 1 {
+                if engTxtField.text != UserDefault.engEdit.getString() ||
+                    trTxtField.text != UserDefault.trEdit.getString() {
+                    present(alert, animated: true, completion: nil)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                present(alert, animated: true, completion: nil)
+            }
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
-    
+        
     func preventInterrupt(){
         // None of our movies should interrupt system music playback.
             _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
@@ -241,6 +228,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
 //MARK: - Flip Button
 
 extension AddViewController {
+    
     func flipCoinButton(){
         coinButton.setBackgroundImage(coinButtonImage, for: .normal)
         UIView.transition(with: coinButton, duration: 0.2, options: coinButtonAnimation, animations: nil, completion: nil)
@@ -340,5 +328,23 @@ extension AddViewController {
             
             stackView.heightAnchor.constraint(equalToConstant: 182),
         ])
+    }
+}
+
+//MARK: - Swipe Gesture
+
+extension AddViewController {
+    
+    func addGestureRecognizer(){
+        let dismissView = UITapGestureRecognizer(target: self, action:  #selector(coinButtonViewPressed))
+        self.coinButtonView.addGestureRecognizer(dismissView)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownGesture))
+        swipeDown.direction = .down
+        view.addGestureRecognizer(swipeDown)
+    }
+    
+    @objc func swipeDownGesture(_ sender: UISwipeGestureRecognizer) {
+        checkAction()
     }
 }

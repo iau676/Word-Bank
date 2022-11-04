@@ -48,6 +48,7 @@ class WordsViewController: UIViewController {
         setupNavigationBar()
         setupSearchBar()
         setupView()
+        addGestureRecognizer()
         hideKeyboardWhenTappedAround()
         updateSearchBarPlaceholder()
     }
@@ -149,10 +150,10 @@ class WordsViewController: UIViewController {
     @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
         switch sender.direction {
         case .right:
-            self.navigationController?.popToRootViewController(animated: true)
+            
             break
         case .left:
-            if whichButton == ExerciseType.normal { performSegue(withIdentifier: "goAdd", sender: self) }
+            
             break
         default: break
         }
@@ -583,5 +584,28 @@ extension WordsViewController {
             self.tableViewStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
             self.buttonStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -48).isActive = true
         })
+    }
+}
+
+//MARK: - Swipe Gesture
+
+extension WordsViewController {
+    func addGestureRecognizer(){
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeftGesture))
+        swipeLeft.direction = .left
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRightGesture))
+        swipeRight.direction = .right
+        
+        view.addGestureRecognizer(swipeLeft)
+        view.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc func respondToSwipeLeftGesture(gesture: UISwipeGestureRecognizer) {
+        if whichButton == ExerciseType.normal { performSegue(withIdentifier: "goAdd", sender: self) }
+    }
+    
+    @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }
