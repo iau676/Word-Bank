@@ -46,7 +46,7 @@
 		706A9A27275A6FF800E64ECC /* greenBubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A23275A6FF800E64ECC /* greenBubble2.png */; };
 		706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB227592F8D008B4773 /* AppDelegate.swift */; };
 		706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB427592F8D008B4773 /* SceneDelegate.swift */; };
-		706CBAB727592F8D008B4773 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB627592F8D008B4773 /* ViewController.swift */; };
+		706CBAB727592F8D008B4773 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB627592F8D008B4773 /* HomeViewController.swift */; };
 		706CBABA27592F8D008B4773 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 706CBAB827592F8D008B4773 /* Main.storyboard */; };
 		706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 706CBABB27592F8D008B4773 /* _3.xcdatamodeld */; };
 		706CBABF27592F8E008B4773 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 706CBABE27592F8E008B4773 /* Assets.xcassets */; };
@@ -81,7 +81,6 @@
 		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
 		70F0AB3F28C51869002E3EC9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */; };
 		70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */; };
-		70F5903B2897F17E008D4FE1 /* CompletedExercisesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */; };
 		70F5903D289822C4008D4FE1 /* X2HourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5903C289822C4008D4FE1 /* X2HourViewController.swift */; };
 		70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FC6A4A27E26DD500C31481 /* CloudKit.framework */; };
 		70FC7F38275BD1DE00F138E7 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */; };
@@ -129,7 +128,7 @@
 		706CBAAF27592F8D008B4773 /* Word Bank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Bank.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		706CBAB227592F8D008B4773 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		706CBAB427592F8D008B4773 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		706CBAB627592F8D008B4773 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		706CBAB627592F8D008B4773 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		706CBAB927592F8D008B4773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		706CBABC27592F8D008B4773 /* _3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = _3.xcdatamodel; sourceTree = "<group>"; };
 		706CBABE27592F8E008B4773 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -164,7 +163,6 @@
 		70C357E72888638300F3AD86 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
-		70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedExercisesViewController.swift; sourceTree = "<group>"; };
 		70F5903C289822C4008D4FE1 /* X2HourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2HourViewController.swift; sourceTree = "<group>"; };
 		70FC6A4A27E26DD500C31481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
@@ -186,13 +184,12 @@
 		70209B1C27595DD000D527D3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				706CBAB627592F8D008B4773 /* ViewController.swift */,
-				70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */,
+				706CBAB627592F8D008B4773 /* HomeViewController.swift */,
 				7027F690275B9B84001F6068 /* WordsViewController.swift */,
 				708C0E1327A8894F00E9105F /* AddViewController.swift */,
+				70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */,
 				708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */,
 				700C439827A856FD00D94497 /* LevelInfoViewController.swift */,
-				70F5903A2897F17E008D4FE1 /* CompletedExercisesViewController.swift */,
 				7014743527AAB4EE005E1854 /* LevelUpViewController.swift */,
 				7081AB0127CCD15700E2996A /* NewPointViewController.swift */,
 				7009BDE629112BAA0068E2F6 /* DailyViewController.swift */,
@@ -300,7 +297,6 @@
 		706CBAB127592F8D008B4773 /* Word Bank */ = {
 			isa = PBXGroup;
 			children = (
-				705D92EE28F897F7001C4F38 /* Wheel Files */,
 				701FA77628DFDC28001ADA07 /* Word Bank.entitlements */,
 				706CBAB227592F8D008B4773 /* AppDelegate.swift */,
 				706CBAB427592F8D008B4773 /* SceneDelegate.swift */,
@@ -310,6 +306,7 @@
 				70C357E62888330600F3AD86 /* Videos */,
 				708AFD86288719BA00E09AE1 /* Extensions */,
 				70F0AB3D28C51858002E3EC9 /* Onboarding */,
+				705D92EE28F897F7001C4F38 /* Wheel Files */,
 				70209B1F27595DF200D527D3 /* Model */,
 				70209B1D27595DDE00D527D3 /* View */,
 				70209B1C27595DD000D527D3 /* Controller */,
@@ -472,7 +469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */,
-				706CBAB727592F8D008B4773 /* ViewController.swift in Sources */,
+				706CBAB727592F8D008B4773 /* HomeViewController.swift in Sources */,
 				708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */,
 				7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */,
 				7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */,
@@ -506,7 +503,6 @@
 				702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */,
 				700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */,
 				707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */,
-				70F5903B2897F17E008D4FE1 /* CompletedExercisesViewController.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,
 				7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */,
 				70F5903D289822C4008D4FE1 /* X2HourViewController.swift in Sources */,

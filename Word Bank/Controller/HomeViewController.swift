@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class ViewController: UIViewController, LevelDelegate {
+class HomeViewController: UIViewController, LevelDelegate {
         
     let titleLabel = UILabel()
     
@@ -358,7 +358,7 @@ class ViewController: UIViewController, LevelDelegate {
     }
 }
 
-extension ViewController {
+extension HomeViewController {
     
     func style() {
         view.backgroundColor = Colors.raven
@@ -470,7 +470,7 @@ extension ViewController {
 
 //MARK: - Tab Bar
 
-extension ViewController {
+extension HomeViewController {
     
     func configureTabBar() {
         //style
@@ -530,7 +530,7 @@ extension ViewController {
 
 //MARK: - Keyboard Height
 
-extension ViewController {
+extension HomeViewController {
     func getKeyboardHeight(){
         let textField = UITextField()
         view.addSubview(textField)
