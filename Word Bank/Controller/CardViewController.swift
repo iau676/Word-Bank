@@ -69,7 +69,9 @@ class CardViewController: UIViewController {
     
     func updateWord(){
         if cardCounter == 20 {
-            performSegue(withIdentifier: "goToResult", sender: self)
+            let vc = ResultViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+
         } else {
             questionNumber = Int.random(in: 0..<itemArray.count)
             wordEnglish = wordBrain.getWordEnglish()

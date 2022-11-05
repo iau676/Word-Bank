@@ -161,7 +161,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             
         } else {
             questionCount = 0
-            performSegue(withIdentifier: "goToResult", sender: self)
+            let vc = ResultViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }//updateUI
     

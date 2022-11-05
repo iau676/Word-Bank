@@ -92,9 +92,11 @@ class ResultViewController: UIViewController {
     
     @objc func refreshButtonPressed(_ sender: Any) {
         if whichStartPressed == 4 {
-            performSegue(withIdentifier: "goCard", sender: self)
+            let vc = CardViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            performSegue(withIdentifier: "goQuiz", sender: self)
+            let vc = ExerciseViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
