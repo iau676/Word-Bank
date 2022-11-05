@@ -73,9 +73,9 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollViewWidth = Int(self.scrollView.bounds.size.width)
-        barChart.frame = CGRect(x: 16, y: 16, width: scrollViewWidth-32, height: scrollViewWidth-32)
-        lineChart.frame = CGRect(x: 16, y: 16, width: scrollViewWidth-32, height: scrollViewWidth-32)
-        pieChart.frame = CGRect(x: 16, y: 16, width: scrollViewWidth-32, height: scrollViewWidth-32)
+        barChart.frame = CGRect(x: 4, y: 8, width: scrollViewWidth-72, height: scrollViewWidth-64)
+        lineChart.frame = CGRect(x: 4, y: 8, width: scrollViewWidth-72, height: scrollViewWidth-64)
+        pieChart.frame = CGRect(x: 0, y: 0, width: scrollViewWidth-64, height: scrollViewWidth-64)
     }
     
     private func findWordsCount() {
@@ -162,7 +162,7 @@ extension StatisticViewController {
         }
         
         let set = LineChartDataSet(entries: entries)
-        set.colors = ChartColorTemplates.material()
+        set.colors = ChartColorTemplates.colorful()
         set.label = ""
         lineChart.legend.enabled = false
         
@@ -184,7 +184,7 @@ extension StatisticViewController {
         pieChart.legend.enabled = false
         
         pieChart.centerText = "Completed \nExercises"
-        pieChart.holeColor = .systemGray2
+        pieChart.holeColor = Colors.cellRight
         
         let data = PieChartData(dataSet: set)
         pieChart.data = data
@@ -207,15 +207,15 @@ extension StatisticViewController {
         stackView.distribution = .fill
         
         barView.translatesAutoresizingMaskIntoConstraints = false
-        barView.backgroundColor = .systemGray5
+        barView.backgroundColor = Colors.cellRight
         barView.layer.cornerRadius = 16
         
         lineView.translatesAutoresizingMaskIntoConstraints = false
-        lineView.backgroundColor = .systemPurple
+        lineView.backgroundColor = Colors.cellRight
         lineView.layer.cornerRadius = 16
         
         pieView.translatesAutoresizingMaskIntoConstraints = false
-        pieView.backgroundColor = .systemGray2
+        pieView.backgroundColor = Colors.cellRight
         pieView.layer.cornerRadius = 16
         
         barChart.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
@@ -237,29 +237,25 @@ extension StatisticViewController {
         
         view.addSubview(scrollView)
         
-        
         NSLayoutConstraint.activate([
-            
            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-           scrollView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 4),
-           view.trailingAnchor.constraint(equalToSystemSpacingAfter: scrollView.trailingAnchor, multiplier: 4),
-           //scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-           scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66),
+           scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+           scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+           scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -77),
            
            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-           stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-           stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+           stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+           stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-           stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
            
-           barView.heightAnchor.constraint(equalTo: scrollView.widthAnchor),
-           barView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+           barView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
+           barView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
            
-           lineView.heightAnchor.constraint(equalTo: scrollView.widthAnchor),
-           lineView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+           lineView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
+           lineView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
            
-           pieView.heightAnchor.constraint(equalTo: scrollView.widthAnchor),
-           pieView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+           pieView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
+           pieView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
         ])
     }
 }
