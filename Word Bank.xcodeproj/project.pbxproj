@@ -58,6 +58,7 @@
 		707106F0275A1E42005532D0 /* redBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EC275A1E41005532D0 /* redBubble.png */; };
 		707106F1275A1E42005532D0 /* redBubble4.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106ED275A1E41005532D0 /* redBubble4.png */; };
 		707106F2275A1E42005532D0 /* redBubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EE275A1E41005532D0 /* redBubble2.png */; };
+		7075B371291679B40007EDF7 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7075B370291679B40007EDF7 /* UIViewController+Extensions.swift */; };
 		707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC384288DA9DA00832F35 /* String+Extensions.swift */; };
 		707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */; };
 		707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */; };
@@ -141,6 +142,7 @@
 		707106EC275A1E41005532D0 /* redBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble.png; sourceTree = "<group>"; };
 		707106ED275A1E41005532D0 /* redBubble4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble4.png; sourceTree = "<group>"; };
 		707106EE275A1E41005532D0 /* redBubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble2.png; sourceTree = "<group>"; };
+		7075B370291679B40007EDF7 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		707EC384288DA9DA00832F35 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				700814F328D3909200DF177D /* UIImage+Extensions.swift */,
 				706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */,
 				704F9377290711C50095BF0D /* UITextField+Extensions.swift */,
+				7075B370291679B40007EDF7 /* UIViewController+Extensions.swift */,
 			);
 			path = "UIKit+Extensions";
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				706D707D28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift in Sources */,
 				704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */,
 				700C439927A856FD00D94497 /* LevelInfoViewController.swift in Sources */,
+				7075B371291679B40007EDF7 /* UIViewController+Extensions.swift in Sources */,
 				708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,
 				70FC7F38275BD1DE00F138E7 /* ExerciseViewController.swift in Sources */,

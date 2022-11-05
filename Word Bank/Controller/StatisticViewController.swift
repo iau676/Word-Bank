@@ -22,6 +22,11 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
     var lineChart = LineChartView()
     var pieChart = PieChartView()
     
+    private let barChartLabel = UILabel()
+    private let lineChartLabel = UILabel()
+    private let pieChartLabel = UILabel()
+    private var dayArray: [String] = []
+    
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
@@ -61,6 +66,7 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
         assignDatesToDays()
         findWordsCount()
         findExercisesCount()
+        getLastSevenDays()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,6 +126,12 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
         return Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
     }
     
+    private func getLastSevenDays(){
+        for i in stride(from: 7, to: 0, by: -1) {
+            dayArray.append(String(DateFormatter().weekdaySymbols[Calendar.current.component(.weekday, from: Date()) - i].prefix(3)))
+        }
+    }
+    
     func configureNavigationBar(){
         let backButton: UIButton = UIButton()
         let image = UIImage();
@@ -150,6 +162,9 @@ extension StatisticViewController {
         set.label = ""
         barChart.legend.enabled = false
         
+        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayArray)
+        barChart.xAxis.granularity = 1
+        
         let data = BarChartData(dataSet: set)
         barChart.data = data
     }
@@ -165,6 +180,9 @@ extension StatisticViewController {
         set.colors = ChartColorTemplates.colorful()
         set.label = ""
         lineChart.legend.enabled = false
+        
+        lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayArray)
+        lineChart.xAxis.granularity = 1
         
         let data = LineChartData(dataSet: set)
         lineChart.data = data
@@ -203,8 +221,20 @@ extension StatisticViewController {
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 32
+        stackView.spacing = 48
         stackView.distribution = .fill
+        
+        barChartLabel.translatesAutoresizingMaskIntoConstraints = false
+        barChartLabel.textColor = Colors.black
+        barChartLabel.text = "Words - Last 7 Days"
+        barChartLabel.font = UIFont(name: "AvenirNext-Medium", size: textSize)
+        barChartLabel.numberOfLines = 1
+        
+        lineChartLabel.translatesAutoresizingMaskIntoConstraints = false
+        lineChartLabel.textColor = Colors.black
+        lineChartLabel.text = "Exercises - Last 7 Days"
+        lineChartLabel.font = UIFont(name: "AvenirNext-Medium", size: textSize)
+        lineChartLabel.numberOfLines = 1
         
         barView.translatesAutoresizingMaskIntoConstraints = false
         barView.backgroundColor = Colors.cellRight
@@ -219,8 +249,6 @@ extension StatisticViewController {
         pieView.layer.cornerRadius = 16
         
         barChart.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        
-        //self.view.frame.size.width
     }
     
     func layout() {
@@ -236,20 +264,28 @@ extension StatisticViewController {
         scrollView.addSubview(stackView)
         
         view.addSubview(scrollView)
+        view.addSubview(barChartLabel)
+        view.addSubview(lineChartLabel)
         
         NSLayoutConstraint.activate([
-           scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+           scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight+16),
            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -77),
            
-           stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+           stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 32),
            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
            
+           barChartLabel.bottomAnchor.constraint(equalTo: barView.topAnchor, constant: -8),
+           barChartLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+           
            barView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
            barView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+           
+           lineChartLabel.bottomAnchor.constraint(equalTo: lineView.topAnchor, constant: -8),
+           lineChartLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
            
            lineView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
            lineView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
