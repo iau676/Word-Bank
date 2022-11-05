@@ -22,6 +22,23 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
     var lineChart = LineChartView()
     var pieChart = PieChartView()
     
+    private var wordBrain = WordBrain()
+    private var itemArray: [Item] { return wordBrain.itemArray }
+    private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
+    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    
+    private var dateArray: [String] = []
+    private var today = ""
+    private var yesterday = ""
+    private var twoDaysAgo = ""
+    private var threeDaysAgo = ""
+    private var fourDaysAgo = ""
+    private var fiveDaysAgo = ""
+    private var sixDaysAgo = ""
+    
+    private var wordsDict = [String: Int]()
+    private var exercisesDict = [String: Int]()
+    
     //tabBar
     let tabBarStackView = UIStackView()
     let homeButton = UIButton()
@@ -32,6 +49,8 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        wordBrain.loadItemArray()
+        wordBrain.loadExerciseArray()
         style()
         layout()
         barChart.delegate = self
@@ -39,6 +58,16 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
         pieChart.delegate = self
         configureNavigationBar()
         configureTabBar()
+        assignDatesToDays()
+        findWordsCount()
+        findExercisesCount()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureBarChart()
+        configureLineChart()
+        configurePieChart()
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,6 +76,48 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
         barChart.frame = CGRect(x: 16, y: 16, width: scrollViewWidth-32, height: scrollViewWidth-32)
         lineChart.frame = CGRect(x: 16, y: 16, width: scrollViewWidth-32, height: scrollViewWidth-32)
         pieChart.frame = CGRect(x: 16, y: 16, width: scrollViewWidth-32, height: scrollViewWidth-32)
+    }
+    
+    private func findWordsCount() {
+        for i in 0..<itemArray.count {
+            let wordDate = itemArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+            if dateArray.contains(wordDate) {
+                wordsDict.updateValue((wordsDict[wordDate] ?? 0)+1, forKey: wordDate)
+            }
+        }
+    }
+    
+    private func findExercisesCount() {
+        for i in 0..<exerciseArray.count {
+            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+            let exerciseName = exerciseArray[i].name ?? ""
+            if dateArray.contains(exerciseDate) {
+                exercisesDict.updateValue((exercisesDict[exerciseDate] ?? 0)+1, forKey: exerciseDate)
+            }
+            exercisesDict.updateValue((exercisesDict[exerciseName] ?? 0)+1, forKey: exerciseName)
+        }
+    }
+    
+    private func assignDatesToDays(){
+        today = getDate(daysAgo: 0)
+        yesterday = getDate(daysAgo: 1)
+        twoDaysAgo = getDate(daysAgo: 2)
+        threeDaysAgo = getDate(daysAgo: 3)
+        fourDaysAgo = getDate(daysAgo: 4)
+        fiveDaysAgo = getDate(daysAgo: 5)
+        sixDaysAgo = getDate(daysAgo: 5)
+        
+        dateArray.append(sixDaysAgo)
+        dateArray.append(fiveDaysAgo)
+        dateArray.append(fourDaysAgo)
+        dateArray.append(threeDaysAgo)
+        dateArray.append(twoDaysAgo)
+        dateArray.append(yesterday)
+        dateArray.append(today)
+    }
+    
+    private func getDate(daysAgo: Int) -> String {
+        return Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
     }
     
     func configureNavigationBar(){
@@ -70,45 +141,52 @@ extension StatisticViewController {
     func configureBarChart(){
         var entries = [BarChartDataEntry()]
         
-        for d in 0..<10 {
-            entries.append(BarChartDataEntry(x: Double(d), y: Double(d)))
+        for i in 0..<dateArray.count {
+            entries.append(BarChartDataEntry(x: Double(i), y: Double(wordsDict[dateArray[i]] ?? 0)))
         }
         
         let set = BarChartDataSet(entries: entries)
         set.colors = ChartColorTemplates.joyful()
+        set.label = ""
+        barChart.legend.enabled = false
         
         let data = BarChartData(dataSet: set)
-        
         barChart.data = data
     }
     
     func configureLineChart(){
         var entries = [ChartDataEntry()]
         
-        for d in 0..<10 {
-            entries.append(ChartDataEntry(x: Double(d), y: Double(d)))
+        for i in 0..<dateArray.count {
+            entries.append(ChartDataEntry(x: Double(i), y: Double(exercisesDict[dateArray[i]] ?? 0)))
         }
         
         let set = LineChartDataSet(entries: entries)
         set.colors = ChartColorTemplates.material()
+        set.label = ""
+        lineChart.legend.enabled = false
         
         let data = LineChartData(dataSet: set)
-        
         lineChart.data = data
     }
     
     func configurePieChart(){
         var entries = [ChartDataEntry()]
         
-        for d in 0..<10 {
-            entries.append(ChartDataEntry(x: Double(d), y: Double(d)))
-        }
+        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseName.card] ?? 0), label: "Card"))
+        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseName.listening] ?? 0), label: "Listening"))
+        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseName.writing] ?? 0), label: "Writing"))
+        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseName.test] ?? 0), label: "Test"))
         
         let set = PieChartDataSet(entries: entries)
-        set.colors = ChartColorTemplates.colorful()
+        set.colors = ChartColorTemplates.liberty()
+        set.label = ""
+        pieChart.legend.enabled = false
+        
+        pieChart.centerText = "Completed \nExercises"
+        pieChart.holeColor = .systemGray2
         
         let data = PieChartData(dataSet: set)
-        
         pieChart.data = data
     }
 }
@@ -141,9 +219,7 @@ extension StatisticViewController {
         pieView.layer.cornerRadius = 16
         
         barChart.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        configureBarChart()
-        configureLineChart()
-        configurePieChart()
+        
         //self.view.frame.size.width
     }
     
