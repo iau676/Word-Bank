@@ -184,7 +184,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         if engTxtField.text!.count > 0 || trTxtField.text!.count > 0 {
             let alert = UIAlertController(title: "Your changes could not be saved", message: "", preferredStyle: .alert)
 
-            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
                 self.dismiss(animated: true, completion: nil)
             }
             

@@ -80,6 +80,7 @@ class WordsViewController: UIViewController {
                 (segue.destination as? AddViewController)?.onViewWillDisappear = {
                     self.goEdit = 0
                     self.goAddPage = 0
+                    self.setupButtons()
                 }
             }
             
@@ -101,62 +102,27 @@ class WordsViewController: UIViewController {
         UserDefault.startPressed.set(1)
         testExerciseButton.bounce()
         testExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
-        check2Items()
+        checkWordCount(ifOK: "goToExercise")
     }
     
     @objc func writingExerciseButtonPressed(_ sender: UIButton) {
         UserDefault.startPressed.set(2)
         writingExerciseButton.bounce()
         writingExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
-        check2Items()
+        checkWordCount(ifOK: "goToExercise")
     }
     
     @objc func listeningExerciseButtonPressed(_ sender: UIButton) {
         listeningExerciseButton.bounce()
         listeningExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
-        //0 is true, 1 is false
-        if UserDefault.playSound.getInt() == 0 {
-            UserDefault.startPressed.set(3)
-            check2Items()
-        } else {
-            let alert = UIAlertController(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
-                self.navigationController?.popToRootViewController(animated: true)
-            }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-        }
+        checkSoundSetting()
     }
     
     @objc func cardExerciseButtonPressed(_ sender: UIButton) {
         UserDefault.startPressed.set(4)
-        cardExerciseButton.pulstate()
+        cardExerciseButton.bounce()
         cardExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
-        if itemArray.count < 2 {
-            let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
-                self.performSegue(withIdentifier: "goAdd", sender: self)
-            }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-        } else {
-            let when = DispatchTime.now() + 0.1
-            DispatchQueue.main.asyncAfter(deadline: when){
-                self.performSegue(withIdentifier: "goCard", sender: self)
-            }
-        }
-    }
-   
-    @IBAction func swipeGesture(_ sender: UISwipeGestureRecognizer) {
-        switch sender.direction {
-        case .right:
-            
-            break
-        case .left:
-            
-            break
-        default: break
-        }
+        checkWordCount(ifOK: "goCard")
     }
 
     //MARK: - Helpers
@@ -282,13 +248,12 @@ class WordsViewController: UIViewController {
         }
     }
     
-    func check2Items(){
-        let checkCount = (whichButton == ExerciseType.normal) ? itemArray.count : hardItemArray.count
+    func checkWordCount(ifOK: String){
+        let wordCount = (whichButton == ExerciseType.normal) ? itemArray.count : hardItemArray.count
         
-        if checkCount < 2 {
+        if wordCount < 2 {
             let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
-                self.updateView()
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
                 if self.whichButton == ExerciseType.normal {
                     self.performSegue(withIdentifier: "goAdd", sender: self)
                 } else {
@@ -300,8 +265,23 @@ class WordsViewController: UIViewController {
         } else {
             let when = DispatchTime.now() + 0.1
             DispatchQueue.main.asyncAfter(deadline: when){
-                self.performSegue(withIdentifier: "goToExercise", sender: self)
+                self.performSegue(withIdentifier: ifOK, sender: self)
             }
+        }
+    }
+    
+    func checkSoundSetting(){
+        //0 is true, 1 is false
+        if UserDefault.playSound.getInt() == 0 {
+            UserDefault.startPressed.set(3)
+            checkWordCount(ifOK: "goToExercise")
+        } else {
+            let alert = UIAlertController(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                self.navigationController?.pushViewController(SettingsViewController(), animated: true)
+            }
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
         }
     }
 }
@@ -387,7 +367,7 @@ extension WordsViewController: UITableViewDataSource {
         if hardItemArray.count <= 0 {
             let alert = UIAlertController(title: "Nothing to see here yet", message: "When you answer a word incorrectly in the exercises, that word is added to this page. In order to delete that word from here, you should answer correctly 5 times.", preferredStyle: .alert)
                             
-            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
                 self.navigationController?.popToRootViewController(animated: true)
             }
             alert.addAction(action)

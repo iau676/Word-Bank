@@ -31,6 +31,7 @@ class HomeViewController: UIViewController, LevelDelegate {
     let hardCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     
     var wordBrain = WordBrain()
+    private var itemArray: [Item] { return wordBrain.itemArray }
     var goAddPage = 0
     var progressValue:Float = 0.0
     
@@ -55,6 +56,7 @@ class HomeViewController: UIViewController, LevelDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        wordBrain.loadItemArray()
         setupCircularProgress()
         check2xTime()
         setupButtons()
@@ -114,7 +116,7 @@ class HomeViewController: UIViewController, LevelDelegate {
         UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
         flipCP(button: exerciseButton, cp: exerciseCP)
-        performSegue(identifier: "goExercise", second: 0.4)
+        checkWordCount()
     }
     
     @objc func newWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
@@ -338,6 +340,21 @@ class HomeViewController: UIViewController, LevelDelegate {
           
         } else {
             
+        }
+    }
+    
+    func checkWordCount(){
+        let wordCount = itemArray.count
+        
+        if wordCount < 2 {
+            let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                self.dismiss(animated: true)
+            }
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        } else {
+            performSegue(identifier: "goExercise", second: 0.4)
         }
     }
     

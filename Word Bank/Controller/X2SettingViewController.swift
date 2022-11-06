@@ -93,7 +93,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
             }
             
             let alert = UIAlertController(title:  title , message: message, preferredStyle: .alert)
-                let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+                let action = UIAlertAction(title: "OK", style: .default) { (action) in
                     if dayCount >= 1 {
                         UserDefault.x2Time.set(Date())
                         let lastEditLabel = Date().getFormattedDate(format: "dd/MM/yyyy, HH:mm")

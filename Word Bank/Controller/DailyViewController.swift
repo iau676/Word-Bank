@@ -26,6 +26,7 @@ class DailyViewController: UIViewController {
     private let prizeButton = UIButton()
     
     private var wordBrain = WordBrain()
+    private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
     private var exerciseDict = [String: Int]()
     private let todayDate = Date().getFormattedDate(format: "yyyy-MM-dd")
@@ -40,6 +41,7 @@ class DailyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        wordBrain.loadItemArray()
         wordBrain.loadExerciseArray()
         configureNavigationBar()
         style()
@@ -183,17 +185,17 @@ class DailyViewController: UIViewController {
     
     @objc func taskOneButtonPressed(){
         UserDefault.startPressed.set(1)
-        pushExerciseViewController()
+        checkWordCount()
     }
     
     @objc func taskTwoButtonPressed(){
         UserDefault.startPressed.set(2)
-        pushExerciseViewController()
+        checkWordCount()
     }
     
     @objc func taskThreeButtonPressed(){
         UserDefault.startPressed.set(3)
-        pushExerciseViewController()
+        checkSoundSetting()
     }
     
     @objc func prizeButtonPressed(){
@@ -207,6 +209,36 @@ class DailyViewController: UIViewController {
             if exerciseDate == todayDate {
                 exerciseDict.updateValue((exerciseDict[exerciseName] ?? 0)+1, forKey: exerciseName)
             }
+        }
+    }
+    
+    func checkWordCount(){
+        let wordCount = itemArray.count
+        
+        if wordCount < 2 {
+            let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        } else {
+            pushExerciseViewController()
+        }
+    }
+    
+    func checkSoundSetting(){
+        //0 is true, 1 is false
+        if UserDefault.playSound.getInt() == 0 {
+            UserDefault.startPressed.set(3)
+            pushExerciseViewController()
+        } else {
+            let alert = UIAlertController(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                self.navigationController?.pushViewController(SettingsViewController(), animated: true)
+            }
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
         }
     }
     
