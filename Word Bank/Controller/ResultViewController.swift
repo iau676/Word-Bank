@@ -140,46 +140,30 @@ class ResultViewController: UIViewController {
     
     func updateStatistic() {
         if UserDefault.whichButton.getString() == ExerciseType.normal {
-            UserDefault.exerciseCount.set(UserDefault.exerciseCount.getInt()+1)
-            UserDefault.trueCount.set(UserDefault.trueCount.getInt()+numberOfTrue)
-            UserDefault.falseCount.set(UserDefault.falseCount.getInt()+(userAnswer.count-numberOfTrue))
-            if numberOfTrue == userAnswer.count {
-                UserDefault.allTrueCount.set(UserDefault.allTrueCount.getInt()+1)
-            }
             updateExerciseCount(exerciseType: ExerciseType.normal)
-            updateUser()
+        } else {
+            updateExerciseCount(exerciseType: ExerciseType.hard)
         }
+        updateUser()
     }
     
     func updateUser(){
         wordBrain.user[0].level             = Int16(UserDefault.level.getInt())
         wordBrain.user[0].lastPoint         = Int32(UserDefault.lastPoint.getInt())
-        wordBrain.user[0].exerciseCount     = Int16(UserDefault.exerciseCount.getInt())
-        wordBrain.user[0].allTrueCount      = Int16(UserDefault.allTrueCount.getInt())
-        wordBrain.user[0].testCount         = Int16(UserDefault.testCount.getInt())
-        wordBrain.user[0].writingCount      = Int16(UserDefault.writingCount.getInt())
-        wordBrain.user[0].listeningCount    = Int16(UserDefault.listeningCount.getInt())
-        wordBrain.user[0].cardCount         = Int16(UserDefault.cardCount.getInt())
-        wordBrain.user[0].trueCount         = Int16(UserDefault.trueCount.getInt())
-        wordBrain.user[0].falseCount        = Int16(UserDefault.falseCount.getInt())
     }
     
     func updateExerciseCount(exerciseType: String) {
         switch whichStartPressed {
         case 1:
-            UserDefault.testCount.set(UserDefault.testCount.getInt()+1)
             wordBrain.addExercise(name: ExerciseName.test, type: exerciseType)
             break
         case 2:
-            UserDefault.writingCount.set(UserDefault.writingCount.getInt()+1)
             wordBrain.addExercise(name: ExerciseName.writing, type: exerciseType)
             break
         case 3:
-            UserDefault.listeningCount.set(UserDefault.listeningCount.getInt()+1)
             wordBrain.addExercise(name: ExerciseName.listening, type: exerciseType)
             break
         case 4:
-            UserDefault.cardCount.set(UserDefault.cardCount.getInt()+1)
             wordBrain.addExercise(name: ExerciseName.card, type: exerciseType)
             break
         default: break
