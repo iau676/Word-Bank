@@ -19,6 +19,9 @@ enum WheelState : Int {
 class SpinWheel: SKSpriteNode {
     
     //MARK: - Local variables
+    
+    var wordBrain = WordBrain()
+    
     var wheel: SKSpriteNode!
     var flapper: SKSpriteNode!
     var pivotPin: SKSpriteNode!
@@ -71,7 +74,6 @@ class SpinWheel: SKSpriteNode {
         createWheel()
         createFlapper()
     }
-    
     
     func setupSounds() {
         tickSound = SKAction.playSoundFileNamed("bubble_pop.aac", waitForCompletion: false)
@@ -303,7 +305,7 @@ class SpinWheel: SKSpriteNode {
     }
     
     func createBackgroundBlocker(_ winnningIndex: Int) {
-        let prizeTitle: String = slots[winnningIndex][0]
+        let prizePoint: Int = wordBrain.getPrizePoint()
         let prizeImage: String = slots[winnningIndex][1]
         
         backgroundBlocker = SKSpriteNode(color: UIColor(white: 0.2, alpha: 0.9), size: self.size)
@@ -315,55 +317,65 @@ class SpinWheel: SKSpriteNode {
         backgroundBlocker.run(fadeIn)
         
         if winnningIndex == 7 {
-            let youWonLabel = SKLabelNode()
-            youWonLabel.fontName = "AvenirNext-Bold"
-            youWonLabel.text = "you won \(prizeTitle)"
-            youWonLabel.fontSize = 84.0
-            youWonLabel.fontColor = SKColor(white: 0.9, alpha: 1.0)
-            youWonLabel.position = CGPoint(x: 0, y: 0.15 * self.size.height / 2)
-            youWonLabel.zPosition = 1600
-            backgroundBlocker.addChild(youWonLabel)
-            
-            let prize: SKSpriteNode = SKSpriteNode(imageNamed: prizeImage)
-            prize.position = CGPoint(x: 0, y: 0)
-            prize.zPosition = 5
-            backgroundBlocker.addChild(prize)
-            
-            let continueButton: PushButton = PushButton(upImage: "button_continue_up", downImage: "button_continue_down")
-            continueButton.setButtonAction(target: self, event: .touchUpInside, function: closeSpinWheel, parent: self)
-            continueButton.position = CGPoint(x: 0, y: 0 - 0.35 * self.size.height / 2)
-            continueButton.zPosition = 5
-            backgroundBlocker.addChild(continueButton)
+            userGotPrize(prizePoint: prizePoint, prizeImage: prizeImage)
         } else {
-            
-            var newIndex = 1
-            
-            switch winnningIndex {
-            case 0:
-                newIndex = 4
-            case 1:
-                newIndex = 1
-            case 2:
-                newIndex = 2
-            case 3:
-                newIndex = 1
-            case 4:
-                newIndex = 3
-            case 5:
-                newIndex = 2
-            case 6:
-                newIndex = 3
-            default:
-                break
-            }
-            
-            let index:[String: Int] = ["index": newIndex]
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "presentExercise"), object: nil, userInfo: index)
+            userWillGoExercise(winnningIndex)
         }
+    }
+    
+    func userGotPrize(prizePoint: Int, prizeImage: String){
+        let youWonLabel = SKLabelNode()
+        youWonLabel.fontName = "AvenirNext-Bold"
+        youWonLabel.text = "YOU WON \(prizePoint.withCommas()) POINTS"
+        youWonLabel.fontSize = 84.0
+        youWonLabel.fontColor = SKColor(white: 0.9, alpha: 1.0)
+        youWonLabel.position = CGPoint(x: 0, y: 0.15 * self.size.height / 2)
+        youWonLabel.zPosition = 1600
+        backgroundBlocker.addChild(youWonLabel)
+        
+        let lastPoint = UserDefault.lastPoint.getInt()
+        UserDefault.lastPoint.set(lastPoint+prizePoint)
+        
+        let prize: SKSpriteNode = SKSpriteNode(imageNamed: prizeImage)
+        prize.position = CGPoint(x: 0, y: 0)
+        prize.zPosition = 5
+        backgroundBlocker.addChild(prize)
+        
+        let continueButton: PushButton = PushButton(upImage: "button_continue_up", downImage: "button_continue_down")
+        continueButton.setButtonAction(target: self, event: .touchUpInside, function: closeSpinWheel, parent: self)
+        continueButton.position = CGPoint(x: 0, y: 0 - 0.35 * self.size.height / 2)
+        continueButton.zPosition = 5
+        backgroundBlocker.addChild(continueButton)
     }
     
     func closeSpinWheel() {
         backgroundBlocker.removeFromParent()
         spinWheel()
+    }
+    
+    func userWillGoExercise(_ winnningIndex: Int){
+        var newIndex = 1
+        
+        switch winnningIndex {
+        case 0:
+            newIndex = 4
+        case 1:
+            newIndex = 1
+        case 2:
+            newIndex = 2
+        case 3:
+            newIndex = 1
+        case 4:
+            newIndex = 3
+        case 5:
+            newIndex = 2
+        case 6:
+            newIndex = 3
+        default:
+            break
+        }
+        
+        let index:[String: Int] = ["index": newIndex]
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "presentExercise"), object: nil, userInfo: index)
     }
 }

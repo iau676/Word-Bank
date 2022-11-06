@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		700458532917EC8E0077A4D2 /* WordBrain+PrizePoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700458522917EC8E0077A4D2 /* WordBrain+PrizePoints.swift */; };
 		700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700814F328D3909200DF177D /* UIImage+Extensions.swift */; };
 		7009BDE729112BAA0068E2F6 /* DailyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7009BDE629112BAA0068E2F6 /* DailyViewController.swift */; };
 		700BC57F2892FE9E00903C04 /* WordBrain+calculateLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */; };
@@ -88,6 +89,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		700458522917EC8E0077A4D2 /* WordBrain+PrizePoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+PrizePoints.swift"; sourceTree = "<group>"; };
 		700814F328D3909200DF177D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		7009BDE629112BAA0068E2F6 /* DailyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewController.swift; sourceTree = "<group>"; };
 		700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateLevel.swift"; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */,
 				700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */,
 				700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */,
+				700458522917EC8E0077A4D2 /* WordBrain+PrizePoints.swift */,
 				70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */,
 				7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */,
 				70C357E428882DFC00F3AD86 /* Player.swift */,
@@ -475,6 +478,7 @@
 				706CBAB727592F8D008B4773 /* HomeViewController.swift in Sources */,
 				708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */,
 				7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */,
+				700458532917EC8E0077A4D2 /* WordBrain+PrizePoints.swift in Sources */,
 				7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */,
 				7009BDE729112BAA0068E2F6 /* DailyViewController.swift in Sources */,
 				706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */,
