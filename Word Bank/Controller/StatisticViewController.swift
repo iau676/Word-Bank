@@ -111,7 +111,7 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
         threeDaysAgo = getDate(daysAgo: 3)
         fourDaysAgo = getDate(daysAgo: 4)
         fiveDaysAgo = getDate(daysAgo: 5)
-        sixDaysAgo = getDate(daysAgo: 5)
+        sixDaysAgo = getDate(daysAgo: 6)
         
         dateArray.append(sixDaysAgo)
         dateArray.append(fiveDaysAgo)
@@ -127,8 +127,8 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
     }
     
     private func getLastSevenDays(){
-        for i in stride(from: 7, to: 0, by: -1) {
-            dayArray.append(String(DateFormatter().weekdaySymbols[Calendar.current.component(.weekday, from: Date()) - i].prefix(3)))
+        for i in stride(from: 6, to: -1, by: -1) {
+            dayArray.append(Calendar.current.date(byAdding: .day, value: -i, to: Date())?.getFormattedDate(format: "EEE") ?? "")
         }
     }
     
