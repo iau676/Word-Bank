@@ -7,37 +7,7 @@
 
 import UIKit
 
-struct BadgeData {
-    var title: String
-    var url: String
-    var backgroundImage: UIImage?
-}
-
 class AwardsViewController: UIViewController {
-    
-    fileprivate let levelData = [
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-    ]
-    
-    fileprivate let wordsData = [
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "winner")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "winner")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "winner")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "winner")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "winner")),
-    ]
-    
-    fileprivate let exercisesData = [
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-        BadgeData(title: "www", url: "www", backgroundImage: UIImage(named: "medal")),
-    ]
     
     private let levelLabel = UILabel()
     private let wordsLabel = UILabel()
@@ -50,6 +20,18 @@ class AwardsViewController: UIViewController {
     private let levelScoreLabel = UILabel()
     private let wordsScoreLabel = UILabel()
     private let exerciseScoreLabel = UILabel()
+    
+    private var wordBrain = WordBrain()
+    private var itemArray: [Item] { return wordBrain.itemArray }
+    private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
+    
+    private let levelTitleArray: [Int] = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    private let wordsTitleArray: [Int] = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+    private let exercisesTitleArray: [Int] = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+    
+    private var levelBadgeCount = 0
+    private var wordBadgeCount = 0
+    private var exerciseBadgeCount = 0
 
     fileprivate let levelCV:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -94,6 +76,8 @@ class AwardsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        wordBrain.loadItemArray()
+        wordBrain.loadExerciseArray()
         configureNavigationBar()
         style()
         layout()
@@ -107,13 +91,13 @@ class AwardsViewController: UIViewController {
         configureLabel(wordsLabel, "WORDS")
         configureLabel(exercisesLabel, "EXERCISES")
         
-        configureButton(levelButton, "99")
-        configureButton(wordsButton, "99")
-        configureButton(exercisesButton, "99")
+        configureButton(levelButton, "\(UserDefault.level.getInt())")
+        configureButton(wordsButton, "\(itemArray.count)")
+        configureButton(exercisesButton, "\(exerciseArray.count)")
         
-        configureLabel(levelScoreLabel, "1/10")
-        configureLabel(wordsScoreLabel, "1/10")
-        configureLabel(exerciseScoreLabel, "1/10")
+        configureLabel(levelScoreLabel, "0/10")
+        configureLabel(wordsScoreLabel, "0/10")
+        configureLabel(exerciseScoreLabel, "0/10")
       
         levelCV.delegate = self
         levelCV.dataSource = self
@@ -231,30 +215,70 @@ extension AwardsViewController: UICollectionViewDelegateFlowLayout, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var count = 0
-        
-        switch collectionView {
-        case levelCV:
-            count = levelData.count
-        case wordsCV:
-            count = wordsData.count
-        case exercisesCV:
-            count = exercisesData.count
-        default: break
-        }
-        return count
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
-    
+        
         switch collectionView {
         case levelCV:
+            cell.titleLabel.text = "\(levelTitleArray[indexPath.row])"
             cell.awardLabel.text = "LEVEL"
+            if levelTitleArray[indexPath.row] <= UserDefault.level.getInt() {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+                levelBadgeCount += 1
+                levelScoreLabel.text = "\(levelBadgeCount)/10"
+            } else if levelTitleArray[indexPath.row] - UserDefault.level.getInt() < 10 {
+                let value = Float(levelTitleArray[indexPath.row] - UserDefault.level.getInt()) * 0.1
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+            } else {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: UIColor(hex: "#b9b9b9") ?? .darkGray)
+                cell.titleLabel.textColor = UIColor(hex: "#b9b9b9")
+            }
         case wordsCV:
+            cell.titleLabel.text = "\(wordsTitleArray[indexPath.row])"
             cell.awardLabel.text = "WORDS"
+            if wordsTitleArray[indexPath.row] <= itemArray.count {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+                wordBadgeCount += 1
+                wordsScoreLabel.text = "\(wordBadgeCount)/10"
+            } else if wordsTitleArray[indexPath.row] - itemArray.count < 500 {
+                let value = Float(wordsTitleArray[indexPath.row] - itemArray.count) / 5 * 0.01
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+            } else {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: UIColor(hex: "#b9b9b9") ?? .darkGray)
+                cell.titleLabel.textColor = UIColor(hex: "#b9b9b9")
+            }
         case exercisesCV:
+            cell.titleLabel.text = "\(exercisesTitleArray[indexPath.row])"
             cell.awardLabel.text = "EXERCISES"
+            if exercisesTitleArray[indexPath.row] <= exerciseArray.count {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+                exerciseBadgeCount += 1
+                exerciseScoreLabel.text = "\(exerciseBadgeCount)/10"
+            } else if exercisesTitleArray[indexPath.row] - exerciseArray.count < 1000 {
+                let value = Float(exercisesTitleArray[indexPath.row] - exerciseArray.count) / 10 * 0.01
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+            } else {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: UIColor(hex: "#b9b9b9") ?? .darkGray)
+                cell.titleLabel.textColor = UIColor(hex: "#b9b9b9")
+            }
         default: break
         }
         return cell
@@ -276,8 +300,7 @@ class CustomCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "9"
-        label.font = UIFont(name: "AvenirNext-Medium", size: 29)
+        label.font = UIFont(name: "AvenirNext-DemiBold", size: 19)
         label.textColor = UIColor(hex: "#b9b9b9") ?? .darkGray
         return label
     }()
