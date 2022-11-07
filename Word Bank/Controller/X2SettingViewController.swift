@@ -27,30 +27,6 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     var onViewWillDisappear:((_ id: Int) -> Void)?
     var userSelectedHour = 0
     let notificationCenter = UNUserNotificationCenter.current()
-    let hours = ["00:00 - 01:00",
-                 "01:00 - 02:00",
-                 "02:00 - 03:00",
-                 "03:00 - 04:00",
-                 "04:00 - 05:00",
-                 "05:00 - 06:00",
-                 "06:00 - 07:00",
-                 "07:00 - 08:00",
-                 "08:00 - 09:00",
-                 "09:00 - 10:00",
-                 "10:00 - 11:00",
-                 "11:00 - 12:00",
-                 "12:00 - 13:00",
-                 "13:00 - 14:00",
-                 "14:00 - 15:00",
-                 "15:00 - 16:00",
-                 "16:00 - 17:00",
-                 "17:00 - 18:00",
-                 "18:00 - 19:00",
-                 "19:00 - 20:00",
-                 "20:00 - 21:00",
-                 "21:00 - 22:00",
-                 "22:00 - 23:00",
-                 "23:00 - 00:00"]
     
     //MARK: - Life Cycle
     
@@ -85,7 +61,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
             var message = ""
             
             if dayCount >= 1 {
-                title = "You will earn 2x points for each correct answer between \(hours[userSelectedHour]) hours."
+                title = "You will earn 2x points for each correct answer between \(wordBrain.hours[userSelectedHour]) hours."
                 message = "You can change this feature only once a day."
             } else {
                 title = "You can change this feature only once a day."
@@ -149,7 +125,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     func updateInfoLabel(){
-        infoLabel.text = "You will earn 2x points for each correct answer between \(hours[UserDefault.userSelectedHour.getInt()])  hours."
+        infoLabel.text = "You will earn 2x points for each correct answer between \(wordBrain.hours[UserDefault.userSelectedHour.getInt()])  hours."
     }
     
     func checkNotificationAllowed() {
@@ -179,11 +155,11 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return hours.count
+        return wordBrain.hours.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return hours[row]
+        return wordBrain.hours[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -191,7 +167,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: hours[row], attributes: [NSAttributedString.Key.foregroundColor: Colors.black!])
+        return NSAttributedString(string: wordBrain.hours[row], attributes: [NSAttributedString.Key.foregroundColor: Colors.black!])
     }
 }
 

@@ -43,31 +43,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     var soundImageName = ""
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
-    let hours = ["00:00 - 01:00",
-                 "01:00 - 02:00",
-                 "02:00 - 03:00",
-                 "03:00 - 04:00",
-                 "04:00 - 05:00",
-                 "05:00 - 06:00",
-                 "06:00 - 07:00",
-                 "07:00 - 08:00",
-                 "08:00 - 09:00",
-                 "09:00 - 10:00",
-                 "10:00 - 11:00",
-                 "11:00 - 12:00",
-                 "12:00 - 13:00",
-                 "13:00 - 14:00",
-                 "14:00 - 15:00",
-                 "15:00 - 16:00",
-                 "16:00 - 17:00",
-                 "17:00 - 18:00",
-                 "18:00 - 19:00",
-                 "19:00 - 20:00",
-                 "20:00 - 21:00",
-                 "21:00 - 22:00",
-                 "22:00 - 23:00",
-                 "23:00 - 00:00"]
-    
     //tabBar
     let tabBarStackView = UIStackView()
     let homeButton = UIButton()
@@ -96,7 +71,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "goPicker" {
             if segue.destination is X2SettingViewController {
                 (segue.destination as? X2SettingViewController)?.onViewWillDisappear = { (id) -> Void in
-                    self.x2HoursLabel.text = self.hours[id]
+                    self.x2HoursLabel.text = self.wordBrain.hours[id]
                     self.onViewWillDisappear?()// trigger function in ViewController
                 }
             }
@@ -244,7 +219,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             UserDefault.soundSpeed.set(0.3)
         }
         
-        x2HoursLabel.text = hours[UserDefault.userSelectedHour.getInt()]
+        x2HoursLabel.text = wordBrain.hours[UserDefault.userSelectedHour.getInt()]
         
         soundSpeed = UserDefault.soundSpeed.getDouble()
         switch soundSpeed {

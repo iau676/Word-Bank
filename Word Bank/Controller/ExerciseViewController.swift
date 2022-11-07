@@ -53,7 +53,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = " "
-        getHour()
+        wordBrain.getHour()
         
         style()
         setupView()
@@ -333,13 +333,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             scheduledTimer(timeInterval: 0.8, #selector(updateHintLabelColor))
         }
     }
-    
-    func getHour() {
-        UserDefault.lastHour.set(Calendar.current.component(.hour, from: Date()))
-    }
 
     func checkAnswerQ(_ sender: UIButton? = nil, _ userAnswer: String){
-        getHour()
+        wordBrain.getHour()
         questionCount += 1
         let progrs = wordBrain.getProgress()
         progressBarTop.progress = progrs
@@ -381,7 +377,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         default: break
         }
         
-        if UserDefault.lastHour.getInt() == UserDefault.userSelectedHour.getInt() {
+        if UserDefault.currentHour.getInt() == UserDefault.userSelectedHour.getInt() {
             exercisePoint *= 2
         }
         

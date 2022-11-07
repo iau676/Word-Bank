@@ -24,10 +24,17 @@ class WheelViewController: UIViewController {
     @objc func goExercise(_ notification: Notification) {
         if let index = notification.userInfo?["index"] as? Int {
             UserDefault.startPressed.set(index)
-            let goView = (index == 4) ? "goCard" : "goExercise"
             let when = DispatchTime.now() + 0.7
             DispatchQueue.main.asyncAfter(deadline: when){
-                self.performSegue(withIdentifier: goView, sender: self)
+                if index == 4 {
+                    let vc = CardViewController()
+                    vc.wheelPressed = 1
+                    self.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    let vc = ExerciseViewController()
+                    vc.wheelPressed = 1
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
         }
     }

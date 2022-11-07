@@ -48,7 +48,7 @@ class HomeViewController: UIViewController, LevelDelegate {
     override func viewDidLoad() {
         fixSoundProblemForRealDevice()
         configureTabBar()
-        getHour()
+        wordBrain.getHour()
         style()
         layout()
     }
@@ -336,7 +336,7 @@ class HomeViewController: UIViewController, LevelDelegate {
     }
 
     func check2xTime(){
-        if UserDefault.lastHour.getInt() == UserDefault.userSelectedHour.getInt() {
+        if UserDefault.currentHour.getInt() == UserDefault.userSelectedHour.getInt() {
           
         } else {
             
@@ -357,11 +357,7 @@ class HomeViewController: UIViewController, LevelDelegate {
             performSegue(identifier: "goExercise", second: 0.4)
         }
     }
-    
-    func getHour() {
-        UserDefault.lastHour.set(Calendar.current.component(.hour, from: Date()))
-    }
-    
+        
     func scheduledTimer(timeInterval: Double, _ selector : Selector) {
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
     }
