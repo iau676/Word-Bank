@@ -55,7 +55,11 @@ class LevelUpViewController: UIViewController {
     //MARK: - Selectors
     
     @objc func continueButtonPressed(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        continueButton.bounce()
+        continueButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     //MARK: - Helpers
@@ -83,7 +87,7 @@ extension LevelUpViewController {
         
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.setTitle("Continue", for: .normal)
-        continueButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 17)
+        continueButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 23)
         continueButton.addTarget(self, action: #selector(continueButtonPressed(_:)), for: .primaryActionTriggered)
         continueButton.layer.shadowColor = Colors.darkGrayShadow?.cgColor
         continueButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
@@ -107,7 +111,8 @@ extension LevelUpViewController {
             
             continueButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -99),
             continueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
+            continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            continueButton.heightAnchor.constraint(equalToConstant: 45),
         ])
     }
 }
