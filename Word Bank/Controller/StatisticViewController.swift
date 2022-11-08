@@ -268,7 +268,7 @@ extension StatisticViewController {
         view.addSubview(lineChartLabel)
         
         NSLayoutConstraint.activate([
-           scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight+16),
+           scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -77),

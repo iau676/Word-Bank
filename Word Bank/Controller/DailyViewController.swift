@@ -376,7 +376,7 @@ extension DailyViewController {
         let taskThreeBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict[ExerciseName.listening] ?? 0)
         
         NSLayoutConstraint.activate([
-            secondView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 8),
+            secondView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
             secondView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             secondView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             secondView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -82)

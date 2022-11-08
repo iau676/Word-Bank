@@ -417,6 +417,10 @@ extension WordBrain {
             return false
         }
     }
+    
+    func getTopBarHeight() -> CGFloat{
+        return UserDefault.topBarHeight.getCGFloat()
+    }
 }
 
 //MARK: - Card Exercise

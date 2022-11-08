@@ -228,6 +228,11 @@ class HomeViewController: UIViewController, LevelDelegate {
         //version 2.0.3
         if UserDefault.keyboardHeight.getCGFloat() == 0 {
             getKeyboardHeight()
+            //getTopBarHeight()
+        }
+        
+        if UserDefault.topBarHeight.getCGFloat() == 0 {
+            getTopBarHeight()
         }
     }
     
@@ -370,6 +375,8 @@ class HomeViewController: UIViewController, LevelDelegate {
         }
     }
 }
+
+//MARK: - Layout
 
 extension HomeViewController {
     
@@ -565,5 +572,13 @@ extension HomeViewController {
                 UserDefault.keyboardHeight.set(keyboardHeight)
             }
         }
+    }
+}
+
+//MARK: - Top Bar Height
+
+extension HomeViewController {
+    func getTopBarHeight(){
+        UserDefault.topBarHeight.set(self.topbarHeight)
     }
 }

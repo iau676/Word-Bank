@@ -532,7 +532,7 @@ extension WordsViewController {
         view.addSubview(buttonStackView)
         
         NSLayoutConstraint.activate([
-            tableViewStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 24),
+            tableViewStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
             tableViewStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableViewStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             tableViewStackView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -16),

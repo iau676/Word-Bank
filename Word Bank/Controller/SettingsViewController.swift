@@ -413,7 +413,7 @@ extension SettingsViewController {
         
         NSLayoutConstraint.activate([
             
-            xView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 32),
+            xView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 16),
             xView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             xView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             

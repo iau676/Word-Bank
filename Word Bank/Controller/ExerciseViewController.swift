@@ -549,7 +549,7 @@ extension ExerciseViewController {
         view.addSubview(progressBarBottom)
         
         NSLayoutConstraint.activate([
-            userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 8),
+            userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
             userPointButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userPointButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             userPointButton.heightAnchor.constraint(equalToConstant: 24),

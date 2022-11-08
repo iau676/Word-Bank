@@ -152,12 +152,12 @@ extension CardViewController {
         view.addSubview(cardView)
         
         NSLayoutConstraint.activate([
-            cardView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 16),
+            cardView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight()),
             cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             cardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
             
-            cardView2.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 16),
+            cardView2.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight()),
             cardView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             cardView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             cardView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
