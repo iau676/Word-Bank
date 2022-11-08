@@ -12,6 +12,7 @@ import CoreData
 class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     let userPointButton = UIButton()
+    let xButton = UIButton()
     let progressBarTop = UIProgressView()
     let soundButton = UIButton()
     
@@ -217,6 +218,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         answer1Button.setTitleColor(Colors.f6f6f6, for: .normal)
         answer2Button.setTitleColor(Colors.f6f6f6, for: .normal)
         userPointButton.changeBackgroundColor(to: Colors.f6f6f6)
+        xButton.changeBackgroundColor(to: Colors.pink)
         soundButton.tintColor = Colors.f6f6f6
         progressBarTop.tintColor = Colors.f6f6f6
         progressBarTop.tintColor = Colors.f6f6f6
@@ -266,6 +268,12 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         if whichStartPressed == 3 {
             questionLabel.isHidden = true
             bubbleButton.isHidden = false
+        }
+        
+        if UserDefault.currentHour.getInt() == UserDefault.userSelectedHour.getInt() {
+            xButton.isHidden = false
+        } else {
+            xButton.isHidden = true
         }
         
         soundSpeed = UserDefault.soundSpeed.getDouble()
@@ -379,8 +387,11 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         
         if UserDefault.currentHour.getInt() == UserDefault.userSelectedHour.getInt() {
             exercisePoint *= 2
+            xButton.isHidden = false
+        } else {
+            xButton.isHidden = true
         }
-        
+                
         if userGotItRight {
             player.playMP3(Sounds.truee)
             
@@ -467,6 +478,12 @@ extension ExerciseViewController {
         userPointButton.setTitleColor(Colors.raven, for: .normal)
         userPointButton.layer.cornerRadius = 12
         
+        xButton.translatesAutoresizingMaskIntoConstraints = false
+        xButton.setTitle("2x", for: .normal)
+        xButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
+        xButton.isHidden = true
+        xButton.setButtonCornerRadius(16)
+        
         progressBarTop.translatesAutoresizingMaskIntoConstraints = false
         progressBarTop.tintColor = Colors.f6f6f6
         
@@ -522,6 +539,7 @@ extension ExerciseViewController {
         answerStackView.addArrangedSubview(answer2Button)
         
         view.addSubview(userPointButton)
+        view.addSubview(xButton)
         view.addSubview(progressBarTop)
         view.addSubview(soundButton)
         view.addSubview(questionLabel)
@@ -531,9 +549,15 @@ extension ExerciseViewController {
         view.addSubview(progressBarBottom)
         
         NSLayoutConstraint.activate([
-            userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: (self.navigationController?.navigationBar.frame.height ?? 45) + 16),
+            userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 8),
             userPointButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userPointButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            userPointButton.heightAnchor.constraint(equalToConstant: 24),
+            
+            xButton.centerYAnchor.constraint(equalTo: userPointButton.centerYAnchor),
+            xButton.leadingAnchor.constraint(equalTo: userPointButton.leadingAnchor),
+            xButton.widthAnchor.constraint(equalToConstant: 32),
+            xButton.heightAnchor.constraint(equalToConstant: 32),
             
             progressBarTop.topAnchor.constraint(equalTo: userPointButton.bottomAnchor, constant: 8),
             progressBarTop.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),

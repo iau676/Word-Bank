@@ -425,7 +425,7 @@ extension ResultViewController {
         view.addSubview(buttonStackView)
         
         NSLayoutConstraint.activate([
-            confettiButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
+            confettiButton.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight),
             confettiButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             scoreLabel.topAnchor.constraint(equalTo: confettiButton.bottomAnchor, constant: 16),

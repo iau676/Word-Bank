@@ -151,15 +151,13 @@ extension CardViewController {
         view.addSubview(cardView2)
         view.addSubview(cardView)
         
-        let navigationBarHeight = navigationController?.navigationBar.frame.height ?? 0
-        
         NSLayoutConstraint.activate([
-            cardView.topAnchor.constraint(equalTo: view.topAnchor, constant: navigationBarHeight+16),
+            cardView.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 16),
             cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             cardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
             
-            cardView2.topAnchor.constraint(equalTo: view.topAnchor, constant: navigationBarHeight+16),
+            cardView2.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 16),
             cardView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             cardView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             cardView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),

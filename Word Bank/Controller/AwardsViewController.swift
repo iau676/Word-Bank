@@ -128,7 +128,7 @@ class AwardsViewController: UIViewController {
         view.addSubview(exerciseScoreLabel)
         
         NSLayoutConstraint.activate([
-            levelCV.topAnchor.constraint(equalTo: view.topAnchor, constant: 90),
+            levelCV.topAnchor.constraint(equalTo: view.topAnchor, constant: self.topbarHeight + 48),
             levelCV.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             levelCV.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             levelCV.heightAnchor.constraint(equalToConstant: 140),
