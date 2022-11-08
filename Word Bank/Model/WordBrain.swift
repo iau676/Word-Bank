@@ -357,6 +357,10 @@ struct WordBrain {
     func getHour() {
         UserDefault.currentHour.set(Calendar.current.component(.hour, from: Date()))
     }
+    
+    func getTodayDate() -> String{
+        return Date().getFormattedDate(format: "yyyy-MM-dd")
+    }
 
     mutating func loadHardItemArray(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
         do {
@@ -403,6 +407,17 @@ struct WordBrain {
     }
 }
 
+//MARK: - User Defaults
+
+extension WordBrain {
+    func isUserWillGetDailyPrize() -> Bool{
+        if UserDefault.userGotDailyPrize.getString() == "willGet" {
+            return true
+        } else {
+            return false
+        }
+    }
+}
 
 //MARK: - Card Exercise
 

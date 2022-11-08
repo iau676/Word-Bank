@@ -60,17 +60,31 @@ class SpinWheel: SKSpriteNode {
         let background = SKSpriteNode(color: Colors.purple ?? .purple, size: self.size)
         background.zPosition = -1
         addChild(background)
+        
+        if wordBrain.isUserWillGetDailyPrize() {
+            slots = [
+                ["", "wheel_prize_present", "", "0", "44"],
+                ["","wheel_prize_present", "", "45", "89"],
+                ["", "wheel_prize_present", "", "90", "134"],
+                ["", "wheel_prize_present", "", "135", "179"],
+                ["", "wheel_prize_present", "", "180", "224"],
+                ["", "wheel_prize_present", "", "225", "269"],
+                ["", "wheel_prize_present", "", "270", "314"],
+                ["", "wheel_prize_present", "", "315", "360"]
+            ]
+        } else {
+            slots = [
+                ["", "cardExercise", "", "0", "44"],
+                ["","testExercise", "", "45", "89"],
+                ["", "writingExercise", "", "90", "134"],
+                ["", "testExercise", "", "135", "179"],
+                ["", "listeningExercise", "", "180", "224"],
+                ["", "writingExercise", "", "225", "269"],
+                ["", "listeningExercise", "", "270", "314"],
+                ["", "wheel_prize_present", "", "315", "360"]
+            ]
+        }
 
-        slots = [
-            ["123", "cardExercise", "", "0", "44"],
-            ["12331","testExercise", "", "45", "89"],
-            ["12331", "writingExercise", "", "90", "134"],
-            ["12331", "testExercise", "", "135", "179"],
-            ["12331", "listeningExercise", "", "180", "224"],
-            ["12331", "writingExercise", "", "225", "269"],
-            ["12331", "listeningExercise", "", "270", "314"],
-            ["a present", "wheel_prize_present", "", "315", "360"]
-        ]
         createWheel()
         createFlapper()
     }
@@ -316,10 +330,14 @@ class SpinWheel: SKSpriteNode {
         let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 1.0)
         backgroundBlocker.run(fadeIn)
         
-        if winnningIndex == 7 {
-            userGotPrize(prizePoint: prizePoint, prizeImage: prizeImage)
+        if wordBrain.isUserWillGetDailyPrize() {
+            userWillGetDailyPrize(prizePoint: prizePoint, prizeImage: prizeImage, winnningIndex: winnningIndex)
         } else {
-            userWillGoExercise(winnningIndex)
+            if winnningIndex == 7 {
+                userGotPrize(prizePoint: prizePoint, prizeImage: prizeImage)
+            } else {
+                userWillGoExercise(winnningIndex)
+            }
         }
     }
     
@@ -348,9 +366,40 @@ class SpinWheel: SKSpriteNode {
         backgroundBlocker.addChild(continueButton)
     }
     
+    func userWillGetDailyPrize(prizePoint: Int, prizeImage: String, winnningIndex: Int){
+        var newPrizePoint = Double(prizePoint)
+        
+        switch winnningIndex {
+        case 0:
+            newPrizePoint *= 1
+        case 1:
+            newPrizePoint *= 1.1
+        case 2:
+            newPrizePoint *= 1.2
+        case 3:
+            newPrizePoint *= 1.3
+        case 4:
+            newPrizePoint *= 1.4
+        case 5:
+            newPrizePoint *= 1.5
+        case 6:
+            newPrizePoint *= 1.6
+        case 7:
+            newPrizePoint *= 1.7
+        default:
+            break
+        }
+        UserDefault.userGotDailyPrize.set(wordBrain.getTodayDate())
+        userGotPrize(prizePoint: Int(newPrizePoint), prizeImage: prizeImage)
+    }
+    
     func closeSpinWheel() {
-        backgroundBlocker.removeFromParent()
-        spinWheel()
+        if slots[1][1] == "wheel_prize_present"{
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "goHome"), object: nil, userInfo: nil)
+        } else {
+            backgroundBlocker.removeFromParent()
+            spinWheel()
+        }
     }
     
     func userWillGoExercise(_ winnningIndex: Int){

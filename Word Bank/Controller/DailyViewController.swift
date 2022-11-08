@@ -41,7 +41,7 @@ class DailyViewController: UIViewController {
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
     private var exerciseDict = [String: Int]()
-    private let todayDate = Date().getFormattedDate(format: "yyyy-MM-dd")
+    private var todayDate: String { return wordBrain.getTodayDate() }
 
     //tabBar
     let tabBarStackView = UIStackView()
@@ -63,7 +63,7 @@ class DailyViewController: UIViewController {
         updateButtons()
         
         showDailyTask()
-        hide2xEvent()
+        hide2xEvent()        
     }
     
     override func viewDidLayoutSubviews() {
@@ -91,7 +91,7 @@ class DailyViewController: UIViewController {
     
     @objc func prizeButtonPressed(){
         prizeButton.bounce()
-        UserDefault.userGotPrize.set(todayDate)
+        UserDefault.userGotDailyPrize.set("willGet")
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
             self.navigationController?.pushViewController(WheelViewController(), animated: true)
         }
@@ -162,8 +162,7 @@ class DailyViewController: UIViewController {
         let listeningExerciseCount = exerciseDict[ExerciseName.listening] ?? 0
         
         if testExerciseCount >= 10 && writingExerciseCount >= 10 && listeningExerciseCount >= 10 {
-            if UserDefault.userGotPrize.getString() != todayDate {
-                prizeButton.alpha = 1
+            if UserDefault.userGotDailyPrize.getString() != todayDate {
                 prizeButton.isEnabled = true
             }
         }
@@ -321,7 +320,6 @@ extension DailyViewController {
         
         prizeButton.setImage(image: Images.wheel_prize_present, width: 128, height: 128)
         prizeButton.backgroundColor = .clear
-        prizeButton.alpha = 0.5
         prizeButton.isEnabled = false
         prizeButton.addTarget(self, action: #selector(prizeButtonPressed), for: .primaryActionTriggered)
         
