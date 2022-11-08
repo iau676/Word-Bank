@@ -83,6 +83,12 @@ extension UIButton {
         }
     }
     
+    func setTitleWithAnimation(title: String) {
+        UIView.transition(with: self, duration: 0.5, options: .transitionCrossDissolve, animations: {
+          self.setTitle(title, for: .normal)
+        }, completion: nil)
+    }
+    
     func alignVertical(spacing: CGFloat = 6.0) {
         if let image = self.imageView?.image {
                     let imageSize: CGSize = image.size

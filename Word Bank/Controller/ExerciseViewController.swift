@@ -392,7 +392,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             
             sender?.backgroundColor = Colors.green
             bubbleButton.setTitleColor(Colors.green, for: .normal)
-            userPointButton.setTitle(String((lastPoint+exercisePoint).withCommas()), for: UIControl.State.normal)
+            userPointButton.setTitleWithAnimation(title: (lastPoint+exercisePoint).withCommas())
             bubbleButton.setTitle(String("+\(exercisePoint)"), for: UIControl.State.normal)
             
             timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "greenBubble")
@@ -412,7 +412,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
            
             sender?.backgroundColor = Colors.red
             bubbleButton.setTitleColor(Colors.red, for: .normal)
-            userPointButton.setTitle(String((lastPoint-exercisePoint).withCommas()), for: UIControl.State.normal)
+            userPointButton.setTitleWithAnimation(title: (lastPoint-exercisePoint).withCommas())
             bubbleButton.setTitle(String(-exercisePoint), for: UIControl.State.normal)
             
             timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "redBubble")
