@@ -61,10 +61,10 @@ extension UIButton {
         layer.add(shake, forKey: nil)
     }
     
-    func animateCoinDown(){
+    func animateCoinDown(y: CGFloat){
         let animation = CABasicAnimation(keyPath: "position")
         animation.fromValue = CGPoint(x: center.x , y: center.y)
-        animation.toValue = CGPoint(x: center.x, y:  4*center.y)
+        animation.toValue = CGPoint(x: center.x, y: y)
         animation.duration = 1
         animation.fillMode = .forwards
         layer.add(animation, forKey: nil)

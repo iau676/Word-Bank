@@ -242,7 +242,7 @@ extension AddViewController {
     }
     
     @objc func animateDown(){
-        coinButton.animateCoinDown()
+        coinButton.animateCoinDown(y: self.view.frame.height-UserDefault.keyboardHeight.getCGFloat()-66)
     }
 
     @objc func deleteButtonBackgroundImage(){
