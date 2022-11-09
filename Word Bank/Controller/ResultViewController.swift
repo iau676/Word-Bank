@@ -153,18 +153,23 @@ class ResultViewController: UIViewController {
     }
     
     func updateExerciseCount(exerciseType: String) {
+        
+        let trueCount = Int16(numberOfTrue)
+        let falseCount = Int16(userAnswer.count-numberOfTrue)
+        let hintCount = Int16(UserDefault.hintCount.getInt())
+        
         switch whichStartPressed {
         case 1:
-            wordBrain.addExercise(name: ExerciseName.test, type: exerciseType)
+            wordBrain.addExercise(name: ExerciseName.test, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
             break
         case 2:
-            wordBrain.addExercise(name: ExerciseName.writing, type: exerciseType)
+            wordBrain.addExercise(name: ExerciseName.writing, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
             break
         case 3:
-            wordBrain.addExercise(name: ExerciseName.listening, type: exerciseType)
+            wordBrain.addExercise(name: ExerciseName.listening, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
             break
         case 4:
-            wordBrain.addExercise(name: ExerciseName.card, type: exerciseType)
+            wordBrain.addExercise(name: ExerciseName.card, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
             break
         default: break
         }

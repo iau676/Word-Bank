@@ -158,6 +158,7 @@ enum UserDefault {
     static var arrayForResultViewENG     = UserDefaultsManager(key: "arrayForResultViewENG")
     static var arrayForResultViewTR      = UserDefaultsManager(key: "arrayForResultViewTR")
     static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")
+    static var hintCount                 = UserDefaultsManager(key: "hintCount")
     
     static var engEdit                   = UserDefaultsManager(key: "engEdit")
     static var trEdit                    = UserDefaultsManager(key: "trEdit")

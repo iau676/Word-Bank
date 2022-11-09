@@ -48,6 +48,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var whichStartPressed : Int { return UserDefault.startPressed.getInt() }
     var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
     var wheelPressed = 0
+    var hintCount = 0
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     //MARK: - Life Cycle
@@ -163,6 +164,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             
         } else {
             questionCount = 0
+            UserDefault.hintCount.set(hintCount)
             let vc = ResultViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -335,6 +337,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             letterCounter += 1
             hintLabel.text = hint
             decreaseOnePoint()
+            hintCount += 1
             player.playMP3(Sounds.beep)
         } else {
             hintLabel.textColor = Colors.green

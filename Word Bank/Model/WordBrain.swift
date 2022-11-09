@@ -91,10 +91,13 @@ struct WordBrain {
         saveContext()
     }
     
-    mutating func addExercise(name: String, type: String){
+    mutating func addExercise(name: String, type: String, trueCount: Int16, falseCount: Int16, hintCount: Int16){
         let newExercise = Exercise(context: self.context)
         newExercise.name = name
         newExercise.type = type
+        newExercise.trueCount = trueCount
+        newExercise.falseCount = falseCount
+        newExercise.hintCount = hintCount
         newExercise.date = Date()
         newExercise.uuid = UUID().uuidString
         self.exerciseArray.append(newExercise)
