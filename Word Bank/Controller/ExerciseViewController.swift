@@ -46,6 +46,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var wordBrain = WordBrain()
     var whichButton: String { return UserDefault.whichButton.getString() }
     var whichStartPressed : Int { return UserDefault.startPressed.getInt() }
+    var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
     var wheelPressed = 0
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -568,7 +569,7 @@ extension ExerciseViewController {
             
             textFieldStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             textFieldStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            textFieldStackView.bottomAnchor.constraint(equalTo: answerStackView.topAnchor, constant: -16),
+            textFieldStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-16),
             
             answerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             answerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
