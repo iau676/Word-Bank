@@ -65,6 +65,7 @@ enum Sounds {
 
 enum Images {
     static let check                     = UIImage(named: "check")
+    static let whiteCircle               = UIImage(named: "whiteCircle")
     static let wheel_prize_present       = UIImage(named: "wheel_prize_present")
     static let confetti                  = UIImage(named: "confetti")
     static let arrow_back                = UIImage(named: "arrow_back")

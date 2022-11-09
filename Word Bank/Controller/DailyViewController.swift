@@ -40,7 +40,6 @@ class DailyViewController: UIViewController {
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
-    private var exerciseDict = [String: Int]()
     private var todayDate: String { return wordBrain.getTodayDate() }
 
     //tabBar
@@ -53,13 +52,14 @@ class DailyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        wordBrain.getHour()
         wordBrain.loadItemArray()
         wordBrain.loadExerciseArray()
-        wordBrain.getHour()
+        wordBrain.findExercisesCompletedToday()
+
         configureNavigationBar()
         style()
         configureTabBar()
-        findCompletedExercises()
         updateButtons()
         
         showDailyTask()
@@ -116,16 +116,6 @@ class DailyViewController: UIViewController {
     
     //MARK: - Helpers
     
-    func findCompletedExercises(){
-        for i in 0..<exerciseArray.count {
-            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
-            let exerciseName = exerciseArray[i].name ?? ""
-            if exerciseDate == todayDate {
-                exerciseDict.updateValue((exerciseDict[exerciseName] ?? 0)+1, forKey: exerciseName)
-            }
-        }
-    }
-    
     func checkWordCount(){
         let wordCount = itemArray.count
         
@@ -157,14 +147,26 @@ class DailyViewController: UIViewController {
     }
     
     func updateButtons(){
-        let testExerciseCount = exerciseDict[ExerciseName.test] ?? 0
-        let writingExerciseCount = exerciseDict[ExerciseName.writing] ?? 0
-        let listeningExerciseCount = exerciseDict[ExerciseName.listening] ?? 0
+        let testExerciseCount = wordBrain.getTestExerciseCountToday()
+        let writingExerciseCount = wordBrain.getWritingExerciseCountToday()
+        let listeningExerciseCount = wordBrain.getListeningExerciseCountToday()
         
         if testExerciseCount >= 10 && writingExerciseCount >= 10 && listeningExerciseCount >= 10 {
             if UserDefault.userGotDailyPrize.getString() != todayDate {
                 prizeButton.isEnabled = true
             }
+        }
+        
+        if testExerciseCount >= 10 {
+            taskOneButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
+        }
+        
+        if writingExerciseCount >= 10 {
+            taskTwoButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
+        }
+        
+        if writingExerciseCount >= 10 {
+            taskThreeButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
         }
     }
     
@@ -296,9 +298,9 @@ extension DailyViewController {
         configureButton(taskThreeButton, "Complete 10 Listening Exercise")
         configureButton(prizeButton, "")
         
-        taskOneButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
-        taskTwoButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
-        taskThreeButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
+        taskOneButton.setImageWithRenderingMode(image: Images.whiteCircle, width: 25, height: 25, color: .white)
+        taskTwoButton.setImageWithRenderingMode(image: Images.whiteCircle, width: 25, height: 25, color: .white)
+        taskThreeButton.setImageWithRenderingMode(image: Images.whiteCircle, width: 25, height: 25, color: .white)
         
         taskOneButton.moveImageTitleLeft()
         taskTwoButton.moveImageTitleLeft()
@@ -371,9 +373,9 @@ extension DailyViewController {
         secondView.addSubview(wheelButton)
         secondView.addSubview(whiteCircleButton)
         
-        let taskOneBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict[ExerciseName.test] ?? 0)
-        let taskTwoBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict[ExerciseName.writing] ?? 0)
-        let taskThreeBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(exerciseDict[ExerciseName.listening] ?? 0)
+        let taskOneBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(wordBrain.getTestExerciseCountToday())
+        let taskTwoBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(wordBrain.getWritingExerciseCountToday())
+        let taskThreeBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(wordBrain.getListeningExerciseCountToday())
         
         NSLayoutConstraint.activate([
             secondView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),

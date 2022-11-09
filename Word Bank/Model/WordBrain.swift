@@ -15,6 +15,7 @@ struct WordBrain {
     var hardItemArray = [HardItem]()
     var user = [User]()
     var exerciseArray = [Exercise]()
+    var exerciseDict = [String: Int]()
     
     static let shareInstance = WordBrain()
     
@@ -449,5 +450,38 @@ extension WordBrain {
     mutating func userSwipeLeft(){
         rightOnceBooll.append(false)
         UserDefault.rightOnceBool.set(rightOnceBooll)
+    }
+}
+
+//MARK: - Daily Exercise Info
+
+extension WordBrain {
+    mutating func findExercisesCompletedToday(){
+        loadExerciseArray()
+        let todayDate = getTodayDate()
+        let exerciseArrayCount = (exerciseArray.count > 5760) ? 5760 : exerciseArray.count //24*60*4
+        for i in 0..<exerciseArrayCount {
+            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+            let exerciseName = exerciseArray[i].name ?? ""
+            if exerciseDate == todayDate {
+                exerciseDict.updateValue((exerciseDict[exerciseName] ?? 0)+1, forKey: exerciseName)
+            }
+        }
+    }
+    
+    func getTestExerciseCountToday() -> Int{
+        return exerciseDict[ExerciseName.test] ?? 0
+    }
+    
+    func getWritingExerciseCountToday() -> Int{
+        return exerciseDict[ExerciseName.writing] ?? 0
+    }
+    
+    func getListeningExerciseCountToday() -> Int{
+        return exerciseDict[ExerciseName.listening] ?? 0
+    }
+    
+    func getCardExerciseCountToday() -> Int{
+        return exerciseDict[ExerciseName.card] ?? 0
     }
 }
