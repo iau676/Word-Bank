@@ -191,6 +191,7 @@ class AwardsViewController: UIViewController {
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
         button.setButtonCornerRadius(8)
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         button.backgroundColor = Colors.blue
     }
     
