@@ -62,7 +62,6 @@ enum Sounds {
     static let beep                      = "beep"
 }
 
-
 enum Images {
     static let check                     = UIImage(named: "check")
     static let whiteCircle               = UIImage(named: "whiteCircle")
@@ -72,7 +71,14 @@ enum Images {
     static let coin                      = UIImage(named: "coin")
     
     static let home                      = UIImage(named: "home")
-    static let daily                     = UIImage(named: "daily")
+    static let daily1                    = UIImage(named: "daily1")
+    static let daily2                    = UIImage(named: "daily2")
+    static let daily3                    = UIImage(named: "daily3")
+    static let daily4                    = UIImage(named: "daily4")
+    static let daily5                    = UIImage(named: "daily5")
+    static let daily6                    = UIImage(named: "daily6")
+    static let daily7                    = UIImage(named: "daily7")
+    static let daily8                    = UIImage(named: "daily8")
     static let award                     = UIImage(named: "award")
     static let statistic                 = UIImage(named: "statistic")
     static let settings                  = UIImage(named: "settings")
@@ -106,6 +112,7 @@ enum UserDefault {
     static var userInterfaceStyle        = ""
     static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
     static var topBarHeight              = UserDefaultsManager(key: "topBarHeight")
+    static var dailyImageIndex           = UserDefaultsManager(key: "dailyImageIndex")
     static var userGotDailyPrize         = UserDefaultsManager(key: "userGotDailyPrize")
     
     static var level                     = UserDefaultsManager(key: "level")

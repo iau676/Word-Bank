@@ -71,6 +71,8 @@ struct WordBrain {
                  "22:00 - 23:00",
                  "23:00 - 00:00"]
     
+    let dailyImages: [UIImage?] = [Images.daily1, Images.daily2, Images.daily3, Images.daily4, Images.daily5, Images.daily6, Images.daily7, Images.daily8]
+    
     mutating func createUser(){
         let newUser = User(context: self.context)
         newUser.date = Date()
@@ -458,6 +460,7 @@ extension WordBrain {
 extension WordBrain {
     mutating func findExercisesCompletedToday(){
         loadExerciseArray()
+        exerciseDict.removeAll()
         let todayDate = getTodayDate()
         let exerciseArrayCount = (exerciseArray.count > 5760) ? 5760 : exerciseArray.count //24*60*4
         for i in 0..<exerciseArrayCount {
@@ -483,5 +486,33 @@ extension WordBrain {
     
     func getCardExerciseCountToday() -> Int{
         return exerciseDict[ExerciseName.card] ?? 0
+    }
+        
+    mutating func updateTabBarDailyImage(){
+        findExercisesCompletedToday()
+        
+        let testExerciseCount = getTestExerciseCountToday() >= 10 ? 1 : 0
+        let writingExerciseCount = getWritingExerciseCountToday() >= 10 ? 10 : 0
+        let listeningExerciseCount = getListeningExerciseCountToday() >= 10 ? 100 : 0
+        
+        switch testExerciseCount + writingExerciseCount + listeningExerciseCount {
+        case 0:
+            UserDefault.dailyImageIndex.set(0)
+        case 1:
+            UserDefault.dailyImageIndex.set(1)
+        case 10:
+            UserDefault.dailyImageIndex.set(2)
+        case 100:
+            UserDefault.dailyImageIndex.set(3)
+        case 11:
+            UserDefault.dailyImageIndex.set(4)
+        case 101:
+            UserDefault.dailyImageIndex.set(5)
+        case 110:
+            UserDefault.dailyImageIndex.set(6)
+        case 111:
+            UserDefault.dailyImageIndex.set(7)
+        default: break
+        }
     }
 }

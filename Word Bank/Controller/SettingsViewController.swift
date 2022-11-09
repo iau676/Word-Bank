@@ -491,7 +491,7 @@ extension SettingsViewController {
         tabBarStackView.distribution = .fillEqually
         
         homeButton.configureForTabBar(image: Images.home, title: "Home", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        dailyButton.configureForTabBar(image: Images.daily, title: "Daily", titleColor: .darkGray, imageWidth: 26, imageHeight: 26)
+        dailyButton.configureForTabBar(image: wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()], title: "Daily", titleColor: .darkGray, imageWidth: 26, imageHeight: 26)
         awardButton.configureForTabBar(image: Images.award, title: "Awards", titleColor: .darkGray, imageWidth: 27, imageHeight: 27)
         statisticButton.configureForTabBar(image: Images.statistic, title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
         settingsButton.configureForTabBar(image: Images.settings, title: "Settings", titleColor: Colors.blue ?? .blue, imageWidth: 25, imageHeight: 25)
