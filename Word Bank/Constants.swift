@@ -26,6 +26,8 @@ enum Colors {
     static let pink                      = UIColor(hex: "#fc8da5")
     static let d6d6d6                    = UIColor(hex: "#d6d6d6")
     static let f6f6f6                    = UIColor(hex: "#f6f6f6")
+    static let d9d9d9                    = UIColor(hex: "#d9d9d9")
+    static let b9b9b9                    = UIColor(hex: "#b9b9b9")
     static let testAnswerLayer           = UIColor(hex: "#47668f")
     static let red                       = UIColor(hex: "#eb5c70")
     static let raven                     = UIColor(hex: "#323d5a")
