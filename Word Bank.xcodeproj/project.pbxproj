@@ -16,6 +16,24 @@
 		7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */; };
 		7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FF289571A100A42314 /* UIColor+Extensions.swift */; };
 		7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */; };
+		70134170291D5723001967E1 /* CircleColorSparkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7013416F291D5723001967E1 /* CircleColorSparkView.swift */; };
+		70134172291D573D001967E1 /* CircleColorSparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134171291D573D001967E1 /* CircleColorSparkViewFactory.swift */; };
+		70134174291D5751001967E1 /* ImageSparkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134173291D5751001967E1 /* ImageSparkView.swift */; };
+		70134176291D577A001967E1 /* ImageSparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134175291D577A001967E1 /* ImageSparkViewFactory.swift */; };
+		70134179291D57A1001967E1 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134178291D57A1001967E1 /* CGPoint+Extensions.swift */; };
+		7013417C291D57C1001967E1 /* Firework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7013417B291D57C1001967E1 /* Firework.swift */; };
+		7013417E291D57D5001967E1 /* FireworkSpark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7013417D291D57D5001967E1 /* FireworkSpark.swift */; };
+		70134180291D57E7001967E1 /* FireworkSparkScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7013417F291D57E7001967E1 /* FireworkSparkScheduler.swift */; };
+		70134182291D57FC001967E1 /* SparkTrajectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134181291D57FC001967E1 /* SparkTrajectory.swift */; };
+		70134184291D580F001967E1 /* SparkTrajectoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134183291D580F001967E1 /* SparkTrajectoryFactory.swift */; };
+		70134186291D581F001967E1 /* SparkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134185291D581F001967E1 /* SparkView.swift */; };
+		70134188291D582E001967E1 /* SparkViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134187291D582E001967E1 /* SparkViewAnimator.swift */; };
+		7013418A291D5844001967E1 /* SparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134189291D5844001967E1 /* SparkViewFactory.swift */; };
+		7013418D291D5867001967E1 /* ClassicFirework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7013418C291D5867001967E1 /* ClassicFirework.swift */; };
+		7013418F291D5877001967E1 /* ClassicFireworkAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7013418E291D5877001967E1 /* ClassicFireworkAnimator.swift */; };
+		70134191291D5888001967E1 /* ClassicFireworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134190291D5888001967E1 /* ClassicFireworkController.swift */; };
+		70134193291D589A001967E1 /* ClassicSparkTrajectoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134192291D589A001967E1 /* ClassicSparkTrajectoryFactory.swift */; };
+		70134195291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134194291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift */; };
 		7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7014743527AAB4EE005E1854 /* LevelUpViewController.swift */; };
 		701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701581BC27DE80D800796ADE /* SettingsViewController.swift */; };
 		70175BC427E71F170053CBDB /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175BC327E71F170053CBDB /* CardViewController.swift */; };
@@ -97,6 +115,24 @@
 		7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContextualAction+Extensions.swift"; sourceTree = "<group>"; };
 		7011E3FF289571A100A42314 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateExercisePoint.swift"; sourceTree = "<group>"; };
+		7013416F291D5723001967E1 /* CircleColorSparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleColorSparkView.swift; sourceTree = "<group>"; };
+		70134171291D573D001967E1 /* CircleColorSparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleColorSparkViewFactory.swift; sourceTree = "<group>"; };
+		70134173291D5751001967E1 /* ImageSparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkView.swift; sourceTree = "<group>"; };
+		70134175291D577A001967E1 /* ImageSparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkViewFactory.swift; sourceTree = "<group>"; };
+		70134178291D57A1001967E1 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		7013417B291D57C1001967E1 /* Firework.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firework.swift; sourceTree = "<group>"; };
+		7013417D291D57D5001967E1 /* FireworkSpark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworkSpark.swift; sourceTree = "<group>"; };
+		7013417F291D57E7001967E1 /* FireworkSparkScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworkSparkScheduler.swift; sourceTree = "<group>"; };
+		70134181291D57FC001967E1 /* SparkTrajectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkTrajectory.swift; sourceTree = "<group>"; };
+		70134183291D580F001967E1 /* SparkTrajectoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkTrajectoryFactory.swift; sourceTree = "<group>"; };
+		70134185291D581F001967E1 /* SparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkView.swift; sourceTree = "<group>"; };
+		70134187291D582E001967E1 /* SparkViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkViewAnimator.swift; sourceTree = "<group>"; };
+		70134189291D5844001967E1 /* SparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkViewFactory.swift; sourceTree = "<group>"; };
+		7013418C291D5867001967E1 /* ClassicFirework.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicFirework.swift; sourceTree = "<group>"; };
+		7013418E291D5877001967E1 /* ClassicFireworkAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicFireworkAnimator.swift; sourceTree = "<group>"; };
+		70134190291D5888001967E1 /* ClassicFireworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicFireworkController.swift; sourceTree = "<group>"; };
+		70134192291D589A001967E1 /* ClassicSparkTrajectoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicSparkTrajectoryFactory.swift; sourceTree = "<group>"; };
+		70134194291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicSparkTrajectoryFactoryProtocol.swift; sourceTree = "<group>"; };
 		7014743527AAB4EE005E1854 /* LevelUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpViewController.swift; sourceTree = "<group>"; };
 		701581BC27DE80D800796ADE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		70175BC327E71F170053CBDB /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +219,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7013416D291D56DF001967E1 /* Fireworks Files */ = {
+			isa = PBXGroup;
+			children = (
+				70134177291D578E001967E1 /* System Extensions */,
+				7013416E291D5711001967E1 /* Spark Views */,
+				7013417A291D57B9001967E1 /* Model */,
+				7013418B291D5857001967E1 /* Classic Firework */,
+			);
+			path = "Fireworks Files";
+			sourceTree = "<group>";
+		};
+		7013416E291D5711001967E1 /* Spark Views */ = {
+			isa = PBXGroup;
+			children = (
+				7013416F291D5723001967E1 /* CircleColorSparkView.swift */,
+				70134171291D573D001967E1 /* CircleColorSparkViewFactory.swift */,
+				70134173291D5751001967E1 /* ImageSparkView.swift */,
+				70134175291D577A001967E1 /* ImageSparkViewFactory.swift */,
+			);
+			path = "Spark Views";
+			sourceTree = "<group>";
+		};
+		70134177291D578E001967E1 /* System Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				70134178291D57A1001967E1 /* CGPoint+Extensions.swift */,
+			);
+			path = "System Extensions";
+			sourceTree = "<group>";
+		};
+		7013417A291D57B9001967E1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7013417B291D57C1001967E1 /* Firework.swift */,
+				7013417D291D57D5001967E1 /* FireworkSpark.swift */,
+				7013417F291D57E7001967E1 /* FireworkSparkScheduler.swift */,
+				70134181291D57FC001967E1 /* SparkTrajectory.swift */,
+				70134183291D580F001967E1 /* SparkTrajectoryFactory.swift */,
+				70134185291D581F001967E1 /* SparkView.swift */,
+				70134187291D582E001967E1 /* SparkViewAnimator.swift */,
+				70134189291D5844001967E1 /* SparkViewFactory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7013418B291D5857001967E1 /* Classic Firework */ = {
+			isa = PBXGroup;
+			children = (
+				7013418C291D5867001967E1 /* ClassicFirework.swift */,
+				7013418E291D5877001967E1 /* ClassicFireworkAnimator.swift */,
+				70134190291D5888001967E1 /* ClassicFireworkController.swift */,
+				70134192291D589A001967E1 /* ClassicSparkTrajectoryFactory.swift */,
+				70134194291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift */,
+			);
+			path = "Classic Firework";
+			sourceTree = "<group>";
+		};
 		70209B1C27595DD000D527D3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,6 +403,7 @@
 				708AFD86288719BA00E09AE1 /* Extensions */,
 				70F0AB3D28C51858002E3EC9 /* Onboarding */,
 				705D92EE28F897F7001C4F38 /* Wheel Files */,
+				7013416D291D56DF001967E1 /* Fireworks Files */,
 				70209B1F27595DF200D527D3 /* Model */,
 				70209B1D27595DDE00D527D3 /* View */,
 				70209B1C27595DD000D527D3 /* Controller */,
@@ -473,18 +567,26 @@
 			files = (
 				70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */,
 				706CBAB727592F8D008B4773 /* HomeViewController.swift in Sources */,
+				70134186291D581F001967E1 /* SparkView.swift in Sources */,
 				708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */,
+				70134191291D5888001967E1 /* ClassicFireworkController.swift in Sources */,
 				7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */,
+				70134182291D57FC001967E1 /* SparkTrajectory.swift in Sources */,
+				7013418F291D5877001967E1 /* ClassicFireworkAnimator.swift in Sources */,
 				700458532917EC8E0077A4D2 /* WordBrain+PrizePoints.swift in Sources */,
 				7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */,
 				7009BDE729112BAA0068E2F6 /* DailyViewController.swift in Sources */,
 				706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */,
 				70C357E528882DFC00F3AD86 /* Player.swift in Sources */,
+				70134176291D577A001967E1 /* ImageSparkViewFactory.swift in Sources */,
 				700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */,
+				70134170291D5723001967E1 /* CircleColorSparkView.swift in Sources */,
 				7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */,
 				70175BC427E71F170053CBDB /* CardViewController.swift in Sources */,
 				706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */,
+				7013418D291D5867001967E1 /* ClassicFirework.swift in Sources */,
 				705D92ED28F89625001C4F38 /* CGFloat+Extensions.swift in Sources */,
+				70134184291D580F001967E1 /* SparkTrajectoryFactory.swift in Sources */,
 				7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */,
 				707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */,
 				7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */,
@@ -496,22 +598,31 @@
 				700C439927A856FD00D94497 /* LevelInfoViewController.swift in Sources */,
 				7075B371291679B40007EDF7 /* UIViewController+Extensions.swift in Sources */,
 				708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */,
+				70134195291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,
 				70FC7F38275BD1DE00F138E7 /* ExerciseViewController.swift in Sources */,
+				70134174291D5751001967E1 /* ImageSparkView.swift in Sources */,
+				7013417E291D57D5001967E1 /* FireworkSpark.swift in Sources */,
 				707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */,
 				70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */,
 				700BC57F2892FE9E00903C04 /* WordBrain+calculateLevel.swift in Sources */,
+				7013418A291D5844001967E1 /* SparkViewFactory.swift in Sources */,
 				706CBAD627593993008B4773 /* WordCell.swift in Sources */,
 				708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */,
 				70F0AB3F28C51869002E3EC9 /* OnboardingViewController.swift in Sources */,
+				70134193291D589A001967E1 /* ClassicSparkTrajectoryFactory.swift in Sources */,
 				70209B2B2759613900D527D3 /* WordBrain.swift in Sources */,
 				702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */,
 				700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */,
+				70134180291D57E7001967E1 /* FireworkSparkScheduler.swift in Sources */,
 				707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,
 				7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */,
+				70134179291D57A1001967E1 /* CGPoint+Extensions.swift in Sources */,
+				7013417C291D57C1001967E1 /* Firework.swift in Sources */,
 				708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */,
 				702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */,
+				70134188291D582E001967E1 /* SparkViewAnimator.swift in Sources */,
 				705D92E328F89625001C4F38 /* PushButton.swift in Sources */,
 				7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */,
 				705D92EB28F89625001C4F38 /* SpinWheel.swift in Sources */,
@@ -519,6 +630,7 @@
 				701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */,
 				705D92D528F895BA001C4F38 /* WheelViewController.swift in Sources */,
 				7094D8C6290D694D007E422F /* BadgeView.swift in Sources */,
+				70134172291D573D001967E1 /* CircleColorSparkViewFactory.swift in Sources */,
 				709ED6A72899312800A34007 /* Constants.swift in Sources */,
 				70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */,
 				704B055528364098006C7F96 /* Word.swift in Sources */,

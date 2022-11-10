@@ -36,12 +36,13 @@ class HomeViewController: UIViewController, LevelDelegate {
     var progressValue:Float = 0.0
     
     //tabBar
-    let tabBarStackView = UIStackView()
-    let homeButton = UIButton()
-    let dailyButton = UIButton()
-    let awardButton = UIButton()
-    let statisticButton = UIButton()
-    let settingsButton = UIButton()
+    private let fireworkController = ClassicFireworkController()
+    private let tabBarStackView = UIStackView()
+    private let homeButton = UIButton()
+    private let dailyButton = UIButton()
+    private let awardButton = UIButton()
+    private let statisticButton = UIButton()
+    private let settingsButton = UIButton()
     
     //MARK: - Life Cycle
     
@@ -534,22 +535,26 @@ extension HomeViewController {
     }
 
     @objc func dailyButtonPressed(gesture: UISwipeGestureRecognizer) {
-        let vc = DailyViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        pushVC(vc: DailyViewController(), button: dailyButton)
     }
     
     @objc func awardButtonPressed(gesture: UISwipeGestureRecognizer) {
-        let vc = AwardsViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        pushVC(vc: AwardsViewController(), button: awardButton)
     }
     
     @objc func statisticButtonPressed(gesture: UISwipeGestureRecognizer) {
-        let vc = StatisticViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        pushVC(vc: StatisticViewController(), button: statisticButton)
     }
     
     @objc func settingsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        performSegue(identifier: "goSettings", second: 0.0)
+        pushVC(vc: SettingsViewController(), button: settingsButton)
+    }
+    
+    func pushVC(vc: UIViewController, button: UIButton){
+        self.fireworkController.addFireworks(count: 5, sparks: 5, around: button)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15){
+           self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 

@@ -43,12 +43,13 @@ class DailyViewController: UIViewController {
     private var todayDate: String { return wordBrain.getTodayDate() }
 
     //tabBar
-    let tabBarStackView = UIStackView()
-    let homeButton = UIButton()
-    let dailyButton = UIButton()
-    let awardButton = UIButton()
-    let statisticButton = UIButton()
-    let settingsButton = UIButton()
+    private let fireworkController = ClassicFireworkController()
+    private let tabBarStackView = UIStackView()
+    private let homeButton = UIButton()
+    private let dailyButton = UIButton()
+    private let awardButton = UIButton()
+    private let statisticButton = UIButton()
+    private let settingsButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -521,21 +522,29 @@ extension DailyViewController {
     }
     
     @objc func homeButtonPressed(gesture: UISwipeGestureRecognizer) {
-        self.navigationController?.popToRootViewController(animated: true)
+        pushVC(vc: UIViewController(), button: homeButton)
     }
 
     @objc func awardsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        let vc = AwardsViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        pushVC(vc: AwardsViewController(), button: awardButton)
     }
   
     @objc func statisticButtonPressed(gesture: UISwipeGestureRecognizer) {
-        let vc = StatisticViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        pushVC(vc: StatisticViewController(), button: statisticButton)
     }
     
     @objc func settingsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        let vc = SettingsViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        pushVC(vc: SettingsViewController(), button: settingsButton)
+    }
+    
+    func pushVC(vc: UIViewController, button: UIButton){
+        self.fireworkController.addFireworks(count: 5, sparks: 5, around: button)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15){
+            if button == self.homeButton {
+                self.navigationController?.popToRootViewController(animated: true)
+            } else {
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
 }
