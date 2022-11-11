@@ -64,7 +64,7 @@ class SpinWheel: SKSpriteNode {
         if wordBrain.isUserWillGetDailyPrize() {
             slots = [
                 ["", "wheel_prize_present", "", "0", "44"],
-                ["","wheel_prize_present", "", "45", "89"],
+                ["", "wheel_prize_present", "", "45", "89"],
                 ["", "wheel_prize_present", "", "90", "134"],
                 ["", "wheel_prize_present", "", "135", "179"],
                 ["", "wheel_prize_present", "", "180", "224"],
@@ -73,16 +73,30 @@ class SpinWheel: SKSpriteNode {
                 ["", "wheel_prize_present", "", "315", "360"]
             ]
         } else {
-            slots = [
-                ["", "cardExercise", "", "0", "44"],
-                ["","testExercise", "", "45", "89"],
-                ["", "writingExercise", "", "90", "134"],
-                ["", "testExercise", "", "135", "179"],
-                ["", "listeningExercise", "", "180", "224"],
-                ["", "writingExercise", "", "225", "269"],
-                ["", "listeningExercise", "", "270", "314"],
-                ["", "wheel_prize_present", "", "315", "360"]
-            ]
+            if wordBrain.isUserGotWheelPrize() {
+                slots = [
+                    ["", "testExercise", "", "0", "44"],
+                    ["", "writingExercise", "", "45", "89"],
+                    ["", "listeningExercise", "", "90", "134"],
+                    ["", "cardExercise", "", "135", "179"],
+                    ["", "testExercise", "", "180", "224"],
+                    ["", "writingExercise", "", "225", "269"],
+                    ["", "listeningExercise", "", "270", "314"],
+                    ["", "cardExercise", "", "315", "360"]
+                ]
+            } else {
+                slots = [
+                    ["", "testExercise", "", "0", "44"],
+                    ["", "writingExercise", "", "45", "89"],
+                    ["", "listeningExercise", "", "90", "134"],
+                    ["", "cardExercise", "", "135", "179"],
+                    ["", "testExercise", "", "180", "224"],
+                    ["", "writingExercise", "", "225", "269"],
+                    ["", "listeningExercise", "", "270", "314"],
+                    ["", "wheel_prize_present", "", "315", "360"]
+                ]
+            }
+            
         }
 
         createWheel()
@@ -333,10 +347,15 @@ class SpinWheel: SKSpriteNode {
         if wordBrain.isUserWillGetDailyPrize() {
             userWillGetDailyPrize(prizePoint: prizePoint, prizeImage: prizeImage, winnningIndex: winnningIndex)
         } else {
-            if winnningIndex == 7 {
-                userGotPrize(prizePoint: prizePoint, prizeImage: prizeImage)
-            } else {
+            if wordBrain.isUserGotWheelPrize() {
                 userWillGoExercise(winnningIndex)
+            } else {
+                if winnningIndex == 7 {
+                    UserDefault.userGotWheelPrize.set(wordBrain.getTodayDate())
+                    userGotPrize(prizePoint: prizePoint, prizeImage: prizeImage)
+                } else {
+                    userWillGoExercise(winnningIndex)
+                }
             }
         }
     }
@@ -397,6 +416,10 @@ class SpinWheel: SKSpriteNode {
         if slots[1][1] == "wheel_prize_present"{
             NotificationCenter.default.post(name: Notification.Name(rawValue: "goHome"), object: nil, userInfo: nil)
         } else {
+            slots[7][1] = "blueBackground"
+            loadSlotImages()
+            slots[7][1] = "cardExercise"
+            loadSlotImages()
             backgroundBlocker.removeFromParent()
             spinWheel()
         }
@@ -407,19 +430,21 @@ class SpinWheel: SKSpriteNode {
         
         switch winnningIndex {
         case 0:
-            newIndex = 4
+            newIndex = 1
         case 1:
-            newIndex = 1
-        case 2:
             newIndex = 2
-        case 3:
-            newIndex = 1
-        case 4:
+        case 2:
             newIndex = 3
+        case 3:
+            newIndex = 4
+        case 4:
+            newIndex = 1
         case 5:
             newIndex = 2
         case 6:
             newIndex = 3
+        case 7:
+            newIndex = 4
         default:
             break
         }

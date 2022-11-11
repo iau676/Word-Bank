@@ -116,6 +116,7 @@ enum UserDefault {
     static var topBarHeight              = UserDefaultsManager(key: "topBarHeight")
     static var dailyImageIndex           = UserDefaultsManager(key: "dailyImageIndex")
     static var userGotDailyPrize         = UserDefaultsManager(key: "userGotDailyPrize")
+    static var userGotWheelPrize         = UserDefaultsManager(key: "userGotWheelPrize")
     
     static var level                     = UserDefaultsManager(key: "level")
     static var lastPoint                 = UserDefaultsManager(key: "lastPoint")

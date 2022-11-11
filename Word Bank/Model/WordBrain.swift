@@ -424,6 +424,14 @@ extension WordBrain {
         }
     }
     
+    func isUserGotWheelPrize() -> Bool{
+        if UserDefault.userGotWheelPrize.getString() == getTodayDate() {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func getTopBarHeight() -> CGFloat{
         return UserDefault.topBarHeight.getCGFloat()
     }
