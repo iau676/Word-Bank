@@ -212,7 +212,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
         getLetter()
-        return true
+        return false
     }
     
     func configureColor(){
