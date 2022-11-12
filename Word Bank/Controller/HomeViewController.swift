@@ -90,16 +90,6 @@ class HomeViewController: UIViewController, LevelDelegate {
             destinationVC.goAddPage = goAddPage
         }
     }
-   
-    //MARK: - IBAction
-    
-    func setNotificationFirstTime() {
-        //works after any button pressed
-        if UserDefault.setNotificationFirstTime.getInt() == 0 {
-            wordBrain.setNotification()
-            UserDefault.setNotificationFirstTime.set(1)
-        }
-    }
     
     //MARK: - Selectors
     
@@ -121,7 +111,6 @@ class HomeViewController: UIViewController, LevelDelegate {
     }
     
     @objc func newWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        
         newWordsButton.setImage(image: Images.onlyHand, width: 35, height: 35)
         dropButton.setImage(image: Images.drop, width: 7, height: 7)
         dropButton.animateDropDown()
@@ -175,19 +164,7 @@ class HomeViewController: UIViewController, LevelDelegate {
         
         //version 2.0.2
         if UserDefault.exerciseCount.getValue() == nil {
-            UserDefault.allTrueCount.set(UserDefault.blueAllTrue.getInt()+1)
-            
-            UserDefault.testCount.set(UserDefault.start1count.getInt()+1)
-            UserDefault.writingCount.set(UserDefault.start2count.getInt()+1)
-            UserDefault.listeningCount.set(UserDefault.start3count.getInt()+1)
-            UserDefault.cardCount.set(UserDefault.start4count.getInt()+1)
-            
-            UserDefault.exerciseCount.set(UserDefault.blueExerciseCount.getInt()+1)
-            UserDefault.trueCount.set(UserDefault.blueTrueCount.getInt()+1)
-            UserDefault.falseCount.set(UserDefault.blueFalseCount.getInt()+1)
-            
-            let when = DispatchTime.now() + 5
-            DispatchQueue.main.asyncAfter(deadline: when){
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5){
                 self.wordBrain.loadUser()
                 self.wordBrain.loadItemArray()
                 self.wordBrain.loadHardItemArray()
@@ -234,6 +211,11 @@ class HomeViewController: UIViewController, LevelDelegate {
         
         if UserDefault.topBarHeight.getCGFloat() == 0 {
             getTopBarHeight()
+        }
+        
+        if UserDefault.setNotificationFirstTime.getInt() == 0 {
+            wordBrain.setNotification()
+            UserDefault.setNotificationFirstTime.set(1)
         }
     }
     

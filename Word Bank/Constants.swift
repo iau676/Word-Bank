@@ -163,14 +163,4 @@ enum UserDefault {
     
     static var engEdit                   = UserDefaultsManager(key: "engEdit")
     static var trEdit                    = UserDefaultsManager(key: "trEdit")
-    
-    //will delete next version
-    static var blueAllTrue               = UserDefaultsManager(key: "blueAllTrue")
-    static var start1count               = UserDefaultsManager(key: "start1count")
-    static var start2count               = UserDefaultsManager(key: "start2count")
-    static var start3count               = UserDefaultsManager(key: "start3count")
-    static var start4count               = UserDefaultsManager(key: "start4count")
-    static var blueExerciseCount         = UserDefaultsManager(key: "blueExerciseCount")
-    static var blueTrueCount             = UserDefaultsManager(key: "blueTrueCount")
-    static var blueFalseCount            = UserDefaultsManager(key: "blueFalseCount")
 }
