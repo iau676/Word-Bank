@@ -9,6 +9,10 @@ import UIKit
 import CoreData
 import UserNotifications
 
+protocol X2HourDelegate: AnyObject {
+    func x2HourChanged(_ userSelectedHour: Int)
+}
+
 class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     //MARK: - IBOutlet
@@ -21,6 +25,8 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     let infoLabel = UILabel()
     let allowNotificationButton = UIButton()
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    
+    var delegate: X2HourDelegate?
     
     //MARK: - Variables
     
@@ -76,7 +82,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
                         UserDefault.lastEditLabel.set(lastEditLabel)
                         self.lastEditLabel.text = "Last changed on \(lastEditLabel)"
                         UserDefault.userSelectedHour.set(self.userSelectedHour)
-                        self.onViewWillDisappear?(self.userSelectedHour)
+                        self.delegate?.x2HourChanged(self.userSelectedHour)
                         self.wordBrain.setNotification()
                     }
                     self.dismiss(animated: true, completion: nil)

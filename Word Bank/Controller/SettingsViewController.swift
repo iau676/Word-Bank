@@ -39,7 +39,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     var player = Player()
     var wordBrain = WordBrain()
     var soundSpeed = 0.0
-    var onViewWillDisappear: (()->())?
     var soundImageName = ""
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
@@ -66,25 +65,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         layout()
     }
     
-    //MARK: - prepare
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goPicker" {
-            if segue.destination is X2SettingViewController {
-                (segue.destination as? X2SettingViewController)?.onViewWillDisappear = { (id) -> Void in
-                    self.x2HoursLabel.text = self.wordBrain.hours[id]
-                    self.onViewWillDisappear?()// trigger function in ViewController
-                }
-            }
-        }
-    }
-    
     //MARK: - Selectors
     
     @objc func xViewPressed(gesture: UISwipeGestureRecognizer) {
         let vc = X2SettingViewController()
         vc.modalPresentationStyle = .popover
         vc.popoverPresentationController?.sourceView = UIView()
+        vc.delegate = self
         present(vc, animated: true)
     }
 
@@ -295,6 +282,16 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         })
     }
 }
+
+//MARK: - X2HourDelegate
+
+extension SettingsViewController: X2HourDelegate {
+    func x2HourChanged(_ userSelectedHour: Int) {
+        self.x2HoursLabel.text = self.wordBrain.hours[userSelectedHour]
+    }
+}
+
+//MARK: - Layout
 
 extension SettingsViewController {
     

@@ -77,14 +77,6 @@ class HomeViewController: UIViewController, LevelDelegate {
     //MARK: - prepare
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goSettings" {
-            if segue.destination is SettingsViewController {
-                (segue.destination as? SettingsViewController)?.onViewWillDisappear = {
-                    self.check2xTime()
-                }
-            }
-        }
-        
         if segue.identifier == "goWords" {
             let destinationVC = segue.destination as! WordsViewController
             destinationVC.goAddPage = goAddPage
