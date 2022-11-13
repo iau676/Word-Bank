@@ -272,12 +272,12 @@ extension StatisticViewController {
            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-           scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -77),
+           scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66),
            
            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 32),
            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-           stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+           stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48),
            
            barChartLabel.bottomAnchor.constraint(equalTo: barView.topAnchor, constant: -8),
            barChartLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
