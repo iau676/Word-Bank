@@ -81,6 +81,7 @@ enum Images {
     static let daily6                    = UIImage(named: "daily6")
     static let daily7                    = UIImage(named: "daily7")
     static let daily8                    = UIImage(named: "daily8")
+    static let x2Tab                     = UIImage(named: "x2Tab")
     static let award                     = UIImage(named: "award")
     static let statistic                 = UIImage(named: "statistic")
     static let settings                  = UIImage(named: "settings")

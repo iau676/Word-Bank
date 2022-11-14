@@ -37,6 +37,7 @@ class HomeViewController: UIViewController, LevelDelegate {
     
     //tabBar
     private let fireworkController = ClassicFireworkController()
+    private var timerDaily = Timer()
     private let tabBarStackView = UIStackView()
     private let homeButton = UIButton()
     private let dailyButton = UIButton()
@@ -48,7 +49,6 @@ class HomeViewController: UIViewController, LevelDelegate {
     
     override func viewDidLoad() {
         fixSoundProblemForRealDevice()
-        wordBrain.getHour()
         style()
         layout()
     }
@@ -59,7 +59,6 @@ class HomeViewController: UIViewController, LevelDelegate {
         wordBrain.loadItemArray()
         configureTabBar()
         setupCircularProgress()
-        check2xTime()
         setupButtons()
         setupNavigationBar()
     }
@@ -67,6 +66,7 @@ class HomeViewController: UIViewController, LevelDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        timerDaily.invalidate()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -315,14 +315,6 @@ class HomeViewController: UIViewController, LevelDelegate {
         hardCP.addGestureRecognizer(goHardCP)
     }
 
-    func check2xTime(){
-        if UserDefault.currentHour.getInt() == UserDefault.userSelectedHour.getInt() {
-          
-        } else {
-            
-        }
-    }
-    
     func checkWordCount(){
         let wordCount = itemArray.count
         
@@ -468,6 +460,15 @@ extension HomeViewController {
 extension HomeViewController {
     
     func configureTabBar() {
+        
+        var whichImage: Int = 0
+        self.timerDaily = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            if self.wordBrain.getCurrentHour() == UserDefault.userSelectedHour.getInt() {
+                whichImage += 1
+                self.updateDailyButtonImage(whichImage)
+            }
+        })
+        
         //style
         tabBarStackView.translatesAutoresizingMaskIntoConstraints = false
         tabBarStackView.axis = .horizontal
@@ -529,6 +530,18 @@ extension HomeViewController {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15){
            self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    func updateDailyButtonImage(_ whichImage: Int){
+        UIView.transition(with: dailyButton.imageView ?? dailyButton, duration: 0.8,
+                          options: .transitionFlipFromBottom,
+                          animations: {
+            if whichImage % 2 == 0 {
+                self.dailyButton.setImageWithRenderingMode(image: self.wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()], width: 26, height: 26, color: .darkGray)
+            } else {
+                self.dailyButton.setImage(image: Images.x2Tab, width: 26, height: 26)
+            }
+        })
     }
 }
 

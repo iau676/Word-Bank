@@ -364,6 +364,10 @@ struct WordBrain {
         UserDefault.currentHour.set(Calendar.current.component(.hour, from: Date()))
     }
     
+    func getCurrentHour() -> Int {
+        return Int(Calendar.current.component(.hour, from: Date()))
+    }
+    
     func getTodayDate() -> String{
         return Date().getFormattedDate(format: "yyyy-MM-dd")
     }

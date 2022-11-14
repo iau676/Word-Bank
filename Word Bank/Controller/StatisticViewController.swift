@@ -46,6 +46,7 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
     
     //tabBar
     private let fireworkController = ClassicFireworkController()
+    private var timerDaily = Timer()
     private let tabBarStackView = UIStackView()
     private let homeButton = UIButton()
     private let dailyButton = UIButton()
@@ -302,6 +303,15 @@ extension StatisticViewController {
 extension StatisticViewController {
     
     func configureTabBar() {
+        
+        var whichImage: Int = 0
+        self.timerDaily = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            if self.wordBrain.getCurrentHour() == UserDefault.userSelectedHour.getInt() {
+                whichImage += 1
+                self.updateDailyButtonImage(whichImage)
+            }
+        })
+        
         //style
         tabBarStackView.translatesAutoresizingMaskIntoConstraints = false
         tabBarStackView.axis = .horizontal
@@ -354,6 +364,7 @@ extension StatisticViewController {
     }
     
     func pushVC(vc: UIViewController, button: UIButton){
+        timerDaily.invalidate()
         self.fireworkController.addFireworks(count: 5, sparks: 5, around: button)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15){
             if button == self.homeButton {
@@ -362,5 +373,17 @@ extension StatisticViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
+    }
+    
+    func updateDailyButtonImage(_ whichImage: Int){
+        UIView.transition(with: dailyButton.imageView ?? dailyButton, duration: 0.8,
+                          options: .transitionFlipFromBottom,
+                          animations: {
+            if whichImage % 2 == 0 {
+                self.dailyButton.setImageWithRenderingMode(image: self.wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()], width: 26, height: 26, color: .darkGray)
+            } else {
+                self.dailyButton.setImage(image: Images.x2Tab, width: 26, height: 26)
+            }
+        })
     }
 }
