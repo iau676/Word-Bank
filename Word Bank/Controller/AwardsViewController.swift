@@ -76,6 +76,8 @@ class AwardsViewController: UIViewController {
     private let statisticButton = UIButton()
     private let settingsButton = UIButton()
     
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         wordBrain.loadItemArray()
@@ -84,8 +86,220 @@ class AwardsViewController: UIViewController {
         style()
         layout()
         configureTabBar()
+        updateScoreLabels()
     }
     
+    //MARK: - Helpers
+    
+    func configureLabel(_ label: UILabel, _ text: String){
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = text
+        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
+        label.textColor = Colors.black
+    }
+    
+    func configureButton(_ button: UIButton, _ text: String){
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(text, for: .normal)
+        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
+        button.setButtonCornerRadius(8)
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        button.backgroundColor = Colors.blue
+    }
+    
+    func configureNavigationBar(){
+        let backButton: UIButton = UIButton()
+        let image = UIImage();
+        backButton.setImage(image, for: .normal)
+        backButton.setTitle("", for: .normal);
+        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
+        backButton.setTitleColor(.black, for: .normal)
+        backButton.sizeToFit()
+        let barButton = UIBarButtonItem(customView: backButton)
+        self.navigationItem.leftBarButtonItem = barButton
+        title = "Awards"
+    }
+    
+    private func updateScoreLabels(){
+        for i in 0..<10 {
+            if levelTitleArray[i] <= UserDefault.level.getInt() {
+                levelBadgeCount += 1
+                levelScoreLabel.text = "\(levelBadgeCount)/10"
+            }
+            
+            if wordsTitleArray[i] <= itemArray.count {
+                wordBadgeCount += 1
+                wordsScoreLabel.text = "\(wordBadgeCount)/10"
+            }
+            
+            if exercisesTitleArray[i] <= exerciseArray.count {
+                exerciseBadgeCount += 1
+                exerciseScoreLabel.text = "\(exerciseBadgeCount)/10"
+            }
+        }
+    }
+}
+
+//MARK: - Collection View
+
+extension AwardsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 130, height: 150)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
+        
+        switch collectionView {
+        case levelCV:
+            cell.titleLabel.text = "\(levelTitleArray[indexPath.row])"
+            cell.awardLabel.text = "LEVEL"
+            if levelTitleArray[indexPath.row] <= UserDefault.level.getInt() {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+            } else if levelTitleArray[indexPath.row] - UserDefault.level.getInt() < 10 {
+                let value = Float(levelTitleArray[indexPath.row] - UserDefault.level.getInt()) * 0.1
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+            } else {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
+                cell.titleLabel.textColor = Colors.b9b9b9
+            }
+        case wordsCV:
+            cell.titleLabel.text = "\(wordsTitleArray[indexPath.row])"
+            cell.awardLabel.text = "WORDS"
+            if wordsTitleArray[indexPath.row] <= itemArray.count {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+            } else if wordsTitleArray[indexPath.row] - itemArray.count < 500 {
+                let value = Float(wordsTitleArray[indexPath.row] - itemArray.count) / 5 * 0.01
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+            } else {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
+                cell.titleLabel.textColor = Colors.b9b9b9
+            }
+        case exercisesCV:
+            cell.titleLabel.text = "\(exercisesTitleArray[indexPath.row])"
+            cell.awardLabel.text = "EXERCISES"
+            if exercisesTitleArray[indexPath.row] <= exerciseArray.count {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+            } else if exercisesTitleArray[indexPath.row] - exerciseArray.count < 1000 {
+                let value = Float(exercisesTitleArray[indexPath.row] - exerciseArray.count) / 10 * 0.01
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
+                cell.titleLabel.textColor = Colors.blue ?? .blue
+            } else {
+                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
+                cell.titleLabel.textColor = Colors.b9b9b9
+            }
+        default: break
+        }
+        return cell
+    }
+}
+
+//MARK: - CustomCell
+
+class CustomCell: UICollectionViewCell {
+    
+    let badgeCP = BadgeView(frame: CGRect(x: 10.0, y: 10.0, width: 60.0, height: 60.0))
+    
+    let badgeView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.setViewCornerRadius(12)
+        return view
+    }()
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "AvenirNext-DemiBold", size: 19)
+        label.textColor = Colors.b9b9b9 ?? .darkGray
+        return label
+    }()
+    
+    lazy var awardLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "LEVEL"
+        label.font = UIFont(name: "AvenirNext-Medium", size: 9)
+        label.textColor = .white
+        return label
+    }()
+    
+    lazy var bannerButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("", for: .normal)
+        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
+        button.backgroundColor = .clear
+        button.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
+        return button
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
+        
+        badgeCP.trackColor = Colors.d9d9d9 ?? .darkGray
+        badgeCP.progressColor = Colors.blue ?? .blue
+        badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
+        badgeCP.center = CGPoint(x: contentView.center.x+65, y: contentView.center.y+70)
+        
+        contentView.addSubview(badgeView)
+        contentView.addSubview(badgeCP)
+        contentView.addSubview(titleLabel)
+        
+        contentView.addSubview(bannerButton)
+        contentView.addSubview(awardLabel)
+        
+        NSLayoutConstraint.activate([
+            badgeView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            badgeView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            badgeView.heightAnchor.constraint(equalToConstant: 120),
+            badgeView.widthAnchor.constraint(equalToConstant: 120),
+        ])
+        
+        NSLayoutConstraint.activate([
+            titleLabel.centerXAnchor.constraint(equalTo: badgeCP.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: badgeCP.centerYAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            bannerButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            bannerButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 20),
+        ])
+        
+        NSLayoutConstraint.activate([
+            awardLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            awardLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 14.5),
+        ])
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+//MARK: - Layout
+
+extension AwardsViewController {
     private func style(){
         view.backgroundColor = Colors.cellLeft
         
@@ -179,194 +393,6 @@ class AwardsViewController: UIViewController {
             exerciseScoreLabel.centerYAnchor.constraint(equalTo: exercisesLabel.centerYAnchor),
             exerciseScoreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
-    }
-    
-    func configureLabel(_ label: UILabel, _ text: String){
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = text
-        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
-        label.textColor = Colors.black
-    }
-    
-    func configureButton(_ button: UIButton, _ text: String){
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(text, for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
-        button.setButtonCornerRadius(8)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        button.backgroundColor = Colors.blue
-    }
-    
-    func configureNavigationBar(){
-        let backButton: UIButton = UIButton()
-        let image = UIImage();
-        backButton.setImage(image, for: .normal)
-        backButton.setTitle("", for: .normal);
-        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
-        backButton.setTitleColor(.black, for: .normal)
-        backButton.sizeToFit()
-        let barButton = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = barButton
-        title = "Awards"
-    }
-}
-
-extension AwardsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 130, height: 150)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
-        
-        switch collectionView {
-        case levelCV:
-            cell.titleLabel.text = "\(levelTitleArray[indexPath.row])"
-            cell.awardLabel.text = "LEVEL"
-            if levelTitleArray[indexPath.row] <= UserDefault.level.getInt() {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
-                levelBadgeCount += 1
-                levelScoreLabel.text = "\(levelBadgeCount)/10"
-            } else if levelTitleArray[indexPath.row] - UserDefault.level.getInt() < 10 {
-                let value = Float(levelTitleArray[indexPath.row] - UserDefault.level.getInt()) * 0.1
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
-            } else {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
-                cell.titleLabel.textColor = Colors.b9b9b9
-            }
-        case wordsCV:
-            cell.titleLabel.text = "\(wordsTitleArray[indexPath.row])"
-            cell.awardLabel.text = "WORDS"
-            if wordsTitleArray[indexPath.row] <= itemArray.count {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
-                wordBadgeCount += 1
-                wordsScoreLabel.text = "\(wordBadgeCount)/10"
-            } else if wordsTitleArray[indexPath.row] - itemArray.count < 500 {
-                let value = Float(wordsTitleArray[indexPath.row] - itemArray.count) / 5 * 0.01
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
-            } else {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
-                cell.titleLabel.textColor = Colors.b9b9b9
-            }
-        case exercisesCV:
-            cell.titleLabel.text = "\(exercisesTitleArray[indexPath.row])"
-            cell.awardLabel.text = "EXERCISES"
-            if exercisesTitleArray[indexPath.row] <= exerciseArray.count {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
-                exerciseBadgeCount += 1
-                exerciseScoreLabel.text = "\(exerciseBadgeCount)/10"
-            } else if exercisesTitleArray[indexPath.row] - exerciseArray.count < 1000 {
-                let value = Float(exercisesTitleArray[indexPath.row] - exerciseArray.count) / 10 * 0.01
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
-            } else {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
-                cell.titleLabel.textColor = Colors.b9b9b9
-            }
-        default: break
-        }
-        return cell
-    }
-}
-
-class CustomCell: UICollectionViewCell {
-    
-    let badgeCP = BadgeView(frame: CGRect(x: 10.0, y: 10.0, width: 60.0, height: 60.0))
-    
-    let badgeView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.setViewCornerRadius(12)
-        return view
-    }()
-    
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "AvenirNext-DemiBold", size: 19)
-        label.textColor = Colors.b9b9b9 ?? .darkGray
-        return label
-    }()
-    
-    lazy var awardLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "LEVEL"
-        label.font = UIFont(name: "AvenirNext-Medium", size: 9)
-        label.textColor = .white
-        return label
-    }()
-    
-    lazy var bannerButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
-        button.backgroundColor = .clear
-        button.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
-        return button
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        
-        badgeCP.trackColor = Colors.d9d9d9 ?? .darkGray
-        badgeCP.progressColor = Colors.blue ?? .blue
-        badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-        badgeCP.center = CGPoint(x: contentView.center.x+65, y: contentView.center.y+70)
-        
-        contentView.addSubview(badgeView)
-        contentView.addSubview(badgeCP)
-        contentView.addSubview(titleLabel)
-        
-        contentView.addSubview(bannerButton)
-        contentView.addSubview(awardLabel)
-        
-        NSLayoutConstraint.activate([
-            badgeView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            badgeView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            badgeView.heightAnchor.constraint(equalToConstant: 120),
-            badgeView.widthAnchor.constraint(equalToConstant: 120),
-        ])
-        
-        NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: badgeCP.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: badgeCP.centerYAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            bannerButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            bannerButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 20),
-        ])
-        
-        NSLayoutConstraint.activate([
-            awardLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            awardLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 14.5),
-        ])
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
