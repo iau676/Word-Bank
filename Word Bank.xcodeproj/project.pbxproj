@@ -43,6 +43,7 @@
 		702577DE280748E50009FF65 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 702577DD280748E50009FF65 /* launch.png */; };
 		7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* WordsViewController.swift */; };
 		702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A978227EB378A00AEECF7 /* X2SettingViewController.swift */; };
+		702AF782292365D600CD0B86 /* silent.aac in Resources */ = {isa = PBXBuildFile; fileRef = 702AF781292365D600CD0B86 /* silent.aac */; };
 		7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7039B87927A6A04700519D39 /* CircularProgressView.swift */; };
 		704B055528364098006C7F96 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* Word.swift */; };
 		704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704F9377290711C50095BF0D /* UITextField+Extensions.swift */; };
@@ -143,6 +144,7 @@
 		702577DD280748E50009FF65 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		7027F690275B9B84001F6068 /* WordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
 		702A978227EB378A00AEECF7 /* X2SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2SettingViewController.swift; sourceTree = "<group>"; };
+		702AF781292365D600CD0B86 /* silent.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = silent.aac; sourceTree = "<group>"; };
 		7039B87927A6A04700519D39 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		704B055428364098006C7F96 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		704F9377290711C50095BF0D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 		705D92EE28F897F7001C4F38 /* Wheel Files */ = {
 			isa = PBXGroup;
 			children = (
+				702AF781292365D600CD0B86 /* silent.aac */,
 				705D92D828F89623001C4F38 /* bubble_pop.aac */,
 				705D92E128F89625001C4F38 /* CGFloat+Extensions.swift */,
 				705D92DD28F89624001C4F38 /* error.aac */,
@@ -532,6 +535,7 @@
 			files = (
 				7081AB0527CCD3CB00E2996A /* alltrue.mp4 in Resources */,
 				705D92F028F8A49B001C4F38 /* GameScene.sks in Resources */,
+				702AF782292365D600CD0B86 /* silent.aac in Resources */,
 				707106EF275A1E42005532D0 /* redBubble3.png in Resources */,
 				706CBAC227592F8E008B4773 /* LaunchScreen.storyboard in Resources */,
 				706A9A27275A6FF800E64ECC /* greenBubble2.png in Resources */,

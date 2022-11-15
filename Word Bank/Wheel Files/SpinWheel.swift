@@ -104,10 +104,17 @@ class SpinWheel: SKSpriteNode {
     }
     
     func setupSounds() {
-        tickSound = SKAction.playSoundFileNamed("bubble_pop.aac", waitForCompletion: false)
-        errorSound = SKAction.playSoundFileNamed("error.aac", waitForCompletion: false)
-        wonSound = SKAction.playSoundFileNamed("victory.aac", waitForCompletion: false)
-        wooshSound = SKAction.playSoundFileNamed("woosh.aac", waitForCompletion: false)
+        if UserDefault.playAppSound.getInt() == 0 {
+            tickSound = SKAction.playSoundFileNamed("bubble_pop.aac", waitForCompletion: false)
+            errorSound = SKAction.playSoundFileNamed("error.aac", waitForCompletion: false)
+            wonSound = SKAction.playSoundFileNamed("victory.aac", waitForCompletion: false)
+            wooshSound = SKAction.playSoundFileNamed("woosh.aac", waitForCompletion: false)
+        } else {
+            tickSound = SKAction.playSoundFileNamed("silent.aac", waitForCompletion: false)
+            errorSound = SKAction.playSoundFileNamed("silent.aac", waitForCompletion: false)
+            wonSound = SKAction.playSoundFileNamed("silent.aac", waitForCompletion: false)
+            wooshSound = SKAction.playSoundFileNamed("silent.aac", waitForCompletion: false)
+        }
     }
     
     //MARK: - Create Prize Wheel Objects
