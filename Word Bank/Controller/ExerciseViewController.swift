@@ -31,7 +31,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     var hint = ""
     var letterCounter = 0
-    var totalQuestionNumber = 2
+    var totalQuestionNumber = 20
     var failNumber: [Int] = []
     var failIndex: [Int] = []
     var itemArray: [Item] { return wordBrain.itemArray }
@@ -472,6 +472,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
     }
 }
+
+//MARK: - Layout
 
 extension ExerciseViewController {
     

@@ -19,11 +19,14 @@ class NewPointViewController: UIViewController {
     var textForLabel = ""
     var userWordCount = ""
     let player = Player()
+    var wordBrain = WordBrain()
+    var itemArray: [Item] { return wordBrain.itemArray }
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        wordBrain.loadItemArray()
         style()
         layout()
         configureColor()
@@ -74,24 +77,26 @@ class NewPointViewController: UIViewController {
     }
 }
 
+//MARK: - Layout
+
 extension NewPointViewController {
     
     func style() {
         wordCountLabel.translatesAutoresizingMaskIntoConstraints = false
-        wordCountLabel.text = String(UserDefault.exercisePoint.getInt())
+        wordCountLabel.text = String(itemArray.count)
         wordCountLabel.font = UIFont(name: "ArialRoundedMTBold", size: 70)
         wordCountLabel.textAlignment = .center
         wordCountLabel.numberOfLines = 0
         
         wordsLabel.translatesAutoresizingMaskIntoConstraints = false
         wordsLabel.text = "Words!"
-        wordsLabel.font = UIFont(name: "ArialRoundedMTBold", size: 17)
+        wordsLabel.font = UIFont(name: "ArialRoundedMTBold", size: 21)
         wordsLabel.textAlignment = .center
         wordsLabel.numberOfLines = 0
         
         newPointLabel.translatesAutoresizingMaskIntoConstraints = false
         newPointLabel.text = "You will get +\(UserDefault.exercisePoint.getInt()-10) points for each correct answer."
-        newPointLabel.font = UIFont(name: "ArialRoundedMTBold", size: 17)
+        newPointLabel.font = UIFont(name: "ArialRoundedMTBold", size: 21)
         newPointLabel.textAlignment = .center
         newPointLabel.numberOfLines = 0
         
@@ -115,7 +120,7 @@ extension NewPointViewController {
         
         NSLayoutConstraint.activate([
             wordCountLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 66),
-            wordCountLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            wordCountLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -3),
             
             wordsLabel.topAnchor.constraint(equalTo: wordCountLabel.bottomAnchor, constant: 0),
             wordsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
