@@ -104,6 +104,8 @@ enum Images {
     static let soundLeft                 = UIImage(named: "soundLeft")
     static let soundBlack                = UIImage(named: "soundBlack")
     static let question                  = UIImage(named: "question")
+    static let greenBubble               = UIImage(named: "greenBubble")
+    static let redBubble                 = UIImage(named: "redBubble")
     
     static let plus                      = UIImage(named: "plus")
     static let edit                      = UIImage(named: "edit")

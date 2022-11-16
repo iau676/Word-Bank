@@ -17,6 +17,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     let soundButton = UIButton()
     
     let bubbleButton = UIButton()
+    let bubbleLabel = UILabel()
     let questionLabel = UILabel()
     
     let hintLabel = UILabel()
@@ -123,7 +124,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
 
         if questionCount < totalQuestionNumber {
 
-            bubbleButton.setTitle("", for: UIControl.State.normal)
+            bubbleLabel.text = ""
             
             if whichStartPressed == 3 {
                 bubbleButton.setImage(image: Images.sound, width: 66, height: 66)
@@ -171,8 +172,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }//updateUI
     
     @objc func hideBubbleButton(){
+        bubbleLabel.text = ""
         if whichStartPressed == 3 {
-            bubbleButton.setTitle("", for: UIControl.State.normal)
             bubbleButton.setImage(image: Images.sound, width: 66, height: 66)
         } else {
             bubbleButton.isHidden = true
@@ -187,12 +188,12 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         hintLabel.textColor = Colors.f6f6f6
     }
     
-    @objc func updateImg(_ timer: Timer){
-        let imgName = timer.userInfo!
-        let imagePath:String? = Bundle.main.path(forResource: (imgName as! String), ofType: "png")
-        let image:UIImage? = UIImage(contentsOfFile: imagePath!)
-        bubbleButton.setBackgroundImage(image, for: UIControl.State.normal)
-    }
+//    @objc func updateImg(_ timer: Timer){
+//        let imgName = timer.userInfo!
+//        let imagePath:String? = Bundle.main.path(forResource: (imgName as! String), ofType: "png")
+//        let image:UIImage? = UIImage(contentsOfFile: imagePath!)
+//        bubbleButton.setBackgroundImage(image, for: UIControl.State.normal)
+//    }
     
     @objc func backButtonPressed(sender : UIButton) {
         if wheelPressed == 1 {
@@ -406,14 +407,12 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             }
             
             sender?.backgroundColor = Colors.green
-            bubbleButton.setTitleColor(Colors.green, for: .normal)
+            bubbleLabel.textColor = Colors.green
+            bubbleLabel.text = "+\(exercisePoint)"
             userPointButton.setTitleWithAnimation(title: (lastPoint+exercisePoint).withCommas())
-            bubbleButton.setTitle(String("+\(exercisePoint)"), for: UIControl.State.normal)
             
-            timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "greenBubble")
-            timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "greenBubble2")
-            timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "greenBubble3")
-            timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "greenBubble4")
+            bubbleButton.setBackgroundImage(Images.greenBubble, for: .normal)
+            rotateBubbleButton()
             
             UserDefault.lastPoint.set(lastPoint+exercisePoint)
         } else {
@@ -426,14 +425,12 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             }
            
             sender?.backgroundColor = Colors.red
-            bubbleButton.setTitleColor(Colors.red, for: .normal)
+            bubbleLabel.textColor = Colors.red
+            bubbleLabel.text = "\(-exercisePoint)"
             userPointButton.setTitleWithAnimation(title: (lastPoint-exercisePoint).withCommas())
-            bubbleButton.setTitle(String(-exercisePoint), for: UIControl.State.normal)
             
-            timer = rotateBubbleButton(timeInterval: 0.01, userInfo: "redBubble")
-            timer = rotateBubbleButton(timeInterval: 0.1, userInfo: "redBubble2")
-            timer = rotateBubbleButton(timeInterval: 0.2, userInfo: "redBubble3")
-            timer = rotateBubbleButton(timeInterval: 0.3, userInfo: "redBubble4")
+            bubbleButton.setBackgroundImage(Images.redBubble, for: .normal)
+            rotateBubbleButton()
             
             UserDefault.lastPoint.set(lastPoint-exercisePoint)
         }
@@ -443,23 +440,34 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         scheduledTimer(timeInterval: 0.7, #selector(updateUI))
     }
     
-    func rotateBubbleButton(timeInterval: Double, userInfo: String) -> Timer {
-        return Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateImg(_:)), userInfo: userInfo, repeats: false)
+//    func rotateBubbleButton(timeInterval: Double, userInfo: String) -> Timer {
+//        return Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateImg(_:)), userInfo: userInfo, repeats: false)
+//    }
+    
+    func rotateBubbleButton() {
+        UIView.animate(withDuration:0.2, animations: {
+            self.bubbleButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
+            UIView.animate(withDuration:0.2, animations: {
+                self.bubbleButton.transform = .identity
+            })
+        }
     }
     
     func decreaseOnePoint(){
         let lastPoint = UserDefault.lastPoint.getInt()
         
         questionLabel.isHidden = true
-        bubbleButton.isHidden = false
         
-        bubbleButton.setTitleColor(Colors.red, for: .normal)
+        bubbleLabel.textColor = Colors.red
+        bubbleLabel.text = "-1"
         bubbleButton.setImage(image: UIImage(), width: 0, height: 0)
-        bubbleButton.setTitle(String(-1), for: UIControl.State.normal)
-        userPointButton.setTitle(String((lastPoint-1).withCommas()), for: UIControl.State.normal)
         
         scheduledTimer(timeInterval: 0.4, #selector(hideBubbleButton))
         
+        userPointButton.setTitleWithAnimation(title: (lastPoint-1).withCommas())
         UserDefault.lastPoint.set(lastPoint-1)
     }
     
@@ -503,8 +511,12 @@ extension ExerciseViewController {
         questionLabel.numberOfLines = 0
         
         bubbleButton.translatesAutoresizingMaskIntoConstraints = false
-        bubbleButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 29)
         bubbleButton.addTarget(self, action: #selector(bubbleButtonPressed), for: .primaryActionTriggered)
+        
+        bubbleLabel.translatesAutoresizingMaskIntoConstraints = false
+        bubbleLabel.font = UIFont(name: "ArialRoundedMTBold", size: 29)
+        bubbleLabel.textAlignment = .center
+        bubbleLabel.numberOfLines = 0
         
         hintLabel.translatesAutoresizingMaskIntoConstraints = false
         hintLabel.textColor = Colors.f6f6f6
@@ -550,6 +562,7 @@ extension ExerciseViewController {
         view.addSubview(soundButton)
         view.addSubview(questionLabel)
         view.addSubview(bubbleButton)
+        view.addSubview(bubbleLabel)
         view.addSubview(textFieldStackView)
         view.addSubview(answerStackView)
         view.addSubview(progressBarBottom)
@@ -586,6 +599,9 @@ extension ExerciseViewController {
             
             bubbleButton.centerYAnchor.constraint(equalTo: questionLabel.centerYAnchor),
             bubbleButton.centerXAnchor.constraint(equalTo: questionLabel.centerXAnchor),
+            
+            bubbleLabel.centerYAnchor.constraint(equalTo: bubbleButton.centerYAnchor),
+            bubbleLabel.centerXAnchor.constraint(equalTo: bubbleButton.centerXAnchor),
             
             progressBarBottom.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
             progressBarBottom.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
