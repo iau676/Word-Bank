@@ -167,3 +167,11 @@ enum UserDefault {
     static var engEdit                   = UserDefaultsManager(key: "engEdit")
     static var trEdit                    = UserDefaultsManager(key: "trEdit")
 }
+
+enum Fonts {
+    static var AvenirNextRegular         = "AvenirNext-Regular"
+    static var AvenirNextDemiBold        = "AvenirNext-DemiBold"
+    static var AvenirNextMedium          = "AvenirNext-Medium"
+    static var AvenirNextBold            = "AvenirNext-Bold"
+    static var ArialRoundedMTBold        = "ArialRoundedMTBold"
+}

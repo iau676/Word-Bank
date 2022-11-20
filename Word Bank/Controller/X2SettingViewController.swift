@@ -188,26 +188,26 @@ extension X2SettingViewController {
         saveButton.backgroundColor = .darkGray
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(.white, for: .normal)
-        saveButton.titleLabel?.font =  UIFont(name: "AvenirNext-Regular", size: textSize)
+        saveButton.titleLabel?.font =  UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         saveButton.addTarget(self, action: #selector(saveButtonPressed(_:)), for: .primaryActionTriggered)
         
         lastEditLabel.translatesAutoresizingMaskIntoConstraints = false
         lastEditLabel.textColor = Colors.black
         lastEditLabel.textAlignment = .center
         lastEditLabel.numberOfLines = 0
-        lastEditLabel.font = UIFont(name: "AvenirNext-Regular", size: textSize)
+        lastEditLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.textColor = Colors.black
         infoLabel.textAlignment = .center
         infoLabel.numberOfLines = 0
-        infoLabel.font = UIFont(name: "AvenirNext-Regular", size: textSize)
+        infoLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
         allowNotificationButton.translatesAutoresizingMaskIntoConstraints = false
         allowNotificationButton.backgroundColor = .darkGray
         allowNotificationButton.setTitle("Allow Notification", for: .normal)
         allowNotificationButton.setTitleColor(.white, for: .normal)
-        allowNotificationButton.titleLabel?.font =  UIFont(name: "AvenirNext-Regular", size: textSize)
+        allowNotificationButton.titleLabel?.font =  UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         allowNotificationButton.addTarget(self, action: #selector(notificationButtonPressed(_:)), for: .primaryActionTriggered)
     }
     

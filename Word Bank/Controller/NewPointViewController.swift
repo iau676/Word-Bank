@@ -84,25 +84,25 @@ extension NewPointViewController {
     func style() {
         wordCountLabel.translatesAutoresizingMaskIntoConstraints = false
         wordCountLabel.text = String(itemArray.count)
-        wordCountLabel.font = UIFont(name: "ArialRoundedMTBold", size: 70)
+        wordCountLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 70)
         wordCountLabel.textAlignment = .center
         wordCountLabel.numberOfLines = 0
         
         wordsLabel.translatesAutoresizingMaskIntoConstraints = false
         wordsLabel.text = "Words!"
-        wordsLabel.font = UIFont(name: "ArialRoundedMTBold", size: 21)
+        wordsLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 21)
         wordsLabel.textAlignment = .center
         wordsLabel.numberOfLines = 0
         
         newPointLabel.translatesAutoresizingMaskIntoConstraints = false
         newPointLabel.text = "You will get +\(UserDefault.exercisePoint.getInt()-10) points for each correct answer."
-        newPointLabel.font = UIFont(name: "ArialRoundedMTBold", size: 21)
+        newPointLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 21)
         newPointLabel.textAlignment = .center
         newPointLabel.numberOfLines = 0
         
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.setTitle("Continue", for: .normal)
-        continueButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 23)
+        continueButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 23)
         continueButton.addTarget(self, action: #selector(continueButtonPressed(_:)), for: .primaryActionTriggered)
         continueButton.layer.shadowColor = Colors.darkGrayShadow?.cgColor
         continueButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)

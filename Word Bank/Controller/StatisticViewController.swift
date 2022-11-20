@@ -229,13 +229,13 @@ extension StatisticViewController {
         barChartLabel.translatesAutoresizingMaskIntoConstraints = false
         barChartLabel.textColor = Colors.black
         barChartLabel.text = "Words - Last 7 Days"
-        barChartLabel.font = UIFont(name: "AvenirNext-Medium", size: textSize)
+        barChartLabel.font = UIFont(name: Fonts.AvenirNextMedium, size: textSize)
         barChartLabel.numberOfLines = 1
         
         lineChartLabel.translatesAutoresizingMaskIntoConstraints = false
         lineChartLabel.textColor = Colors.black
         lineChartLabel.text = "Exercises - Last 7 Days"
-        lineChartLabel.font = UIFont(name: "AvenirNext-Medium", size: textSize)
+        lineChartLabel.font = UIFont(name: Fonts.AvenirNextMedium, size: textSize)
         lineChartLabel.numberOfLines = 1
         
         barView.translatesAutoresizingMaskIntoConstraints = false

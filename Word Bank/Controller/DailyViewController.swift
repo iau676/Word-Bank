@@ -184,7 +184,7 @@ class DailyViewController: UIViewController {
     func configureButton(_ button: UIButton, _ text: String){
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
+        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
         button.setButtonCornerRadius(8)
        // button.backgroundColor = UIColor(hex: "#d9d9d9")
     }
@@ -327,7 +327,7 @@ extension DailyViewController {
         
         //2x
         x2Label.translatesAutoresizingMaskIntoConstraints = false
-        x2Label.font = UIFont(name: "AvenirNext-Regular", size: 21)
+        x2Label.font = UIFont(name: Fonts.AvenirNextRegular, size: 21)
         x2Label.textColor = Colors.f6f6f6
         x2Label.numberOfLines = 0
         x2Label.textAlignment = .center

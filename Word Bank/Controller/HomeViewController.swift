@@ -245,12 +245,12 @@ class HomeViewController: UIViewController, LevelDelegate {
             UIView.transition(with: self.levelButton, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
                 self.levelButton.setTitle(UserDefault.level.getString(), for: .normal)
-                self.levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 30)
+                self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
             }
         } else {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
                 self.levelButton.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
-                self.levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 20)
+                self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 20)
             }
         }
     }
@@ -353,7 +353,7 @@ extension HomeViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = .white
         titleLabel.text = "Word Bank"
-        titleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 23)
+        titleLabel.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 23)
         titleLabel.textColor = Colors.f6f6f6
         
         leftLineView.translatesAutoresizingMaskIntoConstraints = false
@@ -367,7 +367,7 @@ extension HomeViewController {
         
         levelButton.translatesAutoresizingMaskIntoConstraints = false
         levelButton.addTarget(self, action: #selector(levelButtonPressed), for: .primaryActionTriggered)
-        levelButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 30)
+        levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
         
         exerciseButton.translatesAutoresizingMaskIntoConstraints = false
         exerciseButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)

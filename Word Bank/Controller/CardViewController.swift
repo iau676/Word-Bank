@@ -134,7 +134,7 @@ extension CardViewController {
         
         cardLabel.translatesAutoresizingMaskIntoConstraints = false
         cardLabel.textColor = .white
-        cardLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+        cardLabel.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 25)
         cardLabel.textAlignment = .center
         cardLabel.lineBreakMode = .byWordWrapping
         cardLabel.numberOfLines = 0

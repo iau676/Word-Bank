@@ -94,14 +94,14 @@ class AwardsViewController: UIViewController {
     func configureLabel(_ label: UILabel, _ text: String){
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
-        label.font = UIFont(name: "AvenirNext-Regular", size: 19)
+        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
         label.textColor = Colors.black
     }
     
     func configureButton(_ button: UIButton, _ text: String){
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
+        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
         button.setButtonCornerRadius(8)
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         button.backgroundColor = Colors.blue
@@ -230,7 +230,7 @@ class CustomCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "AvenirNext-DemiBold", size: 19)
+        label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 19)
         label.textColor = Colors.b9b9b9 ?? .darkGray
         return label
     }()
@@ -239,7 +239,7 @@ class CustomCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "LEVEL"
-        label.font = UIFont(name: "AvenirNext-Medium", size: 9)
+        label.font = UIFont(name: Fonts.AvenirNextMedium, size: 9)
         label.textColor = .white
         return label
     }()
@@ -248,7 +248,7 @@ class CustomCell: UICollectionViewCell {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("", for: .normal)
-        button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
+        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
         button.backgroundColor = .clear
         button.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
         return button

@@ -76,18 +76,18 @@ extension LevelUpViewController {
     func style() {
         levelUpLabel.translatesAutoresizingMaskIntoConstraints = false
         levelUpLabel.text = "LEVEL UP"
-        levelUpLabel.font = UIFont(name: "ArialRoundedMTBold", size: 17)
+        levelUpLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 17)
         levelUpLabel.textAlignment = .center
         levelUpLabel.numberOfLines = 1
         
         levelLabel.translatesAutoresizingMaskIntoConstraints = false
-        levelLabel.font = UIFont(name: "ArialRoundedMTBold", size: 70)
+        levelLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 70)
         levelLabel.textAlignment = .center
         levelLabel.numberOfLines = 1
         
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.setTitle("Continue", for: .normal)
-        continueButton.titleLabel?.font =  UIFont(name: "ArialRoundedMTBold", size: 23)
+        continueButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 23)
         continueButton.addTarget(self, action: #selector(continueButtonPressed(_:)), for: .primaryActionTriggered)
         continueButton.layer.shadowColor = Colors.darkGrayShadow?.cgColor
         continueButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)

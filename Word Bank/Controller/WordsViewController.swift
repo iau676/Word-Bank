@@ -192,7 +192,7 @@ class WordsViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Colors.black
         label.text = text
-        label.font = UIFont(name: "AvenirNext-Regular", size: 13)
+        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
         label.numberOfLines = 1
     }
     

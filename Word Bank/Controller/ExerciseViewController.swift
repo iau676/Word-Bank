@@ -494,7 +494,7 @@ extension ExerciseViewController {
         
         xButton.translatesAutoresizingMaskIntoConstraints = false
         xButton.setTitle("2x", for: .normal)
-        xButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
+        xButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 17)
         xButton.isHidden = true
         xButton.setButtonCornerRadius(16)
         
@@ -506,7 +506,7 @@ extension ExerciseViewController {
         
         questionLabel.translatesAutoresizingMaskIntoConstraints = false
         questionLabel.textColor = Colors.f6f6f6
-        questionLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        questionLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 0
         
@@ -514,13 +514,13 @@ extension ExerciseViewController {
         bubbleButton.addTarget(self, action: #selector(bubbleButtonPressed), for: .primaryActionTriggered)
         
         bubbleLabel.translatesAutoresizingMaskIntoConstraints = false
-        bubbleLabel.font = UIFont(name: "ArialRoundedMTBold", size: 29)
+        bubbleLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 29)
         bubbleLabel.textAlignment = .center
         bubbleLabel.numberOfLines = 0
         
         hintLabel.translatesAutoresizingMaskIntoConstraints = false
         hintLabel.textColor = Colors.f6f6f6
-        hintLabel.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        hintLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
         hintLabel.textAlignment = .center
         hintLabel.numberOfLines = 0
         

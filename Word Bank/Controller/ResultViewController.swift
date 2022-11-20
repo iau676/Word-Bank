@@ -315,7 +315,7 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func writeAnswerCell(_ userAnswer: NSAttributedString, _ trueAnswer: String) -> NSMutableAttributedString {        
-        let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: "AvenirNext-Medium", size: textSize+2)]
+        let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: Fonts.AvenirNextMedium, size: textSize+2)]
         
         let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
         
@@ -385,7 +385,7 @@ extension ResultViewController {
         confettiButton.setImage(image: Images.confetti, width: 66, height: 66)
         
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        scoreLabel.font = UIFont(name: "AvenirNext-Medium", size: textSize+5)
+        scoreLabel.font = UIFont(name: Fonts.AvenirNextMedium, size: textSize+5)
         scoreLabel.textAlignment = .center
         scoreLabel.numberOfLines = 1
         
@@ -398,7 +398,7 @@ extension ResultViewController {
         
         addedHardWordsButton.translatesAutoresizingMaskIntoConstraints = false
         addedHardWordsButton.backgroundColor = .clear
-        addedHardWordsButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: textSize)
+        addedHardWordsButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         addedHardWordsButton.layer.cornerRadius = 10
         addedHardWordsButton.addTarget(self, action: #selector(addedHardWordsButtonPressed(_:)), for: .primaryActionTriggered)
         

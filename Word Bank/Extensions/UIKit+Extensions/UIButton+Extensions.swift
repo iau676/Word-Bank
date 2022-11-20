@@ -141,7 +141,7 @@ extension UIButton {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .white
         self.setTitle(title, for: .normal)
-        self.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        self.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: 11)
         self.setTitleColor(titleColor, for: .normal)
         self.setImageWithRenderingMode(image: image, width: imageWidth, height: imageHeight, color: titleColor)
         self.alignTextBelow()
