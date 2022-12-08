@@ -66,6 +66,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }()
     
     var shuffledAnswer: Array<Character> = Array("")
+    let backspaceButton = UIButton()
     
     //MARK: - Life Cycle
     
@@ -87,6 +88,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         
         configureBackBarButton()
         addGestureRecognizer()
+        updateScreenWhenKeyboardWillShow()
         preventInterrupt()
     }
 
@@ -105,6 +107,15 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     @objc func answerPressed(_ sender: UIButton) {
         checkAnswerQ(sender,sender.currentTitle!)
+    }
+    
+    @objc func backspaceButtonPressed(_ sender: UIButton) {
+        guard let text = textField.text else {return}
+        if let lastLetter = text.last {
+            shuffledAnswer.append(lastLetter)
+            textField.text = "\(text.dropLast())"
+            letterCV.reloadData()
+        }
     }
     
     @objc func textChanged(_ sender: UITextField) {
@@ -554,6 +565,7 @@ extension ExerciseViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setViewCornerRadius(6)
         textField.setLeftPaddingPoints(10)
+        textField.tintColor = .clear
         textField.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
         
         textFieldStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -577,6 +589,11 @@ extension ExerciseViewController {
         
         letterCV.delegate = self
         letterCV.dataSource = self
+        
+        backspaceButton.translatesAutoresizingMaskIntoConstraints = false
+        backspaceButton.setImage(image: UIImage(named: "backspace"), width: 25, height: 25)
+        backspaceButton.isHidden = false
+        backspaceButton.addTarget(self, action: #selector(backspaceButtonPressed), for: .primaryActionTriggered)
     }
     
     func layout(questionLabelHeight: CGFloat){
@@ -597,7 +614,8 @@ extension ExerciseViewController {
         view.addSubview(answerStackView)
         view.addSubview(progressBarBottom)
         view.addSubview(letterCV)
-        
+        view.addSubview(backspaceButton)
+
         NSLayoutConstraint.activate([
             userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
             userPointButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -642,6 +660,10 @@ extension ExerciseViewController {
             letterCV.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             letterCV.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             letterCV.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32),
+            
+            backspaceButton.trailingAnchor.constraint(equalTo: textField.trailingAnchor, constant: -4),
+            backspaceButton.topAnchor.constraint(equalTo: textField.topAnchor),
+            backspaceButton.bottomAnchor.constraint(equalTo: textField.bottomAnchor),
         ])
         
         NSLayoutConstraint.activate([
@@ -652,6 +674,7 @@ extension ExerciseViewController {
             questionLabel.heightAnchor.constraint(equalToConstant: questionLabelHeight),
             answerStackView.heightAnchor.constraint(equalToConstant: 256),
             textFieldStackView.heightAnchor.constraint(equalToConstant: 86),
+            backspaceButton.widthAnchor.constraint(equalTo: backspaceButton.heightAnchor)
         ])
     }
 }
@@ -712,6 +735,26 @@ class LetterCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+//MARK: - Keyboard Will Show
+
+ extension ExerciseViewController {
+     private func updateScreenWhenKeyboardWillShow(){
+         NotificationCenter.default.addObserver(
+             self,
+             selector: #selector(keyboardWillShow),
+             name: UIResponder.keyboardWillShowNotification,
+             object: nil
+         )
+     }
+     
+     @objc func keyboardWillShow(notification: NSNotification) {
+         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+             let keyboardHeight = CGFloat(keyboardSize.height)
+             backspaceButton.isHidden = (keyboardHeight < 100) ? false : true
+         }
+     }
+ }
 
 //MARK: - Swipe Gesture
 
