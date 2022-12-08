@@ -52,6 +52,21 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var hintCount = 0
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    // collection view
+    
+    fileprivate let letterCV:UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = .clear
+        cv.register(LetterCell.self, forCellWithReuseIdentifier: "cell")
+        cv.showsHorizontalScrollIndicator = false
+        return cv
+    }()
+    
+    var shuffledAnswer: Array<Character> = Array("")
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -93,12 +108,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func textChanged(_ sender: UITextField) {
-        if answerForStart23.lowercased() == sender.text!.lowercased() {
-            checkAnswerQ(nil,sender.text!)
-            textField.text = ""
-            bubbleButton.setImage(image: UIImage(), width: 0, height: 0)
-            wordBrain.answerTrue()
-        }
+        guard let text = sender.text else {return}
+        checkTextField(text)
     }
     
     @objc func soundButtonPressed(_ sender: UIButton) {
@@ -150,9 +161,11 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                 progressBarTop.isHidden = true
                 break
             case 2:
+                updateCV()
                 progressBarBottom.isHidden = true
                 break
             case 3:
+                updateCV()
                 player.playSound(soundSpeed, answerForStart23)
                 progressBarBottom.isHidden = true
                 break
@@ -214,6 +227,20 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
         getLetter()
         return false
+    }
+    
+    func checkTextField(_ text: String) {
+        if answerForStart23.lowercased() == text.lowercased() {
+            checkAnswerQ(nil,text)
+            textField.text = ""
+            bubbleButton.setImage(image: UIImage(), width: 0, height: 0)
+            wordBrain.answerTrue()
+        }
+    }
+    
+    func updateCV(){
+        shuffledAnswer = answerForStart23.shuffled()
+        letterCV.reloadData()
     }
     
     func configureColor(){
@@ -547,6 +574,9 @@ extension ExerciseViewController {
         
         progressBarBottom.translatesAutoresizingMaskIntoConstraints = false
         progressBarBottom.tintColor = Colors.f6f6f6
+        
+        letterCV.delegate = self
+        letterCV.dataSource = self
     }
     
     func layout(questionLabelHeight: CGFloat){
@@ -566,6 +596,7 @@ extension ExerciseViewController {
         view.addSubview(textFieldStackView)
         view.addSubview(answerStackView)
         view.addSubview(progressBarBottom)
+        view.addSubview(letterCV)
         
         NSLayoutConstraint.activate([
             userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
@@ -606,6 +637,11 @@ extension ExerciseViewController {
             progressBarBottom.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
             progressBarBottom.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             progressBarBottom.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            letterCV.topAnchor.constraint(equalTo: textFieldStackView.bottomAnchor, constant: 32),
+            letterCV.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            letterCV.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            letterCV.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32),
         ])
         
         NSLayoutConstraint.activate([
@@ -617,6 +653,63 @@ extension ExerciseViewController {
             answerStackView.heightAnchor.constraint(equalToConstant: 256),
             textFieldStackView.heightAnchor.constraint(equalToConstant: 86),
         ])
+    }
+}
+
+//MARK: - Collection View
+
+extension ExerciseViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 45, height: 45)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return shuffledAnswer.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! LetterCell
+        cell.titleLabel.text = "\(shuffledAnswer[indexPath.row])"
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = collectionView.cellForItem(at: indexPath) as! LetterCell
+        guard let title = item.titleLabel.text else {return}
+        shuffledAnswer.remove(at: shuffledAnswer.index(shuffledAnswer.startIndex, offsetBy: indexPath.row))
+        textField.text! += "\(title)"
+        checkTextField(textField.text ?? "")
+        collectionView.reloadData()
+    }
+}
+
+//MARK: - LetterCell
+
+class LetterCell: UICollectionViewCell {
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
+        label.textColor = Colors.black ?? .darkGray
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
+        contentView.backgroundColor = Colors.f6f6f6
+        contentView.setViewCornerRadius(8)
+     
+        contentView.addSubview(titleLabel)
+        
+        NSLayoutConstraint.activate([
+            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+        ])
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
