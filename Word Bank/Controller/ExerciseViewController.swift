@@ -126,7 +126,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     @objc func soundButtonPressed(_ sender: UIButton) {
         soundButton.bounce()
         if whichStartPressed == 1 {
-            if UserDefault.selectedSegmentIndex.getInt() == 0 {
+            if UserDefault.selectedTestType.getInt() == 0 {
+                //only english word
                 player.playSound(soundSpeed, questionText)
             }
         } else {
@@ -157,7 +158,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             failNumber = UserDefault.failNumber.getValue() as? [Int] ?? [Int]()
             failIndex = UserDefault.failIndex.getValue() as? [Int] ?? [Int]()
                 
-            questionText = wordBrain.getQuestionText(UserDefault.selectedSegmentIndex.getInt(),questionCount, whichStartPressed)
+            questionText = wordBrain.getQuestionText(questionCount, whichStartPressed)
             answerForStart23 = wordBrain.getAnswer()
             questionLabel.text = questionText
 
@@ -165,7 +166,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             switch whichStartPressed {
             case 1:
                 if UserDefault.playSound.getInt() == 0 {
-                    if UserDefault.selectedSegmentIndex.getInt() == 0 {
+                    if UserDefault.selectedTestType.getInt() == 0 {
                         player.playSound(soundSpeed, questionText)
                     }
                 }

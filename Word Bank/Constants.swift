@@ -144,7 +144,7 @@ enum UserDefault {
     
     static var needPoint                 = UserDefaultsManager(key: "needPoint")
     static var goLevelUp                 = UserDefaultsManager(key: "goLevelUp")
-    static var selectedSegmentIndex      = UserDefaultsManager(key: "selectedSegmentIndex")
+    static var selectedTestType          = UserDefaultsManager(key: "selectedTestType")
     static var soundSpeed                = UserDefaultsManager(key: "soundSpeed")
     static var playSound                 = UserDefaultsManager(key: "playSound")
     static var playAppSound              = UserDefaultsManager(key: "playAppSound")

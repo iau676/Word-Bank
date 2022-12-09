@@ -35,7 +35,7 @@ class ResultViewController: UIViewController {
     var arrayForResultViewTR: [String] { return UserDefault.arrayForResultViewTR.getValue() as? [String] ?? [String]() }
     var arrayForResultViewUserAnswer: [String] { UserDefault.userAnswers.getValue() as? [String] ?? [String]() }
     var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
-    var selectedSegmentIndex: Int { return UserDefault.selectedSegmentIndex.getInt() }
+    var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     var whichStartPressed: Int { return UserDefault.startPressed.getInt() }
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
@@ -248,7 +248,7 @@ extension ResultViewController: UITableViewDataSource {
     func updateCellLabelText(_ cell: WordCell, _ index: Int){
         let i = arrayOfIndex[index]
         if UserDefault.whichButton.getString() == ExerciseType.normal {
-            if selectedSegmentIndex == 0 {
+            if selectedTestType == 0 {
                 cell.engLabel.text = itemArray[i].eng
                 cell.trLabel.text = itemArray[i].tr
             } else {
@@ -256,7 +256,7 @@ extension ResultViewController: UITableViewDataSource {
                 cell.trLabel.text = itemArray[i].eng
             }
         } else {
-            if selectedSegmentIndex == 0 {
+            if selectedTestType == 0 {
                 cell.engLabel.text = arrayForResultViewENG[index]
                 cell.trLabel.text = arrayForResultViewTR[index]
             } else {
@@ -306,10 +306,10 @@ extension ResultViewController: UITableViewDataSource {
         if whichStartPressed != 4 {
             if UserDefault.whichButton.getString() == ExerciseType.normal {
                 cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
-                                                              (selectedSegmentIndex == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
+                                                              (selectedTestType == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
             } else {
                 cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
-                                                              (selectedSegmentIndex == 0) ? arrayForResultViewTR[i] : arrayForResultViewENG[i])
+                                                              (selectedTestType == 0) ? arrayForResultViewTR[i] : arrayForResultViewENG[i])
             }
         }
     }

@@ -26,7 +26,7 @@ struct WordBrain {
     
     var questionNumber = 0
     var changedQuestionNumber = 0
-    var userSelectedSegmentIndex = 0
+    var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     var addedHardWordsCount = 0
     var onlyHereNumber = 0
     var answer = 0
@@ -144,7 +144,7 @@ struct WordBrain {
         }
     }
     
-    mutating func getQuestionText(_ selectedSegmentIndex: Int, _ whichQuestion: Int, _ startPressed:Int) -> String {
+    mutating func getQuestionText(_ whichQuestion: Int, _ startPressed:Int) -> String {
         
         questionNumbers.removeAll()
         loadHardItemArray()
@@ -206,20 +206,19 @@ struct WordBrain {
         UserDefault.rightOnce.set(rightOncee)
                 
         changedQuestionNumber = questionNumber + Int.random(in: 0...9)
-        userSelectedSegmentIndex = selectedSegmentIndex
      
         questionNumbersCopy = questionNumbers
         questionNumbersCopy.remove(at: questionNumber)
   
         if UserDefault.whichButton.getString() == ExerciseType.normal {
             if startPressed == 1 {
-                return selectedSegmentIndex == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr!
+                return selectedTestType == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr!
             } else {
                 return  startPressed == 2 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
             }
         } else {
             if startPressed == 1 {
-                return selectedSegmentIndex == 0 ? hardItemArray[questionNumber].eng! : hardItemArray[questionNumber].tr!
+                return selectedTestType == 0 ? hardItemArray[questionNumber].eng! : hardItemArray[questionNumber].tr!
             } else {
                 return  startPressed == 2 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             }
@@ -242,9 +241,9 @@ struct WordBrain {
     mutating func getAnswer(_ sender: Int) -> String {
         if changedQuestionNumber % 2 == sender {
             if UserDefault.whichButton.getString() == ExerciseType.normal {
-                return userSelectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
+                return selectedTestType == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
             } else {
-                return userSelectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
+                return selectedTestType == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             }
         } else {
             if questionNumbersCopy.count > 0 {
@@ -252,9 +251,9 @@ struct WordBrain {
                 let temp = questionNumbersCopy[answer]
                      
                 if UserDefault.whichButton.getString() == ExerciseType.normal {
-                    return userSelectedSegmentIndex == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
+                    return selectedTestType == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
                 } else {
-                    return userSelectedSegmentIndex == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
+                    return selectedTestType == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
                 }
             } else {
                 return ""
@@ -281,9 +280,9 @@ struct WordBrain {
     mutating func checkAnswer(userAnswer: String) -> Bool {
         var trueAnswer = ""
         if UserDefault.whichButton.getString() == ExerciseType.normal {
-             trueAnswer = userSelectedSegmentIndex == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
+             trueAnswer = selectedTestType == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
         } else {
-             trueAnswer = userSelectedSegmentIndex == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
+             trueAnswer = selectedTestType == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
             
             arrayForResultViewENGG.append(hardItemArray[questionNumber].eng ?? "empty")
             UserDefault.arrayForResultViewENG.set(arrayForResultViewENGG)

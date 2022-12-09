@@ -121,7 +121,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func exerciseSettingsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        
+        self.navigationController?.pushViewController(ExerciseSettingsViewController(), animated: false)
     }
     
     @objc func textSizeChanged(_ sender: UISegmentedControl) {
