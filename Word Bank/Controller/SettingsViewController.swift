@@ -35,6 +35,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     let xButton = UIButton()
     let soundSpeedButton = UIButton()
+    let exerciseSettingsButton = UIButton()
     
     var player = Player()
     var wordBrain = WordBrain()
@@ -119,6 +120,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         player.playSound(soundSpeed, "how are you?")
     }
     
+    @objc func exerciseSettingsButtonPressed(gesture: UISwipeGestureRecognizer) {
+        
+    }
+    
     @objc func textSizeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -148,11 +153,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Helpers
     
     func configureColor() {
-        
+        view.backgroundColor = Colors.cellLeft
+        xView.backgroundColor = Colors.cellRight
         appSoundView.backgroundColor = Colors.cellRight
         wordSoundView.backgroundColor = Colors.cellRight
         soundSpeedView.backgroundColor = Colors.cellRight
         textSizeView.backgroundColor = Colors.cellRight
+        exerciseSettingsButton.backgroundColor = Colors.cellRight
         
         x2Label.textColor = Colors.black
         x2HoursLabel.textColor = Colors.black
@@ -160,8 +167,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         wordSoundLabel.textColor = Colors.black
         soundSpeedLabel.textColor = Colors.black
         textSizeLabel.textColor = Colors.black
+        x2HoursLabel.textColor = .darkGray
+        exerciseSettingsButton.setTitleColor(Colors.black, for: .normal)
         
         soundSpeedButton.changeBackgroundColor(to: .clear)
+        
+        textSegmentedControl.tintColor = .black
+        soundSpeedSegmentedControl.tintColor = .black
     }
         
     func configureNavigationBar(){
@@ -260,6 +272,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
   
         updateSegmentedControlTextSize(textSegmentedControl)
         updateSegmentedControlTextSize(soundSpeedSegmentedControl)
+        
+        updateButtonTextSize(exerciseSettingsButton)
     }
     
     func updateSegmentedControlTextSize(_ segmentedControl: UISegmentedControl){
@@ -268,6 +282,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     func updateLabelTextSize(_ label: UILabel){
         label.font = label.font.withSize(textSize)
+    }
+    
+    func updateButtonTextSize(_ button: UIButton){
+        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
     }
     
     func dismissView(){
@@ -297,28 +315,22 @@ extension SettingsViewController: X2HourDelegate {
 extension SettingsViewController {
     
     func style() {
-        view.backgroundColor = Colors.cellLeft
         
         xView.translatesAutoresizingMaskIntoConstraints = false
-        xView.backgroundColor = Colors.cellRight
         xView.setViewCornerRadius(8)
         let xViewGesture = UITapGestureRecognizer(target: self, action:  #selector(self.xViewPressed))
         xView.addGestureRecognizer(xViewGesture)
         
         appSoundView.translatesAutoresizingMaskIntoConstraints = false
-        appSoundView.backgroundColor = Colors.cellRight
         appSoundView.setViewCornerRadius(8)
         
         wordSoundView.translatesAutoresizingMaskIntoConstraints = false
-        wordSoundView.backgroundColor = Colors.cellRight
         wordSoundView.setViewCornerRadius(8)
         
         soundSpeedView.translatesAutoresizingMaskIntoConstraints = false
-        soundSpeedView.backgroundColor = Colors.cellRight
         soundSpeedView.setViewCornerRadius(8)
         
         textSizeView.translatesAutoresizingMaskIntoConstraints = false
-        textSizeView.backgroundColor = Colors.cellRight
         textSizeView.setViewCornerRadius(8)
         
         soundSpeedStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -332,17 +344,14 @@ extension SettingsViewController {
         textSizeStackView.distribution = .fill
         
         x2Label.translatesAutoresizingMaskIntoConstraints = false
-        x2Label.textColor = Colors.black
         x2Label.text = "2x Hour"
         x2Label.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
         x2HoursLabel.translatesAutoresizingMaskIntoConstraints = false
-        x2HoursLabel.textColor = .darkGray
         x2HoursLabel.textAlignment = .right
         x2HoursLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
         appSoundLabel.translatesAutoresizingMaskIntoConstraints = false
-        appSoundLabel.textColor = Colors.black
         appSoundLabel.text = "App Sound"
         appSoundLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
@@ -350,7 +359,6 @@ extension SettingsViewController {
         appSoundSwitch.addTarget(self, action: #selector(appSoundChanged(_:)), for: UIControl.Event.valueChanged)
         
         wordSoundLabel.translatesAutoresizingMaskIntoConstraints = false
-        wordSoundLabel.textColor = Colors.black
         wordSoundLabel.text = "Word Sound"
         wordSoundLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
@@ -358,7 +366,6 @@ extension SettingsViewController {
         wordSoundSwitch.addTarget(self, action: #selector(wordSoundChanged(_:)), for: UIControl.Event.valueChanged)
         
         soundSpeedLabel.translatesAutoresizingMaskIntoConstraints = false
-        soundSpeedLabel.textColor = Colors.black
         soundSpeedLabel.text = "Sound Speed"
         soundSpeedLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
@@ -367,19 +374,21 @@ extension SettingsViewController {
         
         soundSpeedSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         soundSpeedSegmentedControl.replaceSegments(segments: ["0.5", "1", "2"])
-        soundSpeedSegmentedControl.tintColor = .black
         soundSpeedSegmentedControl.addTarget(self, action: #selector(soundSpeedChanged(_:)), for: UIControl.Event.valueChanged)
         
         textSizeLabel.translatesAutoresizingMaskIntoConstraints = false
-        textSizeLabel.textColor = Colors.black
         textSizeLabel.text = "Text Size"
         textSizeLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
         textSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         textSegmentedControl.replaceSegments(segments: ["9", "11", "13", "15", "17", "19", "21"])
-        textSegmentedControl.tintColor = .black
         textSegmentedControl.addTarget(self, action: #selector(textSizeChanged(_:)), for: UIControl.Event.valueChanged)
         
+        exerciseSettingsButton.translatesAutoresizingMaskIntoConstraints = false
+        exerciseSettingsButton.setTitle("Exercise Settings", for: [])
+        exerciseSettingsButton.layer.cornerRadius = 10
+        exerciseSettingsButton.setImageWithRenderingMode(image: Images.next, width: 18, height: 18, color: Colors.black ?? .black)
+        exerciseSettingsButton.addTarget(self, action: #selector(exerciseSettingsButtonPressed), for: .primaryActionTriggered)
     }
     
     func layout() {
@@ -409,6 +418,7 @@ extension SettingsViewController {
         view.addSubview(wordSoundView)
         view.addSubview(soundSpeedView)
         view.addSubview(textSizeView)
+        view.addSubview(exerciseSettingsButton)
         
         NSLayoutConstraint.activate([
             
@@ -466,6 +476,10 @@ extension SettingsViewController {
             textSizeStackView.leadingAnchor.constraint(equalTo: textSizeView.leadingAnchor, constant: 16),
             textSizeStackView.trailingAnchor.constraint(equalTo: textSizeView.trailingAnchor, constant: -16),
             textSizeStackView.bottomAnchor.constraint(equalTo: textSizeView.bottomAnchor, constant: -16),
+            
+            exerciseSettingsButton.topAnchor.constraint(equalTo: textSizeView.bottomAnchor, constant: 16),
+            exerciseSettingsButton.leadingAnchor.constraint(equalTo: textSizeView.leadingAnchor),
+            exerciseSettingsButton.trailingAnchor.constraint(equalTo: textSizeView.trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -474,7 +488,9 @@ extension SettingsViewController {
             wordSoundView.heightAnchor.constraint(equalToConstant: 40),
             soundSpeedView.heightAnchor.constraint(equalToConstant: 90),
             textSizeView.heightAnchor.constraint(equalToConstant: 90),
+            exerciseSettingsButton.heightAnchor.constraint(equalToConstant: 40),
         ])
+        exerciseSettingsButton.moveImageRight()
     }
 }
 

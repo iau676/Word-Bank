@@ -106,6 +106,7 @@ enum Images {
     static let question                  = UIImage(named: "question")
     static let greenBubble               = UIImage(named: "greenBubble")
     static let redBubble                 = UIImage(named: "redBubble")
+    static let next                      = UIImage(named: "next")
     
     static let plus                      = UIImage(named: "plus")
     static let edit                      = UIImage(named: "edit")
