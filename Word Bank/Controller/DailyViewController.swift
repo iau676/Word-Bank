@@ -76,16 +76,19 @@ class DailyViewController: UIViewController {
     //MARK: - Selectors
     
     @objc func taskOneButtonPressed(){
+        UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.startPressed.set(1)
         checkWordCount()
     }
     
     @objc func taskTwoButtonPressed(){
+        UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.startPressed.set(2)
         checkWordCount()
     }
     
     @objc func taskThreeButtonPressed(){
+        UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.startPressed.set(3)
         checkSoundSetting()
     }
