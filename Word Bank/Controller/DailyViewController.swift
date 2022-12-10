@@ -543,7 +543,7 @@ extension DailyViewController {
     func pushVC(vc: UIViewController, button: UIButton){
         self.fireworkController.addFireworks(count: 5, sparks: 5, around: button)
         UserDefault.whichButton.set(ExerciseType.normal)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15){
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05){
             if button == self.homeButton {
                 self.navigationController?.popToRootViewController(animated: true)
             } else {

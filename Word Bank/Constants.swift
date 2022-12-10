@@ -111,6 +111,7 @@ enum Images {
     static let defaultKeyboard           = UIImage(named: "defaultKeyboard")
     static let customKeyboard            = UIImage(named: "customKeyboard")
     static let next                      = UIImage(named: "next")
+    static let backspace                      = UIImage(named: "backspace")
     
     static let plus                      = UIImage(named: "plus")
     static let edit                      = UIImage(named: "edit")

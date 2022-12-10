@@ -152,7 +152,7 @@ class ExerciseSettingsViewController: UIViewController {
             pointLabel.topAnchor.constraint(equalTo: pointView.topAnchor, constant: 16),
             pointLabel.leadingAnchor.constraint(equalTo: pointView.leadingAnchor, constant: 16),
             
-            pointCV.topAnchor.constraint(equalTo: pointLabel.bottomAnchor, constant: 16),
+            pointCV.topAnchor.constraint(equalTo: pointLabel.bottomAnchor, constant: 8),
             pointCV.leadingAnchor.constraint(equalTo: pointView.leadingAnchor, constant: 16),
             pointCV.trailingAnchor.constraint(equalTo: pointView.trailingAnchor, constant: -16),
             pointCV.bottomAnchor.constraint(equalTo: pointView.bottomAnchor, constant: -16),
@@ -171,7 +171,7 @@ class ExerciseSettingsViewController: UIViewController {
             typingLabel.topAnchor.constraint(equalTo: typingView.topAnchor, constant: 16),
             typingLabel.leadingAnchor.constraint(equalTo: typingView.leadingAnchor, constant: 16),
             
-            typingCV.topAnchor.constraint(equalTo: typingLabel.bottomAnchor, constant: 16),
+            typingCV.topAnchor.constraint(equalTo: typingLabel.bottomAnchor, constant: 8),
             typingCV.leadingAnchor.constraint(equalTo: typingView.leadingAnchor, constant: 16),
             typingCV.trailingAnchor.constraint(equalTo: typingView.trailingAnchor, constant: -16),
             typingCV.bottomAnchor.constraint(equalTo: typingView.bottomAnchor, constant: -16),
@@ -179,8 +179,8 @@ class ExerciseSettingsViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             testTypeView.heightAnchor.constraint(equalToConstant: 90),
-            pointView.heightAnchor.constraint(equalToConstant: 169),
-            typingView.heightAnchor.constraint(equalToConstant: 169),
+            pointView.heightAnchor.constraint(equalToConstant: 160),
+            typingView.heightAnchor.constraint(equalToConstant: 160),
         ])
     }
     
@@ -210,6 +210,8 @@ extension ExerciseSettingsViewController: UICollectionViewDelegateFlowLayout, UI
             cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedPointEffect.getInt()) ? Colors.blue?.cgColor : Colors.d6d6d6?.cgColor
         case typingCV:
             cell.imageView.image = (indexPath.row == 0) ? Images.customKeyboard : Images.defaultKeyboard
+            cell.imageView.layer.cornerRadius = 8
+            cell.imageView.clipsToBounds = true
             cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedTyping.getInt()) ? Colors.blue?.cgColor : Colors.d6d6d6?.cgColor
         default: break
         }
@@ -232,18 +234,9 @@ extension ExerciseSettingsViewController: UICollectionViewDelegateFlowLayout, UI
 
 class ExerciseSettingsCell: UICollectionViewCell {
     
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
-        label.textColor = Colors.black ?? .darkGray
-        return label
-    }()
-    
     lazy var imageView: UIImageView = {
         var imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.setViewCornerRadius(8)
         return imageView
     }()
     
@@ -341,7 +334,7 @@ extension ExerciseSettingsViewController {
     func pushVC(vc: UIViewController, button: UIButton){
         timerDaily.invalidate()
         self.fireworkController.addFireworks(count: 5, sparks: 5, around: button)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15){
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05){
             if button == self.homeButton {
                 self.navigationController?.popToRootViewController(animated: true)
             } else {

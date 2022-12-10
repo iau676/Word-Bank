@@ -527,7 +527,7 @@ extension HomeViewController {
     
     func pushVC(vc: UIViewController, button: UIButton){
         self.fireworkController.addFireworks(count: 5, sparks: 5, around: button)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15){
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05){
            self.navigationController?.pushViewController(vc, animated: true)
         }
     }

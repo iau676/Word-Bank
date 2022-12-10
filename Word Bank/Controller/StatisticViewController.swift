@@ -366,7 +366,7 @@ extension StatisticViewController {
     func pushVC(vc: UIViewController, button: UIButton){
         timerDaily.invalidate()
         self.fireworkController.addFireworks(count: 5, sparks: 5, around: button)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15){
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05){
             if button == self.homeButton {
                 self.navigationController?.popToRootViewController(animated: true)
             } else {

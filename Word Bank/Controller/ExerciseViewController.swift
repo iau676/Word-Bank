@@ -596,10 +596,11 @@ extension ExerciseViewController {
         
         letterCV.delegate = self
         letterCV.dataSource = self
+        letterCV.isHidden = (whichStartPressed == 1) ? true : false
         
         backspaceButton.translatesAutoresizingMaskIntoConstraints = false
-        backspaceButton.setImage(image: UIImage(named: "backspace"), width: 25, height: 25)
-        backspaceButton.isHidden = false
+        backspaceButton.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20, color: Colors.black ?? .black)
+        backspaceButton.isHidden = (whichStartPressed == 1) ? true : false
         backspaceButton.addTarget(self, action: #selector(backspaceButtonPressed), for: .primaryActionTriggered)
     }
     
