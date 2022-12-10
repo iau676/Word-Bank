@@ -281,7 +281,11 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         }
         textField.delegate = self
         if whichStartPressed != 1 {
-            textField.becomeFirstResponder()
+            if UserDefault.selectedTyping.getInt() == 0 {
+                textField.isEnabled = false
+            } else {
+                textField.becomeFirstResponder()
+            }
         }
     }
     

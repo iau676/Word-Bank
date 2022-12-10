@@ -108,6 +108,8 @@ enum Images {
     static let redBubble                 = UIImage(named: "redBubble")
     static let greenCircle               = UIImage(named: "greenCircle")
     static let redCircle                 = UIImage(named: "redCircle")
+    static let defaultKeyboard           = UIImage(named: "defaultKeyboard")
+    static let customKeyboard            = UIImage(named: "customKeyboard")
     static let next                      = UIImage(named: "next")
     
     static let plus                      = UIImage(named: "plus")
@@ -148,6 +150,7 @@ enum UserDefault {
     static var goLevelUp                 = UserDefaultsManager(key: "goLevelUp")
     static var selectedTestType          = UserDefaultsManager(key: "selectedTestType")
     static var selectedPointEffect       = UserDefaultsManager(key: "selectedPointEffect")
+    static var selectedTyping            = UserDefaultsManager(key: "selectedTyping")
     static var soundSpeed                = UserDefaultsManager(key: "soundSpeed")
     static var playSound                 = UserDefaultsManager(key: "playSound")
     static var playAppSound              = UserDefaultsManager(key: "playAppSound")

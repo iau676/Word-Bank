@@ -27,6 +27,19 @@ class ExerciseSettingsViewController: UIViewController {
         return cv
     }()
     
+    let typingView = UIView()
+    let typingLabel = UILabel()
+    fileprivate let typingCV:UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = Colors.cellRight
+        cv.register(ExerciseSettingsCell.self, forCellWithReuseIdentifier: "cell")
+        cv.showsHorizontalScrollIndicator = false
+        return cv
+    }()
+    
     var wordBrain = WordBrain()
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
@@ -57,6 +70,7 @@ class ExerciseSettingsViewController: UIViewController {
         testTypeLabel.textColor = Colors.black
         testTypeSegmentedControl.tintColor = .black
         pointView.backgroundColor = Colors.cellRight
+        typingView.backgroundColor = Colors.cellRight
     }
     
     //MARK: - Layout
@@ -93,6 +107,17 @@ class ExerciseSettingsViewController: UIViewController {
         
         pointCV.delegate = self
         pointCV.dataSource = self
+        
+        //Typing
+        typingView.translatesAutoresizingMaskIntoConstraints = false
+        typingView.setViewCornerRadius(8)
+        
+        typingLabel.translatesAutoresizingMaskIntoConstraints = false
+        typingLabel.text = "Typing"
+        typingLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
+        
+        typingCV.delegate = self
+        typingCV.dataSource = self
     }
     
     private func layout(){
@@ -133,9 +158,29 @@ class ExerciseSettingsViewController: UIViewController {
             pointCV.bottomAnchor.constraint(equalTo: pointView.bottomAnchor, constant: -16),
         ])
         
+        //Typing
+        view.addSubview(typingView)
+        typingView.addSubview(typingLabel)
+        typingView.addSubview(typingCV)
+        
+        NSLayoutConstraint.activate([
+            typingView.topAnchor.constraint(equalTo: pointView.bottomAnchor, constant: 16),
+            typingView.leadingAnchor.constraint(equalTo: testTypeView.leadingAnchor),
+            typingView.trailingAnchor.constraint(equalTo: testTypeView.trailingAnchor),
+            
+            typingLabel.topAnchor.constraint(equalTo: typingView.topAnchor, constant: 16),
+            typingLabel.leadingAnchor.constraint(equalTo: typingView.leadingAnchor, constant: 16),
+            
+            typingCV.topAnchor.constraint(equalTo: typingLabel.bottomAnchor, constant: 16),
+            typingCV.leadingAnchor.constraint(equalTo: typingView.leadingAnchor, constant: 16),
+            typingCV.trailingAnchor.constraint(equalTo: typingView.trailingAnchor, constant: -16),
+            typingCV.bottomAnchor.constraint(equalTo: typingView.bottomAnchor, constant: -16),
+        ])
+        
         NSLayoutConstraint.activate([
             testTypeView.heightAnchor.constraint(equalToConstant: 90),
             pointView.heightAnchor.constraint(equalToConstant: 169),
+            typingView.heightAnchor.constraint(equalToConstant: 169),
         ])
     }
     
@@ -159,13 +204,26 @@ extension ExerciseSettingsViewController: UICollectionViewDelegateFlowLayout, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ExerciseSettingsCell
-        cell.imageView.image = (indexPath.row == 0) ? Images.greenBubble : Images.greenCircle
-        cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedPointEffect.getInt()) ? Colors.blue?.cgColor : Colors.d6d6d6?.cgColor
+        switch collectionView {
+        case pointCV:
+            cell.imageView.image = (indexPath.row == 0) ? Images.greenBubble : Images.greenCircle
+            cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedPointEffect.getInt()) ? Colors.blue?.cgColor : Colors.d6d6d6?.cgColor
+        case typingCV:
+            cell.imageView.image = (indexPath.row == 0) ? Images.customKeyboard : Images.defaultKeyboard
+            cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedTyping.getInt()) ? Colors.blue?.cgColor : Colors.d6d6d6?.cgColor
+        default: break
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        UserDefault.selectedPointEffect.set(indexPath.row)
+        switch collectionView {
+        case pointCV:
+            UserDefault.selectedPointEffect.set(indexPath.row)
+        case typingCV:
+            UserDefault.selectedTyping.set(indexPath.row)
+        default: break
+        }
         collectionView.reloadData()
     }
 }
@@ -186,8 +244,6 @@ class ExerciseSettingsCell: UICollectionViewCell {
         var imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.setViewCornerRadius(8)
-        let image = Images.coin
-        imageView.image = image
         return imageView
     }()
     
