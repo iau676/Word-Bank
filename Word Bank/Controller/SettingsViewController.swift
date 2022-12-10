@@ -43,6 +43,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     var soundImageName = ""
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
+    let textSizeArray = [9, 11, 13, 15, 17, 19, 21]
+    let soundSpeedArray = [0.3, 0.5, 0.7]
+    
     //tabBar
     private let fireworkController = ClassicFireworkController()
     private var timerDaily = Timer()
@@ -88,29 +91,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func appSoundChanged(_ sender: UISwitch) {
-        if sender.isOn {
-            UserDefault.playAppSound.set(0)
-        } else {
-            UserDefault.playAppSound.set(1)
-        }
+        UserDefault.playAppSound.set(sender.isOn == true ? 0 : 1)
     }
     
     @objc func soundSpeedChanged(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            UserDefault.soundSpeed.set(0.3)
-            soundSpeed = 0.3
-            break
-        case 1:
-            UserDefault.soundSpeed.set(0.5)
-            soundSpeed = 0.5
-            break
-        case 2:
-            UserDefault.soundSpeed.set(0.7)
-            soundSpeed = 0.7
-            break
-        default: break
-        }
+        UserDefault.soundSpeed.set(soundSpeedArray[sender.selectedSegmentIndex])
+        soundSpeed = soundSpeedArray[sender.selectedSegmentIndex]
         soundSpeedButton.flash()
         player.playSound(soundSpeed, "how are you?")
     }
@@ -125,28 +111,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func textSizeChanged(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            UserDefault.textSize.set(9)
-            break
-        case 1:
-            UserDefault.textSize.set(11)
-            break
-        case 2:
-            UserDefault.textSize.set(13)
-            break
-        case 3:
-            UserDefault.textSize.set(15)
-            break
-        case 4:
-            UserDefault.textSize.set(17)
-            break
-        case 5:
-            UserDefault.textSize.set(19)
-            break
-        default:
-            UserDefault.textSize.set(21)
-        }
+        UserDefault.textSize.set(textSizeArray[sender.selectedSegmentIndex])
         updateTextSize()
     }
     
@@ -201,6 +166,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupDefaults(){
+        
+        if UserDefault.textSize.getInt() == 0 {
+            UserDefault.textSize.set(15)
+            UserDefault.soundSpeed.set(0.3)
+        }
+        
         if UserDefault.playSound.getInt() == 1 {
             wordSoundSwitch.isOn = false
             changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
@@ -209,57 +180,16 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
         }
         
-        if UserDefault.playAppSound.getInt() == 1 {
-            appSoundSwitch.isOn = false
-        } else {
-            appSoundSwitch.isOn = true
-        }
-        
-        if UserDefault.textSize.getInt() == 0 {
-            UserDefault.textSize.set(15)
-            UserDefault.soundSpeed.set(0.3)
-        }
+        appSoundSwitch.isOn = (UserDefault.playAppSound.getInt() == 1) ? false : true
         
         x2HoursLabel.text = wordBrain.hours[UserDefault.userSelectedHour.getInt()]
         
         soundSpeed = UserDefault.soundSpeed.getDouble()
-        switch soundSpeed {
-        case 0.3:
-            soundSpeedSegmentedControl.selectedSegmentIndex = 0
-            break
-        case 0.5:
-            soundSpeedSegmentedControl.selectedSegmentIndex = 1
-            break
-        case 0.7:
-            soundSpeedSegmentedControl.selectedSegmentIndex = 2
-            break
-        default: break
-        }
+        guard let soundSpeedIndex = soundSpeedArray.firstIndex(where: {$0 == soundSpeed}) else {return}
+        soundSpeedSegmentedControl.selectedSegmentIndex = soundSpeedIndex
         
-        switch UserDefault.textSize.getInt() {
-        case 9:
-            textSegmentedControl.selectedSegmentIndex = 0
-            break
-        case 11:
-            textSegmentedControl.selectedSegmentIndex = 1
-            break
-        case 13:
-            textSegmentedControl.selectedSegmentIndex = 2
-            break
-        case 15:
-            textSegmentedControl.selectedSegmentIndex = 3
-            break
-        case 17:
-            textSegmentedControl.selectedSegmentIndex = 4
-            break
-        case 19:
-            textSegmentedControl.selectedSegmentIndex = 5
-            break
-        case 21:
-            textSegmentedControl.selectedSegmentIndex = 6
-            break
-        default: break
-        }
+        guard let textSizeIndex = textSizeArray.firstIndex(where: {$0 == UserDefault.textSize.getInt()}) else {return}
+        textSegmentedControl.selectedSegmentIndex = textSizeIndex
     }
 
     func updateTextSize(){

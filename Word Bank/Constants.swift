@@ -111,7 +111,7 @@ enum Images {
     static let defaultKeyboard           = UIImage(named: "defaultKeyboard")
     static let customKeyboard            = UIImage(named: "customKeyboard")
     static let next                      = UIImage(named: "next")
-    static let backspace                      = UIImage(named: "backspace")
+    static let backspace                 = UIImage(named: "backspace")
     
     static let plus                      = UIImage(named: "plus")
     static let edit                      = UIImage(named: "edit")
@@ -136,7 +136,7 @@ enum UserDefault {
     static var listeningCount            = UserDefaultsManager(key: "listeningCount")
     static var cardCount                 = UserDefaultsManager(key: "cardCount")
     
-    static var allTrueCount               = UserDefaultsManager(key: "allTrueCount")
+    static var allTrueCount              = UserDefaultsManager(key: "allTrueCount")
     static var trueCount                 = UserDefaultsManager(key: "trueCount")
     static var falseCount                = UserDefaultsManager(key: "falseCount")
     
