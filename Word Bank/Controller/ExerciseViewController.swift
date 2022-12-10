@@ -48,6 +48,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var whichButton: String { return UserDefault.whichButton.getString() }
     var whichStartPressed : Int { return UserDefault.startPressed.getInt() }
     var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
+    var truePointImage: UIImage? { return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.greenBubble : Images.greenCircle }
+    var falsePointImage: UIImage? { return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.redBubble : Images.redCircle }
     var wheelPressed = 0
     var hintCount = 0
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -450,7 +452,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             bubbleLabel.text = "+\(exercisePoint)"
             userPointButton.setTitleWithAnimation(title: (lastPoint+exercisePoint).withCommas())
             
-            bubbleButton.setBackgroundImage(Images.greenBubble, for: .normal)
+            bubbleButton.setBackgroundImage(truePointImage, for: .normal)
             rotateBubbleButton()
             
             UserDefault.lastPoint.set(lastPoint+exercisePoint)
@@ -468,7 +470,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             bubbleLabel.text = "\(-exercisePoint)"
             userPointButton.setTitleWithAnimation(title: (lastPoint-exercisePoint).withCommas())
             
-            bubbleButton.setBackgroundImage(Images.redBubble, for: .normal)
+            bubbleButton.setBackgroundImage(falsePointImage, for: .normal)
             rotateBubbleButton()
             
             UserDefault.lastPoint.set(lastPoint-exercisePoint)

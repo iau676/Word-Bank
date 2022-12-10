@@ -14,6 +14,19 @@ class ExerciseSettingsViewController: UIViewController {
     let testTypeLabel = UILabel()
     let testTypeSegmentedControl = UISegmentedControl()
     
+    let pointView = UIView()
+    let pointLabel = UILabel()
+    fileprivate let pointCV:UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = Colors.cellRight
+        cv.register(ExerciseSettingsCell.self, forCellWithReuseIdentifier: "cell")
+        cv.showsHorizontalScrollIndicator = false
+        return cv
+    }()
+    
     var wordBrain = WordBrain()
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
@@ -43,6 +56,7 @@ class ExerciseSettingsViewController: UIViewController {
         testTypeView.backgroundColor = Colors.cellRight
         testTypeLabel.textColor = Colors.black
         testTypeSegmentedControl.tintColor = .black
+        pointView.backgroundColor = Colors.cellRight
     }
     
     //MARK: - Layout
@@ -50,6 +64,7 @@ class ExerciseSettingsViewController: UIViewController {
     private func style(){
         setColors()
         
+        //Test Type
         testTypeView.translatesAutoresizingMaskIntoConstraints = false
         testTypeView.setViewCornerRadius(8)
         
@@ -67,9 +82,22 @@ class ExerciseSettingsViewController: UIViewController {
         testTypeSegmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black ?? .black, .font: UIFont.systemFont(ofSize: textSize-3),], for: .normal)
         testTypeSegmentedControl.selectedSegmentIndex = UserDefault.selectedTestType.getInt()
         testTypeSegmentedControl.addTarget(self, action: #selector(testTypeChanged(_:)), for: UIControl.Event.valueChanged)
+        
+        //Point Effect
+        pointView.translatesAutoresizingMaskIntoConstraints = false
+        pointView.setViewCornerRadius(8)
+        
+        pointLabel.translatesAutoresizingMaskIntoConstraints = false
+        pointLabel.text = "Point Effect"
+        pointLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
+        
+        pointCV.delegate = self
+        pointCV.dataSource = self
     }
     
     private func layout(){
+        
+        //Test Type
         view.addSubview(testTypeView)
         testTypeView.addSubview(testTypeStackView)
         testTypeStackView.addArrangedSubview(testTypeLabel)
@@ -86,8 +114,28 @@ class ExerciseSettingsViewController: UIViewController {
             testTypeStackView.bottomAnchor.constraint(equalTo: testTypeView.bottomAnchor, constant: -16),
         ])
         
+        //Point Effect
+        view.addSubview(pointView)
+        pointView.addSubview(pointLabel)
+        pointView.addSubview(pointCV)
+        
+        NSLayoutConstraint.activate([
+            pointView.topAnchor.constraint(equalTo: testTypeView.bottomAnchor, constant: 16),
+            pointView.leadingAnchor.constraint(equalTo: testTypeView.leadingAnchor),
+            pointView.trailingAnchor.constraint(equalTo: testTypeView.trailingAnchor),
+            
+            pointLabel.topAnchor.constraint(equalTo: pointView.topAnchor, constant: 16),
+            pointLabel.leadingAnchor.constraint(equalTo: pointView.leadingAnchor, constant: 16),
+            
+            pointCV.topAnchor.constraint(equalTo: pointLabel.bottomAnchor, constant: 16),
+            pointCV.leadingAnchor.constraint(equalTo: pointView.leadingAnchor, constant: 16),
+            pointCV.trailingAnchor.constraint(equalTo: pointView.trailingAnchor, constant: -16),
+            pointCV.bottomAnchor.constraint(equalTo: pointView.bottomAnchor, constant: -16),
+        ])
+        
         NSLayoutConstraint.activate([
             testTypeView.heightAnchor.constraint(equalToConstant: 90),
+            pointView.heightAnchor.constraint(equalToConstant: 169),
         ])
     }
     
@@ -95,6 +143,72 @@ class ExerciseSettingsViewController: UIViewController {
     
     @objc func testTypeChanged(_ sender: UISegmentedControl) {
         UserDefault.selectedTestType.set(sender.selectedSegmentIndex)
+    }
+}
+
+//MARK: - Collection View
+
+extension ExerciseSettingsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 99, height: 99)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ExerciseSettingsCell
+        cell.imageView.image = (indexPath.row == 0) ? Images.greenBubble : Images.greenCircle
+        cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedPointEffect.getInt()) ? Colors.blue?.cgColor : Colors.d6d6d6?.cgColor
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        UserDefault.selectedPointEffect.set(indexPath.row)
+        collectionView.reloadData()
+    }
+}
+
+//MARK: - ExerciseSettingsCell
+
+class ExerciseSettingsCell: UICollectionViewCell {
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
+        label.textColor = Colors.black ?? .darkGray
+        return label
+    }()
+    
+    lazy var imageView: UIImageView = {
+        var imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.setViewCornerRadius(8)
+        let image = Images.coin
+        imageView.image = image
+        return imageView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
+        contentView.backgroundColor = .clear
+        contentView.layer.borderWidth = 2
+        contentView.setViewCornerRadius(8)
+        
+        contentView.addSubview(imageView)
+        
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+        ])
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

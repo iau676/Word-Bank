@@ -106,6 +106,8 @@ enum Images {
     static let question                  = UIImage(named: "question")
     static let greenBubble               = UIImage(named: "greenBubble")
     static let redBubble                 = UIImage(named: "redBubble")
+    static let greenCircle               = UIImage(named: "greenCircle")
+    static let redCircle                 = UIImage(named: "redCircle")
     static let next                      = UIImage(named: "next")
     
     static let plus                      = UIImage(named: "plus")
@@ -145,6 +147,7 @@ enum UserDefault {
     static var needPoint                 = UserDefaultsManager(key: "needPoint")
     static var goLevelUp                 = UserDefaultsManager(key: "goLevelUp")
     static var selectedTestType          = UserDefaultsManager(key: "selectedTestType")
+    static var selectedPointEffect       = UserDefaultsManager(key: "selectedPointEffect")
     static var soundSpeed                = UserDefaultsManager(key: "soundSpeed")
     static var playSound                 = UserDefaultsManager(key: "playSound")
     static var playAppSound              = UserDefaultsManager(key: "playAppSound")
