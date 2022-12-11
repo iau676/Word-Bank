@@ -48,6 +48,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
     var truePointImage: UIImage? { return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.greenBubble : Images.greenCircle }
     var falsePointImage: UIImage? { return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.redBubble : Images.redCircle }
+    var selectedTyping: Int { return UserDefault.selectedTyping.getInt() }
     var wheelPressed = 0
     var hintCount = 0
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -96,7 +97,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let x = textFieldStackView.center.y
+        let x = textFieldStackView.center.y - 43 //textFieldStackView.heightAnchor/2
         let y = progressBarTop.center.y
         layout(questionLabelHeight: x-y)
     }
@@ -142,17 +143,10 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         letterCounter = 0
         hint = ""
         hintLabel.text = ""
+        bubbleLabel.text = ""
 
         if questionCount < totalQuestionNumber {
-
-            bubbleLabel.text = ""
             
-            if whichStartPressed == 3 {
-                bubbleButton.setImage(image: Images.sound, width: 66, height: 66)
-            } else {
-                bubbleButton.isHidden=true
-            }
-                
             questionText = wordBrain.getQuestionText(questionCount, whichStartPressed)
             answerForStart23 = wordBrain.getAnswer()
             questionLabel.text = questionText
@@ -164,12 +158,16 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                     player.playSound(soundSpeed, questionText)
                 }
                 progressBarTop.isHidden = true
+                bubbleButton.isHidden = true
+                letterCV.isHidden = true
                 break
             case 2:
                 updateCV()
                 progressBarBottom.isHidden = true
+                bubbleButton.isHidden = true
                 break
             case 3:
+                bubbleButton.setImage(image: Images.sound, width: 66, height: 66)
                 updateCV()
                 player.playSound(soundSpeed, answerForStart23)
                 progressBarBottom.isHidden = true
@@ -237,6 +235,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     func updateCV(){
+        letterCV.isHidden = (selectedTyping == 0) ? false : true
         shuffledAnswer = answerForStart23.shuffled()
         letterCV.reloadData()
     }
@@ -265,10 +264,12 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         }
         textField.delegate = self
         if whichStartPressed != 1 {
-            if UserDefault.selectedTyping.getInt() == 0 {
+            if selectedTyping == 0 {
                 textField.isEnabled = false
+                textField.tintColor = .clear
             } else {
                 textField.becomeFirstResponder()
+                textField.tintColor = Colors.raven
             }
         }
     }
@@ -550,7 +551,6 @@ extension ExerciseViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setViewCornerRadius(6)
         textField.setLeftPaddingPoints(10)
-        textField.tintColor = .clear
         textField.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
         
         textFieldStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -574,7 +574,6 @@ extension ExerciseViewController {
         
         letterCV.delegate = self
         letterCV.dataSource = self
-        letterCV.isHidden = (whichStartPressed == 1) ? true : false
         
         backspaceButton.translatesAutoresizingMaskIntoConstraints = false
         backspaceButton.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20, color: Colors.black ?? .black)
@@ -606,7 +605,6 @@ extension ExerciseViewController {
             userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
             userPointButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userPointButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            userPointButton.heightAnchor.constraint(equalToConstant: 24),
             
             xButton.centerYAnchor.constraint(equalTo: userPointButton.centerYAnchor),
             xButton.leadingAnchor.constraint(equalTo: userPointButton.leadingAnchor),
@@ -620,13 +618,13 @@ extension ExerciseViewController {
             soundButton.topAnchor.constraint(equalTo: progressBarTop.bottomAnchor, constant: 16),
             soundButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             
-            textFieldStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            textFieldStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            textFieldStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-16),
-            
             answerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             answerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             answerStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66),
+            
+            textFieldStackView.centerYAnchor.constraint(equalTo: answerStackView.topAnchor),
+            textFieldStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            textFieldStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             
             questionLabel.topAnchor.constraint(equalTo: progressBarTop.bottomAnchor, constant: 16),
             questionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
@@ -653,6 +651,7 @@ extension ExerciseViewController {
         ])
         
         NSLayoutConstraint.activate([
+            userPointButton.heightAnchor.constraint(equalToConstant: 24),
             soundButton.widthAnchor.constraint(equalToConstant: 40),
             soundButton.heightAnchor.constraint(equalToConstant: 40),
             bubbleButton.widthAnchor.constraint(equalToConstant: 90),
