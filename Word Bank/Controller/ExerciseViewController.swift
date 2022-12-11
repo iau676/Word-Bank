@@ -33,8 +33,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var hint = ""
     var letterCounter = 0
     var totalQuestionNumber = 20
-    var failNumber: [Int] = []
-    var failIndex: [Int] = []
     var itemArray: [Item] { return wordBrain.itemArray }
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var questionCount = 0
@@ -55,7 +53,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     // collection view
-    
     fileprivate let letterCV:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -66,7 +63,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         cv.showsHorizontalScrollIndicator = false
         return cv
     }()
-    
     var shuffledAnswer: Array<Character> = Array("")
     let backspaceButton = UIButton()
     
@@ -156,9 +152,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             } else {
                 bubbleButton.isHidden=true
             }
-         
-            failNumber = UserDefault.failNumber.getValue() as? [Int] ?? [Int]()
-            failIndex = UserDefault.failIndex.getValue() as? [Int] ?? [Int]()
                 
             questionText = wordBrain.getQuestionText(questionCount, whichStartPressed)
             answerForStart23 = wordBrain.getAnswer()
@@ -167,10 +160,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             //0 is true, 1 is false
             switch whichStartPressed {
             case 1:
-                if UserDefault.playSound.getInt() == 0 {
-                    if UserDefault.selectedTestType.getInt() == 0 {
-                        player.playSound(soundSpeed, questionText)
-                    }
+                if UserDefault.playSound.getInt() == 0 && UserDefault.selectedTestType.getInt() == 0{
+                    player.playSound(soundSpeed, questionText)
                 }
                 progressBarTop.isHidden = true
                 break
@@ -214,13 +205,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     @objc func updateHintLabelColor() {
         hintLabel.textColor = Colors.f6f6f6
     }
-    
-//    @objc func updateImg(_ timer: Timer){
-//        let imgName = timer.userInfo!
-//        let imagePath:String? = Bundle.main.path(forResource: (imgName as! String), ofType: "png")
-//        let image:UIImage? = UIImage(contentsOfFile: imagePath!)
-//        bubbleButton.setBackgroundImage(image, for: UIControl.State.normal)
-//    }
     
     @objc func backButtonPressed(sender : UIButton) {
         if wheelPressed == 1 {
@@ -480,14 +464,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             UserDefault.lastPoint.set(lastPoint-exercisePoint)
         }
       
-        wordBrain.nextQuestion()
- 
         scheduledTimer(timeInterval: 0.7, #selector(updateUI))
     }
-    
-//    func rotateBubbleButton(timeInterval: Double, userInfo: String) -> Timer {
-//        return Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateImg(_:)), userInfo: userInfo, repeats: false)
-//    }
     
     func rotateBubbleButton() {
         UIView.animate(withDuration:0.2, animations: {

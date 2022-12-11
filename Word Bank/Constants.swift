@@ -159,8 +159,6 @@ enum UserDefault {
     static var currentHour               = UserDefaultsManager(key: "currentHour")
     static var exercisePoint             = UserDefaultsManager(key: "pointForMyWords")
     static var userAnswers               = UserDefaultsManager(key: "userAnswers")
-    static var failNumber                = UserDefaultsManager(key: "failNumber")
-    static var failIndex                 = UserDefaultsManager(key: "failIndex")
     static var userWordCount             = UserDefaultsManager(key: "userWordCount")
     static var hardWordsCount            = UserDefaultsManager(key: "hardWordsCount")
     static var spinWheelCount            = UserDefaultsManager(key: "spinWheelCount")

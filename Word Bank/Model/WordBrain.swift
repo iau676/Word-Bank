@@ -28,9 +28,8 @@ struct WordBrain {
     var changedQuestionNumber = 0
     var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     var addedHardWordsCount = 0
-    var onlyHereNumber = 0
+    var questionCounter = 0
     var answer = 0
-    var firstFalseIndex = -1
     
     var rightOncee = [Int]()
     var rightOnceBooll = [Bool]()
@@ -152,57 +151,44 @@ struct WordBrain {
 
         // these will be return a function
         if UserDefault.whichButton.getString() == ExerciseType.normal {
-                    
-                    if itemArray.count > 200 {
-                        switch whichQuestion {
-                        case 0...9:
-                            questionNumber = Int.random(in: 100..<itemArray.count)
-                            break
-                        case 9...19:
-                            questionNumber = Int.random(in: 0...100)
-                            break
-                        case 20:
-                            questionNumber = sortedFailsDictionary[0].key
-                            break
-                        case 21:
-                            questionNumber = sortedFailsDictionary[1].key
-                            break
-                        case 22:
-                            questionNumber = sortedFailsDictionary[2].key
-                            break
-                        case 23:
-                            questionNumber = sortedFailsDictionary[3].key
-                            break
-                        case 24:
-                            questionNumber = sortedFailsDictionary[4].key
-                            break
-                        default: break
-                        }
-                    } else {
-                        switch whichQuestion {
-                        case 0...22:
-                            questionNumber = Int.random(in: 0..<itemArray.count)
-                            break
-                        case 23:
-                            questionNumber = sortedFailsDictionary[0].key
-                            break
-                        case 24:
-                            questionNumber = sortedFailsDictionary[1].key
-                            break
-                        default: break
-                        }
-                    }
-                    for i in 0..<itemArray.count {
-                        questionNumbers.append(i)
-                    }
-                } else {
-                    questionNumber = Int.random(in: 0..<hardItemArray.count)
-                    for i in 0..<hardItemArray.count {
-                        questionNumbers.append(i)
-                    }
-                 
+            if itemArray.count > 200 {
+                switch whichQuestion {
+                case 0...9:
+                    questionNumber = Int.random(in: 100..<itemArray.count)
+                    break
+                case 9...14:
+                    questionNumber = Int.random(in: 0...100)
+                    break
+                case 15:
+                    questionNumber = sortedFailsDictionary[0].key
+                    break
+                case 16:
+                    questionNumber = sortedFailsDictionary[1].key
+                    break
+                case 17:
+                    questionNumber = sortedFailsDictionary[2].key
+                    break
+                case 18:
+                    questionNumber = sortedFailsDictionary[3].key
+                    break
+                case 19:
+                    questionNumber = sortedFailsDictionary[4].key
+                    break
+                default: break
                 }
-            rightOncee.append(questionNumber)
+            } else {
+                questionNumber = Int.random(in: 0..<itemArray.count)
+            }
+            for i in 0..<itemArray.count {
+                questionNumbers.append(i)
+            }
+        } else {
+            questionNumber = Int.random(in: 0..<hardItemArray.count)
+            for i in 0..<hardItemArray.count {
+                questionNumbers.append(i)
+            }
+        }
+        rightOncee.append(questionNumber)
         UserDefault.rightOnce.set(rightOncee)
                 
         changedQuestionNumber = questionNumber + Int.random(in: 0...9)
@@ -234,8 +220,8 @@ struct WordBrain {
     }
         
     mutating func getProgress() -> Float {
-        onlyHereNumber += 1
-        return Float(onlyHereNumber) / Float(20.0)
+        questionCounter += 1
+        return Float(questionCounter) / Float(20.0)
     }
 
     mutating func getAnswer(_ sender: Int) -> String {
@@ -260,22 +246,6 @@ struct WordBrain {
             }
         }
     }
-    
-    mutating func nextQuestion() {
-        if UserDefault.whichButton.getString() == ExerciseType.normal {
-            if questionNumber + 1 < itemArray.count {
-                questionNumber += 1
-            } else {
-                questionNumber = 0
-            }
-        } else {
-            if questionNumber + 1 < hardItemArray.count {
-                questionNumber += 1
-            } else {
-                questionNumber = 0
-            }
-        }
-   }
     
     mutating func checkAnswer(userAnswer: String) -> Bool {
         var trueAnswer = ""
