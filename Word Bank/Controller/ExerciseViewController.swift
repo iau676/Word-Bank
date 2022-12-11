@@ -45,10 +45,11 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     var wordBrain = WordBrain()
     var whichButton: String { return UserDefault.whichButton.getString() }
     var whichStartPressed : Int { return UserDefault.startPressed.getInt() }
+    var selectedTyping: Int { return UserDefault.selectedTyping.getInt() }
+    var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
     var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
     var truePointImage: UIImage? { return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.greenBubble : Images.greenCircle }
     var falsePointImage: UIImage? { return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.redBubble : Images.redCircle }
-    var selectedTyping: Int { return UserDefault.selectedTyping.getInt() }
     var wheelPressed = 0
     var hintCount = 0
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -367,7 +368,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             hint = hint.replace(skeletonArr[letterCounter], "\(answerWithoutSpace[letterCounter])")
             letterCounter += 1
             hintLabel.text = hint
-            decreaseOnePoint()
+            decreasePoint()
             hintCount += 1
             player.playMP3(Sounds.beep)
         } else {
@@ -384,7 +385,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         progressBarTop.progress = progrs
         progressBarBottom.progress = progrs
         
-        var exercisePoint = 0
+        var exercisePoint = exercisePoint
         var userGotItRight = true
         
         if whichStartPressed == 1 {
@@ -404,22 +405,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         answer2Button.isEnabled = false
         bubbleButton.isHidden = false
         questionLabel.text = ""
-        
-        exercisePoint = UserDefault.exercisePoint.getInt()
-        
-        switch whichStartPressed {
-        case 0:
-            exercisePoint = 1
-            break
-        case 2:
-            exercisePoint += 10
-            break
-        case 3:
-            exercisePoint += 20
-            break
-        default: break
-        }
-        
+                
         if UserDefault.currentHour.getInt() == UserDefault.userSelectedHour.getInt() {
             exercisePoint *= 2
             xButton.isHidden = false
@@ -480,19 +466,19 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func decreaseOnePoint(){
+    func decreasePoint(){
         let lastPoint = UserDefault.lastPoint.getInt()
         
         questionLabel.isHidden = true
         
         bubbleLabel.textColor = Colors.red
-        bubbleLabel.text = "-1"
+        bubbleLabel.text = "-\(exercisePoint)"
         bubbleButton.setImage(image: UIImage(), width: 0, height: 0)
         
         scheduledTimer(timeInterval: 0.4, #selector(hideBubbleButton))
         
-        userPointButton.setTitleWithAnimation(title: (lastPoint-1).withCommas())
-        UserDefault.lastPoint.set(lastPoint-1)
+        userPointButton.setTitleWithAnimation(title: (lastPoint-exercisePoint).withCommas())
+        UserDefault.lastPoint.set(lastPoint-exercisePoint)
     }
     
     func scheduledTimer(timeInterval: Double, _ selector : Selector) {
