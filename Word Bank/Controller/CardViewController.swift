@@ -12,20 +12,19 @@ class CardViewController: UIViewController {
     
     //MARK: - Variables
     
-    var wordBrain = WordBrain()
-    var itemArray: [Item] { return wordBrain.itemArray }
-    let cardView = UIView()
-    let cardView2 = UIView()
-    let cardLabel = UILabel()
-    let imageView = UIImageView()
-    var divisor: CGFloat!
-    var cardCenter: CGPoint!
-    var cardCounter = 0
-    var questionNumber = 0
+    private var wordBrain = WordBrain()
+    private var itemArray: [Item] { return wordBrain.itemArray }
+    private let cardView = UIView()
+    private let backgroundCardView = UIView()
+    private let cardLabel = UILabel()
+    private let imageView = UIImageView()
+    private var divisor: CGFloat!
+    private var cardCenter: CGPoint!
+    private var cardCounter = 0
+    private var wordEnglish = ""
+    private var wordMeaning = ""
+    private var isOpen = false
     var wheelPressed = 0
-    var wordEnglish = ""
-    var wordMeaning = ""
-    var isOpen = false
     
     //MARK: - Life Cycle
     
@@ -43,7 +42,7 @@ class CardViewController: UIViewController {
 
     //MARK: - Helpers
     
-    func resetCard(_ card: UIView) {
+    private func resetCard(_ card: UIView) {
         card.center = cardCenter
         self.imageView.alpha = 0
         self.cardLabel.alpha = 1
@@ -52,7 +51,7 @@ class CardViewController: UIViewController {
         self.isOpen = false
     }
     
-    func updateCard(_ card: UIView){
+    private func updateCard(_ card: UIView){
         card.alpha = 0
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3){
             self.resetCard(card)
@@ -60,20 +59,19 @@ class CardViewController: UIViewController {
         }
     }
     
-    func addHardWord(){
+    private func addHardWord(){
         let questionNumber = wordBrain.getQuestionNumber()
         if itemArray[questionNumber].addedHardWords == false {
             wordBrain.addWordToHardWords(questionNumber)
         }
     }
     
-    func updateWord(){
+    private func updateWord(){
         if cardCounter == 20 {
             let vc = ResultViewController()
             self.navigationController?.pushViewController(vc, animated: true)
 
         } else {
-            questionNumber = Int.random(in: 0..<itemArray.count)
             wordEnglish = wordBrain.getWordEnglish()
             wordMeaning = wordBrain.getWordMeaning()
             cardCounter += 1
@@ -81,7 +79,7 @@ class CardViewController: UIViewController {
         }
     }
     
-    func configureBackBarButton(){
+    private func configureBackBarButton(){
         let backButton: UIButton = UIButton()
         let image = Images.arrow_back
         backButton.setImage(image, for: .normal)
@@ -96,7 +94,7 @@ class CardViewController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc func backButtonPressed(sender : UIButton) {
+    @objc private func backButtonPressed(sender : UIButton) {
         if wheelPressed == 1 {
             self.navigationController?.popToRootViewController(animated: true)
         } else {
@@ -104,7 +102,7 @@ class CardViewController: UIViewController {
         }
     }
     
-    @objc func flipCard(_ sender:UITapGestureRecognizer){
+    @objc private func flipCard(_ sender:UITapGestureRecognizer){
         if isOpen {
             isOpen = false
             cardLabel.text = wordEnglish
@@ -121,16 +119,16 @@ class CardViewController: UIViewController {
 
 extension CardViewController {
     
-    func style(){
+    private func style(){
         view.backgroundColor = Colors.ravenShadow
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.backgroundColor = Colors.raven
         cardView.layer.cornerRadius = 16
         
-        cardView2.translatesAutoresizingMaskIntoConstraints = false
-        cardView2.backgroundColor = Colors.raven
-        cardView2.layer.cornerRadius = 16
+        backgroundCardView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundCardView.backgroundColor = Colors.raven
+        backgroundCardView.layer.cornerRadius = 16
         
         cardLabel.translatesAutoresizingMaskIntoConstraints = false
         cardLabel.textColor = .white
@@ -143,24 +141,24 @@ extension CardViewController {
         imageView.alpha = 0
     }
     
-    func layout(){
+    private func layout(){
         
         cardView.addSubview(imageView)
         cardView.addSubview(cardLabel)
         
-        view.addSubview(cardView2)
+        view.addSubview(backgroundCardView)
         view.addSubview(cardView)
         
         NSLayoutConstraint.activate([
-            cardView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight()),
+            cardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             cardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
             
-            cardView2.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight()),
-            cardView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            cardView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            cardView2.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+            backgroundCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            backgroundCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            backgroundCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            backgroundCardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
             
             imageView.widthAnchor.constraint(equalToConstant: 100),
             imageView.heightAnchor.constraint(equalToConstant: 100),
@@ -179,7 +177,7 @@ extension CardViewController {
 
 extension CardViewController {
     
-    func addGestureRecognizer(){
+    private func addGestureRecognizer(){
         let swipeGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         cardView.addGestureRecognizer(swipeGesture)
         
@@ -187,7 +185,7 @@ extension CardViewController {
         cardView.addGestureRecognizer(flipCardGesture)
     }
     
-    @objc func respondToSwipeGesture(_ sender: UIPanGestureRecognizer) {
+    @objc private func respondToSwipeGesture(_ sender: UIPanGestureRecognizer) {
         let card = sender.view!
         if cardCenter == nil { cardCenter = card.center }
         let point = sender.translation(in: view)
