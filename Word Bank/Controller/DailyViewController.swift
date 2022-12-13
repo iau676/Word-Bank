@@ -64,7 +64,8 @@ class DailyViewController: UIViewController {
         updateButtons()
         
         showDailyTask()
-        hide2xEvent()        
+        hide2xEvent()
+        addGestureRecognizer()
     }
     
     override func viewDidLayoutSubviews() {
@@ -480,6 +481,31 @@ extension DailyViewController {
             whiteCircleButton.widthAnchor.constraint(equalToConstant: 18),
             whiteCircleButton.heightAnchor.constraint(equalToConstant: 18),
         ])
+    }
+}
+
+//MARK: - Swipe Gesture
+
+extension DailyViewController {
+    private func addGestureRecognizer(){
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeft))
+        swipeLeft.direction = .left
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRight))
+        swipeRight.direction = .right
+        
+        secondView.addGestureRecognizer(swipeLeft)
+        secondView.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc private func respondToSwipeLeft(gesture: UISwipeGestureRecognizer) {
+        show2xEvent()
+        hideDailyTask()
+    }
+        
+    @objc private func respondToSwipeRight(gesture: UISwipeGestureRecognizer) {
+        showDailyTask()
+        hide2xEvent()
     }
 }
 
