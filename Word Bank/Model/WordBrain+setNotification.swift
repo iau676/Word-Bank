@@ -18,8 +18,8 @@ extension WordBrain {
                 let content = UNMutableNotificationContent()
                 content.title = title
                 content.body = message
+                content.sound = UNNotificationSound.default
                 
-                // let date = DateComponents(hour: 23, minute: 44)
                 let date = DateComponents(hour: UserDefault.userSelectedHour.getInt(), minute: 00)
                 let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
                 let id = UUID().uuidString
