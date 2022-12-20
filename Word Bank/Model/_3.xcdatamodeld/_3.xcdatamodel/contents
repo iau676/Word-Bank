@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G217" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G217" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Exercise" representedClassName="Exercise" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="falseCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -13,8 +13,6 @@
         <attribute name="correctNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="eng" optional="YES" attributeType="String"/>
-        <attribute name="originalindex" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="originalList" optional="YES" attributeType="String"/>
         <attribute name="tr" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
     </entity>
@@ -44,4 +42,10 @@
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <attribute name="writingCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <elements>
+        <element name="Exercise" positionX="160" positionY="192" width="128" height="134"/>
+        <element name="HardItem" positionX="160" positionY="192" width="128" height="104"/>
+        <element name="Item" positionX="160" positionY="192" width="128" height="179"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="209"/>
+    </elements>
 </model>
