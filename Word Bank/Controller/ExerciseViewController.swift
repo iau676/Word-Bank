@@ -82,9 +82,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
-        
-        wordBrain.sortWordsForExercise()
-        updateUI()
+        prepareExercise { (success) -> Void in if success { updateUI() } }
         
         configureBackBarButton()
         addGestureRecognizer()
@@ -214,6 +212,11 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
 
     //MARK: - Helpers
+    
+    private func prepareExercise(completion: (_ success: Bool) -> Void) {
+        wordBrain.sortWordsForExercise()
+        completion(true)
+    }
 
     func refreshAnswerButton(_ button: UIButton, title: String) {
         button.isEnabled = true
