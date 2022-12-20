@@ -39,8 +39,6 @@
 		70175BC427E71F170053CBDB /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175BC327E71F170053CBDB /* CardViewController.swift */; };
 		702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */; };
 		70209B2B2759613900D527D3 /* WordBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70209B2A2759613900D527D3 /* WordBrain.swift */; };
-		702577DC280748DD0009FF65 /* kumbaram.png in Resources */ = {isa = PBXBuildFile; fileRef = 702577DB280748DD0009FF65 /* kumbaram.png */; };
-		702577DE280748E50009FF65 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 702577DD280748E50009FF65 /* launch.png */; };
 		7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* WordsViewController.swift */; };
 		702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A978227EB378A00AEECF7 /* X2SettingViewController.swift */; };
 		702AF782292365D600CD0B86 /* silent.aac in Resources */ = {isa = PBXBuildFile; fileRef = 702AF781292365D600CD0B86 /* silent.aac */; };
@@ -60,10 +58,6 @@
 		705D92EC28F89625001C4F38 /* victory.aac in Resources */ = {isa = PBXBuildFile; fileRef = 705D92E028F89624001C4F38 /* victory.aac */; };
 		705D92ED28F89625001C4F38 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92E128F89625001C4F38 /* CGFloat+Extensions.swift */; };
 		705D92F028F8A49B001C4F38 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 705D92EF28F8A49B001C4F38 /* GameScene.sks */; };
-		706A9A24275A6FF800E64ECC /* greenBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A20275A6FF800E64ECC /* greenBubble.png */; };
-		706A9A25275A6FF800E64ECC /* greenBubble3.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A21275A6FF800E64ECC /* greenBubble3.png */; };
-		706A9A26275A6FF800E64ECC /* greenBubble4.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A22275A6FF800E64ECC /* greenBubble4.png */; };
-		706A9A27275A6FF800E64ECC /* greenBubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = 706A9A23275A6FF800E64ECC /* greenBubble2.png */; };
 		706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB227592F8D008B4773 /* AppDelegate.swift */; };
 		706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB427592F8D008B4773 /* SceneDelegate.swift */; };
 		706CBAB727592F8D008B4773 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB627592F8D008B4773 /* HomeViewController.swift */; };
@@ -74,10 +68,6 @@
 		706CBAD627593993008B4773 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAD427593993008B4773 /* WordCell.swift */; };
 		706CBAD727593993008B4773 /* WordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706CBAD527593993008B4773 /* WordCell.xib */; };
 		706D707D28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */; };
-		707106EF275A1E42005532D0 /* redBubble3.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EB275A1E41005532D0 /* redBubble3.png */; };
-		707106F0275A1E42005532D0 /* redBubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EC275A1E41005532D0 /* redBubble.png */; };
-		707106F1275A1E42005532D0 /* redBubble4.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106ED275A1E41005532D0 /* redBubble4.png */; };
-		707106F2275A1E42005532D0 /* redBubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = 707106EE275A1E41005532D0 /* redBubble2.png */; };
 		7075B371291679B40007EDF7 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7075B370291679B40007EDF7 /* UIViewController+Extensions.swift */; };
 		707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC384288DA9DA00832F35 /* String+Extensions.swift */; };
 		707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */; };
@@ -95,12 +85,17 @@
 		708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */; };
 		7094D8C4290D25B5007E422F /* AwardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C3290D25B5007E422F /* AwardsViewController.swift */; };
 		7094D8C6290D694D007E422F /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C5290D694D007E422F /* BadgeView.swift */; };
-		709D3548276331FF001C3E56 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 709D3547276331FF001C3E56 /* Sounds */; };
 		709ED6A72899312800A34007 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709ED6A62899312800A34007 /* Constants.swift */; };
 		70A70D9D29439D93007F3C25 /* ExerciseSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A70D9C29439D93007F3C25 /* ExerciseSettingsViewController.swift */; };
 		70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */; };
 		70C357E528882DFC00F3AD86 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E428882DFC00F3AD86 /* Player.swift */; };
 		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
+		70C7C228295226E6006E65A2 /* AwardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C7C227295226E6006E65A2 /* AwardCell.swift */; };
+		70C7C22A29522704006E65A2 /* LetterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C7C22929522704006E65A2 /* LetterCell.swift */; };
+		70C7C23029522797006E65A2 /* false.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7C22C29522797006E65A2 /* false.mp3 */; };
+		70C7C23129522797006E65A2 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7C22D29522797006E65A2 /* beep.mp3 */; };
+		70C7C23229522797006E65A2 /* mario.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7C22E29522797006E65A2 /* mario.mp3 */; };
+		70C7C23329522797006E65A2 /* true.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7C22F29522797006E65A2 /* true.mp3 */; };
 		70F0AB3F28C51869002E3EC9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */; };
 		70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */; };
 		70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FC6A4A27E26DD500C31481 /* CloudKit.framework */; };
@@ -141,8 +136,6 @@
 		701FA77628DFDC28001ADA07 /* Word Bank.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Word Bank.entitlements"; sourceTree = "<group>"; };
 		702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extensions.swift"; sourceTree = "<group>"; };
 		70209B2A2759613900D527D3 /* WordBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBrain.swift; sourceTree = "<group>"; };
-		702577DB280748DD0009FF65 /* kumbaram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kumbaram.png; sourceTree = "<group>"; };
-		702577DD280748E50009FF65 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		7027F690275B9B84001F6068 /* WordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
 		702A978227EB378A00AEECF7 /* X2SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2SettingViewController.swift; sourceTree = "<group>"; };
 		702AF781292365D600CD0B86 /* silent.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = silent.aac; sourceTree = "<group>"; };
@@ -162,10 +155,6 @@
 		705D92E028F89624001C4F38 /* victory.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = victory.aac; sourceTree = "<group>"; };
 		705D92E128F89625001C4F38 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		705D92EF28F8A49B001C4F38 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		706A9A20275A6FF800E64ECC /* greenBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble.png; sourceTree = "<group>"; };
-		706A9A21275A6FF800E64ECC /* greenBubble3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble3.png; sourceTree = "<group>"; };
-		706A9A22275A6FF800E64ECC /* greenBubble4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble4.png; sourceTree = "<group>"; };
-		706A9A23275A6FF800E64ECC /* greenBubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBubble2.png; sourceTree = "<group>"; };
 		706CBAAF27592F8D008B4773 /* Word Bank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Bank.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		706CBAB227592F8D008B4773 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		706CBAB427592F8D008B4773 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -178,10 +167,6 @@
 		706CBAD427593993008B4773 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		706CBAD527593993008B4773 /* WordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordCell.xib; sourceTree = "<group>"; };
 		706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
-		707106EB275A1E41005532D0 /* redBubble3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble3.png; sourceTree = "<group>"; };
-		707106EC275A1E41005532D0 /* redBubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble.png; sourceTree = "<group>"; };
-		707106ED275A1E41005532D0 /* redBubble4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble4.png; sourceTree = "<group>"; };
-		707106EE275A1E41005532D0 /* redBubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBubble2.png; sourceTree = "<group>"; };
 		7075B370291679B40007EDF7 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		707EC384288DA9DA00832F35 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
@@ -198,12 +183,17 @@
 		708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		7094D8C3290D25B5007E422F /* AwardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardsViewController.swift; sourceTree = "<group>"; };
 		7094D8C5290D694D007E422F /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
-		709D3547276331FF001C3E56 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		709ED6A62899312800A34007 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		70A70D9C29439D93007F3C25 /* ExerciseSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSettingsViewController.swift; sourceTree = "<group>"; };
 		70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+setNotification.swift"; sourceTree = "<group>"; };
 		70C357E428882DFC00F3AD86 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		70C357E72888638300F3AD86 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		70C7C227295226E6006E65A2 /* AwardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardCell.swift; sourceTree = "<group>"; };
+		70C7C22929522704006E65A2 /* LetterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCell.swift; sourceTree = "<group>"; };
+		70C7C22C29522797006E65A2 /* false.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = false.mp3; sourceTree = "<group>"; };
+		70C7C22D29522797006E65A2 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
+		70C7C22E29522797006E65A2 /* mario.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mario.mp3; sourceTree = "<group>"; };
+		70C7C22F29522797006E65A2 /* true.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = true.mp3; sourceTree = "<group>"; };
 		70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		70FC6A4A27E26DD500C31481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -306,7 +296,9 @@
 		70209B1D27595DDE00D527D3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				70C7C227295226E6006E65A2 /* AwardCell.swift */,
 				7094D8C5290D694D007E422F /* BadgeView.swift */,
+				70C7C22929522704006E65A2 /* LetterCell.swift */,
 				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
 				706CBAD427593993008B4773 /* WordCell.swift */,
 				706CBAD527593993008B4773 /* WordCell.xib */,
@@ -321,8 +313,8 @@
 				704B055428364098006C7F96 /* Word.swift */,
 				70209B2A2759613900D527D3 /* WordBrain.swift */,
 				7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */,
-				700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */,
 				700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */,
+				700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */,
 				700458522917EC8E0077A4D2 /* WordBrain+PrizePoints.swift */,
 				70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */,
 				7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */,
@@ -399,23 +391,17 @@
 		706CBAB127592F8D008B4773 /* Word Bank */ = {
 			isa = PBXGroup;
 			children = (
-				701FA77628DFDC28001ADA07 /* Word Bank.entitlements */,
-				706CBAB227592F8D008B4773 /* AppDelegate.swift */,
-				706CBAB427592F8D008B4773 /* SceneDelegate.swift */,
+				70C7C23529522B12006E65A2 /* Files */,
 				709ED6A62899312800A34007 /* Constants.swift */,
-				70C9132B27608E5800DE413E /* Images */,
-				709D3547276331FF001C3E56 /* Sounds */,
+				70C7C22B2952278C006E65A2 /* Sounds */,
 				70C357E62888330600F3AD86 /* Videos */,
 				708AFD86288719BA00E09AE1 /* Extensions */,
-				70F0AB3D28C51858002E3EC9 /* Onboarding */,
+				70F0AB3D28C51858002E3EC9 /* Onboarding Files */,
 				705D92EE28F897F7001C4F38 /* Wheel Files */,
 				7013416D291D56DF001967E1 /* Fireworks Files */,
 				70209B1F27595DF200D527D3 /* Model */,
 				70209B1D27595DDE00D527D3 /* View */,
 				70209B1C27595DD000D527D3 /* Controller */,
-				706CBABE27592F8E008B4773 /* Assets.xcassets */,
-				706CBAC027592F8E008B4773 /* LaunchScreen.storyboard */,
-				706CBAC327592F8E008B4773 /* Info.plist */,
 			);
 			path = "Word Bank";
 			sourceTree = "<group>";
@@ -439,30 +425,37 @@
 			path = Videos;
 			sourceTree = "<group>";
 		};
-		70C9132B27608E5800DE413E /* Images */ = {
+		70C7C22B2952278C006E65A2 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				702577DB280748DD0009FF65 /* kumbaram.png */,
-				702577DD280748E50009FF65 /* launch.png */,
-				706A9A20275A6FF800E64ECC /* greenBubble.png */,
-				706A9A23275A6FF800E64ECC /* greenBubble2.png */,
-				706A9A21275A6FF800E64ECC /* greenBubble3.png */,
-				706A9A22275A6FF800E64ECC /* greenBubble4.png */,
-				707106EC275A1E41005532D0 /* redBubble.png */,
-				707106EE275A1E41005532D0 /* redBubble2.png */,
-				707106EB275A1E41005532D0 /* redBubble3.png */,
-				707106ED275A1E41005532D0 /* redBubble4.png */,
+				70C7C22D29522797006E65A2 /* beep.mp3 */,
+				70C7C22C29522797006E65A2 /* false.mp3 */,
+				70C7C22E29522797006E65A2 /* mario.mp3 */,
+				70C7C22F29522797006E65A2 /* true.mp3 */,
 			);
-			path = Images;
+			path = Sounds;
 			sourceTree = "<group>";
 		};
-		70F0AB3D28C51858002E3EC9 /* Onboarding */ = {
+		70C7C23529522B12006E65A2 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				701FA77628DFDC28001ADA07 /* Word Bank.entitlements */,
+				706CBAB227592F8D008B4773 /* AppDelegate.swift */,
+				706CBAB427592F8D008B4773 /* SceneDelegate.swift */,
+				706CBABE27592F8E008B4773 /* Assets.xcassets */,
+				706CBAC027592F8E008B4773 /* LaunchScreen.storyboard */,
+				706CBAC327592F8E008B4773 /* Info.plist */,
+			);
+			name = Files;
+			sourceTree = "<group>";
+		};
+		70F0AB3D28C51858002E3EC9 /* Onboarding Files */ = {
 			isa = PBXGroup;
 			children = (
 				70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */,
 				70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */,
 			);
-			path = Onboarding;
+			path = "Onboarding Files";
 			sourceTree = "<group>";
 		};
 		70FC6A4927E26DD500C31481 /* Frameworks */ = {
@@ -539,29 +532,22 @@
 				7081AB0527CCD3CB00E2996A /* alltrue.mp4 in Resources */,
 				705D92F028F8A49B001C4F38 /* GameScene.sks in Resources */,
 				702AF782292365D600CD0B86 /* silent.aac in Resources */,
-				707106EF275A1E42005532D0 /* redBubble3.png in Resources */,
 				706CBAC227592F8E008B4773 /* LaunchScreen.storyboard in Resources */,
-				706A9A27275A6FF800E64ECC /* greenBubble2.png in Resources */,
 				705D92EA28F89625001C4F38 /* woosh.aac in Resources */,
 				705D92E928F89625001C4F38 /* error.aac in Resources */,
-				707106F2275A1E42005532D0 /* redBubble2.png in Resources */,
 				7081AB0727CCFA4300E2996A /* newpoint.mp4 in Resources */,
+				70C7C23229522797006E65A2 /* mario.mp3 in Resources */,
 				705D92E428F89625001C4F38 /* bubble_pop.aac in Resources */,
-				702577DC280748DD0009FF65 /* kumbaram.png in Resources */,
-				709D3548276331FF001C3E56 /* Sounds in Resources */,
 				705D92E728F89625001C4F38 /* sparkle.png in Resources */,
-				706A9A25275A6FF800E64ECC /* greenBubble3.png in Resources */,
+				70C7C23329522797006E65A2 /* true.mp3 in Resources */,
 				7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */,
 				705D92EC28F89625001C4F38 /* victory.aac in Resources */,
-				707106F1275A1E42005532D0 /* redBubble4.png in Resources */,
+				70C7C23029522797006E65A2 /* false.mp3 in Resources */,
 				706CBAD727593993008B4773 /* WordCell.xib in Resources */,
 				705D92E828F89625001C4F38 /* SparkleBlast.sks in Resources */,
-				702577DE280748E50009FF65 /* launch.png in Resources */,
-				707106F0275A1E42005532D0 /* redBubble.png in Resources */,
-				706A9A24275A6FF800E64ECC /* greenBubble.png in Resources */,
 				706CBABF27592F8E008B4773 /* Assets.xcassets in Resources */,
+				70C7C23129522797006E65A2 /* beep.mp3 in Resources */,
 				706CBABA27592F8D008B4773 /* Main.storyboard in Resources */,
-				706A9A26275A6FF800E64ECC /* greenBubble4.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,12 +618,14 @@
 				702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */,
 				70134188291D582E001967E1 /* SparkViewAnimator.swift in Sources */,
 				705D92E328F89625001C4F38 /* PushButton.swift in Sources */,
+				70C7C228295226E6006E65A2 /* AwardCell.swift in Sources */,
 				7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */,
 				705D92EB28F89625001C4F38 /* SpinWheel.swift in Sources */,
 				705D92E628F89625001C4F38 /* GameScene.swift in Sources */,
 				701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */,
 				705D92D528F895BA001C4F38 /* WheelViewController.swift in Sources */,
 				7094D8C6290D694D007E422F /* BadgeView.swift in Sources */,
+				70C7C22A29522704006E65A2 /* LetterCell.swift in Sources */,
 				70134172291D573D001967E1 /* CircleColorSparkViewFactory.swift in Sources */,
 				709ED6A72899312800A34007 /* Constants.swift in Sources */,
 				70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */,
