@@ -21,8 +21,10 @@ struct WordBrain {
     
     var questionNumbers: [Int] = []
     var questionNumbersCopy: [Int] = []
-    var failsDictionary =  [Int:Int]()
+    var failsDictionary = [Int:Int]()
+    var newWordsDictionary = [Int:Int]()
     var sortedFailsDictionary = Array<(key: Int, value: Int)>()
+    var sortedNewWordsDictionary = Array<(key: Int, value: Int)>()
     
     var questionNumber = 0
     var changedQuestionNumber = 0
@@ -133,14 +135,19 @@ struct WordBrain {
         saveContext()
     }
     
-    mutating func sortFails(){
+    mutating func sortWordsForExercise(){
         for i in 0..<itemArray.count {
             let j = itemArray[i].falseCount - itemArray[i].trueCount
             failsDictionary.updateValue(Int(j), forKey: i)
+            let k = itemArray[i].falseCount + itemArray[i].trueCount
+            newWordsDictionary.updateValue(Int(k), forKey: i)
         }
          sortedFailsDictionary = failsDictionary.sorted {
             return $0.value > $1.value
         }
+         sortedNewWordsDictionary = newWordsDictionary.sorted {
+           return $0.value < $1.value
+       }
     }
     
     mutating func getQuestionText(_ whichQuestion: Int, _ startPressed:Int) -> String {
@@ -151,13 +158,13 @@ struct WordBrain {
 
         // these will be return a function
         if UserDefault.whichButton.getString() == ExerciseType.normal {
-            if itemArray.count > 200 {
+            if itemArray.count > 20 {
                 switch whichQuestion {
-                case 0...9:
-                    questionNumber = Int.random(in: 100..<itemArray.count)
+                case 0...4:
+                    questionNumber = sortedNewWordsDictionary[whichQuestion].key
                     break
-                case 9...14:
-                    questionNumber = Int.random(in: 0...100)
+                case 5...14:
+                    questionNumber = Int.random(in: 0..<itemArray.count)
                     break
                 case 15:
                     questionNumber = sortedFailsDictionary[0].key

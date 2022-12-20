@@ -83,8 +83,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
         
+        wordBrain.sortWordsForExercise()
         updateUI()
-        wordBrain.sortFails()
         
         configureBackBarButton()
         addGestureRecognizer()
