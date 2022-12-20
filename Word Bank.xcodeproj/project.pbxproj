@@ -90,12 +90,12 @@
 		70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */; };
 		70C357E528882DFC00F3AD86 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E428882DFC00F3AD86 /* Player.swift */; };
 		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
+		70C7541D29523ACE00192DE6 /* false.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7541929523ACE00192DE6 /* false.mp3 */; };
+		70C7541E29523ACE00192DE6 /* mario.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7541A29523ACE00192DE6 /* mario.mp3 */; };
+		70C7541F29523ACE00192DE6 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7541B29523ACE00192DE6 /* beep.mp3 */; };
+		70C7542029523ACE00192DE6 /* true.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7541C29523ACE00192DE6 /* true.mp3 */; };
 		70C7C228295226E6006E65A2 /* AwardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C7C227295226E6006E65A2 /* AwardCell.swift */; };
 		70C7C22A29522704006E65A2 /* LetterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C7C22929522704006E65A2 /* LetterCell.swift */; };
-		70C7C23029522797006E65A2 /* false.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7C22C29522797006E65A2 /* false.mp3 */; };
-		70C7C23129522797006E65A2 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7C22D29522797006E65A2 /* beep.mp3 */; };
-		70C7C23229522797006E65A2 /* mario.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7C22E29522797006E65A2 /* mario.mp3 */; };
-		70C7C23329522797006E65A2 /* true.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7C22F29522797006E65A2 /* true.mp3 */; };
 		70F0AB3F28C51869002E3EC9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */; };
 		70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */; };
 		70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FC6A4A27E26DD500C31481 /* CloudKit.framework */; };
@@ -188,12 +188,12 @@
 		70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+setNotification.swift"; sourceTree = "<group>"; };
 		70C357E428882DFC00F3AD86 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		70C357E72888638300F3AD86 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		70C7541929523ACE00192DE6 /* false.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = false.mp3; sourceTree = "<group>"; };
+		70C7541A29523ACE00192DE6 /* mario.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mario.mp3; sourceTree = "<group>"; };
+		70C7541B29523ACE00192DE6 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
+		70C7541C29523ACE00192DE6 /* true.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = true.mp3; sourceTree = "<group>"; };
 		70C7C227295226E6006E65A2 /* AwardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardCell.swift; sourceTree = "<group>"; };
 		70C7C22929522704006E65A2 /* LetterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCell.swift; sourceTree = "<group>"; };
-		70C7C22C29522797006E65A2 /* false.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = false.mp3; sourceTree = "<group>"; };
-		70C7C22D29522797006E65A2 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
-		70C7C22E29522797006E65A2 /* mario.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mario.mp3; sourceTree = "<group>"; };
-		70C7C22F29522797006E65A2 /* true.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = true.mp3; sourceTree = "<group>"; };
 		70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		70FC6A4A27E26DD500C31481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -393,7 +393,7 @@
 			children = (
 				70C7C23529522B12006E65A2 /* Files */,
 				709ED6A62899312800A34007 /* Constants.swift */,
-				70C7C22B2952278C006E65A2 /* Sounds */,
+				70C7541829523ACE00192DE6 /* Sounds */,
 				70C357E62888330600F3AD86 /* Videos */,
 				708AFD86288719BA00E09AE1 /* Extensions */,
 				70F0AB3D28C51858002E3EC9 /* Onboarding Files */,
@@ -425,13 +425,13 @@
 			path = Videos;
 			sourceTree = "<group>";
 		};
-		70C7C22B2952278C006E65A2 /* Sounds */ = {
+		70C7541829523ACE00192DE6 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				70C7C22D29522797006E65A2 /* beep.mp3 */,
-				70C7C22C29522797006E65A2 /* false.mp3 */,
-				70C7C22E29522797006E65A2 /* mario.mp3 */,
-				70C7C22F29522797006E65A2 /* true.mp3 */,
+				70C7541929523ACE00192DE6 /* false.mp3 */,
+				70C7541A29523ACE00192DE6 /* mario.mp3 */,
+				70C7541B29523ACE00192DE6 /* beep.mp3 */,
+				70C7541C29523ACE00192DE6 /* true.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -531,22 +531,22 @@
 			files = (
 				7081AB0527CCD3CB00E2996A /* alltrue.mp4 in Resources */,
 				705D92F028F8A49B001C4F38 /* GameScene.sks in Resources */,
+				70C7541F29523ACE00192DE6 /* beep.mp3 in Resources */,
+				70C7541D29523ACE00192DE6 /* false.mp3 in Resources */,
+				70C7541E29523ACE00192DE6 /* mario.mp3 in Resources */,
 				702AF782292365D600CD0B86 /* silent.aac in Resources */,
 				706CBAC227592F8E008B4773 /* LaunchScreen.storyboard in Resources */,
 				705D92EA28F89625001C4F38 /* woosh.aac in Resources */,
 				705D92E928F89625001C4F38 /* error.aac in Resources */,
 				7081AB0727CCFA4300E2996A /* newpoint.mp4 in Resources */,
-				70C7C23229522797006E65A2 /* mario.mp3 in Resources */,
 				705D92E428F89625001C4F38 /* bubble_pop.aac in Resources */,
 				705D92E728F89625001C4F38 /* sparkle.png in Resources */,
-				70C7C23329522797006E65A2 /* true.mp3 in Resources */,
 				7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */,
 				705D92EC28F89625001C4F38 /* victory.aac in Resources */,
-				70C7C23029522797006E65A2 /* false.mp3 in Resources */,
 				706CBAD727593993008B4773 /* WordCell.xib in Resources */,
 				705D92E828F89625001C4F38 /* SparkleBlast.sks in Resources */,
 				706CBABF27592F8E008B4773 /* Assets.xcassets in Resources */,
-				70C7C23129522797006E65A2 /* beep.mp3 in Resources */,
+				70C7542029523ACE00192DE6 /* true.mp3 in Resources */,
 				706CBABA27592F8D008B4773 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
