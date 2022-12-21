@@ -362,18 +362,18 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
                 skeletonArr.append(i)
             }
         }
-        
-        if letterCounter == 0 {
-            hint = skeleton
-        }
-        
-        if letterCounter < skeletonArr.count {
-            hint = hint.replace(skeletonArr[letterCounter], "\(answerWithoutSpace[letterCounter])")
+
+        if letterCounter <= skeletonArr.count {
+            if letterCounter == 0 {
+                hint = skeleton
+            } else {
+                hint = hint.replace(skeletonArr[letterCounter-1], "\(answerWithoutSpace[letterCounter-1])")
+                decreasePoint()
+                player.playMP3(Sounds.beep)
+            }
             letterCounter += 1
             hintLabel.text = hint
-            decreasePoint()
             hintCount += 1
-            player.playMP3(Sounds.beep)
         } else {
             hintLabel.textColor = Colors.green
             hintLabel.flash()
