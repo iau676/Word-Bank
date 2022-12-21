@@ -66,6 +66,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         return cv
     }()
     var shuffledAnswer: Array<Character> = Array("")
+    var currentAnswerIndex: [Int] = []
     let backspaceButton = UIButton()
     
     //MARK: - Life Cycle
@@ -109,10 +110,9 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     @objc func backspaceButtonPressed(_ sender: UIButton) {
         guard let text = textField.text else {return}
-        if let lastLetter = text.last {
-            shuffledAnswer.append(lastLetter)
+        if text.count > 0 {
             textField.text = "\(text.dropLast())"
-            letterCV.reloadData()
+            unhideLetterCell()
         }
     }
     
@@ -143,6 +143,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         hint = ""
         hintLabel.text = ""
         bubbleLabel.text = ""
+        currentAnswerIndex = []
+        letterCV.reloadData()
 
         if questionCount < totalQuestionNumber {
             
@@ -216,6 +218,14 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     private func prepareExercise(completion: (_ success: Bool) -> Void) {
         wordBrain.sortWordsForExercise()
         completion(true)
+    }
+    
+    private func unhideLetterCell() {
+        guard let last = currentAnswerIndex.last else {return}
+        if let cell = letterCV.cellForItem(at: IndexPath(row: last, section: 0)) as? LetterCell {
+            cell.isHidden = false
+            currentAnswerIndex.removeLast()
+        }
     }
 
     func refreshAnswerButton(_ button: UIButton, title: String) {
@@ -563,6 +573,7 @@ extension ExerciseViewController {
         
         letterCV.delegate = self
         letterCV.dataSource = self
+        letterCV.bounces = false
         
         backspaceButton.translatesAutoresizingMaskIntoConstraints = false
         backspaceButton.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20, color: Colors.black ?? .black)
@@ -666,6 +677,7 @@ extension ExerciseViewController: UICollectionViewDelegateFlowLayout, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! LetterCell
+        cell.isHidden = false
         cell.titleLabel.text = "\(shuffledAnswer[indexPath.row])"
         return cell
     }
@@ -673,10 +685,10 @@ extension ExerciseViewController: UICollectionViewDelegateFlowLayout, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = collectionView.cellForItem(at: indexPath) as! LetterCell
         guard let title = item.titleLabel.text else {return}
-        shuffledAnswer.remove(at: shuffledAnswer.index(shuffledAnswer.startIndex, offsetBy: indexPath.row))
+        currentAnswerIndex.append(indexPath.row)
+        item.isHidden = true
         textField.text! += "\(title)"
         checkTextField(textField.text ?? "")
-        collectionView.reloadData()
     }
 }
 

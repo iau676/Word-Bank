@@ -64,25 +64,29 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     @objc func addButtonPressed(_ sender: Any) {
         addButton.bounce()
         if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
-            player.playMP3(Sounds.mario)
-            if goEdit == 0 {
-                wordBrain.addWord(english: engTxtField.text!, meaning: trTxtField.text!)
-                UserDefault.userWordCount.set(userWordCountIntVariable+1)
-                userWordCountIntVariable += 1
-                scheduledTimer(timeInterval: 0.1, #selector(goNewPoint))
-            } else {
-                itemArray[editIndex].eng = engTxtField.text!
-                itemArray[editIndex].tr = trTxtField.text!
-                scheduledTimer(timeInterval: 0.8, #selector(dismissView))
-            }
-            
-            updateWordsPage?()
-            
-            trTxtField.text = ""
-            engTxtField.text = ""
-            engTxtField.becomeFirstResponder()
+           if engTxtField.text!.count <= 20 {
+                player.playMP3(Sounds.mario)
+                if goEdit == 0 {
+                    wordBrain.addWord(english: engTxtField.text!, meaning: trTxtField.text!)
+                    UserDefault.userWordCount.set(userWordCountIntVariable+1)
+                    userWordCountIntVariable += 1
+                    scheduledTimer(timeInterval: 0.1, #selector(goNewPoint))
+                } else {
+                    itemArray[editIndex].eng = engTxtField.text!
+                    itemArray[editIndex].tr = trTxtField.text!
+                    scheduledTimer(timeInterval: 0.8, #selector(dismissView))
+                }
+                
+                updateWordsPage?()
+                
+                trTxtField.text = ""
+                engTxtField.text = ""
+                engTxtField.becomeFirstResponder()
 
-            flipCoinButton()
+                flipCoinButton()
+            } else {
+                maxCharacterAlert()
+            }
         }
     }
     
@@ -208,6 +212,15 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         } else {
             dismiss(animated: true, completion: nil)
         }
+    }
+    
+    private func maxCharacterAlert(){
+        let alert = UIAlertController(title: "Max character is 20", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
         
     func preventInterrupt(){
