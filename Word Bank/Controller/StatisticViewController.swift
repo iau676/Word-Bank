@@ -96,16 +96,28 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
         completion(true)
     }
     
-    private func setCharts(){
-        barChart.noDataText = "Loading..."
-        
+    private func setCharts(){        
         barChart.delegate = self
         lineChart.delegate = self
         pieChart.delegate = self
         
+        barChart.isUserInteractionEnabled = false
+        lineChart.isUserInteractionEnabled = false
+        
         configureBarChart()
         configureLineChart()
         configurePieChart()
+        
+        updateChartsValueFormatter()
+    }
+
+    private func updateChartsValueFormatter() {
+        let format = NumberFormatter()
+        format.numberStyle = .decimal
+        let formatter = DefaultValueFormatter(formatter: format)
+        barChart.data?.setValueFormatter(formatter)
+        lineChart.data?.setValueFormatter(formatter)
+        pieChart.data?.setValueFormatter(formatter)
     }
     
     private func findWordsCount() {
@@ -222,6 +234,7 @@ extension StatisticViewController {
         
         let data = BarChartData(dataSet: set)
         barChart.data = data
+        barChart.data?.setValueFont(UIFont.systemFont(ofSize: 10))
     }
     
     func configureLineChart(){
@@ -244,6 +257,7 @@ extension StatisticViewController {
         
         let data = LineChartData(dataSet: set)
         lineChart.data = data
+        lineChart.data?.setValueFont(UIFont.systemFont(ofSize: 10))
     }
     
     func configurePieChart(){
