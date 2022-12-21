@@ -44,6 +44,14 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
     private var wordsDict = [String: Int]()
     private var exercisesDict = [String: Int]()
     
+    private var wordsWeekCount = 0
+    private var exercisesWeekCount = 0
+    
+    enum Chart {
+        case bar
+        case line
+    }
+    
     //tabBar
     private let fireworkController = ClassicFireworkController()
     private var timerDaily = Timer()
@@ -54,28 +62,22 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
     private let statisticButton = UIButton()
     private let settingsButton = UIButton()
     
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         wordBrain.loadItemArray()
         wordBrain.loadExerciseArray()
         style()
         layout()
-        barChart.delegate = self
-        lineChart.delegate = self
-        pieChart.delegate = self
+        
         configureNavigationBar()
         configureTabBar()
         assignDatesToDays()
-        findWordsCount()
-        findExercisesCount()
+        
         getLastSevenDays()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureBarChart()
-        configureLineChart()
-        configurePieChart()
+        
+        prepareData { (success) -> Void in if success { setCharts() } }
     }
     
     override func viewDidLayoutSubviews() {
@@ -84,6 +86,26 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
         barChart.frame = CGRect(x: 4, y: 8, width: scrollViewWidth-72, height: scrollViewWidth-64)
         lineChart.frame = CGRect(x: 4, y: 8, width: scrollViewWidth-72, height: scrollViewWidth-64)
         pieChart.frame = CGRect(x: 0, y: 0, width: scrollViewWidth-64, height: scrollViewWidth-64)
+    }
+    
+    //MARK: - Helpers
+    
+    private func prepareData(completion: (_ success: Bool) -> Void) {
+        findWordsCount()
+        findExercisesCount()
+        completion(true)
+    }
+    
+    private func setCharts(){
+        barChart.noDataText = "Loading..."
+        
+        barChart.delegate = self
+        lineChart.delegate = self
+        pieChart.delegate = self
+        
+        configureBarChart()
+        configureLineChart()
+        configurePieChart()
     }
     
     private func findWordsCount() {
@@ -146,6 +168,34 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
         self.navigationItem.leftBarButtonItem = barButton
         title = "Statistic"
     }
+    
+    private func getAttributedText(For: Chart) -> NSMutableAttributedString {
+        if let avenirRegular = UIFont(name: Fonts.AvenirNextRegular, size: 15),
+           let avenirDemiBold = UIFont(name: Fonts.AvenirNextDemiBold, size: 15) {
+            
+            let verb  = For == Chart.bar ? "learned" : "completed"
+            let count = For == Chart.bar ? wordsWeekCount : exercisesWeekCount
+            let noun  = For == Chart.bar ? "words" : "exercises"
+            
+            let avenirRegularAttrs = [NSAttributedString.Key.font : avenirRegular]
+            let avenirDemiBoldAttrs = [NSAttributedString.Key.font : avenirDemiBold]
+            
+            let text = "You have \(verb)"
+            let string = NSMutableAttributedString(string:text, attributes: avenirRegularAttrs)
+            
+            let secondText = " \(count) \(noun) "
+            let secondString = NSMutableAttributedString(string:secondText, attributes: avenirDemiBoldAttrs)
+            
+            let thirdText = "this week"
+            let thirdString = NSMutableAttributedString(string:thirdText, attributes: avenirRegularAttrs)
+            
+            string.append(secondString)
+            string.append(thirdString)
+            
+            return string
+        }
+        return NSMutableAttributedString()
+    }
 }
 
 //MARK: - Charts
@@ -157,7 +207,10 @@ extension StatisticViewController {
         
         for i in 0..<dateArray.count {
             entries.append(BarChartDataEntry(x: Double(i), y: Double(wordsDict[dateArray[i]] ?? 0)))
+            wordsWeekCount += wordsDict[dateArray[i]] ?? 0
         }
+        
+        barChartLabel.attributedText = getAttributedText(For: Chart.bar)
         
         let set = BarChartDataSet(entries: entries)
         set.colors = ChartColorTemplates.joyful()
@@ -176,7 +229,10 @@ extension StatisticViewController {
         
         for i in 0..<dateArray.count {
             entries.append(ChartDataEntry(x: Double(i), y: Double(exercisesDict[dateArray[i]] ?? 0)))
+            exercisesWeekCount += exercisesDict[dateArray[i]] ?? 0
         }
+         
+        lineChartLabel.attributedText = getAttributedText(For: Chart.line)
         
         let set = LineChartDataSet(entries: entries)
         set.colors = ChartColorTemplates.colorful()
@@ -228,14 +284,10 @@ extension StatisticViewController {
         
         barChartLabel.translatesAutoresizingMaskIntoConstraints = false
         barChartLabel.textColor = Colors.black
-        barChartLabel.text = "Words - Last 7 Days"
-        barChartLabel.font = UIFont(name: Fonts.AvenirNextMedium, size: textSize)
         barChartLabel.numberOfLines = 1
         
         lineChartLabel.translatesAutoresizingMaskIntoConstraints = false
         lineChartLabel.textColor = Colors.black
-        lineChartLabel.text = "Exercises - Last 7 Days"
-        lineChartLabel.font = UIFont(name: Fonts.AvenirNextMedium, size: textSize)
         lineChartLabel.numberOfLines = 1
         
         barView.translatesAutoresizingMaskIntoConstraints = false
