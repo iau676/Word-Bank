@@ -382,7 +382,7 @@ extension WordsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            let alert = UIAlertController(title: "Word will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
+            let alert = UIAlertController(title: "'\(self.itemArray[indexPath.row].eng ?? "Word")' will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
             let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
                 self.wordBrain.removeWord(at: indexPath.row)
                 UserDefault.userWordCount.set(UserDefault.userWordCount.getInt()-1)
