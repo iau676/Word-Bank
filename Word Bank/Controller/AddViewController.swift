@@ -29,7 +29,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     var goEdit = 0
     var editIndex = 0
     var userWordCountInt = 0
-    var userWordCountIntVariable = 0 //fix userdefaults slow problem
+    var userWordCountIntVariable = 0
     
     var coinButtonImage: UIImage { return goEdit == 0 ? Images.coin! : Images.check!}
     var coinButtonAnimation: UIView.AnimationOptions { return goEdit == 0 ? .transitionFlipFromTop : .transitionFlipFromLeft }
@@ -52,7 +52,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         addGestureRecognizer()
         checkEditStatus()
         preventInterrupt()
-        userWordCountIntVariable = UserDefault.userWordCount.getInt()
+        userWordCountIntVariable = wordBrain.itemArray.count
     }
     
     override func viewWillDisappear(_ animated: Bool) {
