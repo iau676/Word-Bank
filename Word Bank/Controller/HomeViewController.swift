@@ -33,15 +33,7 @@ final class HomeViewController: UIViewController, LevelDelegate {
     private var goAddPage = 0
     private var progressValue:Float = 0.0
     
-    //tabBar
-    private let fireworkController = ClassicFireworkController()
-    private var timerDaily = Timer()
-    private let tabBarStackView = UIStackView()
-    private let homeButton = UIButton()
-    private let dailyButton = UIButton()
-    private let awardButton = UIButton()
-    private let statisticButton = UIButton()
-    private let settingsButton = UIButton()
+    private let tabBar = TabBar(color1: Colors.blue ?? .systemBlue)
     
     //MARK: - Life Cycle
     
@@ -54,15 +46,9 @@ final class HomeViewController: UIViewController, LevelDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         wordBrain.loadItemArray()
-        configureTabBar()
         setupCircularProgress()
         setupButtonImages()
         setupNavigationBar()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        timerDaily.invalidate()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -242,7 +228,9 @@ extension HomeViewController {
     
     func style() {
         title = "Word Bank"
-        view.backgroundColor = Colors.d6d6d6
+        view.backgroundColor = Colors.cellLeft
+        
+        tabBar.delegate = self
         
         leftLineView.translatesAutoresizingMaskIntoConstraints = false
         leftLineView.backgroundColor = .darkGray
@@ -335,96 +323,41 @@ extension HomeViewController {
             rightLineView.heightAnchor.constraint(equalToConstant: exerciseCP.center.y-40),
             rightLineView.widthAnchor.constraint(equalToConstant: 1),
         ])
+        
+        view.addSubview(tabBar)
+        tabBar.setDimensions(height: 66, width: view.bounds.width)
+        tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
     }
 }
 
-//MARK: - Tab Bar
+//MARK: - TabBarDelegate
 
-extension HomeViewController {
+extension HomeViewController: TabBarDelegate {
     
-    func configureTabBar() {
-        
-        var whichImage: Int = 0
-        self.timerDaily = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-            if self.wordBrain.getCurrentHour() == UserDefault.userSelectedHour.getInt() {
-                whichImage += 1
-                self.updateDailyButtonImage(whichImage)
-            }
-        })
-        
-        //style
-        tabBarStackView.translatesAutoresizingMaskIntoConstraints = false
-        tabBarStackView.axis = .horizontal
-        tabBarStackView.spacing = 0
-        tabBarStackView.distribution = .fillEqually
-        
-        homeButton.configureForTabBar(image: Images.home, title: "Home", titleColor: Colors.blue ?? .blue, imageWidth: 25, imageHeight: 25)
-        dailyButton.configureForTabBar(image: wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()], title: "Daily", titleColor: .darkGray, imageWidth: 26, imageHeight: 26)
-        awardButton.configureForTabBar(image: Images.award, title: "Awards", titleColor: .darkGray, imageWidth: 27, imageHeight: 27)
-        statisticButton.configureForTabBar(image: Images.statistic, title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        settingsButton.configureForTabBar(image: Images.settings, title: "Settings", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3){
-            self.wordBrain.updateTabBarDailyImage()
-            self.dailyButton.configureForTabBar(image: self.wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()], title: "Daily", titleColor: .darkGray, imageWidth: 26, imageHeight: 26)
-        }
-        
-        dailyButton.addTarget(self, action: #selector(dailyButtonPressed), for: .primaryActionTriggered)
-        awardButton.addTarget(self, action: #selector(awardButtonPressed), for: .primaryActionTriggered)
-        statisticButton.addTarget(self, action: #selector(statisticButtonPressed), for: .primaryActionTriggered)
-        settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
-        
-        //layout
-        tabBarStackView.addArrangedSubview(homeButton)
-        tabBarStackView.addArrangedSubview(dailyButton)
-        tabBarStackView.addArrangedSubview(awardButton)
-        tabBarStackView.addArrangedSubview(statisticButton)
-        tabBarStackView.addArrangedSubview(settingsButton)
-  
-        view.addSubview(tabBarStackView)
-        
-        NSLayoutConstraint.activate([
-            tabBarStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            tabBarStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tabBarStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0),
-            tabBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tabBarStackView.heightAnchor.constraint(equalToConstant: 66)
-        ])
-    }
-
-    @objc func dailyButtonPressed(gesture: UISwipeGestureRecognizer) {
-        pushVC(vc: DailyViewController(), button: dailyButton)
+    func homePressed() {
+        //navigationController?.popToRootViewController(animated: true)
     }
     
-    @objc func awardButtonPressed(gesture: UISwipeGestureRecognizer) {
-        pushVC(vc: AwardsViewController(), button: awardButton)
+    func dailyPressed() {
+        pushVC(vc: DailyViewController())
     }
     
-    @objc func statisticButtonPressed(gesture: UISwipeGestureRecognizer) {
-        pushVC(vc: StatisticViewController(), button: statisticButton)
+    func awardPressed() {
+        pushVC(vc: AwardsViewController())
     }
     
-    @objc func settingsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        pushVC(vc: SettingsViewController(), button: settingsButton)
+    func statisticPressed() {
+        pushVC(vc: StatisticViewController())
     }
     
-    func pushVC(vc: UIViewController, button: UIButton){
-        self.fireworkController.addFireworks(count: 5, sparks: 5, around: button)
+    func settingPressed() {
+        pushVC(vc: SettingsViewController())
+    }
+    
+    func pushVC(vc: UIViewController){
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05){
            self.navigationController?.pushViewController(vc, animated: true)
         }
-    }
-    
-    func updateDailyButtonImage(_ whichImage: Int){
-        UIView.transition(with: dailyButton.imageView ?? dailyButton, duration: 0.8,
-                          options: .transitionFlipFromBottom,
-                          animations: {
-            if whichImage % 2 == 0 {
-                self.dailyButton.setImageWithRenderingMode(image: self.wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()], width: 26, height: 26, color: .darkGray)
-            } else {
-                self.dailyButton.setImage(image: Images.x2Tab, width: 26, height: 26)
-            }
-        })
     }
 }
 

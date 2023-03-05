@@ -42,14 +42,7 @@ class DailyViewController: UIViewController {
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
     private var todayDate: String { return wordBrain.getTodayDate() }
 
-    //tabBar
-    private let fireworkController = ClassicFireworkController()
-    private let tabBarStackView = UIStackView()
-    private let homeButton = UIButton()
-    private let dailyButton = UIButton()
-    private let awardButton = UIButton()
-    private let statisticButton = UIButton()
-    private let settingsButton = UIButton()
+    private let tabBar = TabBar(color2: Colors.blue ?? .systemBlue)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +53,6 @@ class DailyViewController: UIViewController {
 
         configureNavigationBar()
         style()
-        configureTabBar()
         updateButtons()
         
         showDailyTask()
@@ -269,6 +261,8 @@ extension DailyViewController {
     
     private func style(){
         view.backgroundColor = Colors.cellLeft
+        
+        tabBar.delegate = self
         
         secondView.translatesAutoresizingMaskIntoConstraints = false
         secondView.backgroundColor = Colors.cellRight
@@ -481,6 +475,10 @@ extension DailyViewController {
             whiteCircleButton.widthAnchor.constraint(equalToConstant: 18),
             whiteCircleButton.heightAnchor.constraint(equalToConstant: 18),
         ])
+        
+        view.addSubview(tabBar)
+        tabBar.setDimensions(height: 66, width: view.bounds.width)
+        tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
     }
 }
 
@@ -509,72 +507,33 @@ extension DailyViewController {
     }
 }
 
+//MARK: - TabBarDelegate
 
-//MARK: - Tab Bar
-
-extension DailyViewController {
+extension DailyViewController: TabBarDelegate {
     
-    func configureTabBar() {
-        //style
-        tabBarStackView.translatesAutoresizingMaskIntoConstraints = false
-        tabBarStackView.axis = .horizontal
-        tabBarStackView.spacing = 0
-        tabBarStackView.distribution = .fillEqually
-        
-        homeButton.configureForTabBar(image: Images.home, title: "Home", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        dailyButton.configureForTabBar(image: wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()], title: "Daily", titleColor: Colors.blue ?? .blue, imageWidth: 26, imageHeight: 26)
-        awardButton.configureForTabBar(image: Images.award, title: "Awards", titleColor: .darkGray, imageWidth: 27, imageHeight: 27)
-        statisticButton.configureForTabBar(image: Images.statistic, title: "Statistics", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        settingsButton.configureForTabBar(image: Images.settings, title: "Settings", titleColor: .darkGray, imageWidth: 25, imageHeight: 25)
-        
-        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: .primaryActionTriggered)
-        awardButton.addTarget(self, action: #selector(awardsButtonPressed), for: .primaryActionTriggered)
-        statisticButton.addTarget(self, action: #selector(statisticButtonPressed), for: .primaryActionTriggered)
-        settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
-        
-        //layout
-        tabBarStackView.addArrangedSubview(homeButton)
-        tabBarStackView.addArrangedSubview(dailyButton)
-        tabBarStackView.addArrangedSubview(awardButton)
-        tabBarStackView.addArrangedSubview(statisticButton)
-        tabBarStackView.addArrangedSubview(settingsButton)
-  
-        view.addSubview(tabBarStackView)
-        
-        NSLayoutConstraint.activate([
-            tabBarStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            tabBarStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tabBarStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0),
-            tabBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tabBarStackView.heightAnchor.constraint(equalToConstant: 66)
-        ])
+    func homePressed() {
+        navigationController?.popToRootViewController(animated: true)
     }
     
-    @objc func homeButtonPressed(gesture: UISwipeGestureRecognizer) {
-        pushVC(vc: UIViewController(), button: homeButton)
-    }
-
-    @objc func awardsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        pushVC(vc: AwardsViewController(), button: awardButton)
-    }
-  
-    @objc func statisticButtonPressed(gesture: UISwipeGestureRecognizer) {
-        pushVC(vc: StatisticViewController(), button: statisticButton)
+    func dailyPressed() {
+        //pushVC(vc: DailyViewController())
     }
     
-    @objc func settingsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        pushVC(vc: SettingsViewController(), button: settingsButton)
+    func awardPressed() {
+        pushVC(vc: AwardsViewController())
     }
     
-    func pushVC(vc: UIViewController, button: UIButton){
-        self.fireworkController.addFireworks(count: 5, sparks: 5, around: button)
-        UserDefault.whichButton.set(ExerciseType.normal)
+    func statisticPressed() {
+        pushVC(vc: StatisticViewController())
+    }
+    
+    func settingPressed() {
+        pushVC(vc: SettingsViewController())
+    }
+    
+    func pushVC(vc: UIViewController){
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05){
-            if button == self.homeButton {
-                self.navigationController?.popToRootViewController(animated: true)
-            } else {
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
+           self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
