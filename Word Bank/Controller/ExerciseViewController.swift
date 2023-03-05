@@ -32,7 +32,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     var hint = ""
     var letterCounter = 0
-    var totalQuestionNumber = 20
+    var totalQuestionNumber = 2
     var itemArray: [Item] { return wordBrain.itemArray }
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var questionCount = 0
@@ -398,7 +398,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         progressBarTop.progress = progrs
         progressBarBottom.progress = progrs
         
-        var exercisePoint = exercisePoint
+        var exercisePoint = exercisePoint*20
         var userGotItRight = true
         
         if whichStartPressed == 1 {
@@ -511,72 +511,57 @@ extension ExerciseViewController {
     func style(){
         view.backgroundColor = Colors.raven
         
-        userPointButton.translatesAutoresizingMaskIntoConstraints = false
         userPointButton.setTitleColor(Colors.raven, for: .normal)
         userPointButton.layer.cornerRadius = 12
         
-        xButton.translatesAutoresizingMaskIntoConstraints = false
         xButton.setTitle("2x", for: .normal)
         xButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 17)
         xButton.isHidden = true
         xButton.setButtonCornerRadius(16)
         
-        progressBarTop.translatesAutoresizingMaskIntoConstraints = false
         progressBarTop.tintColor = Colors.f6f6f6
         
-        soundButton.translatesAutoresizingMaskIntoConstraints = false
         soundButton.addTarget(self, action: #selector(soundButtonPressed), for: .primaryActionTriggered)
         
-        questionLabel.translatesAutoresizingMaskIntoConstraints = false
         questionLabel.textColor = Colors.f6f6f6
         questionLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 0
         
-        bubbleButton.translatesAutoresizingMaskIntoConstraints = false
         bubbleButton.addTarget(self, action: #selector(bubbleButtonPressed), for: .primaryActionTriggered)
         
-        bubbleLabel.translatesAutoresizingMaskIntoConstraints = false
         bubbleLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 29)
         bubbleLabel.textAlignment = .center
         bubbleLabel.numberOfLines = 0
         
-        hintLabel.translatesAutoresizingMaskIntoConstraints = false
         hintLabel.textColor = Colors.f6f6f6
         hintLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
         hintLabel.textAlignment = .center
         hintLabel.numberOfLines = 0
         
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setViewCornerRadius(6)
         textField.setLeftPaddingPoints(10)
         textField.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
         
-        textFieldStackView.translatesAutoresizingMaskIntoConstraints = false
         textFieldStackView.axis = .vertical
         textFieldStackView.distribution = .fillEqually
         textFieldStackView.spacing = 16
         
-        answerStackView.translatesAutoresizingMaskIntoConstraints = false
         answerStackView.axis = .vertical
         answerStackView.distribution = .fillEqually
         answerStackView.spacing = 16
         
-        answer1Button.translatesAutoresizingMaskIntoConstraints = false
         answer1Button.addTarget(self, action: #selector(answerPressed), for: .primaryActionTriggered)
-        
-        answer2Button.translatesAutoresizingMaskIntoConstraints = false
         answer2Button.addTarget(self, action: #selector(answerPressed), for: .primaryActionTriggered)
         
-        progressBarBottom.translatesAutoresizingMaskIntoConstraints = false
         progressBarBottom.tintColor = Colors.f6f6f6
         
         letterCV.delegate = self
         letterCV.dataSource = self
         letterCV.bounces = false
         
-        backspaceButton.translatesAutoresizingMaskIntoConstraints = false
-        backspaceButton.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20, color: Colors.black ?? .black)
+        backspaceButton.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20,
+                                                  color: Colors.black ?? .black)
         backspaceButton.isHidden = (whichStartPressed == 1) ? true : false
         backspaceButton.addTarget(self, action: #selector(backspaceButtonPressed), for: .primaryActionTriggered)
     }
@@ -600,67 +585,57 @@ extension ExerciseViewController {
         view.addSubview(progressBarBottom)
         view.addSubview(letterCV)
         view.addSubview(backspaceButton)
-
-        NSLayoutConstraint.activate([
-            userPointButton.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
-            userPointButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            userPointButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            xButton.centerYAnchor.constraint(equalTo: userPointButton.centerYAnchor),
-            xButton.leadingAnchor.constraint(equalTo: userPointButton.leadingAnchor),
-            xButton.widthAnchor.constraint(equalToConstant: 32),
-            xButton.heightAnchor.constraint(equalToConstant: 32),
-            
-            progressBarTop.topAnchor.constraint(equalTo: userPointButton.bottomAnchor, constant: 8),
-            progressBarTop.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            progressBarTop.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            soundButton.topAnchor.constraint(equalTo: progressBarTop.bottomAnchor, constant: 16),
-            soundButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            answerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            answerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            answerStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66),
-            
-            textFieldStackView.centerYAnchor.constraint(equalTo: answerStackView.topAnchor),
-            textFieldStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            textFieldStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            questionLabel.topAnchor.constraint(equalTo: progressBarTop.bottomAnchor, constant: 16),
-            questionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            questionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            bubbleButton.centerYAnchor.constraint(equalTo: questionLabel.centerYAnchor),
-            bubbleButton.centerXAnchor.constraint(equalTo: questionLabel.centerXAnchor),
-            
-            bubbleLabel.centerYAnchor.constraint(equalTo: bubbleButton.centerYAnchor),
-            bubbleLabel.centerXAnchor.constraint(equalTo: bubbleButton.centerXAnchor),
-            
-            progressBarBottom.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
-            progressBarBottom.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            progressBarBottom.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            letterCV.topAnchor.constraint(equalTo: textFieldStackView.bottomAnchor, constant: 32),
-            letterCV.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            letterCV.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            letterCV.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32),
-            
-            backspaceButton.trailingAnchor.constraint(equalTo: textField.trailingAnchor, constant: -4),
-            backspaceButton.topAnchor.constraint(equalTo: textField.topAnchor),
-            backspaceButton.bottomAnchor.constraint(equalTo: textField.bottomAnchor),
-        ])
         
-        NSLayoutConstraint.activate([
-            userPointButton.heightAnchor.constraint(equalToConstant: 24),
-            soundButton.widthAnchor.constraint(equalToConstant: 40),
-            soundButton.heightAnchor.constraint(equalToConstant: 40),
-            bubbleButton.widthAnchor.constraint(equalToConstant: 90),
-            bubbleButton.heightAnchor.constraint(equalToConstant: 90),
-            questionLabel.heightAnchor.constraint(equalToConstant: questionLabelHeight),
-            answerStackView.heightAnchor.constraint(equalToConstant: 256),
-            textFieldStackView.heightAnchor.constraint(equalToConstant: 86),
-            backspaceButton.widthAnchor.constraint(equalTo: backspaceButton.heightAnchor)
-        ])
+        userPointButton.setHeight(height: 24)
+        userPointButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                               right: view.rightAnchor, paddingTop: 8,
+                               paddingLeft: 16, paddingRight: 16)
+        
+        xButton.setDimensions(height: 32, width: 32)
+        xButton.centerY(inView: userPointButton, leftAnchor: userPointButton.leftAnchor)
+        
+        progressBarTop.anchor(top: userPointButton.bottomAnchor, left: view.leftAnchor,
+                              right: view.rightAnchor, paddingTop: 8,
+                              paddingLeft: 16, paddingRight: 16)
+        
+        soundButton.setDimensions(height: 40, width: 40)
+        soundButton.anchor(top: progressBarTop.bottomAnchor, right: view.rightAnchor,
+                           paddingTop: 16, paddingRight: 32)
+        
+        answerStackView.setHeight(height: 256)
+        answerStackView.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                               right: view.rightAnchor, paddingLeft: 32,
+                               paddingBottom: 66, paddingRight: 32)
+        
+        textFieldStackView.setHeight(height: 86)
+        textFieldStackView.centerY(inView: answerStackView, constant: -128)
+        textFieldStackView.anchor(left: view.leftAnchor, right: view.rightAnchor,
+                                  paddingLeft: 32, paddingRight: 32)
+        
+        questionLabel.setHeight(height: questionLabelHeight)
+        questionLabel.anchor(top: progressBarTop.bottomAnchor, left: view.leftAnchor,
+                             right: view.rightAnchor, paddingTop: 16,
+                             paddingLeft: 32, paddingRight: 32)
+        
+        bubbleButton.setDimensions(height: 90, width: 90)
+        bubbleButton.centerY(inView: questionLabel)
+        bubbleButton.centerX(inView: questionLabel)
+        
+        bubbleLabel.centerY(inView: bubbleButton)
+        bubbleLabel.centerX(inView: bubbleButton)
+        
+        progressBarBottom.anchor(left: view.leftAnchor, bottom: view.bottomAnchor,
+                                 right: view.rightAnchor, paddingLeft: 16,
+                                 paddingBottom: 16, paddingRight: 16)
+        
+        letterCV.anchor(top: textFieldStackView.bottomAnchor, left: view.leftAnchor,
+                        bottom: view.bottomAnchor, right: view.rightAnchor,
+                        paddingTop: 32, paddingLeft: 32,
+                        paddingBottom: 32, paddingRight: 32)
+        
+        backspaceButton.setWidth(width: backspaceButton.bounds.height)
+        backspaceButton.anchor(top: textField.topAnchor, bottom: textField.bottomAnchor,
+                               right: textField.rightAnchor, paddingRight: 4)
     }
 }
 

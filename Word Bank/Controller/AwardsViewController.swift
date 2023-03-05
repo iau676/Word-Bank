@@ -252,56 +252,55 @@ extension AwardsViewController {
         view.addSubview(wordsScoreLabel)
         view.addSubview(exerciseScoreLabel)
         
-        NSLayoutConstraint.activate([
-            levelCV.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 32),
-            levelCV.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            levelCV.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            levelCV.heightAnchor.constraint(equalToConstant: 140),
-            
-            levelLabel.bottomAnchor.constraint(equalTo: levelCV.topAnchor, constant: 1),
-            levelLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            
-            levelButton.centerYAnchor.constraint(equalTo: levelLabel.centerYAnchor),
-            levelButton.leadingAnchor.constraint(equalTo: levelLabel.trailingAnchor, constant: 8),
-            levelButton.heightAnchor.constraint(equalToConstant: 29),
-            
-            levelScoreLabel.centerYAnchor.constraint(equalTo: levelLabel.centerYAnchor),
-            levelScoreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-        ])
+        //level
+        levelCV.setHeight(height: 140)
+        levelCV.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
         
-        NSLayoutConstraint.activate([
-            wordsCV.topAnchor.constraint(equalTo: levelCV.bottomAnchor, constant: 32),
-            wordsCV.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            wordsCV.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            wordsCV.heightAnchor.constraint(equalToConstant: 140),
-            
-            wordsLabel.bottomAnchor.constraint(equalTo: wordsCV.topAnchor, constant: 1),
-            wordsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            
-            wordsButton.centerYAnchor.constraint(equalTo: wordsLabel.centerYAnchor),
-            wordsButton.leadingAnchor.constraint(equalTo: wordsLabel.trailingAnchor, constant: 8),
-            wordsButton.heightAnchor.constraint(equalToConstant: 29),
-            
-            wordsScoreLabel.centerYAnchor.constraint(equalTo: wordsLabel.centerYAnchor),
-            wordsScoreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-        ])
-       
-        NSLayoutConstraint.activate([
-            exercisesCV.topAnchor.constraint(equalTo: wordsCV.bottomAnchor, constant: 32),
-            exercisesCV.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            exercisesCV.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            exercisesCV.heightAnchor.constraint(equalToConstant: 140),
-            
-            exercisesLabel.bottomAnchor.constraint(equalTo: exercisesCV.topAnchor, constant: 1),
-            exercisesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            
-            exercisesButton.centerYAnchor.constraint(equalTo: exercisesLabel.centerYAnchor),
-            exercisesButton.leadingAnchor.constraint(equalTo: exercisesLabel.trailingAnchor, constant: 8),
-            exercisesButton.heightAnchor.constraint(equalToConstant: 29),
-            
-            exerciseScoreLabel.centerYAnchor.constraint(equalTo: exercisesLabel.centerYAnchor),
-            exerciseScoreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-        ])
+        
+        levelLabel.anchor(left: view.leftAnchor, bottom: levelCV.topAnchor,
+                          paddingLeft: 32, paddingBottom: 1)
+        
+        levelButton.setHeight(height: 29)
+        levelButton.centerY(inView: levelLabel)
+        levelButton.anchor(left: levelLabel.rightAnchor, paddingLeft: 8)
+        
+        levelScoreLabel.centerY(inView: levelLabel)
+        levelScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
+        
+        
+        //words
+        wordsCV.setHeight(height: 140)
+        wordsCV.anchor(top: levelCV.bottomAnchor, left: view.leftAnchor,
+                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
+        
+        
+        wordsLabel.anchor(left: view.leftAnchor, bottom: wordsCV.topAnchor,
+                          paddingLeft: 32, paddingBottom: 1)
+        
+        wordsButton.setHeight(height: 29)
+        wordsButton.centerY(inView: wordsLabel)
+        wordsButton.anchor(left: wordsLabel.rightAnchor, paddingLeft: 8)
+        
+        wordsScoreLabel.centerY(inView: wordsLabel)
+        wordsScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
+        
+        //exercises
+        exercisesCV.setHeight(height: 140)
+        exercisesCV.anchor(top: wordsCV.bottomAnchor, left: view.leftAnchor,
+                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
+        
+        
+        exercisesLabel.anchor(left: view.leftAnchor, bottom: exercisesCV.topAnchor,
+                          paddingLeft: 32, paddingBottom: 1)
+        
+        exercisesButton.setHeight(height: 29)
+        exercisesButton.centerY(inView: exercisesLabel)
+        exercisesButton.anchor(left: exercisesLabel.rightAnchor, paddingLeft: 8)
+        
+        exerciseScoreLabel.centerY(inView: exercisesLabel)
+        exerciseScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
+    
         
         view.addSubview(tabBar)
         tabBar.setDimensions(height: 66, width: view.bounds.width)

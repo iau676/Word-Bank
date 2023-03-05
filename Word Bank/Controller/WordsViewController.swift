@@ -188,7 +188,6 @@ class WordsViewController: UIViewController {
     }
     
     func configureLabel(_ label: UILabel, _ text: String){
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Colors.black
         label.text = text
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
@@ -207,9 +206,8 @@ class WordsViewController: UIViewController {
     }
     
     func setupNavigationBar(){
-        let backButton = UIBarButtonItem()
-        backButton.title = "Back"
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
+        
         if whichButton == ExerciseType.normal {
             title = "My Words"
         } else {
@@ -275,12 +273,10 @@ class WordsViewController: UIViewController {
             UserDefault.startPressed.set(3)
             checkWordCount(ifOK: "goToExercise")
         } else {
-            let alert = UIAlertController(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            showAlert(title: "To start this exercise, you need to activate the \"Word Sound\" feature.",
+                      message: "") { OKpressed in
                 self.navigationController?.pushViewController(SettingsViewController(), animated: true)
             }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
         }
     }
 }
@@ -320,7 +316,7 @@ extension WordsViewController: UISearchBarDelegate {
     }
 }
 
-    //MARK: - Show Words
+    //MARK: - UITableViewDataSource
 
 extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -364,18 +360,15 @@ extension WordsViewController: UITableViewDataSource {
     
     func showAlertIfHardWordsEmpty(){
         if hardItemArray.count <= 0 {
-            let alert = UIAlertController(title: "Nothing to see here yet", message: "When you answer a word incorrectly in the exercises, that word is added to this page. In order to delete that word from here, you should answer correctly 5 times.", preferredStyle: .alert)
-                            
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            showAlert(title: "Nothing to see here yet",
+                      message: "When you answer a word incorrectly in the exercises, that word is added to this page. In order to delete that word from here, you should answer correctly 5 times.") { OKpressed in
                 self.navigationController?.popToRootViewController(animated: true)
             }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
         }
     }
 }
 
-    //MARK: - Swipe Cell
+    //MARK: - UITableViewDelegate
 
 extension WordsViewController: UITableViewDelegate {
 
@@ -455,19 +448,20 @@ extension WordsViewController {
     }
 }
 
+//MARK: - Layout
+
 extension WordsViewController {
     func style(){
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addBarButtonPressed))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"),
+                                                            style: .plain, target: self,
+                                                            action: #selector(addBarButtonPressed))
         
-        tableViewStackView.translatesAutoresizingMaskIntoConstraints = false
         tableViewStackView.axis = .vertical
         tableViewStackView.spacing = 0
         tableViewStackView.distribution = .fill
         
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.barTintColor = Colors.cellLeft
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
         tableView.dataSource = self
         tableView.delegate = self
@@ -477,22 +471,21 @@ extension WordsViewController {
         tableView.isScrollEnabled = true
         tableView.backgroundColor = Colors.cellLeft
         
-        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         buttonStackView.axis = .horizontal
         buttonStackView.spacing = 16
         buttonStackView.distribution = .fillEqually
         
-        testExerciseButton.translatesAutoresizingMaskIntoConstraints = false
-        testExerciseButton.addTarget(self, action: #selector(testExerciseButtonPressed), for: .primaryActionTriggered)
+        testExerciseButton.addTarget(self, action: #selector(testExerciseButtonPressed),
+                                     for: .primaryActionTriggered)
         
-        writingExerciseButton.translatesAutoresizingMaskIntoConstraints = false
-        writingExerciseButton.addTarget(self, action: #selector(writingExerciseButtonPressed), for: .primaryActionTriggered)
+        writingExerciseButton.addTarget(self, action: #selector(writingExerciseButtonPressed),
+                                        for: .primaryActionTriggered)
         
-        listeningExerciseButton.translatesAutoresizingMaskIntoConstraints = false
-        listeningExerciseButton.addTarget(self, action: #selector(listeningExerciseButtonPressed), for: .primaryActionTriggered)
+        listeningExerciseButton.addTarget(self, action: #selector(listeningExerciseButtonPressed),
+                                          for: .primaryActionTriggered)
         
-        cardExerciseButton.translatesAutoresizingMaskIntoConstraints = false
-        cardExerciseButton.addTarget(self, action: #selector(cardExerciseButtonPressed), for: .primaryActionTriggered)
+        cardExerciseButton.addTarget(self, action: #selector(cardExerciseButtonPressed),
+                                     for: .primaryActionTriggered)
         
         configureLabel(testExerciseLabel, "Test")
         configureLabel(writingExerciseLabel, "Writing")
@@ -517,39 +510,34 @@ extension WordsViewController {
         view.addSubview(tableViewStackView)
         view.addSubview(buttonStackView)
         
-        NSLayoutConstraint.activate([
-            tableViewStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
-            tableViewStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tableViewStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            tableViewStackView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -16),
-            
-            buttonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            testExerciseLabel.topAnchor.constraint(equalTo: testExerciseButton.bottomAnchor, constant: 8),
-            testExerciseLabel.centerXAnchor.constraint(equalTo: testExerciseButton.centerXAnchor),
-            
-            writingExerciseLabel.topAnchor.constraint(equalTo: writingExerciseButton.bottomAnchor, constant: 8),
-            writingExerciseLabel.centerXAnchor.constraint(equalTo: writingExerciseButton.centerXAnchor),
-            
-            listeningExerciseLabel.topAnchor.constraint(equalTo: listeningExerciseButton.bottomAnchor, constant: 8),
-            listeningExerciseLabel.centerXAnchor.constraint(equalTo: listeningExerciseButton.centerXAnchor),
-            
-            cardExerciseLabel.topAnchor.constraint(equalTo: cardExerciseButton.bottomAnchor, constant: 8),
-            cardExerciseLabel.centerXAnchor.constraint(equalTo: cardExerciseButton.centerXAnchor),
-        ])
+        tableViewStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                                  bottom: buttonStackView.topAnchor, right: view.rightAnchor,
+                                  paddingTop: 8, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
         
-        NSLayoutConstraint.activate([
-            buttonStackView.heightAnchor.constraint(equalToConstant: 55),
-        ])
+        buttonStackView.setHeight(height: 55)
+        buttonStackView.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                               right: view.rightAnchor, paddingLeft: 16,
+                               paddingBottom: 66, paddingRight: 16)
         
-        UIView.transition(with: tableView, duration: 0.6,
-                          options: .transitionCrossDissolve,
-                          animations: {
-            self.view.layoutIfNeeded()
-            self.tableViewStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
-            self.buttonStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -48).isActive = true
-        })
+        testExerciseLabel.centerX(inView: testExerciseButton)
+        testExerciseLabel.anchor(top: testExerciseButton.bottomAnchor, paddingTop: 8)
+        
+        writingExerciseLabel.centerX(inView: writingExerciseButton)
+        writingExerciseLabel.anchor(top: writingExerciseButton.bottomAnchor, paddingTop: 8)
+        
+        listeningExerciseLabel.centerX(inView: listeningExerciseButton)
+        listeningExerciseLabel.anchor(top: listeningExerciseButton.bottomAnchor, paddingTop: 8)
+        
+        cardExerciseLabel.centerX(inView: cardExerciseButton)
+        cardExerciseLabel.anchor(top: cardExerciseButton.bottomAnchor, paddingTop: 8)
+        
+//        UIView.transition(with: tableView, duration: 0.6,
+//                          options: .transitionCrossDissolve,
+//                          animations: {
+//            self.view.layoutIfNeeded()
+//            self.tableViewStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
+//            self.buttonStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -48).isActive = true
+//        })
     }
 }
 

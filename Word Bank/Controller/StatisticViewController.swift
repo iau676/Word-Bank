@@ -328,31 +328,30 @@ extension StatisticViewController {
         view.addSubview(barChartLabel)
         view.addSubview(lineChartLabel)
         
+        scrollView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                          bottom: view.bottomAnchor, right: view.rightAnchor,
+                          paddingTop: 8, paddingBottom: 66)
+        
+        stackView.anchor(top: scrollView.topAnchor, left: view.leftAnchor,
+                         bottom: scrollView.bottomAnchor, right: view.rightAnchor,
+                         paddingTop: 32, paddingLeft: 32,
+                         paddingBottom: 48, paddingRight: 32)
+        
+        lineChartLabel.anchor(left: view.leftAnchor, bottom: lineView.topAnchor,
+                             paddingLeft: 32, paddingBottom: 8)
+        
+        barChartLabel.anchor(left: view.leftAnchor, bottom: barView.topAnchor,
+                             paddingLeft: 32, paddingBottom: 8)
+        
         NSLayoutConstraint.activate([
-           scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
-           scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-           scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-           scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66),
-           
-           stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 32),
-           stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-           stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-           stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -48),
-           
-           barChartLabel.bottomAnchor.constraint(equalTo: barView.topAnchor, constant: -8),
-           barChartLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-           
-           barView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
-           barView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-           
-           lineChartLabel.bottomAnchor.constraint(equalTo: lineView.topAnchor, constant: -8),
-           lineChartLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-           
-           lineView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
-           lineView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-           
-           pieView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
-           pieView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+          barView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
+          barView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+          
+          lineView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
+          lineView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+          
+          pieView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
+          pieView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
         ])
         
         view.addSubview(tabBar)

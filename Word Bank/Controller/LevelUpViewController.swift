@@ -74,27 +74,24 @@ class LevelUpViewController: UIViewController {
 
 extension LevelUpViewController {
     func style() {
-        levelUpLabel.translatesAutoresizingMaskIntoConstraints = false
         levelUpLabel.text = "LEVEL UP"
         levelUpLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 17)
         levelUpLabel.textAlignment = .center
         levelUpLabel.numberOfLines = 1
         
-        levelLabel.translatesAutoresizingMaskIntoConstraints = false
         levelLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 70)
         levelLabel.textAlignment = .center
         levelLabel.numberOfLines = 1
         
-        continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.setTitle("Continue", for: .normal)
         continueButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 23)
-        continueButton.addTarget(self, action: #selector(continueButtonPressed(_:)), for: .primaryActionTriggered)
         continueButton.layer.shadowColor = Colors.darkGrayShadow?.cgColor
         continueButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
         continueButton.layer.shadowOpacity = 1.0
         continueButton.layer.shadowRadius = 0.0
         continueButton.setButtonCornerRadius(16)
         continueButton.layer.masksToBounds = false
+        continueButton.addTarget(self, action: #selector(continueButtonPressed(_:)), for: .primaryActionTriggered)
     }
     
     func layout() {
@@ -102,17 +99,16 @@ extension LevelUpViewController {
         view.addSubview(levelLabel)
         view.addSubview(continueButton)
         
-        NSLayoutConstraint.activate([
-            levelUpLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 66),
-            levelUpLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            levelLabel.topAnchor.constraint(equalTo: levelUpLabel.bottomAnchor, constant: 0),
-            levelLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            continueButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -99),
-            continueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            continueButton.heightAnchor.constraint(equalToConstant: 45),
-        ])
+        levelUpLabel.centerX(inView: view)
+        levelUpLabel.anchor(top: view.topAnchor, paddingTop: 66)
+        
+        levelLabel.centerX(inView: view)
+        levelLabel.anchor(top: levelUpLabel.bottomAnchor)
+        
+        continueButton.setHeight(height: 45)
+        continueButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                              right: view.rightAnchor, paddingLeft: 32,
+                              paddingBottom: 66, paddingRight: 32)
+        
     }
 }

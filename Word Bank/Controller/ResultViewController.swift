@@ -58,7 +58,6 @@ class ResultViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
         updateRefreshButtonVisibility()
         checkWhichExercise()
         updateHardWordText()
@@ -67,7 +66,6 @@ class ResultViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
         player.removeAppEventsSubscribers()
         player.removePlayer()
     }
@@ -378,41 +376,38 @@ extension ResultViewController: UITableViewDelegate {
     }
 }
 
+//MARK: - Layout
+
 extension ResultViewController {
     
     func style(){
-        confettiButton.translatesAutoresizingMaskIntoConstraints = false
+        navigationItem.leftBarButtonItem = UIBarButtonItem()
+        
         confettiButton.setImage(image: Images.confetti, width: 66, height: 66)
         
-        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         scoreLabel.font = UIFont(name: Fonts.AvenirNextMedium, size: textSize+5)
         scoreLabel.textAlignment = .center
         scoreLabel.numberOfLines = 1
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
         tableView.tableFooterView = UIView()
         tableView.layer.cornerRadius = 16
         tableView.dataSource = self
         tableView.delegate = self
         
-        addedHardWordsButton.translatesAutoresizingMaskIntoConstraints = false
         addedHardWordsButton.backgroundColor = .clear
         addedHardWordsButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         addedHardWordsButton.layer.cornerRadius = 10
         addedHardWordsButton.addTarget(self, action: #selector(addedHardWordsButtonPressed(_:)), for: .primaryActionTriggered)
         
-        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         buttonStackView.axis = .horizontal
         buttonStackView.distribution = .fill
         buttonStackView.spacing = 130
         
-        homeButton.translatesAutoresizingMaskIntoConstraints = false
         homeButton.setBackgroundImage(UIImage(systemName: "house.fill"), for: .normal)
         homeButton.tintColor = .white
         homeButton.addTarget(self, action: #selector(homeButtonPressed(_:)), for: .primaryActionTriggered)
         
-        refreshButton.translatesAutoresizingMaskIntoConstraints = false
         refreshButton.setBackgroundImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
         refreshButton.tintColor = .white
         refreshButton.addTarget(self, action: #selector(refreshButtonPressed(_:)), for: .primaryActionTriggered)
@@ -429,37 +424,29 @@ extension ResultViewController {
         
         view.addSubview(buttonStackView)
         
-        NSLayoutConstraint.activate([
-            confettiButton.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() - 32),
-            confettiButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            scoreLabel.topAnchor.constraint(equalTo: confettiButton.bottomAnchor, constant: 16),
-            scoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            tableView.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor, constant: 16),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            tableView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -16),
-            
-            addedHardWordsButton.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -8),
-            addedHardWordsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            addedHardWordsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-
-            buttonStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32),
-            buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
+        confettiButton.centerX(inView: view)
+        confettiButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
         
-        NSLayoutConstraint.activate([
-            homeButton.widthAnchor.constraint(equalToConstant: 48),
-            homeButton.heightAnchor.constraint(equalToConstant: 40),
-            refreshButton.widthAnchor.constraint(equalToConstant: 35),
-            refreshButton.heightAnchor.constraint(equalToConstant: 40),
-        ])
+        scoreLabel.centerX(inView: view)
+        scoreLabel.anchor(top: confettiButton.bottomAnchor, paddingTop: 16)
+        
+        tableView.anchor(top: scoreLabel.bottomAnchor, left: view.leftAnchor,
+                         bottom: buttonStackView.topAnchor, right: view.rightAnchor,
+                         paddingTop: 16, paddingLeft: 32,
+                         paddingBottom: 32, paddingRight: 16)
+        
+        addedHardWordsButton.anchor(left: view.leftAnchor, bottom: buttonStackView.topAnchor,
+                                    right: view.rightAnchor, paddingLeft: 32,
+                                    paddingBottom: 8, paddingRight: 32)
+        
+        buttonStackView.centerX(inView: view)
+        buttonStackView.anchor(bottom: view.bottomAnchor, paddingBottom: 32)
+        
+        homeButton.setDimensions(height: 40, width: 48)
+        refreshButton.setDimensions(height: 40, width: 35)
         
         if addedHardWordsCount > 0 {
-            NSLayoutConstraint.activate([
-                tableView.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -48)
-            ])
+            tableView.anchor(bottom: buttonStackView.topAnchor, paddingBottom: 48)
         }
     }
 }

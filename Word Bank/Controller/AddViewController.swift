@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class AddViewController: UIViewController, UITextFieldDelegate {
+class AddViewController: UIViewController {
     
     let coinButtonView = UIButton()
     let coinButton = UIButton()
@@ -215,19 +215,18 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func maxCharacterAlert(){
-        let alert = UIAlertController(title: "Max character is 20", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            alert.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        showAlert(title: "Max character is 20", message: "")
     }
         
     func preventInterrupt(){
         // None of our movies should interrupt system music playback.
             _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
     }
-    
+}
+
+//MARK: - UITextFieldDelegate
+
+extension AddViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == engTxtField {
             trTxtField.becomeFirstResponder()
@@ -270,35 +269,27 @@ extension AddViewController {
     func style(){
         view.backgroundColor = Colors.darkBackground
         
-        coinButtonView.translatesAutoresizingMaskIntoConstraints = false
-        
-        coinButton.translatesAutoresizingMaskIntoConstraints = false
         coinButton.addTarget(self, action: #selector(coinButtonPressed), for: .touchUpInside)
         
-        textView.translatesAutoresizingMaskIntoConstraints = false
         textView.backgroundColor = Colors.cellLeft
         textView.setViewCornerRadius(10)
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.distribution = .fillEqually
         
-        engTxtField.translatesAutoresizingMaskIntoConstraints = false
         engTxtField.placeholder = "English"
         engTxtField.keyboardType = .asciiCapable
         engTxtField.backgroundColor = Colors.cellRight
         engTxtField.layer.cornerRadius = 8
         engTxtField.setLeftPaddingPoints(10)
         
-        trTxtField.translatesAutoresizingMaskIntoConstraints = false
         trTxtField.placeholder = "Meaning"
         trTxtField.keyboardType = .asciiCapable
         trTxtField.backgroundColor = Colors.cellRight
         trTxtField.layer.cornerRadius = 8
         trTxtField.setLeftPaddingPoints(10)
         
-        addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.backgroundColor = .darkGray
         addButton.layer.cornerRadius = 8
         addButton.setTitle("+", for: .normal)
@@ -316,31 +307,19 @@ extension AddViewController {
         textView.addSubview(stackView)
         view.addSubview(textView)
         
-        NSLayoutConstraint.activate([
-            coinButtonView.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
-            
-            coinButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            textView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
+        coinButtonView.setDimensions(height: view.frame.size.height-(view.center.y+130), width: view.bounds.width)
+        coinButtonView.anchor(top: view.topAnchor, paddingTop: 32)
         
-        NSLayoutConstraint.activate([
-            coinButtonView.heightAnchor.constraint(equalToConstant: view.frame.size.height-(view.center.y+130)),
-            coinButtonView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            
-            coinButton.heightAnchor.constraint(equalToConstant: 120),
-            coinButton.widthAnchor.constraint(equalToConstant: 120),
-            
-            textView.heightAnchor.constraint(equalToConstant: 214),
-            textView.widthAnchor.constraint(equalToConstant: view.frame.size.width-32),
-            
-            stackView.heightAnchor.constraint(equalToConstant: 182),
-        ])
+        coinButton.setDimensions(height: 120, width: 120)
+        coinButton.centerX(inView: view)
+        
+        textView.setDimensions(height: 214, width: view.frame.size.width-32)
+        textView.centerX(inView: view)
+        textView.centerY(inView: view)
+        
+        stackView.setDimensions(height: 182, width: view.bounds.width-64)
+        stackView.centerY(inView: view)
+        stackView.centerX(inView: view)
     }
 }
 

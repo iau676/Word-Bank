@@ -20,6 +20,8 @@ class WheelViewController: UIViewController {
         let scene = SKScene(fileNamed: "GameScene")
         scene?.scaleMode = .aspectFill
         vieW?.presentScene(scene!, transition: SKTransition.flipHorizontal(withDuration: 0.42))
+        
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
 
     @objc func goExercise(_ notification: Notification) {

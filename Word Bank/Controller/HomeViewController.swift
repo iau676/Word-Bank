@@ -230,34 +230,18 @@ extension HomeViewController {
         title = "Word Bank"
         view.backgroundColor = Colors.cellLeft
         
-        tabBar.delegate = self
-        
-        leftLineView.translatesAutoresizingMaskIntoConstraints = false
         leftLineView.backgroundColor = .darkGray
-        
-        centerLineView.translatesAutoresizingMaskIntoConstraints = false
         centerLineView.backgroundColor = .darkGray
-        
-        rightLineView.translatesAutoresizingMaskIntoConstraints = false
         rightLineView.backgroundColor = .darkGray
         
-        levelButton.translatesAutoresizingMaskIntoConstraints = false
-        levelButton.addTarget(self, action: #selector(levelButtonPressed), for: .primaryActionTriggered)
         levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
-        
-        exerciseButton.translatesAutoresizingMaskIntoConstraints = false
+        levelButton.addTarget(self, action: #selector(levelButtonPressed), for: .primaryActionTriggered)
         exerciseButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)
-        
-        newWordsButton.translatesAutoresizingMaskIntoConstraints = false
         newWordsButton.addTarget(self, action: #selector(newWordsButtonPressed), for: .primaryActionTriggered)
-        
-        wordsButton.translatesAutoresizingMaskIntoConstraints = false
         wordsButton.addTarget(self, action: #selector(wordsButtonPressed), for: .primaryActionTriggered)
-        
-        hardWordsButton.translatesAutoresizingMaskIntoConstraints = false
         hardWordsButton.addTarget(self, action: #selector(hardWordsButtonPressed), for: .primaryActionTriggered)
         
-        dropButton.translatesAutoresizingMaskIntoConstraints = false
+        tabBar.delegate = self
     }
     
     func layout() {
@@ -284,45 +268,32 @@ extension HomeViewController {
         exerciseCP.center = CGPoint(x: view.center.x+121, y: view.center.y)
         hardCP.center = CGPoint(x: view.center.x-121, y: view.center.y)
         
-        NSLayoutConstraint.activate([
-            leftLineView.topAnchor.constraint(equalTo: view.topAnchor),
-            leftLineView.leadingAnchor.constraint(equalTo: hardCP.centerXAnchor),
-            
-            centerLineView.topAnchor.constraint(equalTo: view.topAnchor),
-            centerLineView.leadingAnchor.constraint(equalTo: wordsCP.centerXAnchor),
-            
-            rightLineView.topAnchor.constraint(equalTo: view.topAnchor),
-            rightLineView.leadingAnchor.constraint(equalTo: exerciseCP.centerXAnchor),
-            
-            levelButton.centerXAnchor.constraint(equalTo: levelCP.centerXAnchor),
-            levelButton.centerYAnchor.constraint(equalTo: levelCP.centerYAnchor),
-            
-            exerciseButton.centerXAnchor.constraint(equalTo: exerciseCP.centerXAnchor),
-            exerciseButton.centerYAnchor.constraint(equalTo: exerciseCP.centerYAnchor),
-            
-            newWordsButton.centerXAnchor.constraint(equalTo: newWordCP.centerXAnchor),
-            newWordsButton.centerYAnchor.constraint(equalTo: newWordCP.centerYAnchor),
-            
-            wordsButton.centerXAnchor.constraint(equalTo: wordsCP.centerXAnchor),
-            wordsButton.centerYAnchor.constraint(equalTo: wordsCP.centerYAnchor),
-            
-            hardWordsButton.centerXAnchor.constraint(equalTo: hardCP.centerXAnchor),
-            hardWordsButton.centerYAnchor.constraint(equalTo: hardCP.centerYAnchor),
-            
-            dropButton.centerXAnchor.constraint(equalTo: newWordCP.centerXAnchor, constant: 1),
-            dropButton.centerYAnchor.constraint(equalTo: newWordCP.centerYAnchor, constant: 16),
-        ])
+        leftLineView.anchor(top: view.topAnchor, left: hardCP.centerXAnchor)
+        centerLineView.anchor(top: view.topAnchor, left: levelCP.centerXAnchor)
+        rightLineView.anchor(top: view.topAnchor, left: exerciseCP.centerXAnchor)
         
-        NSLayoutConstraint.activate([
-            leftLineView.heightAnchor.constraint(equalToConstant: hardCP.center.y-40),
-            leftLineView.widthAnchor.constraint(equalToConstant: 1),
-            
-            centerLineView.heightAnchor.constraint(equalToConstant: wordsCP.center.y-40),
-            centerLineView.widthAnchor.constraint(equalToConstant: 1),
-            
-            rightLineView.heightAnchor.constraint(equalToConstant: exerciseCP.center.y-40),
-            rightLineView.widthAnchor.constraint(equalToConstant: 1),
-        ])
+        leftLineView.setDimensions(height: hardCP.center.y-40, width: 1)
+        centerLineView.setDimensions(height: wordsCP.center.y-40, width: 1)
+        rightLineView.setDimensions(height: exerciseCP.center.y-40, width: 1)
+        
+        levelButton.centerX(inView: levelCP)
+        levelButton.centerY(inView: levelCP)
+        
+        exerciseButton.centerX(inView: exerciseCP)
+        exerciseButton.centerY(inView: exerciseCP)
+        
+        newWordsButton.centerX(inView: newWordCP)
+        newWordsButton.centerY(inView: newWordCP)
+        
+        wordsButton.centerX(inView: wordsCP)
+        wordsButton.centerY(inView: wordsCP)
+        
+        hardWordsButton.centerX(inView: hardCP)
+        hardWordsButton.centerY(inView: hardCP)
+        
+        dropButton.centerX(inView: newWordCP)
+        dropButton.centerY(inView: newWordCP, constant: 16)
+        
         
         view.addSubview(tabBar)
         tabBar.setDimensions(height: 66, width: view.bounds.width)

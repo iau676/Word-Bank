@@ -82,34 +82,30 @@ class NewPointViewController: UIViewController {
 extension NewPointViewController {
     
     func style() {
-        wordCountLabel.translatesAutoresizingMaskIntoConstraints = false
         wordCountLabel.text = String(itemArray.count)
         wordCountLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 70)
         wordCountLabel.textAlignment = .center
         wordCountLabel.numberOfLines = 0
         
-        wordsLabel.translatesAutoresizingMaskIntoConstraints = false
         wordsLabel.text = "Words!"
         wordsLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 21)
         wordsLabel.textAlignment = .center
         wordsLabel.numberOfLines = 0
         
-        newPointLabel.translatesAutoresizingMaskIntoConstraints = false
         newPointLabel.text = "You will get +\(UserDefault.exercisePoint.getInt()-10) points for each correct answer."
         newPointLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 21)
         newPointLabel.textAlignment = .center
         newPointLabel.numberOfLines = 0
         
-        continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.setTitle("Continue", for: .normal)
         continueButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 23)
-        continueButton.addTarget(self, action: #selector(continueButtonPressed(_:)), for: .primaryActionTriggered)
         continueButton.layer.shadowColor = Colors.darkGrayShadow?.cgColor
         continueButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
         continueButton.layer.shadowOpacity = 1.0
         continueButton.layer.shadowRadius = 0.0
         continueButton.setButtonCornerRadius(16)
         continueButton.layer.masksToBounds = false
+        continueButton.addTarget(self, action: #selector(continueButtonPressed(_:)), for: .primaryActionTriggered)
     }
     
     func layout() {
@@ -118,21 +114,18 @@ extension NewPointViewController {
         view.addSubview(newPointLabel)
         view.addSubview(continueButton)
         
-        NSLayoutConstraint.activate([
-            wordCountLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 66),
-            wordCountLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -3),
-            
-            wordsLabel.topAnchor.constraint(equalTo: wordCountLabel.bottomAnchor, constant: 0),
-            wordsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            newPointLabel.topAnchor.constraint(equalTo: wordsLabel.bottomAnchor, constant: 32),
-            newPointLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            newPointLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            continueButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -99),
-            continueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            continueButton.heightAnchor.constraint(equalToConstant: 45),
-        ])
+        wordCountLabel.centerX(inView: view)
+        wordCountLabel.anchor(top: view.topAnchor, paddingTop: 66)
+        
+        wordsLabel.centerX(inView: view)
+        wordsLabel.anchor(top: wordCountLabel.bottomAnchor)
+        
+        newPointLabel.anchor(top: wordsLabel.bottomAnchor, left: view.leftAnchor,
+                             right: view.rightAnchor, paddingTop: 32,
+                             paddingLeft: 32, paddingRight: 32)
+        
+        continueButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor,
+                              right: view.rightAnchor, paddingLeft: 32,
+                              paddingBottom: 66, paddingRight: 32)
     }
 }
