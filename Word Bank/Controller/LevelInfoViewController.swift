@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LevelDelegate: AnyObject {
-    func updateLevelButtonTitle(isInt: Bool)
+    func updateLevelButtonTitleAfterPressed(isInt: Bool)
 }
 
 class LevelInfoViewController: UIViewController {
@@ -215,7 +215,7 @@ class LevelInfoViewController: UIViewController {
     
     func animateDismissView() {
         
-        self.delegate?.updateLevelButtonTitle(isInt: true)
+        self.delegate?.updateLevelButtonTitleAfterPressed(isInt: true)
         
         // hide blur view
         dimmedView.alpha = maxDimmedAlpha

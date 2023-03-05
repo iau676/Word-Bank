@@ -27,4 +27,25 @@ extension UIView {
                       })
     }
     
+    func bounce() {
+        UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut, .allowUserInteraction]) { [weak self] in
+            self?.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.15, delay: 0, options: [.curveEaseInOut, .allowUserInteraction]) { [weak self] in
+                self?.transform = CGAffineTransform.identity
+            } completion: { _ in
+                
+            }
+        }
+    }
+    
+    func flip(duration: Double = 0.5, deadline: Double = 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + deadline) {
+            UIView.transition(with: self,
+                              duration: duration,
+                              options: .transitionFlipFromLeft,
+                              animations: nil,
+                              completion: nil)
+        }
+    }
  }

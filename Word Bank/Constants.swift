@@ -12,18 +12,19 @@ enum Colors {
     static let black                     = UIColor(hex: "#1C1C1C")
     static let cellRight                 = UIColor(hex: "#F5F5F5")
     static let cellLeft                  = UIColor(hex: "#DFDEDE")
-    static let blueBottom                = UIColor(hex: "#88D1F0")
-    static let yyellow                   = UIColor(hex: "#FFC047")
-    static let yellowBottom              = UIColor(hex: "#FFD387")
-    static let purple                    = UIColor(hex: "#af52de")
+    
+    static let pink                      = UIColor(hex: "#fc8da5")
     static let green                     = UIColor(hex: "#17bf8c")
     static let blue                      = UIColor(hex: "#1cbaeb")
     static let yellow                    = UIColor(hex: "#ffbf47")
-    static let purpleShadow              = UIColor(hex: "#9527cc")
-    static let greenShadow               = UIColor(hex: "#129970")
-    static let blueShadow                = UIColor(hex: "#1299bf")
-    static let yellowShadow              = UIColor(hex: "#ffa808")
-    static let pink                      = UIColor(hex: "#fc8da5")
+    static let purple                    = UIColor(hex: "#af52de")
+    
+    static let pinkLight                 = UIColor(hex: "#f198ab")
+    static let greenLight                = UIColor(hex: "#27e5ab")
+    static let blueLight                 = UIColor(hex: "#58ccf0")
+    static let yellowLight               = UIColor(hex: "#ffdb99")
+    static let purpleLight               = UIColor(hex: "#cd92ea")
+    
     static let d6d6d6                    = UIColor(hex: "#d6d6d6")
     static let f6f6f6                    = UIColor(hex: "#f6f6f6")
     static let d9d9d9                    = UIColor(hex: "#d9d9d9")
@@ -37,6 +38,7 @@ enum Colors {
     static let lightRed                  = UIColor(hex: "#ff8f9e")
     static let lightYellow               = UIColor(hex: "#ffdb99")
     static let darkGrayShadow            = UIColor(hex: "#444444")
+    
 }
 
 enum ExerciseName {

@@ -9,31 +9,29 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class HomeViewController: UIViewController, LevelDelegate {
-        
-    let titleLabel = UILabel()
+final class HomeViewController: UIViewController, LevelDelegate {
     
-    let leftLineView = UIView()
-    let centerLineView = UIView()
-    let rightLineView = UIView()
+    private let leftLineView = UIView()
+    private let centerLineView = UIView()
+    private let rightLineView = UIView()
     
-    let levelButton = UIButton()
-    let exerciseButton = UIButton()
-    let newWordsButton = UIButton()
-    let wordsButton = UIButton()
-    let hardWordsButton = UIButton()
-    let dropButton = UIButton()
+    private let levelButton = UIButton()
+    private let exerciseButton = UIButton()
+    private let newWordsButton = UIButton()
+    private let wordsButton = UIButton()
+    private let hardWordsButton = UIButton()
+    private let dropButton = UIButton()
             
-    let levelCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    let newWordCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    let wordsCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    let exerciseCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    let hardCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    private let levelCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    private let newWordCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    private let wordsCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    private let exerciseCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    private let hardCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     
-    var wordBrain = WordBrain()
+    private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
-    var goAddPage = 0
-    var progressValue:Float = 0.0
+    private var goAddPage = 0
+    private var progressValue:Float = 0.0
     
     //tabBar
     private let fireworkController = ClassicFireworkController()
@@ -55,17 +53,15 @@ class HomeViewController: UIViewController, LevelDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
         wordBrain.loadItemArray()
         configureTabBar()
         setupCircularProgress()
-        setupButtons()
+        setupButtonImages()
         setupNavigationBar()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
         timerDaily.invalidate()
     }
     
@@ -85,24 +81,28 @@ class HomeViewController: UIViewController, LevelDelegate {
     
     //MARK: - Selectors
     
-    @objc func levelButtonPressed(sender : UITapGestureRecognizer) {
-        flipCP(button: levelButton, cp: levelCP)
-       
+    @objc func levelButtonPressed() {
+        levelCP.bounce()
+        levelButton.flip()
+        
         let vc = LevelInfoViewController()
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
-        self.updateLevelButtonTitle(isInt: false)
+        self.updateLevelButtonTitleAfterPressed(isInt: false)
         self.present(vc, animated: false)
     }
     
-    @objc func exerciseButtonPressed(gesture: UISwipeGestureRecognizer) {
+    @objc func exerciseButtonPressed() {
+        exerciseCP.bounce()
+        
         UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
-        flipCP(button: exerciseButton, cp: exerciseCP)
         checkWordCount()
     }
     
-    @objc func newWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
+    @objc func newWordsButtonPressed() {
+        newWordCP.bounce()
+        
         newWordsButton.setImage(image: Images.onlyHand, width: 35, height: 35)
         dropButton.setImage(image: Images.drop, width: 7, height: 7)
         dropButton.animateDropDown()
@@ -111,136 +111,27 @@ class HomeViewController: UIViewController, LevelDelegate {
         UserDefault.whichButton.set(ExerciseType.normal)
         goAddPage = 1
         viewDidLayoutSubviews()
-        flipCP(button: newWordsButton, cp: newWordCP)
-        performSegue(identifier: "goWords", second: 0.4)
+        performSegue(identifier: "goWords", second: 0.2)
     }
     
-    @objc func wordsButtonPressed(gesture: UISwipeGestureRecognizer) {
+    @objc func wordsButtonPressed() {
+        wordsCP.bounce()
+        
         UserDefault.whichButton.set(ExerciseType.normal)
         goAddPage = 0
-        flipCP(button: wordsButton, cp: wordsCP)
-        performSegue(identifier: "goWords", second: 0.4)
+        performSegue(identifier: "goWords", second: 0.1)
     }
     
     @objc func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        UserDefault.whichButton.set(ExerciseType.hard)
-        flipCP(button: hardWordsButton, cp: hardCP)
-        performSegue(identifier: "goWords", second: 0.4)
-    }
-    
-    @objc func appendDefaultWords() {
-        let defaultWordsCount = wordBrain.defaultWords.count
+        hardCP.bounce()
         
-        for index in 0..<defaultWordsCount {
-            _ = index // noneed
-            wordBrain.addWord(english: "\(wordBrain.defaultWords[index].eng)", meaning: "\(wordBrain.defaultWords[index].tr)")
-        }
-        UserDefault.userWordCount.set(defaultWordsCount)
-     }
+        UserDefault.whichButton.set(ExerciseType.hard)
+        performSegue(identifier: "goWords", second: 0.1)
+    }
     
     //MARK: - Helpers
     
-    func setupFirstLaunch(){
-        //version 2.0.1
-        if UserDefault.x2Time.getValue() == nil {
-            let calendar = Calendar.current
-            let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())!
-            UserDefault.x2Time.set(twoDaysAgo)
-            UserDefault.userSelectedHour.set(23)
-            UserDefault.lastEditLabel.set("empty")
-            UserDefault.exercisePoint.set("10")
-            UserDefault.textSize.set(15)
-            askNotificationPermission()
-            showOnboarding()
-        }
-        
-        //version 2.0.2
-        if UserDefault.exerciseCount.getValue() == nil {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5){
-                self.wordBrain.loadUser()
-                self.wordBrain.loadItemArray()
-                self.wordBrain.loadHardItemArray()
-                
-                UserDefault.hardWordsCount.set(self.wordBrain.hardItemArray.count)
-                
-                let wordCount = self.wordBrain.itemArray.count
-                if wordCount == 0 {
-                    self.scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
-                }
-                
-                if self.wordBrain.user.count < 1 {
-                    self.wordBrain.createUser()
-                    UserDefault.level.set(0)
-                    UserDefault.lastPoint.set(0)
-                    UserDefault.exerciseCount.set(0)
-                    UserDefault.allTrueCount.set(0)
-                    UserDefault.testCount.set(0)
-                    UserDefault.writingCount.set(0)
-                    UserDefault.listeningCount.set(0)
-                    UserDefault.cardCount.set(0)
-                    UserDefault.trueCount.set(0)
-                    UserDefault.falseCount.set(0)
-                } else {
-                    UserDefault.level.set(self.wordBrain.user[0].level)
-                    UserDefault.lastPoint.set(self.wordBrain.user[0].lastPoint)
-                    UserDefault.exerciseCount.set(self.wordBrain.user[0].exerciseCount)
-                    UserDefault.allTrueCount.set(self.wordBrain.user[0].allTrueCount)
-                    UserDefault.testCount.set(self.wordBrain.user[0].testCount)
-                    UserDefault.writingCount.set(self.wordBrain.user[0].writingCount)
-                    UserDefault.listeningCount.set(self.wordBrain.user[0].listeningCount)
-                    UserDefault.cardCount.set(self.wordBrain.user[0].cardCount)
-                    UserDefault.trueCount.set(self.wordBrain.user[0].trueCount)
-                    UserDefault.falseCount.set(self.wordBrain.user[0].falseCount)
-                }
-            }
-        }
-        
-        //version 2.0.3
-        if UserDefault.keyboardHeight.getCGFloat() == 0 {
-            getKeyboardHeight()
-            //getTopBarHeight()
-        }
-        
-        if UserDefault.topBarHeight.getCGFloat() == 0 {
-            getTopBarHeight()
-        }
-        
-        if UserDefault.setNotificationFirstTime.getInt() == 0 {
-            wordBrain.setNotification()
-            UserDefault.setNotificationFirstTime.set(1)
-        }
-    }
-    
-    func askNotificationPermission(){
-        wordBrain.notificationCenter.requestAuthorization(options: [.alert, .sound]) {
-            (permissionGranted, error) in
-            if(!permissionGranted){
-                print("Permission Denied")
-            }
-        }
-    }
-
-    func showOnboarding(){
-        navigationController?.pushViewController(OnboardingContainerViewController(), animated: true)
-    }
-    
-    func flipCP(button: UIButton, cp: CircularProgressView){
-        cp.trackLayer.lineWidth = 3
-        cp.progressLayer.lineWidth = 3
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
-            UIView.transition(with: cp, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
-            UIView.transition(with: button, duration: 0.5, options: .transitionFlipFromLeft, animations: nil, completion: nil)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5){
-            UIView.transition(with: cp, duration: 0.2, options: .transitionCrossDissolve, animations: {
-                cp.trackLayer.lineWidth = 10
-                cp.progressLayer.lineWidth = 10
-            })
-        }
-    }
-    
-    func updateLevelButtonTitle(isInt: Bool) {
+    func updateLevelButtonTitleAfterPressed(isInt: Bool) {
         if isInt {
             UIView.transition(with: self.levelButton, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
@@ -255,13 +146,13 @@ class HomeViewController: UIViewController, LevelDelegate {
         }
     }
     
-    func performSegue(identifier: String, second: Double){
+    func performSegue(identifier: String, second: Double = 0.0){
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + second){
             self.performSegue(withIdentifier: identifier, sender: self)
         }
     }
  
-    func setupButtons(){
+    func setupButtonImages(){
         exerciseButton.setImage(image: Images.wheelicon, width: 35, height: 35)
         newWordsButton.setImage(image: Images.new, width: 35, height: 35)
         wordsButton.setImage(image: Images.bank, width: 40, height: 40)
@@ -291,13 +182,19 @@ class HomeViewController: UIViewController, LevelDelegate {
         levelButton.setTitle(UserDefault.level.getString(), for: .normal)
         
         levelCP.trackColor = UIColor.white
-        levelCP.progressColor = Colors.pink ?? .systemPink
         levelCP.setProgressWithAnimation(duration: 1.0, value: progressValue)
         
+        levelCP.backgroundColor = Colors.pinkLight
+        newWordCP.backgroundColor = Colors.greenLight
+        wordsCP.backgroundColor = Colors.blueLight
+        hardCP.backgroundColor =  Colors.yellowLight
+        exerciseCP.backgroundColor = Colors.purpleLight
+        
+        levelCP.progressColor = Colors.pink ?? .systemPink
         newWordCP.trackColor = Colors.green ?? .green
         wordsCP.trackColor = Colors.blue ?? .blue
-        exerciseCP.trackColor = Colors.purple ?? .purple
         hardCP.trackColor = Colors.yellow ?? .yellow
+        exerciseCP.trackColor = Colors.purple ?? .purple
         
         let goLevelInfo = UITapGestureRecognizer(target: self, action:  #selector(levelButtonPressed))
         levelCP.addGestureRecognizer(goLevelInfo)
@@ -319,19 +216,15 @@ class HomeViewController: UIViewController, LevelDelegate {
         let wordCount = itemArray.count
         
         if wordCount < 2 {
-            let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
-                self.dismiss(animated: true)
-            }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+            showAlert(title: "Minimum two words are required", message: "")
         } else {
-            performSegue(identifier: "goExercise", second: 0.4)
+            performSegue(identifier: "goExercise", second: 0.1)
         }
     }
         
     func scheduledTimer(timeInterval: Double, _ selector : Selector) {
-        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: timeInterval, target: self,
+                             selector: selector, userInfo: nil, repeats: false)
     }
 
     func fixSoundProblemForRealDevice(){
@@ -348,22 +241,17 @@ class HomeViewController: UIViewController, LevelDelegate {
 extension HomeViewController {
     
     func style() {
-        view.backgroundColor = Colors.raven
-        
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textColor = .white
-        titleLabel.text = "Word Bank"
-        titleLabel.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 23)
-        titleLabel.textColor = Colors.f6f6f6
+        title = "Word Bank"
+        view.backgroundColor = Colors.d6d6d6
         
         leftLineView.translatesAutoresizingMaskIntoConstraints = false
-        leftLineView.backgroundColor = .white
+        leftLineView.backgroundColor = .darkGray
         
         centerLineView.translatesAutoresizingMaskIntoConstraints = false
-        centerLineView.backgroundColor = .white
+        centerLineView.backgroundColor = .darkGray
         
         rightLineView.translatesAutoresizingMaskIntoConstraints = false
-        rightLineView.backgroundColor = .white
+        rightLineView.backgroundColor = .darkGray
         
         levelButton.translatesAutoresizingMaskIntoConstraints = false
         levelButton.addTarget(self, action: #selector(levelButtonPressed), for: .primaryActionTriggered)
@@ -385,8 +273,6 @@ extension HomeViewController {
     }
     
     func layout() {
-        view.addSubview(titleLabel)
-        
         view.addSubview(leftLineView)
         view.addSubview(centerLineView)
         view.addSubview(rightLineView)
@@ -411,9 +297,6 @@ extension HomeViewController {
         hardCP.center = CGPoint(x: view.center.x-121, y: view.center.y)
         
         NSLayoutConstraint.activate([
-            titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 56),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -2),
-                        
             leftLineView.topAnchor.constraint(equalTo: view.topAnchor),
             leftLineView.leadingAnchor.constraint(equalTo: hardCP.centerXAnchor),
             
@@ -578,4 +461,103 @@ extension HomeViewController {
     func getTopBarHeight(){
         UserDefault.topBarHeight.set(self.topbarHeight)
     }
+}
+
+//MARK: - First Launch
+
+extension HomeViewController {
+    
+    func setupFirstLaunch() {
+        //version 2.0.1
+        if UserDefault.x2Time.getValue() == nil {
+            let calendar = Calendar.current
+            let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())!
+            UserDefault.x2Time.set(twoDaysAgo)
+            UserDefault.userSelectedHour.set(23)
+            UserDefault.lastEditLabel.set("empty")
+            UserDefault.exercisePoint.set("10")
+            UserDefault.textSize.set(15)
+            askNotificationPermission()
+            showOnboarding()
+        }
+        
+        //version 2.0.2
+        if UserDefault.exerciseCount.getValue() == nil {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5){
+                self.wordBrain.loadUser()
+                self.wordBrain.loadItemArray()
+                self.wordBrain.loadHardItemArray()
+                
+                UserDefault.hardWordsCount.set(self.wordBrain.hardItemArray.count)
+                
+                let wordCount = self.wordBrain.itemArray.count
+                if wordCount == 0 {
+                    self.scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
+                }
+                
+                if self.wordBrain.user.count < 1 {
+                    self.wordBrain.createUser()
+                    UserDefault.level.set(0)
+                    UserDefault.lastPoint.set(0)
+                    UserDefault.exerciseCount.set(0)
+                    UserDefault.allTrueCount.set(0)
+                    UserDefault.testCount.set(0)
+                    UserDefault.writingCount.set(0)
+                    UserDefault.listeningCount.set(0)
+                    UserDefault.cardCount.set(0)
+                    UserDefault.trueCount.set(0)
+                    UserDefault.falseCount.set(0)
+                } else {
+                    UserDefault.level.set(self.wordBrain.user[0].level)
+                    UserDefault.lastPoint.set(self.wordBrain.user[0].lastPoint)
+                    UserDefault.exerciseCount.set(self.wordBrain.user[0].exerciseCount)
+                    UserDefault.allTrueCount.set(self.wordBrain.user[0].allTrueCount)
+                    UserDefault.testCount.set(self.wordBrain.user[0].testCount)
+                    UserDefault.writingCount.set(self.wordBrain.user[0].writingCount)
+                    UserDefault.listeningCount.set(self.wordBrain.user[0].listeningCount)
+                    UserDefault.cardCount.set(self.wordBrain.user[0].cardCount)
+                    UserDefault.trueCount.set(self.wordBrain.user[0].trueCount)
+                    UserDefault.falseCount.set(self.wordBrain.user[0].falseCount)
+                }
+            }
+        }
+        
+        //version 2.0.3
+        if UserDefault.keyboardHeight.getCGFloat() == 0 {
+            getKeyboardHeight()
+            //getTopBarHeight()
+        }
+        
+        if UserDefault.topBarHeight.getCGFloat() == 0 {
+            getTopBarHeight()
+        }
+        
+        if UserDefault.setNotificationFirstTime.getInt() == 0 {
+            wordBrain.setNotification()
+            UserDefault.setNotificationFirstTime.set(1)
+        }
+    }
+    
+    func askNotificationPermission(){
+        wordBrain.notificationCenter.requestAuthorization(options: [.alert, .sound]) {
+            (permissionGranted, error) in
+            if(!permissionGranted){
+                print("Permission Denied")
+            }
+        }
+    }
+
+    func showOnboarding(){
+        navigationController?.pushViewController(OnboardingContainerViewController(), animated: true)
+    }
+    
+    @objc func appendDefaultWords() {
+        let defaultWordsCount = wordBrain.defaultWords.count
+        
+        for index in 0..<defaultWordsCount {
+            wordBrain.addWord(english: "\(wordBrain.defaultWords[index].eng)",
+                              meaning: "\(wordBrain.defaultWords[index].tr)")
+        }
+        UserDefault.userWordCount.set(defaultWordsCount)
+     }
 }

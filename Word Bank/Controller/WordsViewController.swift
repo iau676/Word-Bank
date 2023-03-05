@@ -199,9 +199,9 @@ class WordsViewController: UIViewController {
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
         if whichButton == ExerciseType.normal {
-            gradient.colors = [Colors.blue!.cgColor, Colors.blueBottom!.cgColor]
+            gradient.colors = [Colors.blue!.cgColor, Colors.blueLight!.cgColor]
         } else {
-            gradient.colors = [Colors.yellow!.cgColor, Colors.yellowBottom!.cgColor]
+            gradient.colors = [Colors.yellow!.cgColor, Colors.yellowLight!.cgColor]
         }
         view.layer.insertSublayer(gradient, at: 0)
     }
@@ -452,19 +452,6 @@ extension WordsViewController {
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
-    }
-}
-
-//dismiss keyboard when user tap around
-extension WordsViewController {
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(WordsViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
 }
 
