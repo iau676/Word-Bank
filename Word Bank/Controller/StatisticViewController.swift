@@ -281,31 +281,24 @@ extension StatisticViewController {
         
         tabBar.delegate = self
         
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.backgroundColor = Colors.cellLeft
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 48
         stackView.distribution = .fill
         
-        barChartLabel.translatesAutoresizingMaskIntoConstraints = false
         barChartLabel.textColor = Colors.black
         barChartLabel.numberOfLines = 1
         
-        lineChartLabel.translatesAutoresizingMaskIntoConstraints = false
         lineChartLabel.textColor = Colors.black
         lineChartLabel.numberOfLines = 1
         
-        barView.translatesAutoresizingMaskIntoConstraints = false
         barView.backgroundColor = Colors.cellRight
         barView.layer.cornerRadius = 16
         
-        lineView.translatesAutoresizingMaskIntoConstraints = false
         lineView.backgroundColor = Colors.cellRight
         lineView.layer.cornerRadius = 16
         
-        pieView.translatesAutoresizingMaskIntoConstraints = false
         pieView.backgroundColor = Colors.cellRight
         pieView.layer.cornerRadius = 16
         

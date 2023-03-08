@@ -122,22 +122,18 @@ extension CardViewController {
     private func style(){
         view.backgroundColor = Colors.ravenShadow
         
-        cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.backgroundColor = Colors.raven
         cardView.layer.cornerRadius = 16
         
-        backgroundCardView.translatesAutoresizingMaskIntoConstraints = false
         backgroundCardView.backgroundColor = Colors.raven
         backgroundCardView.layer.cornerRadius = 16
         
-        cardLabel.translatesAutoresizingMaskIntoConstraints = false
         cardLabel.textColor = .white
         cardLabel.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 25)
         cardLabel.textAlignment = .center
         cardLabel.lineBreakMode = .byWordWrapping
         cardLabel.numberOfLines = 0
         
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0
     }
     
@@ -149,27 +145,22 @@ extension CardViewController {
         view.addSubview(backgroundCardView)
         view.addSubview(cardView)
         
-        NSLayoutConstraint.activate([
-            cardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            cardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
-            
-            backgroundCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            backgroundCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            backgroundCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            backgroundCardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
-            
-            imageView.widthAnchor.constraint(equalToConstant: 100),
-            imageView.heightAnchor.constraint(equalToConstant: 100),
-            imageView.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
-            
-            cardLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
-            cardLabel.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
-            cardLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
-            cardLabel.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
-        ])
+        cardView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                        bottom: view.bottomAnchor, right: view.rightAnchor,
+                        paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+        
+        backgroundCardView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                                  bottom: view.bottomAnchor, right: view.rightAnchor,
+                                  paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+        
+        imageView.setDimensions(height: 100, width: 100)
+        imageView.centerY(inView: cardView)
+        imageView.centerX(inView: cardView)
+        
+        cardLabel.centerX(inView: cardView)
+        cardLabel.centerY(inView: cardView)
+        cardLabel.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor,
+                         paddingLeft: 16, paddingRight: 16)
     }
 }
 

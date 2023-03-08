@@ -182,33 +182,29 @@ extension X2SettingViewController {
     func style() {
         view.backgroundColor = Colors.cellLeft
         
-        pickerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.backgroundColor = .darkGray
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.titleLabel?.font =  UIFont(name: Fonts.AvenirNextRegular, size: textSize)
-        saveButton.addTarget(self, action: #selector(saveButtonPressed(_:)), for: .primaryActionTriggered)
+        saveButton.addTarget(self, action: #selector(saveButtonPressed(_:)),
+                             for: .primaryActionTriggered)
         
-        lastEditLabel.translatesAutoresizingMaskIntoConstraints = false
         lastEditLabel.textColor = Colors.black
         lastEditLabel.textAlignment = .center
         lastEditLabel.numberOfLines = 0
         lastEditLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
-        infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.textColor = Colors.black
         infoLabel.textAlignment = .center
         infoLabel.numberOfLines = 0
         infoLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
-        allowNotificationButton.translatesAutoresizingMaskIntoConstraints = false
         allowNotificationButton.backgroundColor = .darkGray
         allowNotificationButton.setTitle("Allow Notification", for: .normal)
         allowNotificationButton.setTitleColor(.white, for: .normal)
         allowNotificationButton.titleLabel?.font =  UIFont(name: Fonts.AvenirNextRegular, size: textSize)
-        allowNotificationButton.addTarget(self, action: #selector(notificationButtonPressed(_:)), for: .primaryActionTriggered)
+        allowNotificationButton.addTarget(self, action: #selector(notificationButtonPressed(_:)),
+                                          for: .primaryActionTriggered)
     }
     
     func layout() {
@@ -218,25 +214,23 @@ extension X2SettingViewController {
         view.addSubview(infoLabel)
         view.addSubview(allowNotificationButton)
         
-        NSLayoutConstraint.activate([
-            pickerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
-            pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            saveButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 16),
-            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            lastEditLabel.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 16),
-            lastEditLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            lastEditLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            infoLabel.topAnchor.constraint(equalTo: lastEditLabel.bottomAnchor, constant: 16),
-            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            allowNotificationButton.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 16),
-            allowNotificationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            allowNotificationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-        ])
+        pickerView.centerX(inView: view)
+        pickerView.anchor(top: view.topAnchor, paddingTop: 32)
+        
+        saveButton.anchor(top: pickerView.bottomAnchor, left: view.leftAnchor,
+                          right: view.rightAnchor, paddingTop: 16,
+                          paddingLeft: 32, paddingRight: 32)
+        
+        lastEditLabel.anchor(top: saveButton.bottomAnchor, left: view.leftAnchor,
+                             right: view.rightAnchor, paddingTop: 16,
+                             paddingLeft: 32, paddingRight: 32)
+        
+        infoLabel.anchor(top: lastEditLabel.bottomAnchor, left: view.leftAnchor,
+                         right: view.rightAnchor, paddingTop: 16,
+                         paddingLeft: 32, paddingRight: 32)
+        
+        allowNotificationButton.anchor(top: infoLabel.bottomAnchor, left: view.leftAnchor,
+                                       right: view.rightAnchor, paddingTop: 16,
+                                       paddingLeft: 32, paddingRight: 32)
     }
 }

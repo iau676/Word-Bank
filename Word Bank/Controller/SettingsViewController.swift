@@ -239,79 +239,65 @@ extension SettingsViewController {
         
         tabBar.delegate = self
         
-        xView.translatesAutoresizingMaskIntoConstraints = false
         xView.setViewCornerRadius(8)
         let xViewGesture = UITapGestureRecognizer(target: self, action:  #selector(self.xViewPressed))
         xView.addGestureRecognizer(xViewGesture)
         
-        appSoundView.translatesAutoresizingMaskIntoConstraints = false
         appSoundView.setViewCornerRadius(8)
-        
-        wordSoundView.translatesAutoresizingMaskIntoConstraints = false
         wordSoundView.setViewCornerRadius(8)
-        
-        soundSpeedView.translatesAutoresizingMaskIntoConstraints = false
         soundSpeedView.setViewCornerRadius(8)
-        
-        textSizeView.translatesAutoresizingMaskIntoConstraints = false
         textSizeView.setViewCornerRadius(8)
         
-        soundSpeedStackView.translatesAutoresizingMaskIntoConstraints = false
         soundSpeedStackView.axis = .vertical
         soundSpeedStackView.spacing = 8
         soundSpeedStackView.distribution = .fill
         
-        textSizeStackView.translatesAutoresizingMaskIntoConstraints = false
         textSizeStackView.axis = .vertical
         textSizeStackView.spacing = 8
         textSizeStackView.distribution = .fill
         
-        x2Label.translatesAutoresizingMaskIntoConstraints = false
         x2Label.text = "2x Hour"
         x2Label.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
-        x2HoursLabel.translatesAutoresizingMaskIntoConstraints = false
         x2HoursLabel.textAlignment = .right
         x2HoursLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
-        appSoundLabel.translatesAutoresizingMaskIntoConstraints = false
         appSoundLabel.text = "App Sound"
         appSoundLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
-        appSoundSwitch.translatesAutoresizingMaskIntoConstraints = false
-        appSoundSwitch.addTarget(self, action: #selector(appSoundChanged(_:)), for: UIControl.Event.valueChanged)
+        appSoundSwitch.addTarget(self, action: #selector(appSoundChanged(_:)),
+                                 for: UIControl.Event.valueChanged)
         
-        wordSoundLabel.translatesAutoresizingMaskIntoConstraints = false
         wordSoundLabel.text = "Word Sound"
         wordSoundLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
-        wordSoundSwitch.translatesAutoresizingMaskIntoConstraints = false
-        wordSoundSwitch.addTarget(self, action: #selector(wordSoundChanged(_:)), for: UIControl.Event.valueChanged)
+        wordSoundSwitch.addTarget(self, action: #selector(wordSoundChanged(_:)),
+                                  for: UIControl.Event.valueChanged)
         
-        soundSpeedLabel.translatesAutoresizingMaskIntoConstraints = false
         soundSpeedLabel.text = "Sound Speed"
         soundSpeedLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
-        soundSpeedButton.translatesAutoresizingMaskIntoConstraints = false
-        soundSpeedButton.addTarget(self, action: #selector(soundSpeedButtonPressed), for: .primaryActionTriggered)
+        soundSpeedButton.addTarget(self, action: #selector(soundSpeedButtonPressed),
+                                   for: .primaryActionTriggered)
         
-        soundSpeedSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         soundSpeedSegmentedControl.replaceSegments(segments: ["0.5", "1", "2"])
-        soundSpeedSegmentedControl.addTarget(self, action: #selector(soundSpeedChanged(_:)), for: UIControl.Event.valueChanged)
+        soundSpeedSegmentedControl.addTarget(self, action: #selector(soundSpeedChanged(_:)),
+                                             for: UIControl.Event.valueChanged)
         
-        textSizeLabel.translatesAutoresizingMaskIntoConstraints = false
         textSizeLabel.text = "Text Size"
         textSizeLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
-        textSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         textSegmentedControl.replaceSegments(segments: ["9", "11", "13", "15", "17", "19", "21"])
-        textSegmentedControl.addTarget(self, action: #selector(textSizeChanged(_:)), for: UIControl.Event.valueChanged)
+        textSegmentedControl.addTarget(self, action: #selector(textSizeChanged(_:)),
+                                       for: UIControl.Event.valueChanged)
         
-        exerciseSettingsButton.translatesAutoresizingMaskIntoConstraints = false
         exerciseSettingsButton.setTitle("Exercise Settings", for: [])
         exerciseSettingsButton.layer.cornerRadius = 10
-        exerciseSettingsButton.setImageWithRenderingMode(image: Images.next, width: 18, height: 18, color: Colors.black ?? .black)
-        exerciseSettingsButton.addTarget(self, action: #selector(exerciseSettingsButtonPressed), for: .primaryActionTriggered)
+        exerciseSettingsButton.setImageWithRenderingMode(image: Images.next,
+                                                         width: 18, height: 18,
+                                                         color: Colors.black ?? .black)
+        exerciseSettingsButton.addTarget(self, action: #selector(exerciseSettingsButtonPressed),
+                                         for: .primaryActionTriggered)
     }
     
     func layout() {
@@ -343,76 +329,72 @@ extension SettingsViewController {
         view.addSubview(textSizeView)
         view.addSubview(exerciseSettingsButton)
         
-        NSLayoutConstraint.activate([
-            
-            xView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 16),
-            xView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            xView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            x2Label.topAnchor.constraint(equalTo: xView.topAnchor, constant: 8),
-            x2Label.leadingAnchor.constraint(equalTo: xView.leadingAnchor, constant: 16),
-            x2Label.bottomAnchor.constraint(equalTo: xView.bottomAnchor, constant: -8),
-            
-            x2HoursLabel.topAnchor.constraint(equalTo: xView.topAnchor, constant: 8),
-            x2HoursLabel.trailingAnchor.constraint(equalTo: xView.trailingAnchor, constant: -16),
-            x2HoursLabel.bottomAnchor.constraint(equalTo: xView.bottomAnchor, constant: -8),
-
-            appSoundView.topAnchor.constraint(equalTo: xView.bottomAnchor, constant: 16),
-            appSoundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            appSoundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            appSoundLabel.topAnchor.constraint(equalTo: appSoundView.topAnchor, constant: 8),
-            appSoundLabel.leadingAnchor.constraint(equalTo: appSoundView.leadingAnchor, constant: 16),
-            appSoundLabel.bottomAnchor.constraint(equalTo: appSoundView.bottomAnchor, constant: -8),
-            
-            appSoundSwitch.topAnchor.constraint(equalTo: appSoundView.topAnchor, constant: 4),
-            appSoundSwitch.trailingAnchor.constraint(equalTo: appSoundView.trailingAnchor, constant: -16),
-            
-            wordSoundView.topAnchor.constraint(equalTo: appSoundView.bottomAnchor, constant: 16),
-            wordSoundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            wordSoundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            wordSoundLabel.topAnchor.constraint(equalTo: wordSoundView.topAnchor, constant: 8),
-            wordSoundLabel.leadingAnchor.constraint(equalTo: wordSoundView.leadingAnchor, constant: 16),
-            wordSoundLabel.bottomAnchor.constraint(equalTo: wordSoundView.bottomAnchor, constant: -8),
-            
-            wordSoundSwitch.topAnchor.constraint(equalTo: wordSoundView.topAnchor, constant: 4),
-            wordSoundSwitch.trailingAnchor.constraint(equalTo: wordSoundView.trailingAnchor, constant: -16),
-            
-            soundSpeedView.topAnchor.constraint(equalTo: wordSoundView.bottomAnchor, constant: 16),
-            soundSpeedView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            soundSpeedView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            soundSpeedButton.topAnchor.constraint(equalTo: soundSpeedView.topAnchor, constant: 9),
-            soundSpeedButton.trailingAnchor.constraint(equalTo: soundSpeedView.trailingAnchor, constant: -16),
-            
-            soundSpeedStackView.topAnchor.constraint(equalTo: soundSpeedView.topAnchor, constant: 16),
-            soundSpeedStackView.leadingAnchor.constraint(equalTo: soundSpeedView.leadingAnchor, constant: 16),
-            soundSpeedStackView.trailingAnchor.constraint(equalTo: soundSpeedView.trailingAnchor, constant: -16),
-            soundSpeedStackView.bottomAnchor.constraint(equalTo: soundSpeedView.bottomAnchor, constant: -16),
-            
-            textSizeView.topAnchor.constraint(equalTo: soundSpeedView.bottomAnchor, constant: 16),
-            textSizeView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            textSizeView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            textSizeStackView.topAnchor.constraint(equalTo: textSizeView.topAnchor, constant: 16),
-            textSizeStackView.leadingAnchor.constraint(equalTo: textSizeView.leadingAnchor, constant: 16),
-            textSizeStackView.trailingAnchor.constraint(equalTo: textSizeView.trailingAnchor, constant: -16),
-            textSizeStackView.bottomAnchor.constraint(equalTo: textSizeView.bottomAnchor, constant: -16),
-            
-            exerciseSettingsButton.topAnchor.constraint(equalTo: textSizeView.bottomAnchor, constant: 16),
-            exerciseSettingsButton.leadingAnchor.constraint(equalTo: textSizeView.leadingAnchor),
-            exerciseSettingsButton.trailingAnchor.constraint(equalTo: textSizeView.trailingAnchor)
-        ])
+        //2x Hour
+        xView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                     right: view.rightAnchor, paddingTop: 16,
+                     paddingLeft: 32, paddingRight: 32)
         
-        NSLayoutConstraint.activate([
-            xView.heightAnchor.constraint(equalToConstant: 40),
-            appSoundView.heightAnchor.constraint(equalToConstant: 40),
-            wordSoundView.heightAnchor.constraint(equalToConstant: 40),
-            soundSpeedView.heightAnchor.constraint(equalToConstant: 90),
-            textSizeView.heightAnchor.constraint(equalToConstant: 90),
-            exerciseSettingsButton.heightAnchor.constraint(equalToConstant: 40),
-        ])
+        x2Label.centerY(inView: xView)
+        x2Label.anchor(left: xView.leftAnchor, paddingLeft: 16)
+        
+        x2HoursLabel.centerY(inView: xView)
+        x2HoursLabel.anchor(right: xView.rightAnchor, paddingRight: 16)
+        
+        //App Sound
+        appSoundView.anchor(top: xView.bottomAnchor, left: view.leftAnchor,
+                            right: view.rightAnchor, paddingTop: 16,
+                            paddingLeft: 32, paddingRight: 32)
+        
+        appSoundLabel.centerY(inView: appSoundView)
+        appSoundLabel.anchor(left: appSoundView.leftAnchor, paddingLeft: 16)
+        
+        appSoundSwitch.centerY(inView: appSoundView)
+        appSoundSwitch.anchor(right: appSoundView.rightAnchor, paddingRight: 16)
+        
+        //Word Sound
+        wordSoundView.anchor(top: appSoundView.bottomAnchor, left: view.leftAnchor,
+                             right: view.rightAnchor, paddingTop: 16,
+                             paddingLeft: 32, paddingRight: 32)
+        
+        wordSoundLabel.centerY(inView: wordSoundView)
+        wordSoundLabel.anchor(left: wordSoundView.leftAnchor, paddingLeft: 16)
+        
+        wordSoundSwitch.centerY(inView: wordSoundView)
+        wordSoundSwitch.anchor(right: wordSoundView.rightAnchor, paddingRight: 16)
+        
+        //Sound Speed
+        soundSpeedView.anchor(top: wordSoundView.bottomAnchor, left: view.leftAnchor,
+                              right: view.rightAnchor, paddingTop: 16,
+                              paddingLeft: 32, paddingRight: 32)
+        
+        soundSpeedButton.anchor(top: soundSpeedView.topAnchor, right: soundSpeedView.rightAnchor,
+                                paddingTop: 9, paddingRight: 16)
+        
+        soundSpeedStackView.anchor(top: soundSpeedView.topAnchor, left: soundSpeedView.leftAnchor,
+                                   bottom: soundSpeedView.bottomAnchor, right: soundSpeedView.rightAnchor,
+                                   paddingTop: 16, paddingLeft: 16,
+                                   paddingBottom: 16, paddingRight: 16)
+        
+        //Text Size
+        textSizeView.anchor(top: soundSpeedView.bottomAnchor, left: view.leftAnchor,
+                            right: view.rightAnchor, paddingTop: 16,
+                            paddingLeft: 32, paddingRight: 32)
+        
+        textSizeStackView.anchor(top: textSizeView.topAnchor, left: textSizeView.leftAnchor,
+                                 bottom: textSizeView.bottomAnchor, right: textSizeView.rightAnchor,
+                                 paddingTop: 16, paddingLeft: 16,
+                                 paddingBottom: 16, paddingRight: 16)
+        
+        //Exercise Settings
+        exerciseSettingsButton.anchor(top: textSizeView.bottomAnchor, left: textSizeView.leftAnchor,
+                                      right: textSizeView.rightAnchor, paddingTop: 16)
+        
+        xView.setHeight(height: 40)
+        appSoundView.setHeight(height: 40)
+        wordSoundView.setHeight(height: 40)
+        soundSpeedView.setHeight(height: 90)
+        textSizeView.setHeight(height: 90)
+        exerciseSettingsButton.setHeight(height: 40)
         exerciseSettingsButton.moveImageRight()
         
         view.addSubview(tabBar)

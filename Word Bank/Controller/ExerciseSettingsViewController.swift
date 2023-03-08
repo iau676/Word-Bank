@@ -79,29 +79,25 @@ class ExerciseSettingsViewController: UIViewController {
         setColors()
         
         //Test Type
-        testTypeView.translatesAutoresizingMaskIntoConstraints = false
         testTypeView.setViewCornerRadius(8)
         
-        testTypeStackView.translatesAutoresizingMaskIntoConstraints = false
         testTypeStackView.axis = .vertical
         testTypeStackView.spacing = 8
         testTypeStackView.distribution = .fill
         
-        testTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         testTypeLabel.text = "Test Type"
         testTypeLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
-        testTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         testTypeSegmentedControl.replaceSegments(segments: ["English - Meaning", "Meaning - English"])
-        testTypeSegmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black ?? .black, .font: UIFont.systemFont(ofSize: textSize-3),], for: .normal)
+        testTypeSegmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black ?? .black,
+                                                         .font: UIFont.systemFont(ofSize: textSize-3),], for: .normal)
         testTypeSegmentedControl.selectedSegmentIndex = UserDefault.selectedTestType.getInt()
-        testTypeSegmentedControl.addTarget(self, action: #selector(testTypeChanged(_:)), for: UIControl.Event.valueChanged)
+        testTypeSegmentedControl.addTarget(self, action: #selector(testTypeChanged(_:)),
+                                           for: UIControl.Event.valueChanged)
         
         //Point Effect
-        pointView.translatesAutoresizingMaskIntoConstraints = false
         pointView.setViewCornerRadius(8)
         
-        pointLabel.translatesAutoresizingMaskIntoConstraints = false
         pointLabel.text = "Point Effect"
         pointLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
@@ -109,10 +105,8 @@ class ExerciseSettingsViewController: UIViewController {
         pointCV.dataSource = self
         
         //Typing
-        typingView.translatesAutoresizingMaskIntoConstraints = false
         typingView.setViewCornerRadius(8)
         
-        typingLabel.translatesAutoresizingMaskIntoConstraints = false
         typingLabel.text = "Typing"
         typingLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
@@ -128,60 +122,50 @@ class ExerciseSettingsViewController: UIViewController {
         testTypeStackView.addArrangedSubview(testTypeLabel)
         testTypeStackView.addArrangedSubview(testTypeSegmentedControl)
         
-        NSLayoutConstraint.activate([
-            testTypeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            testTypeView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            testTypeView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            
-            testTypeStackView.topAnchor.constraint(equalTo: testTypeView.topAnchor, constant: 16),
-            testTypeStackView.leadingAnchor.constraint(equalTo: testTypeView.leadingAnchor, constant: 16),
-            testTypeStackView.trailingAnchor.constraint(equalTo: testTypeView.trailingAnchor, constant: -16),
-            testTypeStackView.bottomAnchor.constraint(equalTo: testTypeView.bottomAnchor, constant: -16),
-        ])
+        testTypeView.setHeight(height: 90)
+        testTypeView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            right: view.rightAnchor, paddingTop: 16,
+                            paddingLeft: 32, paddingRight: 32)
+        
+        testTypeStackView.anchor(top: testTypeView.topAnchor, left: testTypeView.leftAnchor,
+                                 bottom: testTypeView.bottomAnchor, right: testTypeView.rightAnchor,
+                                 paddingTop: 16, paddingLeft: 16,
+                                 paddingBottom: 16, paddingRight: 16)
         
         //Point Effect
         view.addSubview(pointView)
         pointView.addSubview(pointLabel)
         pointView.addSubview(pointCV)
         
-        NSLayoutConstraint.activate([
-            pointView.topAnchor.constraint(equalTo: testTypeView.bottomAnchor, constant: 16),
-            pointView.leadingAnchor.constraint(equalTo: testTypeView.leadingAnchor),
-            pointView.trailingAnchor.constraint(equalTo: testTypeView.trailingAnchor),
-            
-            pointLabel.topAnchor.constraint(equalTo: pointView.topAnchor, constant: 16),
-            pointLabel.leadingAnchor.constraint(equalTo: pointView.leadingAnchor, constant: 16),
-            
-            pointCV.topAnchor.constraint(equalTo: pointLabel.bottomAnchor, constant: 8),
-            pointCV.leadingAnchor.constraint(equalTo: pointView.leadingAnchor, constant: 16),
-            pointCV.trailingAnchor.constraint(equalTo: pointView.trailingAnchor, constant: -16),
-            pointCV.bottomAnchor.constraint(equalTo: pointView.bottomAnchor, constant: -16),
-        ])
+        pointView.setHeight(height: 160)
+        pointView.anchor(top: testTypeView.bottomAnchor, left: testTypeView.leftAnchor,
+                         right: testTypeView.rightAnchor, paddingTop: 16)
+        
+        pointLabel.anchor(top: pointView.topAnchor, left: pointView.leftAnchor,
+                          paddingTop: 16, paddingLeft: 16)
+        
+        pointCV.anchor(top: pointLabel.bottomAnchor, left: pointView.leftAnchor,
+                       bottom: pointView.bottomAnchor, right: pointView.rightAnchor,
+                       paddingTop: 8, paddingLeft: 16,
+                       paddingBottom: 16, paddingRight: 16)
         
         //Typing
         view.addSubview(typingView)
         typingView.addSubview(typingLabel)
         typingView.addSubview(typingCV)
         
-        NSLayoutConstraint.activate([
-            typingView.topAnchor.constraint(equalTo: pointView.bottomAnchor, constant: 16),
-            typingView.leadingAnchor.constraint(equalTo: testTypeView.leadingAnchor),
-            typingView.trailingAnchor.constraint(equalTo: testTypeView.trailingAnchor),
-            
-            typingLabel.topAnchor.constraint(equalTo: typingView.topAnchor, constant: 16),
-            typingLabel.leadingAnchor.constraint(equalTo: typingView.leadingAnchor, constant: 16),
-            
-            typingCV.topAnchor.constraint(equalTo: typingLabel.bottomAnchor, constant: 8),
-            typingCV.leadingAnchor.constraint(equalTo: typingView.leadingAnchor, constant: 16),
-            typingCV.trailingAnchor.constraint(equalTo: typingView.trailingAnchor, constant: -16),
-            typingCV.bottomAnchor.constraint(equalTo: typingView.bottomAnchor, constant: -16),
-        ])
+        typingView.setHeight(height: 160)
+        typingView.anchor(top: pointView.bottomAnchor, left: testTypeView.leftAnchor,
+                          right: testTypeView.rightAnchor, paddingTop: 16)
         
-        NSLayoutConstraint.activate([
-            testTypeView.heightAnchor.constraint(equalToConstant: 90),
-            pointView.heightAnchor.constraint(equalToConstant: 160),
-            typingView.heightAnchor.constraint(equalToConstant: 160),
-        ])
+        typingLabel.anchor(top: typingView.topAnchor, left: typingView.leftAnchor,
+                           paddingTop: 16, paddingLeft: 16)
+        
+        
+        typingCV.anchor(top: typingLabel.bottomAnchor, left: typingView.leftAnchor,
+                        bottom: typingView.bottomAnchor, right: typingView.rightAnchor,
+                        paddingTop: 8, paddingLeft: 16,
+                        paddingBottom: 16, paddingRight: 16)
     }
     
     //MARK: - Selectors

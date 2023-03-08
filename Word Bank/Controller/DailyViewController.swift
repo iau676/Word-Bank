@@ -264,31 +264,26 @@ extension DailyViewController {
         
         tabBar.delegate = self
         
-        secondView.translatesAutoresizingMaskIntoConstraints = false
         secondView.backgroundColor = Colors.cellRight
         secondView.setViewCornerRadius(10)
         
         //top tabBar
-        topTapBarStackView.translatesAutoresizingMaskIntoConstraints = false
         topTapBarStackView.axis = .horizontal
         topTapBarStackView.distribution = .fillEqually
         topTapBarStackView.spacing = 0
         
-        dailyTaskButton.translatesAutoresizingMaskIntoConstraints = false
         dailyTaskButton.setImage(image: Images.wheel_prize_present, width: 25, height: 25)
         dailyTaskButton.setButtonCornerRadius(8)
         dailyTaskButton.layer.maskedCorners = [.layerMinXMinYCorner]
         dailyTaskButton.backgroundColor = Colors.cellRight
         dailyTaskButton.addTarget(self, action: #selector(dailyTaskButtonPressed), for: .primaryActionTriggered)
         
-        x2EventButton.translatesAutoresizingMaskIntoConstraints = false
         x2EventButton.setImage(image: UIImage(named: "x2V"), width: 25, height: 25)
         x2EventButton.setButtonCornerRadius(8)
         x2EventButton.layer.maskedCorners = [.layerMaxXMinYCorner]
         x2EventButton.backgroundColor = Colors.pink
         x2EventButton.addTarget(self, action: #selector(x2EventButtonPressed), for: .primaryActionTriggered)
         
-        lineView.translatesAutoresizingMaskIntoConstraints = false
         lineView.backgroundColor = .systemGray5
         
         //Daily
@@ -324,19 +319,16 @@ extension DailyViewController {
         prizeButton.addTarget(self, action: #selector(prizeButtonPressed), for: .primaryActionTriggered)
         
         //2x
-        x2Label.translatesAutoresizingMaskIntoConstraints = false
         x2Label.font = UIFont(name: Fonts.AvenirNextRegular, size: 21)
         x2Label.textColor = Colors.f6f6f6
         x2Label.numberOfLines = 0
         x2Label.textAlignment = .center
         
-        wheelButton.translatesAutoresizingMaskIntoConstraints = false
         wheelButton.setImage(image: Images.wheelicon, width: 128, height: 128)
         wheelButton.backgroundColor = .clear
         wheelButton.isEnabled = true
         wheelButton.addTarget(self, action: #selector(wheelButtonPressed), for: .primaryActionTriggered)
         
-        whiteCircleButton.translatesAutoresizingMaskIntoConstraints = false
         whiteCircleButton.backgroundColor = .white
         whiteCircleButton.setButtonCornerRadius(9)
         whiteCircleButton.layer.borderWidth = 0.6

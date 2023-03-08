@@ -13,8 +13,13 @@ class WheelViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(goExercise(_:)), name: Notification.Name(rawValue: "presentExercise"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(goHome), name: Notification.Name(rawValue: "goHome"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(goExercise(_:)),
+                                               name: Notification.Name(rawValue: "presentExercise"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(goHome),
+                                               name: Notification.Name(rawValue: "goHome"),
+                                               object: nil)
         self.view = SKView()
         let vieW = self.view as! SKView?
         let scene = SKScene(fileNamed: "GameScene")
