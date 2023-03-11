@@ -51,7 +51,6 @@ class AddViewController: UIViewController {
         cofigureTextViewYAnchor()
         addGestureRecognizer()
         checkEditStatus()
-        preventInterrupt()
         userWordCountIntVariable = wordBrain.itemArray.count
     }
     
@@ -85,7 +84,7 @@ class AddViewController: UIViewController {
 
                 flipCoinButton()
             } else {
-                maxCharacterAlert()
+                showAlert(title: "Max character is 20", message: "")
             }
         }
     }
@@ -212,15 +211,6 @@ class AddViewController: UIViewController {
         } else {
             dismiss(animated: true, completion: nil)
         }
-    }
-    
-    private func maxCharacterAlert(){
-        showAlert(title: "Max character is 20", message: "")
-    }
-        
-    func preventInterrupt(){
-        // None of our movies should interrupt system music playback.
-            _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
     }
 }
 

@@ -22,6 +22,8 @@ class Player {
         let u = AVSpeechUtterance(string: word)
         u.voice = AVSpeechSynthesisVoice(language: "en-US")
         u.rate = Float(selectedSpeed)
+        _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
+                                                             mode: .default, options: .mixWithOthers)
         Player.synth.speak(u)
     }
     
@@ -30,7 +32,8 @@ class Player {
             let url = Bundle.main.url(forResource: "\(soundName)", withExtension: "mp3")
             playerMP3 = try! AVAudioPlayer(contentsOf: url!)
             do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
+                                                                mode: .default, options: .mixWithOthers)
                 try AVAudioSession.sharedInstance().setActive(true)
             } catch {
              print(error)
@@ -45,7 +48,8 @@ class Player {
         let player = AVPlayer(url: url)
         player.actionAtItemEnd = .none
         player.isMuted = true
-        _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
+        _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
+                                                             mode: .default, options: .mixWithOthers)
         return player
     }
     

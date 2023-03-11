@@ -88,7 +88,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         configureBackBarButton()
         addGestureRecognizer()
         updateScreenWhenKeyboardWillShow()
-        preventInterrupt()
     }
 
     override func viewWillAppear(_ animated: Bool) { 
@@ -496,11 +495,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     
     func scheduledTimer(timeInterval: Double, _ selector : Selector) {
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
-    }
-    
-    func preventInterrupt(){
-        // None of our movies should interrupt system music playback.
-            _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
     }
 }
 
