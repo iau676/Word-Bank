@@ -162,7 +162,7 @@ class DailyViewController: UIViewController {
             taskTwoButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
         }
         
-        if writingExerciseCount >= 10 {
+        if listeningExerciseCount >= 10 {
             taskThreeButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
         }
     }
@@ -172,17 +172,15 @@ class DailyViewController: UIViewController {
     }
     
     func configureLayerButton(_ button: UIButton, _ color: UIColor?) {
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setHeight(height: 60)
         button.setButtonCornerRadius(8)
         button.backgroundColor = color
     }
     
     func configureButton(_ button: UIButton, _ text: String){
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
         button.setButtonCornerRadius(8)
-       // button.backgroundColor = UIColor(hex: "#d9d9d9")
     }
     
     func configureNavigationBar(){
@@ -344,130 +342,86 @@ extension DailyViewController {
         secondView.addSubview(topTapBarStackView)
         secondView.addSubview(lineView)
         
-        //Daily
-        secondView.addSubview(taskOneButtonRavenLayer)
-        secondView.addSubview(taskOneButtonBlueLayer)
-        secondView.addSubview(taskOneButton)
         
-        secondView.addSubview(taskTwoButtonRavenLayer)
-        secondView.addSubview(taskTwoButtonBlueLayer)
-        secondView.addSubview(taskTwoButton)
+        let taskButtonW = view.bounds.width-64-32
+        let taskOneBlueLayerWidth = (taskButtonW/10)*CGFloat(wordBrain.getTestExerciseCountToday())
+        let taskTwoBlueLayerWidth = (taskButtonW/10)*CGFloat(wordBrain.getWritingExerciseCountToday())
+        let taskThreeBlueLayerWidth = (taskButtonW/10)*CGFloat(wordBrain.getListeningExerciseCountToday())
         
-        secondView.addSubview(taskThreeButtonRavenLayer)
-        secondView.addSubview(taskThreeButtonBlueLayer)
-        secondView.addSubview(taskThreeButton)
-        
-        secondView.addSubview(prizeButton)
-        
-        //2x
-        secondView.addSubview(x2Label)
-        secondView.addSubview(wheelButton)
-        secondView.addSubview(whiteCircleButton)
-        
-        let taskOneBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(wordBrain.getTestExerciseCountToday())
-        let taskTwoBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(wordBrain.getWritingExerciseCountToday())
-        let taskThreeBlueLayerWidth = taskButtonWidth-(taskButtonWidth/10)*CGFloat(wordBrain.getListeningExerciseCountToday())
-        
-        NSLayoutConstraint.activate([
-            secondView.topAnchor.constraint(equalTo: view.topAnchor, constant: wordBrain.getTopBarHeight() + 8),
-            secondView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            secondView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            secondView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -82)
-        ])
-        
+        secondView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                          bottom: view.bottomAnchor, right: view.rightAnchor,
+                          paddingTop: 8, paddingLeft: 32,
+                          paddingBottom: 82, paddingRight: 32)
+
         //top tabBar
-        NSLayoutConstraint.activate([
-            topTapBarStackView.topAnchor.constraint(equalTo: secondView.topAnchor),
-            topTapBarStackView.leadingAnchor.constraint(equalTo: secondView.leadingAnchor),
-            topTapBarStackView.trailingAnchor.constraint(equalTo: secondView.trailingAnchor),
-            topTapBarStackView.heightAnchor.constraint(equalToConstant: 66),
-        ])
+        topTapBarStackView.setHeight(height: 66)
+        topTapBarStackView.anchor(top: secondView.topAnchor, left: secondView.leftAnchor,
+                                  right: secondView.rightAnchor)
         
-        NSLayoutConstraint.activate([
-            lineView.topAnchor.constraint(equalTo: topTapBarStackView.bottomAnchor),
-            lineView.leadingAnchor.constraint(equalTo: secondView.leadingAnchor),
-            lineView.trailingAnchor.constraint(equalTo: secondView.trailingAnchor),
-            lineView.heightAnchor.constraint(equalToConstant: 1),
-        ])
+        lineView.setHeight(height: 1)
+        lineView.anchor(top: topTapBarStackView.bottomAnchor, left: secondView.leftAnchor,
+                        right: secondView.rightAnchor)
         
         //Daily
-        NSLayoutConstraint.activate([
-            taskOneButtonRavenLayer.topAnchor.constraint(equalTo: topTapBarStackView.bottomAnchor, constant: 32),
-            taskOneButtonRavenLayer.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
-            taskOneButtonRavenLayer.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
-            taskOneButtonRavenLayer.heightAnchor.constraint(equalToConstant: 66),
-            
-            taskOneButtonBlueLayer.topAnchor.constraint(equalTo: taskOneButtonRavenLayer.topAnchor),
-            taskOneButtonBlueLayer.leadingAnchor.constraint(equalTo: taskOneButtonRavenLayer.leadingAnchor),
-            taskOneButtonBlueLayer.trailingAnchor.constraint(equalTo: taskOneButtonRavenLayer.trailingAnchor, constant: -taskOneBlueLayerWidth),
-            taskOneButtonBlueLayer.heightAnchor.constraint(equalTo: taskOneButtonRavenLayer.heightAnchor),
-            
-            taskOneButton.topAnchor.constraint(equalTo: taskOneButtonRavenLayer.topAnchor),
-            taskOneButton.leadingAnchor.constraint(equalTo: taskOneButtonRavenLayer.leadingAnchor),
-            taskOneButton.trailingAnchor.constraint(equalTo: taskOneButtonRavenLayer.trailingAnchor),
-            taskOneButton.heightAnchor.constraint(equalTo: taskOneButtonRavenLayer.heightAnchor)
-        ])
-       
-        NSLayoutConstraint.activate([
-            taskTwoButtonRavenLayer.topAnchor.constraint(equalTo: taskOneButtonRavenLayer.bottomAnchor, constant: 16),
-            taskTwoButtonRavenLayer.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
-            taskTwoButtonRavenLayer.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
-            taskTwoButtonRavenLayer.heightAnchor.constraint(equalToConstant: 66),
-            
-            taskTwoButtonBlueLayer.topAnchor.constraint(equalTo: taskTwoButtonRavenLayer.topAnchor),
-            taskTwoButtonBlueLayer.leadingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.leadingAnchor),
-            taskTwoButtonBlueLayer.trailingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.trailingAnchor, constant: -taskTwoBlueLayerWidth),
-            taskTwoButtonBlueLayer.heightAnchor.constraint(equalTo: taskTwoButtonRavenLayer.heightAnchor),
-            
-            taskTwoButton.topAnchor.constraint(equalTo: taskTwoButtonRavenLayer.topAnchor),
-            taskTwoButton.leadingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.leadingAnchor),
-            taskTwoButton.trailingAnchor.constraint(equalTo: taskTwoButtonRavenLayer.trailingAnchor),
-            taskTwoButton.heightAnchor.constraint(equalTo: taskTwoButtonRavenLayer.heightAnchor)
-        ])
+        //raven layer
+        let stackViewRaven = UIStackView(arrangedSubviews: [taskOneButtonRavenLayer,
+                                                            taskTwoButtonRavenLayer,
+                                                            taskThreeButtonRavenLayer])
+        stackViewRaven.distribution = .fillEqually
+        stackViewRaven.axis = .vertical
+        stackViewRaven.spacing = 16
         
-        NSLayoutConstraint.activate([
-            taskThreeButtonRavenLayer.topAnchor.constraint(equalTo: taskTwoButtonRavenLayer.bottomAnchor, constant:16),
-            taskThreeButtonRavenLayer.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
-            taskThreeButtonRavenLayer.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
-            taskThreeButtonRavenLayer.heightAnchor.constraint(equalToConstant: 66),
-            
-            taskThreeButtonBlueLayer.topAnchor.constraint(equalTo: taskThreeButtonRavenLayer.topAnchor),
-            taskThreeButtonBlueLayer.leadingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.leadingAnchor),
-            taskThreeButtonBlueLayer.trailingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.trailingAnchor, constant: -taskThreeBlueLayerWidth),
-            taskThreeButtonBlueLayer.heightAnchor.constraint(equalTo: taskThreeButtonRavenLayer.heightAnchor),
-            
-            taskThreeButton.topAnchor.constraint(equalTo: taskThreeButtonRavenLayer.topAnchor),
-            taskThreeButton.leadingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.leadingAnchor),
-            taskThreeButton.trailingAnchor.constraint(equalTo: taskThreeButtonRavenLayer.trailingAnchor),
-            taskThreeButton.heightAnchor.constraint(equalTo: taskThreeButtonRavenLayer.heightAnchor)
-        ])
+        secondView.addSubview(stackViewRaven)
+        stackViewRaven.centerX(inView: view)
+        stackViewRaven.setWidth(width: taskButtonW)
+        stackViewRaven.anchor(top: topTapBarStackView.bottomAnchor, paddingTop: 32)
+  
+        //blue layer
+        taskOneButtonRavenLayer.addSubview(taskOneButtonBlueLayer)
+        taskOneButtonBlueLayer.setWidth(width: taskOneBlueLayerWidth)
         
-        NSLayoutConstraint.activate([
-            prizeButton.topAnchor.constraint(equalTo: taskThreeButtonRavenLayer.bottomAnchor, constant: 32),
-            prizeButton.centerXAnchor.constraint(equalTo: secondView.centerXAnchor),
-            prizeButton.widthAnchor.constraint(equalToConstant: 128),
-            prizeButton.heightAnchor.constraint(equalToConstant: 128),
-        ])
+        taskTwoButtonRavenLayer.addSubview(taskTwoButtonBlueLayer)
+        taskTwoButtonBlueLayer.setWidth(width: taskTwoBlueLayerWidth)
+
+        taskThreeButtonRavenLayer.addSubview(taskThreeButtonBlueLayer)
+        taskThreeButtonBlueLayer.setWidth(width: taskThreeBlueLayerWidth)
+        
+        //button layer
+        taskOneButtonRavenLayer.addSubview(taskOneButton)
+        taskOneButton.setDimensions(height: 60, width: taskButtonW)
+        
+        taskTwoButtonRavenLayer.addSubview(taskTwoButton)
+        taskTwoButton.setDimensions(height: 60, width: taskButtonW)
+        
+        taskThreeButtonRavenLayer.addSubview(taskThreeButton)
+        taskThreeButton.setDimensions(height: 60, width: taskButtonW)
+
+        //prize button
+        secondView.addSubview(prizeButton)
+        prizeButton.centerX(inView: secondView)
+        prizeButton.setDimensions(height: 128, width: 128)
+        prizeButton.anchor(top: stackViewRaven.bottomAnchor, paddingTop: 32)
+
         
         //2x
-        NSLayoutConstraint.activate([
-            x2Label.topAnchor.constraint(equalTo: secondView.topAnchor, constant: 128),
-            x2Label.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 16),
-            x2Label.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -16),
-        ])
+        //x2Label
+        secondView.addSubview(x2Label)
+        x2Label.anchor(top: secondView.topAnchor, left: secondView.leftAnchor,
+                       right: secondView.rightAnchor, paddingTop: 128,
+                       paddingLeft: 16, paddingRight: 16)
         
-        NSLayoutConstraint.activate([
-            wheelButton.topAnchor.constraint(equalTo: taskThreeButtonRavenLayer.bottomAnchor, constant: 32),
-            wheelButton.centerXAnchor.constraint(equalTo: secondView.centerXAnchor),
-            wheelButton.widthAnchor.constraint(equalToConstant: 128),
-            wheelButton.heightAnchor.constraint(equalToConstant: 128),
-            
-            whiteCircleButton.centerXAnchor.constraint(equalTo: wheelButton.centerXAnchor),
-            whiteCircleButton.centerYAnchor.constraint(equalTo: wheelButton.centerYAnchor),
-            whiteCircleButton.widthAnchor.constraint(equalToConstant: 18),
-            whiteCircleButton.heightAnchor.constraint(equalToConstant: 18),
-        ])
+        //wheelButton
+        secondView.addSubview(wheelButton)
+        wheelButton.centerX(inView: secondView)
+        wheelButton.setDimensions(height: 128, width: 128)
+        wheelButton.anchor(top: x2Label.bottomAnchor, paddingTop: 32)
         
+        secondView.addSubview(whiteCircleButton)
+        whiteCircleButton.centerX(inView: wheelButton)
+        whiteCircleButton.centerY(inView: wheelButton)
+        whiteCircleButton.setDimensions(height: 18, width: 18)
+
+        //tab bar
         view.addSubview(tabBar)
         tabBar.setDimensions(height: 66, width: view.bounds.width)
         tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)

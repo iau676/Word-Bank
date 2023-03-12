@@ -465,19 +465,19 @@ extension WordBrain {
         }
     }
     
-    func getTestExerciseCountToday() -> Int{
+    func getTestExerciseCountToday() -> Int {
         return exerciseDict[ExerciseName.test] ?? 0
     }
     
-    func getWritingExerciseCountToday() -> Int{
+    func getWritingExerciseCountToday() -> Int {
         return exerciseDict[ExerciseName.writing] ?? 0
     }
     
-    func getListeningExerciseCountToday() -> Int{
+    func getListeningExerciseCountToday() -> Int {
         return exerciseDict[ExerciseName.listening] ?? 0
     }
     
-    func getCardExerciseCountToday() -> Int{
+    func getCardExerciseCountToday() -> Int {
         return exerciseDict[ExerciseName.card] ?? 0
     }
         
