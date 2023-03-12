@@ -33,6 +33,10 @@ extension UIViewController {
         present(alert, animated: true)
     }
     
+    func scheduledTimer(timeInterval: Double, _ selector : Selector) {
+        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
+    }
+    
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(WordsViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false

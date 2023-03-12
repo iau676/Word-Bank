@@ -75,14 +75,14 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         title = " "
         wordBrain.getHour()
+        wordBrain.loadHardItemArray()
+        wordBrain.loadItemArray()
         
         style()
         setupView()
         configureColor()
         configureTextField()
         
-        wordBrain.loadHardItemArray()
-        wordBrain.loadItemArray()
         prepareExercise { (success) -> Void in if success { updateUI() } }
         
         configureBackBarButton()
@@ -493,9 +493,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         UserDefault.lastPoint.set(lastPoint-exercisePoint)
     }
     
-    func scheduledTimer(timeInterval: Double, _ selector : Selector) {
-        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
-    }
 }
 
 //MARK: - Layout

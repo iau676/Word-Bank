@@ -207,11 +207,6 @@ final class HomeViewController: UIViewController, LevelDelegate {
             performSegue(identifier: "goExercise", second: 0.1)
         }
     }
-        
-    func scheduledTimer(timeInterval: Double, _ selector : Selector) {
-        Timer.scheduledTimer(timeInterval: timeInterval, target: self,
-                             selector: selector, userInfo: nil, repeats: false)
-    }
 
     func fixSoundProblemForRealDevice(){
         do {
@@ -396,7 +391,7 @@ extension HomeViewController {
                 
                 let wordCount = self.wordBrain.itemArray.count
                 if wordCount == 0 {
-                    self.scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
+                    //scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
                 }
                 
                 if self.wordBrain.user.count < 1 {

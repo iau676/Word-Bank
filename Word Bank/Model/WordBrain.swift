@@ -17,7 +17,7 @@ struct WordBrain {
     var exerciseArray = [Exercise]()
     var exerciseDict = [String: Int]()
     
-    static let shareInstance = WordBrain()
+    static var shared = WordBrain()
     
     var questionNumbers: [Int] = []
     var questionNumbersCopy: [Int] = []
@@ -398,7 +398,7 @@ struct WordBrain {
 //MARK: - User Defaults
 
 extension WordBrain {
-    func isUserWillGetDailyPrize() -> Bool{
+    func isUserWillGetDailyPrize() -> Bool {
         if UserDefault.userGotDailyPrize.getString() == "willGet" {
             return true
         } else {
@@ -406,7 +406,7 @@ extension WordBrain {
         }
     }
     
-    func isUserGotWheelPrize() -> Bool{
+    func isUserGotWheelPrize() -> Bool {
         if UserDefault.userGotWheelPrize.getString() == getTodayDate() {
             return true
         } else {
@@ -414,8 +414,16 @@ extension WordBrain {
         }
     }
     
-    func getTopBarHeight() -> CGFloat{
+    func getTopBarHeight() -> CGFloat {
         return UserDefault.topBarHeight.getCGFloat()
+    }
+    
+    func getTruePointImage() -> UIImage? {
+        return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.greenBubble : Images.greenCircle
+    }
+    
+    func getFalsePointImage() -> UIImage? {
+        return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.redBubble : Images.redCircle
     }
 }
 

@@ -71,7 +71,8 @@ class DailyViewController: UIViewController {
     @objc func taskOneButtonPressed(){
         UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.startPressed.set(1)
-        checkWordCount()
+        //checkWordCount()
+        self.navigationController?.pushViewController(TestController(), animated: true)
     }
     
     @objc func taskTwoButtonPressed(){

@@ -47,6 +47,8 @@
 		704B055528364098006C7F96 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* Word.swift */; };
 		704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704F9377290711C50095BF0D /* UITextField+Extensions.swift */; };
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
+		705B3D0929BE108C005CFEC2 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0829BE108C005CFEC2 /* TestController.swift */; };
+		705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */; };
 		705D92D528F895BA001C4F38 /* WheelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92D428F895BA001C4F38 /* WheelViewController.swift */; };
 		705D92E328F89625001C4F38 /* PushButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92D728F89623001C4F38 /* PushButton.swift */; };
 		705D92E428F89625001C4F38 /* bubble_pop.aac in Resources */ = {isa = PBXBuildFile; fileRef = 705D92D828F89623001C4F38 /* bubble_pop.aac */; };
@@ -145,6 +147,8 @@
 		704B055428364098006C7F96 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		704F9377290711C50095BF0D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
+		705B3D0829BE108C005CFEC2 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
+		705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTopView.swift; sourceTree = "<group>"; };
 		705D92D428F895BA001C4F38 /* WheelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelViewController.swift; sourceTree = "<group>"; };
 		705D92D728F89623001C4F38 /* PushButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushButton.swift; sourceTree = "<group>"; };
 		705D92D828F89623001C4F38 /* bubble_pop.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = bubble_pop.aac; sourceTree = "<group>"; };
@@ -291,6 +295,7 @@
 				70175BC327E71F170053CBDB /* CardViewController.swift */,
 				702A978227EB378A00AEECF7 /* X2SettingViewController.swift */,
 				705D92D428F895BA001C4F38 /* WheelViewController.swift */,
+				705B3D0829BE108C005CFEC2 /* TestController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -306,6 +311,7 @@
 				7011749A29B4C47200019D69 /* TabBar.swift */,
 				706CBAD527593993008B4773 /* WordCell.xib */,
 				706CBAB827592F8D008B4773 /* Main.storyboard */,
+				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -568,6 +574,7 @@
 				70134191291D5888001967E1 /* ClassicFireworkController.swift in Sources */,
 				7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */,
 				70134182291D57FC001967E1 /* SparkTrajectory.swift in Sources */,
+				705B3D0929BE108C005CFEC2 /* TestController.swift in Sources */,
 				7013418F291D5877001967E1 /* ClassicFireworkAnimator.swift in Sources */,
 				700458532917EC8E0077A4D2 /* WordBrain+PrizePoints.swift in Sources */,
 				7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */,
@@ -613,6 +620,7 @@
 				700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */,
 				70134180291D57E7001967E1 /* FireworkSparkScheduler.swift in Sources */,
 				707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */,
+				705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,
 				7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */,
 				70134179291D57A1001967E1 /* CGPoint+Extensions.swift in Sources */,

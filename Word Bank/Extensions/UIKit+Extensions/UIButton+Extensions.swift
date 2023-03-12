@@ -150,4 +150,16 @@ extension UIButton {
         self.contentHorizontalAlignment = .left
         self.imageView?.contentMode = .scaleAspectFit
     }
+    
+    func rotate() {
+        UIView.animate(withDuration:0.2, animations: {
+            self.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
+            UIView.animate(withDuration:0.2, animations: {
+                self.transform = .identity
+            })
+        }
+    }
 }

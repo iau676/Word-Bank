@@ -171,10 +171,6 @@ class AddViewController: UIViewController {
         )
     }
     
-    func scheduledTimer(timeInterval: Double, _ selector : Selector) {
-        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
-    }
-    
     func checkEditStatus() {
         if goEdit == 1 {
             engTxtField.text = UserDefault.engEdit.getString()
