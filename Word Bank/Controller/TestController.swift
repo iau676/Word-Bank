@@ -13,10 +13,12 @@ class TestController: UIViewController {
     
     private var wordBrain = WordBrain()
     private var player = Player()
+    
     private var questionCount = 0
     private var totalQuestionNumber = 5
     private var questionText = ""
     private var arrayForResultViewUserAnswer = [String]()
+    private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
     
     private lazy var exerciseTopView: ExerciseTopView = {
         let view = ExerciseTopView()
@@ -24,6 +26,7 @@ class TestController: UIViewController {
         return view
     }()
     
+    private var bubbleButton = BubbleView()
     private lazy var answer1Button = makeAnswerButton()
     private lazy var answer2Button = makeAnswerButton()
     
@@ -36,17 +39,6 @@ class TestController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    
-    private var bubbleButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 29)
-        button.isHidden = true
-        return button
-    }()
-    
-    private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
-    private lazy var truePointImage: UIImage? = wordBrain.getTruePointImage()
-    private lazy var falsePointImage: UIImage? = wordBrain.getFalsePointImage()
     
     //MARK: - Lifecycle
     
@@ -102,9 +94,6 @@ class TestController: UIViewController {
             
             sender.backgroundColor = Colors.green
             exerciseTopView.updatePoint(lastPoint: lastPoint, exercisePoint: exercisePoint, isIncrease: true)
-            bubbleButton.setTitle("+\(exercisePoint)", for: .normal)
-            bubbleButton.setTitleColor(Colors.green, for: .normal)
-            bubbleButton.setBackgroundImage(truePointImage, for: .normal)
         } else {
             player.playMP3(Sounds.falsee)
             
@@ -118,10 +107,8 @@ class TestController: UIViewController {
            
             sender.backgroundColor = Colors.red
             exerciseTopView.updatePoint(lastPoint: lastPoint, exercisePoint: exercisePoint, isIncrease: false)
-            bubbleButton.setTitle("-\(exercisePoint)", for: .normal)
-            bubbleButton.setTitleColor(Colors.red, for: .normal)
-            bubbleButton.setBackgroundImage(falsePointImage, for: .normal)
         }
+        bubbleButton.update(answer: userGotItRight, point: exercisePoint)
         bubbleButton.rotate()
         scheduledTimer(timeInterval: 0.7, #selector(updateUI))
     }
@@ -150,12 +137,12 @@ class TestController: UIViewController {
         
         view.addSubview(questionLabel)
         questionLabel.centerX(inView: view)
-        questionLabel.anchor(top: exerciseTopView.bottomAnchor, bottom: answerStackView.topAnchor)
+        questionLabel.anchor(top: exerciseTopView.userPointButton.bottomAnchor,
+                             bottom: answerStackView.topAnchor)
         
         view.addSubview(bubbleButton)
         bubbleButton.centerX(inView: questionLabel)
         bubbleButton.centerY(inView: questionLabel)
-        bubbleButton.setDimensions(height: 90, width: 90)
     }
     
     private func refreshAnswerButton(_ button: UIButton, title: String) {
@@ -182,6 +169,8 @@ class TestController: UIViewController {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
 }
+
+//MARK: - ExerciseTopDelegate
 
 extension TestController: ExerciseTopDelegate {
     func soundButtonPressed() {

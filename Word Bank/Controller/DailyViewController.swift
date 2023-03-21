@@ -135,12 +135,9 @@ class DailyViewController: UIViewController {
             UserDefault.startPressed.set(3)
             pushExerciseViewController()
         } else {
-            let alert = UIAlertController(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            showAlert(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "") { _ in
                 self.navigationController?.pushViewController(SettingsViewController(), animated: true)
             }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
         }
     }
     
