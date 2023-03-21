@@ -20,6 +20,11 @@ class TestController: UIViewController {
     private var arrayForResultViewUserAnswer = [String]()
     private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
     
+    private var questionArray = [String]()
+    private var answerArray = [String]()
+    private var userAnswerArray = [String]()
+    private var userAnswerArrayBool = [Bool]()
+    
     private lazy var exerciseTopView: ExerciseTopView = {
         let view = ExerciseTopView()
         view.delegate = self
@@ -62,18 +67,24 @@ class TestController: UIViewController {
         if questionCounter < totalQuestionNumber {
             questionText = wordBrain.getQuestionText(questionCounter, 1)
             questionLabel.text = questionText
+            questionArray.append(questionText)
             refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
             refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
+            answerArray.append(wordBrain.getMeaning())
         } else {
             questionCounter = 0
-            let vc = ResultViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            let controller = ResultViewController()
+            controller.questionArray = questionArray
+            controller.answerArray = answerArray
+            controller.userAnswerArray = userAnswerArray
+            controller.userAnswerArrayBool = userAnswerArrayBool
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
     @objc private func answerPressed(_ sender: UIButton) {
         guard let userAnswer = sender.currentTitle else { return }
-        let userGotItRight = wordBrain.checkAnswer(userAnswer: userAnswer)
+        let userGotItRight = answerArray[questionCounter] == userAnswer
         let lastPoint = UserDefault.lastPoint.getInt()
         
         questionCounter += 1
@@ -93,11 +104,7 @@ class TestController: UIViewController {
 //            } else {
 //                if wordBrain.updateCorrectCountHardWord() { questionCount = totalQuestionNumber }
 //            }
-            
             wordBrain.userGotItCorrect()
-            
-            sender.backgroundColor = Colors.green
-            exerciseTopView.updatePoint(lastPoint: lastPoint, exercisePoint: exercisePoint, isIncrease: true)
         } else {
             player.playMP3(Sounds.falsee)
             
@@ -106,12 +113,14 @@ class TestController: UIViewController {
 //            } else {
 //                wordBrain.updateWrongCountHardWords()
 //            }
-            
             wordBrain.userGotItWrong()
-           
-            sender.backgroundColor = Colors.red
-            exerciseTopView.updatePoint(lastPoint: lastPoint, exercisePoint: exercisePoint, isIncrease: false)
         }
+        sender.backgroundColor = userGotItRight ? Colors.green : Colors.red
+        exerciseTopView.updatePoint(lastPoint: lastPoint,
+                                    exercisePoint: exercisePoint,
+                                    isIncrease: userGotItRight)
+        userAnswerArray.append(userAnswer)
+        userAnswerArrayBool.append(userGotItRight)
         bubbleButton.update(answer: userGotItRight, point: exercisePoint)
         bubbleButton.rotate()
         scheduledTimer(timeInterval: 0.7, #selector(updateUI))

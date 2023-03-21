@@ -19,7 +19,12 @@ class ListeningController: UIViewController {
     private var questionText = ""
     private var userAnswer = ""
     private var trueAnswer = ""
-    private var arrayForResultViewUserAnswer = [String]()
+    
+    private var questionArray = [String]()
+    private var answerArray = [String]()
+    private var userAnswerArray = [String]()
+    private var userAnswerArrayBool = [Bool]()
+    
     private var isAnswerSelected = false
     private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
     
@@ -62,13 +67,18 @@ class ListeningController: UIViewController {
     @objc private func updateUI() {
         bubbleView.isHidden = true
         if questionCounter < totalQuestionNumber {
-            questionText = wordBrain.getQuestionText(questionCounter, 1)
+            questionText = wordBrain.getQuestionText(questionCounter, 2)
             questionLabel.text = questionText
+            questionArray.append(questionText)
             configureAnswers()
         } else {
             questionCounter = 0
-            let vc = ResultViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            let controller = ResultViewController()
+            controller.questionArray = questionArray
+            controller.answerArray = answerArray
+            controller.userAnswerArray = userAnswerArray
+            controller.userAnswerArrayBool = userAnswerArrayBool
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
@@ -80,8 +90,6 @@ class ListeningController: UIViewController {
             exerciseTopView.updateProgress()
             
             let lastPoint = UserDefault.lastPoint.getInt()
-            arrayForResultViewUserAnswer.append(userAnswer)
-            UserDefault.userAnswers.set(arrayForResultViewUserAnswer)
             
             isAnswerSelected = false
             bubbleView.isHidden = false
@@ -112,6 +120,8 @@ class ListeningController: UIViewController {
             exerciseTopView.updatePoint(lastPoint: lastPoint,
                                         exercisePoint: exercisePoint,
                                         isIncrease: userGotItRight)
+            userAnswerArray.append(userAnswer)
+            userAnswerArrayBool.append(userGotItRight)
             bubbleView.update(answer: userGotItRight, point: exercisePoint)
             bubbleView.rotate()
             scheduledTimer(timeInterval: 0.7, #selector(updateUI))
@@ -176,6 +186,7 @@ class ListeningController: UIViewController {
         buttonTwo.setTitle(answers.1, for: .normal)
         buttonThree.setTitle(answers.2, for: .normal)
         trueAnswer = answers.3
+        answerArray.append(trueAnswer)
     }
     
     private func makeAnswerButton() -> UIButton {

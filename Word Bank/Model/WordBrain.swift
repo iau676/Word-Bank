@@ -33,10 +33,7 @@ struct WordBrain {
     var questionCounter = 0
     var answer = 0
     
-    var rightOncee = [Int]()
     var rightOnceBooll = [Bool]()
-    var arrayForResultViewENGG = [String]()
-    var arrayForResultViewTRR = [String]()
     
     let notificationCenter = UNUserNotificationCenter.current()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -195,8 +192,6 @@ struct WordBrain {
                 questionNumbers.append(i)
             }
         }
-        rightOncee.append(questionNumber)
-        UserDefault.rightOnce.set(rightOncee)
                 
         changedQuestionNumber = questionNumber + Int.random(in: 0...9)
      
@@ -218,12 +213,17 @@ struct WordBrain {
         }
     } //getQuestionText
     
-    func getAnswer() -> String{
-        if UserDefault.whichButton.getString() == ExerciseType.normal {
-            return itemArray[questionNumber].eng!
-        } else {
-            return hardItemArray[questionNumber].eng!
-        }
+    func getMeaning() -> String {
+//        if UserDefault.whichButton.getString() == ExerciseType.normal {
+//            return itemArray[questionNumber].eng!
+//        } else {
+//            return hardItemArray[questionNumber].eng!
+//        }
+        return itemArray[questionNumber].tr!
+    }
+    
+    func getEnglish() -> String {
+        return itemArray[questionNumber].eng!
     }
         
     mutating func getProgress() -> Float {
@@ -275,41 +275,9 @@ struct WordBrain {
              trueAnswer = selectedTestType == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
         } else {
              trueAnswer = selectedTestType == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
-            
-            arrayForResultViewENGG.append(hardItemArray[questionNumber].eng ?? "empty")
-            UserDefault.arrayForResultViewENG.set(arrayForResultViewENGG)
-            
-            arrayForResultViewTRR.append(hardItemArray[questionNumber].tr ?? "empty")
-            UserDefault.arrayForResultViewTR.set(arrayForResultViewTRR)
         }
         
-        if userAnswer == trueAnswer {
-            //need for result view
-            rightOnceBooll.append(true)
-            UserDefault.rightOnceBool.set(rightOnceBooll)
-            UserDefaults.standard.synchronize()
-            return true
-        } else {
-            //need for result view
-            rightOnceBooll.append(false)
-            UserDefault.rightOnceBool.set(rightOnceBooll)
-            UserDefaults.standard.synchronize()
-            return false
-        }
-    }
-    
-    mutating func arrayForResultView(){
-        arrayForResultViewENGG.append(hardItemArray[questionNumber].eng ?? "empty")
-        UserDefault.arrayForResultViewENG.set(arrayForResultViewENGG)
-        
-        arrayForResultViewTRR.append(hardItemArray[questionNumber].tr ?? "empty")
-        UserDefault.arrayForResultViewTR.set(arrayForResultViewTRR)
-    }
-    
-    mutating func answerTrue(){ // except test option
-        rightOnceBooll.append(true)
-        UserDefault.rightOnceBool.set(rightOnceBooll)
-        UserDefaults.standard.synchronize()
+        return userAnswer == trueAnswer
     }
     
     mutating func updateCorrectCountHardWord() -> Bool {
@@ -447,8 +415,6 @@ extension WordBrain {
 extension WordBrain {
     mutating func getWordEnglish() -> String {
         questionNumber = Int.random(in: 0..<itemArray.count)
-        rightOncee.append(questionNumber)
-        UserDefault.rightOnce.set(rightOncee)
         return itemArray[questionNumber].eng ?? ""
     }
     
@@ -458,16 +424,6 @@ extension WordBrain {
     
     func getQuestionNumber() -> Int {
         return questionNumber
-    }
-    
-    mutating func userSwipeRight(){
-        rightOnceBooll.append(true)
-        UserDefault.rightOnceBool.set(rightOnceBooll)
-    }
-    
-    mutating func userSwipeLeft(){
-        rightOnceBooll.append(false)
-        UserDefault.rightOnceBool.set(rightOnceBooll)
     }
 }
 

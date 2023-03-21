@@ -18,6 +18,11 @@ class WritingController: UIViewController {
     private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
     private var selectedTyping: Int { return UserDefault.selectedTyping.getInt() }
     
+    private var questionArray = [String]()
+    private var answerArray = [String]()
+    private var userAnswerArray = [String]()
+    private var userAnswerArrayBool = [Bool]()
+    
     private var questionCounter = 0
     private var totalQuestionNumber = 5
     private var questionText = ""
@@ -127,14 +132,20 @@ class WritingController: UIViewController {
         currentAnswerIndex = []
         
         if questionCounter < totalQuestionNumber {
-            questionText = wordBrain.getQuestionText(questionCounter, 1)
-            answerText = wordBrain.getAnswer()
+            questionText = wordBrain.getQuestionText(questionCounter, 2)
+            answerText = wordBrain.getEnglish()
             questionLabel.text = questionText
+            questionArray.append(questionText)
+            answerArray.append(answerText)
             updateCV()
         } else {
             questionCounter = 0
-            let vc = ResultViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            let controller = ResultViewController()
+            controller.questionArray = questionArray
+            controller.answerArray = answerArray
+            controller.userAnswerArray = userAnswerArray
+            controller.userAnswerArrayBool = userAnswerArrayBool
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
@@ -143,7 +154,6 @@ class WritingController: UIViewController {
         if answerText.lowercased() == userAnswer.lowercased() {
             checkAnswer(userAnswer)
             textField.text = ""
-            wordBrain.answerTrue()
         }
     }
     
@@ -187,6 +197,8 @@ class WritingController: UIViewController {
         exerciseTopView.updatePoint(lastPoint: lastPoint,
                                     exercisePoint: exercisePoint,
                                     isIncrease: userGotItRight)
+        userAnswerArray.append(userAnswer)
+        userAnswerArrayBool.append(userGotItRight)
         bubbleButton.update(answer: userGotItRight, point: exercisePoint)
         bubbleButton.rotate()
         scheduledTimer(timeInterval: 0.7, #selector(updateUI))

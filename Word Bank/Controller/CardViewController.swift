@@ -26,6 +26,11 @@ class CardViewController: UIViewController {
     private var isOpen = false
     var wheelPressed = 0
     
+    private var questionArray = [String]()
+    private var answerArray = [String]()
+    private var userAnswerArray = [String]()
+    private var userAnswerArrayBool = [Bool]()
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -68,14 +73,20 @@ class CardViewController: UIViewController {
     
     private func updateWord(){
         if cardCounter == 20 {
-            let vc = ResultViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
-
+            let controller = ResultViewController()
+            controller.questionArray = questionArray
+            controller.answerArray = answerArray
+            controller.userAnswerArray = userAnswerArray
+            controller.userAnswerArrayBool = userAnswerArrayBool
+            self.navigationController?.pushViewController(controller, animated: true)
         } else {
             wordEnglish = wordBrain.getWordEnglish()
             wordMeaning = wordBrain.getWordMeaning()
             cardCounter += 1
             cardLabel.text = wordEnglish
+            questionArray.append(wordEnglish)
+            answerArray.append(wordMeaning)
+            userAnswerArray.append(wordMeaning)
         }
     }
     
@@ -201,7 +212,7 @@ extension CardViewController {
                     card.center = CGPoint(x: card.center.x - 200, y: card.center.y + 75)
                     self.updateCard(card)
                     self.addHardWord()
-                    self.wordBrain.userSwipeLeft()
+                    self.userAnswerArrayBool.append(false)
                 })
                 return
             } else if card.center.x > (view.frame.width - 75) {
@@ -209,7 +220,7 @@ extension CardViewController {
                 UIView.animate(withDuration: 0.3, animations: {
                     card.center = CGPoint(x: card.center.x + 200, y: card.center.y + 75)
                     self.updateCard(card)
-                    self.wordBrain.userSwipeRight()
+                    self.userAnswerArrayBool.append(true)
                 })
                 return
             }

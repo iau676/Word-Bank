@@ -148,7 +148,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         if questionCount < totalQuestionNumber {
             
             questionText = wordBrain.getQuestionText(questionCount, whichStartPressed)
-            answerForStart23 = wordBrain.getAnswer()
+            answerForStart23 = wordBrain.getMeaning()
             questionLabel.text = questionText
 
             //0 is true, 1 is false
@@ -243,7 +243,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             checkAnswerQ(nil,text)
             textField.text = ""
             bubbleButton.setImage(image: UIImage(), width: 0, height: 0)
-            wordBrain.answerTrue()
         }
     }
     
@@ -353,7 +352,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     func getLetter(){
-        let answer = wordBrain.getAnswer()
+        let answer = wordBrain.getMeaning()
         let answerWithoutSpace = answer.replace(string: " ", replacement: "")
         var skeleton = ""
         var skeletonArr = [Int]()
@@ -405,7 +404,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         } else {
             userGotItRight = answerForStart23.lowercased() == userAnswer.lowercased()
             if whichButton == ExerciseType.hard {
-                wordBrain.arrayForResultView()
+               // wordBrain.arrayForResultView()
             }
         }
         

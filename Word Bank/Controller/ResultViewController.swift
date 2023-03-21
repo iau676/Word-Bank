@@ -29,11 +29,11 @@ class ResultViewController: UIViewController {
     var userWordCount = ""
     var scoreLabelText = ""
     
-    var arrayOfIndex: [Int] { return UserDefault.rightOnce.getValue() as? [Int] ?? [Int]() }
-    var userAnswer: [Bool] { return UserDefault.rightOnceBool.getValue() as? [Bool] ?? [Bool]() }
-    var arrayForResultViewENG: [String] { return UserDefault.arrayForResultViewENG.getValue() as? [String] ?? [String]() }
-    var arrayForResultViewTR: [String] { return UserDefault.arrayForResultViewTR.getValue() as? [String] ?? [String]() }
-    var arrayForResultViewUserAnswer: [String] { UserDefault.userAnswers.getValue() as? [String] ?? [String]() }
+    var questionArray = [String]()
+    var answerArray = [String]()
+    var userAnswerArray = [String]()
+    var userAnswerArrayBool = [Bool]()
+
     var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
     var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     var whichStartPressed: Int { return UserDefault.startPressed.getInt() }
@@ -129,9 +129,9 @@ class ResultViewController: UIViewController {
     
     func checkWhichExercise() {
         if whichStartPressed == 4 {
-            numberOfTrue = userAnswer.count
+            numberOfTrue = userAnswerArray.count
         } else {
-            scoreLabel.text = "\(numberOfTrue)/\(userAnswer.count)"
+            scoreLabel.text = "\(numberOfTrue)/\(userAnswerArray.count)"
             scoreLabelText = "All Correct!"
         }
     }
@@ -153,7 +153,7 @@ class ResultViewController: UIViewController {
     func updateExerciseCount(exerciseType: String) {
         
         let trueCount = Int16(numberOfTrue)
-        let falseCount = Int16(userAnswer.count-numberOfTrue)
+        let falseCount = Int16(userAnswerArray.count-numberOfTrue)
         let hintCount = Int16(UserDefault.hintCount.getInt())
         
         switch whichStartPressed {
@@ -174,15 +174,15 @@ class ResultViewController: UIViewController {
     }
     
     func calculateNumberOfTrue() {
-        for i in 0..<userAnswer.count {
-            if userAnswer[i] == true {
+        for i in 0..<userAnswerArray.count {
+            if userAnswerArrayBool[i] == true {
                 numberOfTrue += 1
             }
         }
     }
     
     func checkAllTrue(){
-        if numberOfTrue == userAnswer.count {
+        if numberOfTrue == userAnswerArray.count {
             //showWordsButton.isHidden = whichStartPressed == 4 ?  true : false
             tableView.backgroundColor = .clear
             player.observeAppEvents()
@@ -217,12 +217,12 @@ class ResultViewController: UIViewController {
     }
 }
 
-    //MARK: - Show Cell
+    //MARK: - UITableViewDataSource
 
 extension ResultViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userAnswer.count
+        return userAnswerArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -234,7 +234,7 @@ extension ResultViewController: UITableViewDataSource {
         updateCellLabelTextSize(cell)
         updateCellLabelTextColor(cell)
        
-        if userAnswer[indexPath.row] == false {
+        if userAnswerArrayBool[indexPath.row] == false {
             updateCellViewBackgroundForWrong(cell)
             updateCellLabelTextForWrong(cell, indexPath.row)
         } else {
@@ -243,26 +243,9 @@ extension ResultViewController: UITableViewDataSource {
         return cell
     }
     
-    func updateCellLabelText(_ cell: WordCell, _ index: Int){
-        let i = arrayOfIndex[index]
-        if UserDefault.whichButton.getString() == ExerciseType.normal {
-            if selectedTestType == 0 {
-                cell.engLabel.text = itemArray[i].eng
-                cell.trLabel.text = itemArray[i].tr
-            } else {
-                cell.engLabel.text = itemArray[i].tr
-                cell.trLabel.text = itemArray[i].eng
-            }
-        } else {
-            if selectedTestType == 0 {
-                cell.engLabel.text = arrayForResultViewENG[index]
-                cell.trLabel.text = arrayForResultViewTR[index]
-            } else {
-                cell.engLabel.text = arrayForResultViewTR[index]
-                cell.trLabel.text = arrayForResultViewENG[index]
-                
-            }
-        }
+    func updateCellLabelText(_ cell: WordCell, _ index: Int) {
+        cell.engLabel.text = questionArray[index]
+        cell.trLabel.text = answerArray[index]
         cell.numberLabel.text = String(index+1)
     }
     
@@ -297,18 +280,12 @@ extension ResultViewController: UITableViewDataSource {
             cell.engView.backgroundColor = Colors.red
             cell.trView.backgroundColor = Colors.lightRed
         }
-        
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
         if whichStartPressed != 4 {
-            if UserDefault.whichButton.getString() == ExerciseType.normal {
-                cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
-                                                              (selectedTestType == 0) ? itemArray[arrayOfIndex[i]].tr ?? "empty" : itemArray[arrayOfIndex[i]].eng ?? "empty")
-            } else {
-                cell.trLabel.attributedText = writeAnswerCell(arrayForResultViewUserAnswer[i].strikeThrough(),
-                                                              (selectedTestType == 0) ? arrayForResultViewTR[i] : arrayForResultViewENG[i])
-            }
+            cell.trLabel.attributedText = writeAnswerCell(userAnswerArray[i].strikeThrough(),
+                                                          answerArray[i])
         }
     }
     
@@ -343,30 +320,19 @@ extension ResultViewController: UITableViewDataSource {
             cell.updateTopCornerRadius(16)
         }
 
-        if index == userAnswer.count - 1 {
+        if index == userAnswerArray.count - 1 {
             cell.updateBottomCornerRadius(16)
         }
     }
 }
 
-//MARK: - Tap Cell
+//MARK: - UITableViewDelegate
 
 extension ResultViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if whichStartPressed == 3 {
-            var word = ""
-            
-            switch UserDefault.whichButton.getString() {
-            case ExerciseType.normal:
-                word = itemArray[arrayOfIndex[indexPath.row]].eng ?? "empty"
-                break
-            case ExerciseType.hard:
-                word =  arrayForResultViewENG[indexPath.row]
-                break
-            default: break
-            }
-            player.playSound(soundSpeed, word)
+            player.playSound(soundSpeed, questionArray[indexPath.row])
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -398,7 +364,8 @@ extension ResultViewController {
         addedHardWordsButton.backgroundColor = .clear
         addedHardWordsButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         addedHardWordsButton.layer.cornerRadius = 10
-        addedHardWordsButton.addTarget(self, action: #selector(addedHardWordsButtonPressed(_:)), for: .primaryActionTriggered)
+        addedHardWordsButton.addTarget(self, action: #selector(addedHardWordsButtonPressed(_:)),
+                                       for: .primaryActionTriggered)
         
         buttonStackView.axis = .horizontal
         buttonStackView.distribution = .fill
@@ -406,11 +373,13 @@ extension ResultViewController {
         
         homeButton.setBackgroundImage(UIImage(systemName: "house.fill"), for: .normal)
         homeButton.tintColor = .white
-        homeButton.addTarget(self, action: #selector(homeButtonPressed(_:)), for: .primaryActionTriggered)
+        homeButton.addTarget(self, action: #selector(homeButtonPressed(_:)),
+                             for: .primaryActionTriggered)
         
         refreshButton.setBackgroundImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
         refreshButton.tintColor = .white
-        refreshButton.addTarget(self, action: #selector(refreshButtonPressed(_:)), for: .primaryActionTriggered)
+        refreshButton.addTarget(self, action: #selector(refreshButtonPressed(_:)),
+                                for: .primaryActionTriggered)
     }
     
     func layout(){
