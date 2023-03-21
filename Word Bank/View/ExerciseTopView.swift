@@ -57,10 +57,10 @@ class ExerciseTopView: UIView {
         
         WordBrain.shared.questionCounter = 0
         
-        if UserDefault.startPressed.getInt() == 2 {
-            soundHintButton.setImage(image: Images.question, width: 32, height: 32)
-        } else {
-            soundHintButton.setImage(image: Images.soundLeft, width: 40, height: 40)
+        switch UserDefault.startPressed.getInt() {
+        case 1: soundHintButton.setImage(image: Images.soundLeft, width: 40, height: 40)
+        case 2: soundHintButton.setImage(image: Images.question, width: 32, height: 32)
+        default: break
         }
         
         addSubview(userPointButton)

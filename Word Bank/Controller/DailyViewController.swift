@@ -85,7 +85,8 @@ class DailyViewController: UIViewController {
     @objc func taskThreeButtonPressed(){
         UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.startPressed.set(3)
-        checkSoundSetting()
+        //checkSoundSetting()
+        self.navigationController?.pushViewController(ListeningController(), animated: true)
     }
     
     @objc func prizeButtonPressed(){

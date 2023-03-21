@@ -48,6 +48,7 @@
 		704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704F9377290711C50095BF0D /* UITextField+Extensions.swift */; };
 		70509AA829C9CCDE00372655 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA729C9CCDE00372655 /* BubbleView.swift */; };
 		70509AAA29C9DAD000372655 /* WritingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA929C9DAD000372655 /* WritingController.swift */; };
+		70509AAC29CA14D700372655 /* ListeningController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AAB29CA14D700372655 /* ListeningController.swift */; };
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
 		705B3D0929BE108C005CFEC2 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0829BE108C005CFEC2 /* TestController.swift */; };
 		705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */; };
@@ -150,6 +151,7 @@
 		704F9377290711C50095BF0D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70509AA729C9CCDE00372655 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 		70509AA929C9DAD000372655 /* WritingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingController.swift; sourceTree = "<group>"; };
+		70509AAB29CA14D700372655 /* ListeningController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningController.swift; sourceTree = "<group>"; };
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
 		705B3D0829BE108C005CFEC2 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTopView.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				705D92D428F895BA001C4F38 /* WheelViewController.swift */,
 				705B3D0829BE108C005CFEC2 /* TestController.swift */,
 				70509AA929C9DAD000372655 /* WritingController.swift */,
+				70509AAB29CA14D700372655 /* ListeningController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				70134188291D582E001967E1 /* SparkViewAnimator.swift in Sources */,
 				705D92E328F89625001C4F38 /* PushButton.swift in Sources */,
 				70C7C228295226E6006E65A2 /* AwardCell.swift in Sources */,
+				70509AAC29CA14D700372655 /* ListeningController.swift in Sources */,
 				7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */,
 				705D92EB28F89625001C4F38 /* SpinWheel.swift in Sources */,
 				7011749B29B4C47200019D69 /* TabBar.swift in Sources */,

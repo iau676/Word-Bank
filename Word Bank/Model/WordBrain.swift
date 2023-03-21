@@ -254,6 +254,21 @@ struct WordBrain {
         }
     }
     
+    mutating func getListeningAnswers() -> (String, String, String, String) {
+        let answer1 = getListeningAnswer(for: questionNumber)
+        let answer2 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count))
+        let answer3 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count))
+        let array = [answer1, answer2, answer3].shuffled()
+        
+        return (array[0], array[1], array[2], answer1)
+    }
+    
+    private func getListeningAnswer(for number: Int) -> String {
+        return UserDefault.whichButton.getString() == ExerciseType.normal ?
+        itemArray[number].eng! :
+        hardItemArray[number].eng!
+    }
+    
     mutating func checkAnswer(userAnswer: String) -> Bool {
         var trueAnswer = ""
         if UserDefault.whichButton.getString() == ExerciseType.normal {
