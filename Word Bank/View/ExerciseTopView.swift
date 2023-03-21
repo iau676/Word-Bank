@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ExerciseTopDelegate: AnyObject {
-    func soundButtonPressed()
+    func soundHintButtonPressed()
 }
 
 class ExerciseTopView: UIView {
@@ -41,12 +41,12 @@ class ExerciseTopView: UIView {
         return progress
     }()
     
-    private lazy var soundButton: UIButton = {
+    private lazy var soundHintButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = Colors.f6f6f6
         button.titleLabel?.font =  button.titleLabel?.font.withSize(15)
-        button.setImage(image: Images.soundLeft, width: 40, height: 40)
-        button.addTarget(self, action: #selector(soundButtonPressedd), for: .touchUpInside)
+        
+        button.addTarget(self, action: #selector(soundHintButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -56,6 +56,12 @@ class ExerciseTopView: UIView {
         super.init(frame: frame)
         
         WordBrain.shared.questionCounter = 0
+        
+        if UserDefault.startPressed.getInt() == 2 {
+            soundHintButton.setImage(image: Images.question, width: 32, height: 32)
+        } else {
+            soundHintButton.setImage(image: Images.soundLeft, width: 40, height: 40)
+        }
         
         addSubview(userPointButton)
         userPointButton.setHeight(height: 24)
@@ -72,9 +78,9 @@ class ExerciseTopView: UIView {
         progressBar.anchor(top: userPointButton.bottomAnchor, left: leftAnchor, right: rightAnchor,
                            paddingTop: 8, paddingLeft: 40, paddingRight: 40)
         
-        addSubview(soundButton)
-        soundButton.setDimensions(height: 40, width: 40)
-        soundButton.anchor(top: userPointButton.bottomAnchor, right: rightAnchor,
+        addSubview(soundHintButton)
+        soundHintButton.setDimensions(height: 40, width: 40)
+        soundHintButton.anchor(top: userPointButton.bottomAnchor, right: rightAnchor,
                            paddingTop: 16, paddingRight: 32)
         
         setHeight(height: 24+16+40)
@@ -89,9 +95,9 @@ class ExerciseTopView: UIView {
     
     //MARK: - Selectors
     
-    @objc func soundButtonPressedd() {
-        soundButton.bounce()
-        delegate?.soundButtonPressed()
+    @objc func soundHintButtonPressed() {
+        soundHintButton.bounce()
+        delegate?.soundHintButtonPressed()
     }
     
     //MARK: - Helpers

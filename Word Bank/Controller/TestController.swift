@@ -14,7 +14,7 @@ class TestController: UIViewController {
     private var wordBrain = WordBrain()
     private var player = Player()
     
-    private var questionCount = 0
+    private var questionCounter = 0
     private var totalQuestionNumber = 5
     private var questionText = ""
     private var arrayForResultViewUserAnswer = [String]()
@@ -51,17 +51,21 @@ class TestController: UIViewController {
         updateUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        UserDefault.addedHardWordsCount.set(0)
+    }
+    
     //MARK: - Selectors
     
     @objc private func updateUI() {
         bubbleButton.isHidden = true
-        if questionCount < totalQuestionNumber {
-            questionText = wordBrain.getQuestionText(questionCount, 1)
+        if questionCounter < totalQuestionNumber {
+            questionText = wordBrain.getQuestionText(questionCounter, 1)
             questionLabel.text = questionText
             refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
             refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
         } else {
-            questionCount = 0
+            questionCounter = 0
             let vc = ResultViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -72,7 +76,7 @@ class TestController: UIViewController {
         let userGotItRight = wordBrain.checkAnswer(userAnswer: userAnswer)
         let lastPoint = UserDefault.lastPoint.getInt()
         
-        questionCount += 1
+        questionCounter += 1
         exerciseTopView.updateProgress()
         bubbleButton.isHidden = false
         answer1Button.isEnabled = false
@@ -173,7 +177,7 @@ class TestController: UIViewController {
 //MARK: - ExerciseTopDelegate
 
 extension TestController: ExerciseTopDelegate {
-    func soundButtonPressed() {
+    func soundHintButtonPressed() {
         //only english word
         if UserDefault.selectedTestType.getInt() == 0 {
             let soundSpeed = UserDefault.soundSpeed.getDouble()

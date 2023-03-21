@@ -47,6 +47,7 @@
 		704B055528364098006C7F96 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* Word.swift */; };
 		704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704F9377290711C50095BF0D /* UITextField+Extensions.swift */; };
 		70509AA829C9CCDE00372655 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA729C9CCDE00372655 /* BubbleView.swift */; };
+		70509AAA29C9DAD000372655 /* WritingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA929C9DAD000372655 /* WritingController.swift */; };
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
 		705B3D0929BE108C005CFEC2 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0829BE108C005CFEC2 /* TestController.swift */; };
 		705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */; };
@@ -148,6 +149,7 @@
 		704B055428364098006C7F96 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		704F9377290711C50095BF0D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70509AA729C9CCDE00372655 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
+		70509AA929C9DAD000372655 /* WritingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingController.swift; sourceTree = "<group>"; };
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
 		705B3D0829BE108C005CFEC2 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTopView.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				702A978227EB378A00AEECF7 /* X2SettingViewController.swift */,
 				705D92D428F895BA001C4F38 /* WheelViewController.swift */,
 				705B3D0829BE108C005CFEC2 /* TestController.swift */,
+				70509AA929C9DAD000372655 /* WritingController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				70134170291D5723001967E1 /* CircleColorSparkView.swift in Sources */,
 				7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */,
 				70175BC427E71F170053CBDB /* CardViewController.swift in Sources */,
+				70509AAA29C9DAD000372655 /* WritingController.swift in Sources */,
 				706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */,
 				7013418D291D5867001967E1 /* ClassicFirework.swift in Sources */,
 				705D92ED28F89625001C4F38 /* CGFloat+Extensions.swift in Sources */,
