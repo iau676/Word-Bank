@@ -74,34 +74,6 @@ class WordsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         goAddPage = 0
     }
-     
-    //MARK: - prepare
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goAdd" {
-            let destinationVC = segue.destination as! AddViewController
-            destinationVC.modalPresentationStyle = .overFullScreen
-            
-            if segue.destination is AddViewController {
-                (segue.destination as? AddViewController)?.updateWordsPage = {
-                    self.wordBrain.saveContext()
-                    self.wordBrain.loadItemArray()
-                    self.updateSearchBarPlaceholder()
-                    self.tableView.reloadData()
-                }
-                (segue.destination as? AddViewController)?.onViewWillDisappear = {
-                    self.goEdit = 0
-                    self.goAddPage = 0
-                    self.setupButtons()
-                }
-            }
-            
-            if goEdit == 1 {
-                destinationVC.goEdit = 1
-                destinationVC.editIndex = editIndex
-            }
-        }
-    }
     
     //MARK: - Selectors
     
@@ -260,10 +232,19 @@ class WordsViewController: UIViewController {
 
     func checkGoAddPage(){
         if goAddPage == 1 && whichButton == ExerciseType.normal{
-            let controller = AddViewController()
-            controller.modalPresentationStyle = .overCurrentContext
-            self.present(controller, animated: true)
+            goAddEdit()
         }
+    }
+    
+    private func goAddEdit() {
+        let controller = AddEditController()
+        controller.modalPresentationStyle = .overCurrentContext
+        controller.delegate = self
+        if goEdit == 1 {
+            controller.goEdit = 1
+            controller.editIndex = editIndex
+        }
+        self.present(controller, animated: true)
     }
     
     func checkWordCount(controller: UIViewController){
@@ -272,7 +253,7 @@ class WordsViewController: UIViewController {
         if wordCount < 2 {
             showAlert(title: "Minimum two words required", message: "") { _ in
                 if self.whichButton == ExerciseType.normal {
-                    let controller = AddViewController()
+                    let controller = AddEditController()
                     controller.modalPresentationStyle = .overCurrentContext
                     self.present(controller, animated: true)
                 } else {
@@ -578,10 +559,27 @@ extension WordsViewController {
     }
     
     @objc func respondToSwipeLeftGesture(gesture: UISwipeGestureRecognizer) {
-        if whichButton == ExerciseType.normal { performSegue(withIdentifier: "goAdd", sender: self) }
+        if whichButton == ExerciseType.normal { goAddEdit() }
     }
     
     @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
         self.navigationController?.popToRootViewController(animated: true)
+    }
+}
+
+//MARK: - AddEditControllerDelegate
+
+extension WordsViewController: AddEditControllerDelegate {
+    func updateTableView() {
+        wordBrain.saveContext()
+        wordBrain.loadItemArray()
+        updateSearchBarPlaceholder()
+        tableView.reloadData()
+    }
+    
+    func onViewWillDisappear() {
+        goEdit = 0
+        goAddPage = 0
+        setupButtons()
     }
 }

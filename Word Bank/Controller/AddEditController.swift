@@ -9,7 +9,14 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class AddViewController: UIViewController {
+protocol AddEditControllerDelegate : AnyObject {
+    func updateTableView()
+    func onViewWillDisappear()
+}
+
+class AddEditController: UIViewController {
+    
+    weak var delegate: AddEditControllerDelegate?
     
     let coinButtonView = UIButton()
     let coinButton = UIButton()
@@ -24,8 +31,6 @@ class AddViewController: UIViewController {
     var wordBrain = WordBrain()
     var itemArray: [Item] { return wordBrain.itemArray }
     var tapGesture = UITapGestureRecognizer()
-    var updateWordsPage: (()->())?
-    var onViewWillDisappear: (()->())?
     var goEdit = 0
     var editIndex = 0
     var userWordCountInt = 0
@@ -55,7 +60,7 @@ class AddViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        onViewWillDisappear?()
+        delegate?.onViewWillDisappear()
     }
     
     //MARK: - Selectors
@@ -76,13 +81,12 @@ class AddViewController: UIViewController {
                     scheduledTimer(timeInterval: 0.8, #selector(dismissView))
                 }
                 
-                updateWordsPage?()
-                
                 trTxtField.text = ""
                 engTxtField.text = ""
                 engTxtField.becomeFirstResponder()
 
                 flipCoinButton()
+                delegate?.updateTableView()
             } else {
                 showAlert(title: "Max character is 20", message: "")
             }
@@ -212,7 +216,7 @@ class AddViewController: UIViewController {
 
 //MARK: - UITextFieldDelegate
 
-extension AddViewController: UITextFieldDelegate {
+extension AddEditController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == engTxtField {
             trTxtField.becomeFirstResponder()
@@ -225,7 +229,7 @@ extension AddViewController: UITextFieldDelegate {
 
 //MARK: - Flip Button
 
-extension AddViewController {
+extension AddEditController {
     
     func flipCoinButton(){
         coinButton.setBackgroundImage(coinButtonImage, for: .normal)
@@ -250,7 +254,7 @@ extension AddViewController {
 
 //MARK: - Layout
 
-extension AddViewController {
+extension AddEditController {
     
     func style(){
         view.backgroundColor = Colors.darkBackground
@@ -311,7 +315,7 @@ extension AddViewController {
 
 //MARK: - Swipe Gesture
 
-extension AddViewController {
+extension AddEditController {
     
     func addGestureRecognizer(){
         let dismissView = UITapGestureRecognizer(target: self, action:  #selector(coinButtonViewPressed))

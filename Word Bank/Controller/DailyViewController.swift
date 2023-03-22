@@ -44,6 +44,19 @@ class DailyViewController: UIViewController {
 
     private let tabBar = TabBar(color2: Colors.blue ?? .systemBlue)
     
+    private lazy var testExerciseCount: Int = {
+        let int = wordBrain.getExerciseCountToday(for: ExerciseFormat.test)
+        return int > 10 ? 10 : int
+    }()
+    private lazy var writingExerciseCount: Int = {
+        let int = wordBrain.getExerciseCountToday(for: ExerciseFormat.writing)
+        return int > 10 ? 10 : int
+    }()
+    private lazy var listeningExerciseCount: Int = {
+        let int = wordBrain.getExerciseCountToday(for: ExerciseFormat.listening)
+        return int > 10 ? 10 : int
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         wordBrain.getHour()
@@ -150,9 +163,6 @@ class DailyViewController: UIViewController {
     }
     
     func updateButtons(){
-        let testExerciseCount = wordBrain.getTestExerciseCountToday()
-        let writingExerciseCount = wordBrain.getWritingExerciseCountToday()
-        let listeningExerciseCount = wordBrain.getListeningExerciseCountToday()
         
         if testExerciseCount >= 10 && writingExerciseCount >= 10 && listeningExerciseCount >= 10 {
             if UserDefault.userGotDailyPrize.getString() != todayDate {
@@ -350,9 +360,9 @@ extension DailyViewController {
         
         
         let taskButtonW = view.bounds.width-64-32
-        let taskOneBlueLayerWidth = (taskButtonW/10)*CGFloat(wordBrain.getTestExerciseCountToday())
-        let taskTwoBlueLayerWidth = (taskButtonW/10)*CGFloat(wordBrain.getWritingExerciseCountToday())
-        let taskThreeBlueLayerWidth = (taskButtonW/10)*CGFloat(wordBrain.getListeningExerciseCountToday())
+        let taskOneBlueLayerWidth = (taskButtonW/10)*CGFloat(testExerciseCount)
+        let taskTwoBlueLayerWidth = (taskButtonW/10)*CGFloat(writingExerciseCount)
+        let taskThreeBlueLayerWidth = (taskButtonW/10)*CGFloat(listeningExerciseCount)
         
         secondView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                           bottom: view.bottomAnchor, right: view.rightAnchor,

@@ -447,28 +447,16 @@ extension WordBrain {
         }
     }
     
-    func getTestExerciseCountToday() -> Int {
-        return exerciseDict[ExerciseFormat.test] ?? 0
-    }
-    
-    func getWritingExerciseCountToday() -> Int {
-        return exerciseDict[ExerciseFormat.writing] ?? 0
-    }
-    
-    func getListeningExerciseCountToday() -> Int {
-        return exerciseDict[ExerciseFormat.listening] ?? 0
-    }
-    
-    func getCardExerciseCountToday() -> Int {
-        return exerciseDict[ExerciseFormat.card] ?? 0
+    func getExerciseCountToday(for exerciseFormat: String) -> Int {
+        return exerciseDict[exerciseFormat] ?? 0
     }
         
     mutating func updateTabBarDailyImage(){
         findExercisesCompletedToday()
         
-        let testExerciseCount = getTestExerciseCountToday() >= 10 ? 1 : 0
-        let writingExerciseCount = getWritingExerciseCountToday() >= 10 ? 10 : 0
-        let listeningExerciseCount = getListeningExerciseCountToday() >= 10 ? 100 : 0
+        let testExerciseCount = getExerciseCountToday(for: ExerciseFormat.test) >= 10 ? 1 : 0
+        let writingExerciseCount = getExerciseCountToday(for: ExerciseFormat.writing) >= 10 ? 10 : 0
+        let listeningExerciseCount = getExerciseCountToday(for: ExerciseFormat.listening) >= 10 ? 100 : 0
         
         switch testExerciseCount + writingExerciseCount + listeningExerciseCount {
         case 0:

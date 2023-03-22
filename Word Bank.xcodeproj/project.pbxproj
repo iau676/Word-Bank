@@ -87,7 +87,7 @@
 		7081AB0727CCFA4300E2996A /* newpoint.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0627CCFA4300E2996A /* newpoint.mp4 */; };
 		708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD87288719D300E09AE1 /* Date+Extensions.swift */; };
 		708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD89288719F900E09AE1 /* UIView+Extensions.swift */; };
-		708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C0E1327A8894F00E9105F /* AddViewController.swift */; };
+		708C0E1427A8894F00E9105F /* AddEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C0E1327A8894F00E9105F /* AddEditController.swift */; };
 		708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */; };
 		7094D8C4290D25B5007E422F /* AwardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C3290D25B5007E422F /* AwardsViewController.swift */; };
 		7094D8C6290D694D007E422F /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C5290D694D007E422F /* BadgeView.swift */; };
@@ -191,7 +191,7 @@
 		7081AB0627CCFA4300E2996A /* newpoint.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = newpoint.mp4; sourceTree = "<group>"; };
 		708AFD87288719D300E09AE1 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		708AFD89288719F900E09AE1 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
-		708C0E1327A8894F00E9105F /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		708C0E1327A8894F00E9105F /* AddEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditController.swift; sourceTree = "<group>"; };
 		708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		7094D8C3290D25B5007E422F /* AwardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardsViewController.swift; sourceTree = "<group>"; };
 		7094D8C5290D694D007E422F /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
@@ -287,7 +287,7 @@
 			children = (
 				706CBAB627592F8D008B4773 /* HomeViewController.swift */,
 				7027F690275B9B84001F6068 /* WordsViewController.swift */,
-				708C0E1327A8894F00E9105F /* AddViewController.swift */,
+				708C0E1327A8894F00E9105F /* AddEditController.swift */,
 				70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */,
 				708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */,
 				700C439827A856FD00D94497 /* LevelInfoViewController.swift */,
@@ -611,7 +611,7 @@
 				704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */,
 				700C439927A856FD00D94497 /* LevelInfoViewController.swift in Sources */,
 				7075B371291679B40007EDF7 /* UIViewController+Extensions.swift in Sources */,
-				708C0E1427A8894F00E9105F /* AddViewController.swift in Sources */,
+				708C0E1427A8894F00E9105F /* AddEditController.swift in Sources */,
 				70134195291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,
 				70A70D9D29439D93007F3C25 /* ExerciseSettingsViewController.swift in Sources */,

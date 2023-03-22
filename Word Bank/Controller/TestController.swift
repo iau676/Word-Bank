@@ -83,7 +83,7 @@ class TestController: UIViewController {
             questionArray.append(questionText)
             refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
             refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
-            print("DEBUG::::selectedTestType=\(selectedTestType)")
+
             if selectedTestType == 0 {
                 answerArray.append(wordBrain.getMeaning(exerciseType: exerciseType))
             } else {
@@ -105,8 +105,6 @@ class TestController: UIViewController {
         guard let userAnswer = sender.currentTitle else { return }
         let userGotItRight = answerArray[questionCounter] == userAnswer
         let lastPoint = UserDefault.lastPoint.getInt()
-        
-        print("DEBUG::::userAnswer=\(userAnswer)::::::answer=\(answerArray[questionCounter])")
         
         questionCounter += 1
         exerciseTopView.updateProgress()
