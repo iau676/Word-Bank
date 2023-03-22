@@ -148,7 +148,6 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         if questionCount < totalQuestionNumber {
             
             questionText = wordBrain.getQuestionText(questionCount, whichStartPressed)
-            answerForStart23 = wordBrain.getMeaning()
             questionLabel.text = questionText
 
             //0 is true, 1 is false
@@ -182,8 +181,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         } else {
             questionCount = 0
             UserDefault.hintCount.set(hintCount)
-            let vc = ResultViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+//            let vc = ResultViewController()
+//            self.navigationController?.pushViewController(vc, animated: true)
         }
     }//updateUI
     
@@ -352,7 +351,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
     }
     
     func getLetter(){
-        let answer = wordBrain.getMeaning()
+        let answer = ""
         let answerWithoutSpace = answer.replace(string: " ", replacement: "")
         var skeleton = ""
         var skeletonArr = [Int]()

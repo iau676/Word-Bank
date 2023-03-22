@@ -11,6 +11,9 @@ class ListeningController: UIViewController {
     
     //MARK: - Properties
     
+    private let exerciseType: String
+    private let exerciseFormat: String
+    
     private var wordBrain = WordBrain()
     private var player = Player()
     
@@ -56,8 +59,21 @@ class ListeningController: UIViewController {
     
     //MARK: - Lifecycle
     
+    init(exerciseType: String, exerciseFormat: String) {
+        self.exerciseType = exerciseType
+        self.exerciseFormat = exerciseFormat
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        wordBrain.getHour()
+        wordBrain.loadHardItemArray()
+        wordBrain.loadItemArray()
         configureUI()
         updateUI()
     }
@@ -73,7 +89,8 @@ class ListeningController: UIViewController {
             configureAnswers()
         } else {
             questionCounter = 0
-            let controller = ResultViewController()
+            let controller = ResultViewController(exerciseType: exerciseType,
+                                                  exerciseFormat: exerciseFormat)
             controller.questionArray = questionArray
             controller.answerArray = answerArray
             controller.userAnswerArray = userAnswerArray
@@ -99,24 +116,24 @@ class ListeningController: UIViewController {
             
             if userGotItRight {
                 player.playMP3(Sounds.truee)
-                
                 wordBrain.userGotItCorrect()
-    //            if whichButton == ExerciseType.normal {
-    //                wordBrain.userGotItCorrect()
-    //            } else {
-    //                if wordBrain.updateCorrectCountHardWord() { questionCount = totalQuestionNumber }
-    //            }
                 
+                if exerciseType == ExerciseType.normal {
+                    wordBrain.userGotItCorrect()
+                } else {
+                    if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
+                }
             } else {
                 player.playMP3(Sounds.falsee)
-                
                 wordBrain.userGotItWrong()
-    //            if whichButton == ExerciseType.normal {
-    //                wordBrain.userGotItWrong()
-    //            } else {
-    //                wordBrain.updateWrongCountHardWords()
-    //            }
+                
+                if exerciseType == ExerciseType.normal {
+                    wordBrain.userGotItWrong()
+                } else {
+                    wordBrain.updateWrongCountHardWords()
+                }
             }
+            
             exerciseTopView.updatePoint(lastPoint: lastPoint,
                                         exercisePoint: exercisePoint,
                                         isIncrease: userGotItRight)

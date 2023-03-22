@@ -41,7 +41,7 @@ enum Colors {
     
 }
 
-enum ExerciseName {
+enum ExerciseFormat {
     static let test                      = "test"
     static let writing                   = "writing"
     static let listening                 = "listening"
@@ -164,11 +164,7 @@ enum UserDefault {
     static var userWordCount             = UserDefaultsManager(key: "userWordCount")
     static var hardWordsCount            = UserDefaultsManager(key: "hardWordsCount")
     static var spinWheelCount            = UserDefaultsManager(key: "spinWheelCount")
-    
-    static var rightOnce                 = UserDefaultsManager(key: "rightOnce")
-    static var rightOnceBool             = UserDefaultsManager(key: "rightOnceBool")
-    static var arrayForResultViewENG     = UserDefaultsManager(key: "arrayForResultViewENG")
-    static var arrayForResultViewTR      = UserDefaultsManager(key: "arrayForResultViewTR")
+
     static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")
     static var hintCount                 = UserDefaultsManager(key: "hintCount")
     

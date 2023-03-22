@@ -56,15 +56,6 @@ final class HomeViewController: UIViewController, LevelDelegate {
         setupFirstLaunch()
     }
     
-    //MARK: - prepare
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goWords" {
-            let destinationVC = segue.destination as! WordsViewController
-            destinationVC.goAddPage = goAddPage
-        }
-    }
-    
     //MARK: - Selectors
     
     @objc func levelButtonPressed() {
@@ -97,7 +88,10 @@ final class HomeViewController: UIViewController, LevelDelegate {
         UserDefault.whichButton.set(ExerciseType.normal)
         goAddPage = 1
         viewDidLayoutSubviews()
-        performSegue(identifier: "goWords", second: 0.2)
+        //performSegue(identifier: "goWords", second: 0.2)
+        let controller = WordsViewController(exerciseType: ExerciseType.normal)
+        controller.goAddPage = 1
+        pushViewController(controller: controller)
     }
     
     @objc func wordsButtonPressed() {
@@ -105,14 +99,16 @@ final class HomeViewController: UIViewController, LevelDelegate {
         
         UserDefault.whichButton.set(ExerciseType.normal)
         goAddPage = 0
-        performSegue(identifier: "goWords", second: 0.1)
+        let controller = WordsViewController(exerciseType: ExerciseType.normal)
+        pushViewController(controller: controller)
     }
     
     @objc func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         hardCP.bounce()
         
         UserDefault.whichButton.set(ExerciseType.hard)
-        performSegue(identifier: "goWords", second: 0.1)
+        let controller = WordsViewController(exerciseType: ExerciseType.hard)
+        pushViewController(controller: controller)
     }
     
     //MARK: - Helpers
@@ -135,6 +131,12 @@ final class HomeViewController: UIViewController, LevelDelegate {
     func performSegue(identifier: String, second: Double = 0.0){
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + second){
             self.performSegue(withIdentifier: identifier, sender: self)
+        }
+    }
+    
+    private func pushViewController(controller: UIViewController) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
  

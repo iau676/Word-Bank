@@ -11,6 +11,9 @@ class WritingController: UIViewController {
     
     //MARK: - Properties
     
+    private let exerciseType: String
+    private let exerciseFormat: String
+    
     private var wordBrain = WordBrain()
     private var player = Player()
     private var timer = Timer()
@@ -27,7 +30,6 @@ class WritingController: UIViewController {
     private var totalQuestionNumber = 5
     private var questionText = ""
     private var answerText = ""
-    private var arrayForResultViewUserAnswer = [String]()
     
     private lazy var exerciseTopView: ExerciseTopView = {
         let view = ExerciseTopView()
@@ -112,6 +114,16 @@ class WritingController: UIViewController {
     
     //MARK: - Lifecycle
     
+    init(exerciseType: String, exerciseFormat: String) {
+        self.exerciseType = exerciseType
+        self.exerciseFormat = exerciseFormat
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         wordBrain.getHour()
@@ -133,14 +145,15 @@ class WritingController: UIViewController {
         
         if questionCounter < totalQuestionNumber {
             questionText = wordBrain.getQuestionText(questionCounter, 2)
-            answerText = wordBrain.getEnglish()
+            answerText = wordBrain.getEnglish(exerciseType: exerciseType)
             questionLabel.text = questionText
             questionArray.append(questionText)
             answerArray.append(answerText)
             updateCV()
         } else {
             questionCounter = 0
-            let controller = ResultViewController()
+            let controller = ResultViewController(exerciseType: exerciseType,
+                                                  exerciseFormat: exerciseFormat)
             controller.questionArray = questionArray
             controller.answerArray = answerArray
             controller.userAnswerArray = userAnswerArray
@@ -163,37 +176,31 @@ class WritingController: UIViewController {
         exerciseTopView.updateProgress()
         
         let userGotItRight = answerText.lowercased() == userAnswer.lowercased()
-//            if whichButton == ExerciseType.hard {
-//                wordBrain.arrayForResultView()
-//            }
-        
         let lastPoint = UserDefault.lastPoint.getInt()
-        arrayForResultViewUserAnswer.append(userAnswer)
-        UserDefault.userAnswers.set(arrayForResultViewUserAnswer)
         
         bubbleButton.isHidden = false
         questionLabel.text = ""
         
         if userGotItRight {
             player.playMP3(Sounds.truee)
-            
             wordBrain.userGotItCorrect()
-//            if whichButton == ExerciseType.normal {
-//                wordBrain.userGotItCorrect()
-//            } else {
-//                if wordBrain.updateCorrectCountHardWord() { questionCount = totalQuestionNumber }
-//            }
             
+            if exerciseType == ExerciseType.normal {
+                wordBrain.userGotItCorrect()
+            } else {
+                if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
+            }
         } else {
             player.playMP3(Sounds.falsee)
-            
             wordBrain.userGotItWrong()
-//            if whichButton == ExerciseType.normal {
-//                wordBrain.userGotItWrong()
-//            } else {
-//                wordBrain.updateWrongCountHardWords()
-//            }
+            
+            if exerciseType == ExerciseType.normal {
+                wordBrain.userGotItWrong()
+            } else {
+                wordBrain.updateWrongCountHardWords()
+            }
         }
+        
         exerciseTopView.updatePoint(lastPoint: lastPoint,
                                     exercisePoint: exercisePoint,
                                     isIncrease: userGotItRight)

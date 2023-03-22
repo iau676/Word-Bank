@@ -35,9 +35,10 @@ class WheelViewController: UIViewController {
             let when = DispatchTime.now() + 0.7
             DispatchQueue.main.asyncAfter(deadline: when){
                 if index == 4 {
-                    let vc = CardViewController()
-                    vc.wheelPressed = 1
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    let controller = CardViewController(exerciseType: ExerciseType.normal,
+                                                        exerciseFormat: ExerciseFormat.card)
+                    controller.wheelPressed = 1
+                    self.navigationController?.pushViewController(controller, animated: true)
                 } else {
                     let vc = ExerciseViewController()
                     vc.wheelPressed = 1

@@ -298,12 +298,12 @@
 				70803512290C3BA600F1F93A /* StatisticViewController.swift */,
 				701581BC27DE80D800796ADE /* SettingsViewController.swift */,
 				70A70D9C29439D93007F3C25 /* ExerciseSettingsViewController.swift */,
-				70175BC327E71F170053CBDB /* CardViewController.swift */,
 				702A978227EB378A00AEECF7 /* X2SettingViewController.swift */,
 				705D92D428F895BA001C4F38 /* WheelViewController.swift */,
 				705B3D0829BE108C005CFEC2 /* TestController.swift */,
 				70509AA929C9DAD000372655 /* WritingController.swift */,
 				70509AAB29CA14D700372655 /* ListeningController.swift */,
+				70175BC327E71F170053CBDB /* CardViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

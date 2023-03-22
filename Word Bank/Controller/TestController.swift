@@ -11,14 +11,17 @@ class TestController: UIViewController {
     
     //MARK: - Properties
     
+    private let exerciseType: String
+    private let exerciseFormat: String
+    
     private var wordBrain = WordBrain()
     private var player = Player()
     
     private var questionCounter = 0
     private var totalQuestionNumber = 5
     private var questionText = ""
-    private var arrayForResultViewUserAnswer = [String]()
     private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
+    private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     
     private var questionArray = [String]()
     private var answerArray = [String]()
@@ -47,6 +50,16 @@ class TestController: UIViewController {
     
     //MARK: - Lifecycle
     
+    init(exerciseType: String, exerciseFormat: String) {
+        self.exerciseType = exerciseType
+        self.exerciseFormat = exerciseFormat
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         wordBrain.getHour()
@@ -70,10 +83,16 @@ class TestController: UIViewController {
             questionArray.append(questionText)
             refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
             refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
-            answerArray.append(wordBrain.getMeaning())
+            print("DEBUG::::selectedTestType=\(selectedTestType)")
+            if selectedTestType == 0 {
+                answerArray.append(wordBrain.getMeaning(exerciseType: exerciseType))
+            } else {
+                answerArray.append(wordBrain.getEnglish(exerciseType: exerciseType))
+            }
         } else {
             questionCounter = 0
-            let controller = ResultViewController()
+            let controller = ResultViewController(exerciseType: exerciseType,
+                                                  exerciseFormat: exerciseFormat)
             controller.questionArray = questionArray
             controller.answerArray = answerArray
             controller.userAnswerArray = userAnswerArray
@@ -87,33 +106,30 @@ class TestController: UIViewController {
         let userGotItRight = answerArray[questionCounter] == userAnswer
         let lastPoint = UserDefault.lastPoint.getInt()
         
+        print("DEBUG::::userAnswer=\(userAnswer)::::::answer=\(answerArray[questionCounter])")
+        
         questionCounter += 1
         exerciseTopView.updateProgress()
         bubbleButton.isHidden = false
         answer1Button.isEnabled = false
         answer2Button.isEnabled = false
         
-        arrayForResultViewUserAnswer.append(userAnswer)
-        UserDefault.userAnswers.set(arrayForResultViewUserAnswer)
-        
         if userGotItRight {
             player.playMP3(Sounds.truee)
             
-//            if whichButton == ExerciseType.normal {
-//                wordBrain.userGotItCorrect()
-//            } else {
-//                if wordBrain.updateCorrectCountHardWord() { questionCount = totalQuestionNumber }
-//            }
-            wordBrain.userGotItCorrect()
+            if exerciseType == ExerciseType.normal {
+                wordBrain.userGotItCorrect()
+            } else {
+                if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
+            }
         } else {
             player.playMP3(Sounds.falsee)
             
-//            if whichButton == ExerciseType.normal {
-//                wordBrain.userGotItWrong()
-//            } else {
-//                wordBrain.updateWrongCountHardWords()
-//            }
-            wordBrain.userGotItWrong()
+            if exerciseType == ExerciseType.normal {
+                wordBrain.userGotItWrong()
+            } else {
+                wordBrain.updateWrongCountHardWords()
+            }
         }
         sender.backgroundColor = userGotItRight ? Colors.green : Colors.red
         exerciseTopView.updatePoint(lastPoint: lastPoint,

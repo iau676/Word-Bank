@@ -12,6 +12,9 @@ import Combine
 
 class ResultViewController: UIViewController {
 
+    private let exerciseType: String
+    private let exerciseFormat: String
+    
     let confettiButton = UIButton()
     let scoreLabel = UILabel()
     let tableView = UITableView()
@@ -41,6 +44,16 @@ class ResultViewController: UIViewController {
     var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
     
     //MARK: - Life Cycle
+    
+    init(exerciseType: String, exerciseFormat: String) {
+        self.exerciseType = exerciseType
+        self.exerciseFormat = exerciseFormat
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,11 +103,28 @@ class ResultViewController: UIViewController {
     
     @objc func refreshButtonPressed(_ sender: Any) {
         if whichStartPressed == 4 {
-            let vc = CardViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            let controller = CardViewController(exerciseType: ExerciseType.normal,
+                                                exerciseFormat: ExerciseFormat.card)
+            self.navigationController?.pushViewController(controller, animated: true)
         } else {
-            let vc = ExerciseViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            var controller = UIViewController()
+            switch exerciseFormat {
+            case ExerciseFormat.test:
+                controller = TestController(exerciseType: exerciseType,
+                                            exerciseFormat: exerciseFormat)
+            case ExerciseFormat.writing:
+                controller = WritingController(exerciseType: exerciseType,
+                                               exerciseFormat: exerciseFormat)
+            case ExerciseFormat.listening:
+                controller = ListeningController(exerciseType: exerciseType,
+                                                 exerciseFormat: exerciseFormat)
+            case ExerciseFormat.card:
+                controller = CardViewController(exerciseType: exerciseType,
+                                                exerciseFormat: exerciseFormat)
+            default: break
+            }
+            
+            self.navigationController?.pushViewController(controller, animated: true)
         }
     }
     
@@ -158,16 +188,16 @@ class ResultViewController: UIViewController {
         
         switch whichStartPressed {
         case 1:
-            wordBrain.addExercise(name: ExerciseName.test, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
+            wordBrain.addExercise(name: ExerciseFormat.test, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
             break
         case 2:
-            wordBrain.addExercise(name: ExerciseName.writing, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
+            wordBrain.addExercise(name: ExerciseFormat.writing, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
             break
         case 3:
-            wordBrain.addExercise(name: ExerciseName.listening, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
+            wordBrain.addExercise(name: ExerciseFormat.listening, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
             break
         case 4:
-            wordBrain.addExercise(name: ExerciseName.card, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
+            wordBrain.addExercise(name: ExerciseFormat.card, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
             break
         default: break
         }

@@ -72,21 +72,27 @@ class DailyViewController: UIViewController {
         UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.startPressed.set(1)
         //checkWordCount()
-        self.navigationController?.pushViewController(TestController(), animated: true)
+        let controller = TestController(exerciseType: ExerciseType.normal,
+                                        exerciseFormat: ExerciseFormat.test)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func taskTwoButtonPressed(){
         UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.startPressed.set(2)
         //checkWordCount()
-        self.navigationController?.pushViewController(WritingController(), animated: true)
+        let controller = WritingController(exerciseType: ExerciseType.normal,
+                                           exerciseFormat: ExerciseFormat.writing)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func taskThreeButtonPressed(){
         UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.startPressed.set(3)
         //checkSoundSetting()
-        self.navigationController?.pushViewController(ListeningController(), animated: true)
+        let controller = ListeningController(exerciseType: ExerciseType.normal,
+                                             exerciseFormat: ExerciseFormat.listening)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func prizeButtonPressed(){

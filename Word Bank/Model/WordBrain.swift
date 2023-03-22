@@ -213,17 +213,20 @@ struct WordBrain {
         }
     } //getQuestionText
     
-    func getMeaning() -> String {
-//        if UserDefault.whichButton.getString() == ExerciseType.normal {
-//            return itemArray[questionNumber].eng!
-//        } else {
-//            return hardItemArray[questionNumber].eng!
-//        }
-        return itemArray[questionNumber].tr!
+    func getMeaning(exerciseType: String) -> String {
+        if exerciseType == ExerciseType.normal {
+            return itemArray[questionNumber].tr!
+        } else {
+            return hardItemArray[questionNumber].tr!
+        }
     }
     
-    func getEnglish() -> String {
-        return itemArray[questionNumber].eng!
+    func getEnglish(exerciseType: String) -> String {
+        if exerciseType == ExerciseType.normal {
+            return itemArray[questionNumber].eng!
+        } else {
+            return hardItemArray[questionNumber].eng!
+        }
     }
         
     mutating func getProgress() -> Float {
@@ -445,19 +448,19 @@ extension WordBrain {
     }
     
     func getTestExerciseCountToday() -> Int {
-        return exerciseDict[ExerciseName.test] ?? 0
+        return exerciseDict[ExerciseFormat.test] ?? 0
     }
     
     func getWritingExerciseCountToday() -> Int {
-        return exerciseDict[ExerciseName.writing] ?? 0
+        return exerciseDict[ExerciseFormat.writing] ?? 0
     }
     
     func getListeningExerciseCountToday() -> Int {
-        return exerciseDict[ExerciseName.listening] ?? 0
+        return exerciseDict[ExerciseFormat.listening] ?? 0
     }
     
     func getCardExerciseCountToday() -> Int {
-        return exerciseDict[ExerciseName.card] ?? 0
+        return exerciseDict[ExerciseFormat.card] ?? 0
     }
         
     mutating func updateTabBarDailyImage(){

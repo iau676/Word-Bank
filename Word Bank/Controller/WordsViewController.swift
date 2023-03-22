@@ -10,6 +10,10 @@ import CoreData
 
 class WordsViewController: UIViewController {
     
+    //MARK: - Properties
+    
+    private let exerciseType: String
+    
     let searchBar = UISearchBar()
     let tableView = UITableView()
     let tableViewStackView = UIStackView()
@@ -35,6 +39,15 @@ class WordsViewController: UIViewController {
     var whichButton: String	{ return UserDefault.whichButton.getString() }
     
     //MARK: - Life Cycle
+    
+    init(exerciseType: String) {
+        self.exerciseType = exerciseType
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,14 +114,18 @@ class WordsViewController: UIViewController {
         UserDefault.startPressed.set(1)
         testExerciseButton.bounce()
         testExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
-        checkWordCount(ifOK: "goToExercise")
+        let controller = TestController(exerciseType: exerciseType,
+                                        exerciseFormat: ExerciseFormat.test)
+        checkWordCount(controller: controller)
     }
     
     @objc func writingExerciseButtonPressed(_ sender: UIButton) {
         UserDefault.startPressed.set(2)
         writingExerciseButton.bounce()
         writingExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
-        checkWordCount(ifOK: "goToExercise")
+        let controller = WritingController(exerciseType: exerciseType,
+                                           exerciseFormat: ExerciseFormat.writing)
+        checkWordCount(controller: controller)
     }
     
     @objc func listeningExerciseButtonPressed(_ sender: UIButton) {
@@ -121,7 +138,9 @@ class WordsViewController: UIViewController {
         UserDefault.startPressed.set(4)
         cardExerciseButton.bounce()
         cardExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
-        checkWordCount(ifOK: "goCard")
+        let controller = CardViewController(exerciseType: exerciseType,
+                                            exerciseFormat: ExerciseFormat.card)
+        checkWordCount(controller: controller)
     }
 
     //MARK: - Helpers
@@ -209,7 +228,7 @@ class WordsViewController: UIViewController {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         
         if whichButton == ExerciseType.normal {
-            title = "My Words"
+            title = "Words"
         } else {
             title = "Hard Words"
         }
@@ -241,28 +260,29 @@ class WordsViewController: UIViewController {
 
     func checkGoAddPage(){
         if goAddPage == 1 && whichButton == ExerciseType.normal{
-            performSegue(withIdentifier: "goAdd", sender: self)
+            let controller = AddViewController()
+            controller.modalPresentationStyle = .overCurrentContext
+            self.present(controller, animated: true)
         }
     }
     
-    func checkWordCount(ifOK: String){
+    func checkWordCount(controller: UIViewController){
         let wordCount = (whichButton == ExerciseType.normal) ? itemArray.count : hardItemArray.count
         
         if wordCount < 2 {
-            let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            showAlert(title: "Minimum two words required", message: "") { _ in
                 if self.whichButton == ExerciseType.normal {
-                    self.performSegue(withIdentifier: "goAdd", sender: self)
+                    let controller = AddViewController()
+                    controller.modalPresentationStyle = .overCurrentContext
+                    self.present(controller, animated: true)
                 } else {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
             }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
         } else {
             let when = DispatchTime.now() + 0.1
             DispatchQueue.main.asyncAfter(deadline: when){
-                self.performSegue(withIdentifier: ifOK, sender: self)
+                self.navigationController?.pushViewController(controller, animated: true)
             }
         }
     }
@@ -271,7 +291,9 @@ class WordsViewController: UIViewController {
         //0 is true, 1 is false
         if UserDefault.playSound.getInt() == 0 {
             UserDefault.startPressed.set(3)
-            checkWordCount(ifOK: "goToExercise")
+            let controller = ListeningController(exerciseType: exerciseType,
+                                                exerciseFormat: ExerciseFormat.listening)
+            checkWordCount(controller: controller)
         } else {
             showAlert(title: "To start this exercise, you need to activate the \"Word Sound\" feature.",
                       message: "") { OKpressed in
@@ -361,7 +383,7 @@ extension WordsViewController: UITableViewDataSource {
     func showAlertIfHardWordsEmpty(){
         if hardItemArray.count <= 0 {
             showAlert(title: "Nothing to see here yet",
-                      message: "When you answer a word incorrectly in the exercises, that word is added to this page. In order to delete that word from here, you should answer correctly 5 times.") { OKpressed in
+                      message: "When you answer a word incorrectly in the exercises, that word is added to this page. In order to delete that word from here, you should answer correctly 5 times.") { _ in
                 self.navigationController?.popToRootViewController(animated: true)
             }
         }
@@ -517,7 +539,7 @@ extension WordsViewController {
         buttonStackView.setHeight(height: 55)
         buttonStackView.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                right: view.rightAnchor, paddingLeft: 16,
-                               paddingBottom: 66, paddingRight: 16)
+                               paddingBottom: 40, paddingRight: 16)
         
         testExerciseLabel.centerX(inView: testExerciseButton)
         testExerciseLabel.anchor(top: testExerciseButton.bottomAnchor, paddingTop: 8)
