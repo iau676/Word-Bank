@@ -113,8 +113,8 @@ class ResultViewController: UIViewController {
             controller = ListeningController(exerciseType: exerciseType,
                                              exerciseFormat: exerciseFormat)
         case ExerciseFormat.card:
-            controller = CardViewController(exerciseType: exerciseType,
-                                            exerciseFormat: exerciseFormat)
+            controller = CardController(exerciseType: exerciseType,
+                                        exerciseFormat: exerciseFormat)
         default: break
         }
         

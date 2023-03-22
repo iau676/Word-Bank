@@ -37,7 +37,7 @@
 		70134195291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134194291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift */; };
 		7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7014743527AAB4EE005E1854 /* LevelUpViewController.swift */; };
 		701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701581BC27DE80D800796ADE /* SettingsViewController.swift */; };
-		70175BC427E71F170053CBDB /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175BC327E71F170053CBDB /* CardViewController.swift */; };
+		70175BC427E71F170053CBDB /* CardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175BC327E71F170053CBDB /* CardController.swift */; };
 		702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */; };
 		70209B2B2759613900D527D3 /* WordBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70209B2A2759613900D527D3 /* WordBrain.swift */; };
 		7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* WordsViewController.swift */; };
@@ -52,7 +52,7 @@
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
 		705B3D0929BE108C005CFEC2 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0829BE108C005CFEC2 /* TestController.swift */; };
 		705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */; };
-		705D92D528F895BA001C4F38 /* WheelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92D428F895BA001C4F38 /* WheelViewController.swift */; };
+		705D92D528F895BA001C4F38 /* WheelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92D428F895BA001C4F38 /* WheelController.swift */; };
 		705D92E328F89625001C4F38 /* PushButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92D728F89623001C4F38 /* PushButton.swift */; };
 		705D92E428F89625001C4F38 /* bubble_pop.aac in Resources */ = {isa = PBXBuildFile; fileRef = 705D92D828F89623001C4F38 /* bubble_pop.aac */; };
 		705D92E628F89625001C4F38 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D92DA28F89624001C4F38 /* GameScene.swift */; };
@@ -105,7 +105,6 @@
 		70F0AB3F28C51869002E3EC9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */; };
 		70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */; };
 		70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FC6A4A27E26DD500C31481 /* CloudKit.framework */; };
-		70FC7F38275BD1DE00F138E7 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -139,7 +138,7 @@
 		70134194291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicSparkTrajectoryFactoryProtocol.swift; sourceTree = "<group>"; };
 		7014743527AAB4EE005E1854 /* LevelUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpViewController.swift; sourceTree = "<group>"; };
 		701581BC27DE80D800796ADE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		70175BC327E71F170053CBDB /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		70175BC327E71F170053CBDB /* CardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardController.swift; sourceTree = "<group>"; };
 		701FA77628DFDC28001ADA07 /* Word Bank.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Word Bank.entitlements"; sourceTree = "<group>"; };
 		702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extensions.swift"; sourceTree = "<group>"; };
 		70209B2A2759613900D527D3 /* WordBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBrain.swift; sourceTree = "<group>"; };
@@ -155,7 +154,7 @@
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
 		705B3D0829BE108C005CFEC2 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTopView.swift; sourceTree = "<group>"; };
-		705D92D428F895BA001C4F38 /* WheelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelViewController.swift; sourceTree = "<group>"; };
+		705D92D428F895BA001C4F38 /* WheelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelController.swift; sourceTree = "<group>"; };
 		705D92D728F89623001C4F38 /* PushButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushButton.swift; sourceTree = "<group>"; };
 		705D92D828F89623001C4F38 /* bubble_pop.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = bubble_pop.aac; sourceTree = "<group>"; };
 		705D92DA28F89624001C4F38 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -209,7 +208,6 @@
 		70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		70FC6A4A27E26DD500C31481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,7 +286,6 @@
 				706CBAB627592F8D008B4773 /* HomeViewController.swift */,
 				7027F690275B9B84001F6068 /* WordsViewController.swift */,
 				708C0E1327A8894F00E9105F /* AddEditController.swift */,
-				70FC7F37275BD1DE00F138E7 /* ExerciseViewController.swift */,
 				708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */,
 				700C439827A856FD00D94497 /* LevelInfoViewController.swift */,
 				7014743527AAB4EE005E1854 /* LevelUpViewController.swift */,
@@ -299,11 +296,11 @@
 				701581BC27DE80D800796ADE /* SettingsViewController.swift */,
 				70A70D9C29439D93007F3C25 /* ExerciseSettingsViewController.swift */,
 				702A978227EB378A00AEECF7 /* X2SettingViewController.swift */,
-				705D92D428F895BA001C4F38 /* WheelViewController.swift */,
+				705D92D428F895BA001C4F38 /* WheelController.swift */,
 				705B3D0829BE108C005CFEC2 /* TestController.swift */,
 				70509AA929C9DAD000372655 /* WritingController.swift */,
 				70509AAB29CA14D700372655 /* ListeningController.swift */,
-				70175BC327E71F170053CBDB /* CardViewController.swift */,
+				70175BC327E71F170053CBDB /* CardController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -595,7 +592,7 @@
 				700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */,
 				70134170291D5723001967E1 /* CircleColorSparkView.swift in Sources */,
 				7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */,
-				70175BC427E71F170053CBDB /* CardViewController.swift in Sources */,
+				70175BC427E71F170053CBDB /* CardController.swift in Sources */,
 				70509AAA29C9DAD000372655 /* WritingController.swift in Sources */,
 				706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */,
 				7013418D291D5867001967E1 /* ClassicFirework.swift in Sources */,
@@ -615,7 +612,6 @@
 				70134195291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,
 				70A70D9D29439D93007F3C25 /* ExerciseSettingsViewController.swift in Sources */,
-				70FC7F38275BD1DE00F138E7 /* ExerciseViewController.swift in Sources */,
 				70134174291D5751001967E1 /* ImageSparkView.swift in Sources */,
 				7013417E291D57D5001967E1 /* FireworkSpark.swift in Sources */,
 				707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */,
@@ -647,7 +643,7 @@
 				7011749B29B4C47200019D69 /* TabBar.swift in Sources */,
 				705D92E628F89625001C4F38 /* GameScene.swift in Sources */,
 				701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */,
-				705D92D528F895BA001C4F38 /* WheelViewController.swift in Sources */,
+				705D92D528F895BA001C4F38 /* WheelController.swift in Sources */,
 				7094D8C6290D694D007E422F /* BadgeView.swift in Sources */,
 				70C7C22A29522704006E65A2 /* LetterCell.swift in Sources */,
 				70134172291D573D001967E1 /* CircleColorSparkViewFactory.swift in Sources */,

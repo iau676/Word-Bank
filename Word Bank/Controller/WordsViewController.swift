@@ -106,8 +106,8 @@ class WordsViewController: UIViewController {
     @objc func cardExerciseButtonPressed(_ sender: UIButton) {
         cardExerciseButton.bounce()
         cardExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
-        let controller = CardViewController(exerciseType: exerciseType,
-                                            exerciseFormat: ExerciseFormat.card)
+        let controller = CardController(exerciseType: exerciseType,
+                                        exerciseFormat: ExerciseFormat.card)
         checkWordCount(controller: controller)
     }
 

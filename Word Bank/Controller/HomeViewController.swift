@@ -84,7 +84,6 @@ final class HomeViewController: UIViewController, LevelDelegate {
         
         goAddPage = 1
         viewDidLayoutSubviews()
-        //performSegue(identifier: "goWords", second: 0.2)
         let controller = WordsViewController(exerciseType: ExerciseType.normal)
         controller.goAddPage = 1
         pushViewController(controller: controller)
@@ -117,12 +116,6 @@ final class HomeViewController: UIViewController, LevelDelegate {
                 self.levelButton.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
                 self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 20)
             }
-        }
-    }
-    
-    func performSegue(identifier: String, second: Double = 0.0){
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + second){
-            self.performSegue(withIdentifier: identifier, sender: self)
         }
     }
     
@@ -198,7 +191,9 @@ final class HomeViewController: UIViewController, LevelDelegate {
         if wordCount < 2 {
             showAlert(title: "Minimum two words are required", message: "")
         } else {
-            performSegue(identifier: "goExercise", second: 0.1)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
+                self.navigationController?.pushViewController(WheelController(), animated: true)
+            }
         }
     }
 

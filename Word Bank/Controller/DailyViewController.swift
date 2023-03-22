@@ -103,14 +103,14 @@ class DailyViewController: UIViewController {
         prizeButton.bounce()
         UserDefault.userGotDailyPrize.set("willGet")
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
-            self.navigationController?.pushViewController(WheelViewController(), animated: true)
+            self.navigationController?.pushViewController(WheelController(), animated: true)
         }
     }
     
     @objc func wheelButtonPressed(){
         wheelButton.bounce()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
-            self.navigationController?.pushViewController(WheelViewController(), animated: true)
+            self.navigationController?.pushViewController(WheelController(), animated: true)
         }
     }
     
@@ -134,7 +134,7 @@ class DailyViewController: UIViewController {
                 self.navigationController?.popToRootViewController(animated: true)
             }
         } else {
-            pushExerciseViewController(controller: controller)
+            navigationController?.pushViewController(controller, animated: true)
         }
     }
     
@@ -168,10 +168,6 @@ class DailyViewController: UIViewController {
         if listeningExerciseCount >= 10 {
             taskThreeButton.setImageWithRenderingMode(image: Images.check, width: 25, height: 25, color: .white)
         }
-    }
-    
-    func pushExerciseViewController(controller: UIViewController){
-        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func configureLayerButton(_ button: UIButton, _ color: UIColor?) {

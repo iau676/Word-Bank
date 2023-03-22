@@ -9,7 +9,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class WheelViewController: UIViewController {
+final class WheelController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,43 +29,40 @@ class WheelViewController: UIViewController {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
 
-    @objc func goExercise(_ notification: Notification) {
+    @objc private func goExercise(_ notification: Notification) {
         if let index = notification.userInfo?["index"] as? Int {
-            UserDefault.startPressed.set(index)
-            let when = DispatchTime.now() + 0.7
-            DispatchQueue.main.asyncAfter(deadline: when){
-                if index == 4 {
-                    let controller = CardViewController(exerciseType: ExerciseType.normal,
-                                                        exerciseFormat: ExerciseFormat.card)
-                    controller.wheelPressed = 1
-                    self.navigationController?.pushViewController(controller, animated: true)
-                } else {
-                    let vc = ExerciseViewController()
-                    vc.wheelPressed = 1
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.7){
+                self.goExercise(index: index)
             }
         }
     }
     
-    @objc func goHome() {
-        self.navigationController?.popToRootViewController(animated: true)
+    private func goExercise(index: Int) {
+        var controller = UIViewController()
+        switch index {
+        case 1:
+            controller = TestController(exerciseType: ExerciseType.normal,
+                                        exerciseFormat: ExerciseFormat.test)
+        case 2:
+            controller = WritingController(exerciseType: ExerciseType.normal,
+                                           exerciseFormat: ExerciseFormat.writing)
+        case 3:
+            controller = ListeningController(exerciseType: ExerciseType.normal,
+                                             exerciseFormat: ExerciseFormat.listening)
+        case 4:
+            controller = CardController(exerciseType: ExerciseType.normal,
+                                            exerciseFormat: ExerciseFormat.card)
+        default: break
+        }
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goExercise" {
-            let destinationVC = segue.destination as! ExerciseViewController
-            destinationVC.wheelPressed = 1
-        }
-        
-        if segue.identifier == "goCard" {
-            let destinationVC = segue.destination as! CardViewController
-            destinationVC.wheelPressed = 1
-        }
+    @objc private func goHome() {
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }
 
-extension WheelViewController {
+extension WheelController {
     override var shouldAutorotate: Bool {
         return true
     }

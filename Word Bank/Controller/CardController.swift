@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class CardViewController: UIViewController {
+class CardController: UIViewController {
     
     //MARK: - Variables
     
@@ -27,7 +27,6 @@ class CardViewController: UIViewController {
     private var wordEnglish = ""
     private var wordMeaning = ""
     private var isOpen = false
-    var wheelPressed = 0
     
     private var questionArray = [String]()
     private var answerArray = [String]()
@@ -54,7 +53,6 @@ class CardViewController: UIViewController {
         layout()
         updateWord()
         addGestureRecognizer()
-        configureBackBarButton()
         divisor = (view.frame.width/2)/0.61
     }
 
@@ -69,7 +67,7 @@ class CardViewController: UIViewController {
         self.isOpen = false
     }
     
-    private func updateCard(_ card: UIView){
+    private func updateCard(_ card: UIView) {
         card.alpha = 0
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3){
             self.resetCard(card)
@@ -77,14 +75,14 @@ class CardViewController: UIViewController {
         }
     }
     
-    private func addHardWord(){
+    private func addHardWord() {
         let questionNumber = wordBrain.getQuestionNumber()
         if itemArray[questionNumber].addedHardWords == false {
             wordBrain.addWordToHardWords(questionNumber)
         }
     }
     
-    private func updateWord(){
+    private func updateWord() {
         if cardCounter == 20 {
             let controller = ResultViewController(exerciseType: exerciseType,
                                                   exerciseFormat: exerciseFormat)
@@ -104,30 +102,9 @@ class CardViewController: UIViewController {
         }
     }
     
-    private func configureBackBarButton(){
-        let backButton: UIButton = UIButton()
-        let image = Images.arrow_back
-        backButton.setImage(image, for: .normal)
-        backButton.setTitle(" Back", for: .normal);
-        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
-        backButton.setTitleColor(.black, for: .normal)
-        backButton.sizeToFit()
-        backButton.addTarget(self, action: #selector (backButtonPressed(sender:)), for: .touchUpInside)
-        let barButton = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = barButton
-    }
-    
     //MARK: - Selectors
     
-    @objc private func backButtonPressed(sender : UIButton) {
-        if wheelPressed == 1 {
-            self.navigationController?.popToRootViewController(animated: true)
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
-    @objc private func flipCard(_ sender:UITapGestureRecognizer){
+    @objc private func flipCard(_ sender:UITapGestureRecognizer) {
         if isOpen {
             isOpen = false
             cardLabel.text = wordEnglish
@@ -142,9 +119,10 @@ class CardViewController: UIViewController {
 
 //MARK: - Layout
 
-extension CardViewController {
+extension CardController {
     
-    private func style(){
+    private func style() {
+        configureNavigationBar()
         view.backgroundColor = Colors.ravenShadow
         
         cardView.backgroundColor = Colors.raven
@@ -162,7 +140,7 @@ extension CardViewController {
         imageView.alpha = 0
     }
     
-    private func layout(){
+    private func layout() {
         
         cardView.addSubview(imageView)
         cardView.addSubview(cardLabel)
@@ -187,13 +165,17 @@ extension CardViewController {
         cardLabel.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor,
                          paddingLeft: 16, paddingRight: 16)
     }
+    
+    private func configureNavigationBar() {
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
+    }
 }
 
 //MARK: - Swipe Gesture
 
-extension CardViewController {
+extension CardController {
     
-    private func addGestureRecognizer(){
+    private func addGestureRecognizer() {
         let swipeGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         cardView.addGestureRecognizer(swipeGesture)
         
