@@ -129,6 +129,7 @@ class WritingController: UIViewController {
         wordBrain.getHour()
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
+        wordBrain.sortWordsForExercise()
         configureTextField()
         configureUI()
         updateUI()

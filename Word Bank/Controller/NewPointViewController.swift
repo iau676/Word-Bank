@@ -51,10 +51,6 @@ class NewPointViewController: UIViewController {
         super.viewDidLayoutSubviews()
         player.playerLayer?.frame = view.bounds
     }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
         
     //MARK: - Selectors
     

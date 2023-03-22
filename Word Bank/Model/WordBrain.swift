@@ -132,7 +132,7 @@ struct WordBrain {
         saveContext()
     }
     
-    mutating func sortWordsForExercise(){
+    mutating func sortWordsForExercise() {
         for i in 0..<itemArray.count {
             let j = itemArray[i].falseCount - itemArray[i].trueCount
             failsDictionary.updateValue(Int(j), forKey: i)

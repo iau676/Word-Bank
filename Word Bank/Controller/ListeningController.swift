@@ -74,6 +74,7 @@ class ListeningController: UIViewController {
         wordBrain.getHour()
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
+        wordBrain.sortWordsForExercise()
         configureUI()
         updateUI()
     }

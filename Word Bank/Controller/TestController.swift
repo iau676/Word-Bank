@@ -66,6 +66,7 @@ class TestController: UIViewController {
         wordBrain.getHour()
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
+        wordBrain.sortWordsForExercise()
         configureUI()
         updateUI()
     }

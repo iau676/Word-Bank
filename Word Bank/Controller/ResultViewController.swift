@@ -87,10 +87,6 @@ class ResultViewController: UIViewController {
         player.playerLayer?.frame = view.bounds
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-        
     //MARK: - Selectors
     
     @objc func addedHardWordsButtonPressed(_ sender: UIButton) {

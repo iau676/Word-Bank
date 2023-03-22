@@ -48,10 +48,6 @@ class LevelUpViewController: UIViewController {
         player.playerLayer?.frame = view.bounds
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     //MARK: - Selectors
     
     @objc func continueButtonPressed(_ sender: UIButton) {
