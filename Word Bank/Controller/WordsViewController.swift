@@ -36,7 +36,6 @@ class WordsViewController: UIViewController {
     var itemArray: [Item] { return wordBrain.itemArray }
     var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
-    var whichButton: String	{ return UserDefault.whichButton.getString() }
     
     //MARK: - Life Cycle
     
@@ -83,7 +82,6 @@ class WordsViewController: UIViewController {
     }
     
     @objc func testExerciseButtonPressed(_ sender: Any) {
-        UserDefault.startPressed.set(1)
         testExerciseButton.bounce()
         testExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         let controller = TestController(exerciseType: exerciseType,
@@ -92,7 +90,6 @@ class WordsViewController: UIViewController {
     }
     
     @objc func writingExerciseButtonPressed(_ sender: UIButton) {
-        UserDefault.startPressed.set(2)
         writingExerciseButton.bounce()
         writingExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         let controller = WritingController(exerciseType: exerciseType,
@@ -107,7 +104,6 @@ class WordsViewController: UIViewController {
     }
     
     @objc func cardExerciseButtonPressed(_ sender: UIButton) {
-        UserDefault.startPressed.set(4)
         cardExerciseButton.bounce()
         cardExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         let controller = CardViewController(exerciseType: exerciseType,
@@ -124,7 +120,7 @@ class WordsViewController: UIViewController {
     }
     
     func updateView(){
-        if whichButton == ExerciseType.normal {
+        if exerciseType == ExerciseType.normal {
             searchBar.updateSearchBarVisibility(false)
             tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         } else {
@@ -188,7 +184,7 @@ class WordsViewController: UIViewController {
     func setupBackgroundColor(){
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
-        if whichButton == ExerciseType.normal {
+        if exerciseType == ExerciseType.normal {
             gradient.colors = [Colors.blue!.cgColor, Colors.blueLight!.cgColor]
         } else {
             gradient.colors = [Colors.yellow!.cgColor, Colors.yellowLight!.cgColor]
@@ -199,7 +195,7 @@ class WordsViewController: UIViewController {
     func setupNavigationBar(){
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         
-        if whichButton == ExerciseType.normal {
+        if exerciseType == ExerciseType.normal {
             title = "Words"
         } else {
             title = "Hard Words"
@@ -231,7 +227,7 @@ class WordsViewController: UIViewController {
     }
 
     func checkGoAddPage(){
-        if goAddPage == 1 && whichButton == ExerciseType.normal{
+        if goAddPage == 1 && exerciseType == ExerciseType.normal{
             goAddEdit()
         }
     }
@@ -248,11 +244,11 @@ class WordsViewController: UIViewController {
     }
     
     func checkWordCount(controller: UIViewController){
-        let wordCount = (whichButton == ExerciseType.normal) ? itemArray.count : hardItemArray.count
+        let wordCount = (exerciseType == ExerciseType.normal) ? itemArray.count : hardItemArray.count
         
         if wordCount < 2 {
             showAlert(title: "Minimum two words required", message: "") { _ in
-                if self.whichButton == ExerciseType.normal {
+                if self.exerciseType == ExerciseType.normal {
                     let controller = AddEditController()
                     controller.modalPresentationStyle = .overCurrentContext
                     self.present(controller, animated: true)
@@ -271,7 +267,6 @@ class WordsViewController: UIViewController {
     func checkSoundSetting(){
         //0 is true, 1 is false
         if UserDefault.playSound.getInt() == 0 {
-            UserDefault.startPressed.set(3)
             let controller = ListeningController(exerciseType: exerciseType,
                                                 exerciseFormat: ExerciseFormat.listening)
             checkWordCount(controller: controller)
@@ -324,7 +319,7 @@ extension WordsViewController: UISearchBarDelegate {
 extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         updateSearchBarPlaceholder()
-        if whichButton == ExerciseType.normal {
+        if exerciseType == ExerciseType.normal {
             return itemArray.count
         } else {
             showAlertIfHardWordsEmpty()
@@ -342,7 +337,7 @@ extension WordsViewController: UITableViewDataSource {
         cell.trView.isHidden = false
         
         if itemArray.count > 0 {
-            if whichButton == ExerciseType.normal {
+            if exerciseType == ExerciseType.normal {
                 cell.engLabel.text = itemArray[indexPath.row].eng
                 cell.trLabel.text = itemArray[indexPath.row].tr
             } else {
@@ -429,7 +424,7 @@ extension WordsViewController: UITableViewDelegate {
         addAction.setImage(image: Images.plus, width: 25, height: 25)
         addAction.setBackgroundColor(Colors.yellow)
         
-        if whichButton == ExerciseType.normal {
+        if exerciseType == ExerciseType.normal {
             if self.itemArray[indexPath.row].addedHardWords == true {
                 return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
             }
@@ -559,7 +554,7 @@ extension WordsViewController {
     }
     
     @objc func respondToSwipeLeftGesture(gesture: UISwipeGestureRecognizer) {
-        if whichButton == ExerciseType.normal { goAddEdit() }
+        if exerciseType == ExerciseType.normal { goAddEdit() }
     }
     
     @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {

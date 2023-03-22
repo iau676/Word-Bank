@@ -147,7 +147,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
 
         if questionCount < totalQuestionNumber {
             
-            questionText = wordBrain.getQuestionText(questionCount, whichStartPressed)
+            questionText = ""
             questionLabel.text = questionText
 
             //0 is true, 1 is false
@@ -174,8 +174,8 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
             default: break
             }
             
-            refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
-            refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
+//            refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
+//            refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
             bubbleButton.setBackgroundImage(nil, for: UIControl.State.normal)
             
         } else {
@@ -399,7 +399,7 @@ class ExerciseViewController: UIViewController, UITextFieldDelegate {
         var userGotItRight = true
         
         if whichStartPressed == 1 {
-            userGotItRight = wordBrain.checkAnswer(userAnswer: userAnswer)
+            userGotItRight = false
         } else {
             userGotItRight = answerForStart23.lowercased() == userAnswer.lowercased()
             if whichButton == ExerciseType.hard {

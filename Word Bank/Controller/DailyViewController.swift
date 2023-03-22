@@ -82,30 +82,21 @@ class DailyViewController: UIViewController {
     //MARK: - Selectors
     
     @objc func taskOneButtonPressed(){
-        UserDefault.whichButton.set(ExerciseType.normal)
-        UserDefault.startPressed.set(1)
-        //checkWordCount()
         let controller = TestController(exerciseType: ExerciseType.normal,
                                         exerciseFormat: ExerciseFormat.test)
-        self.navigationController?.pushViewController(controller, animated: true)
+        checkWordCount(controller: controller)
     }
     
     @objc func taskTwoButtonPressed(){
-        UserDefault.whichButton.set(ExerciseType.normal)
-        UserDefault.startPressed.set(2)
-        //checkWordCount()
         let controller = WritingController(exerciseType: ExerciseType.normal,
                                            exerciseFormat: ExerciseFormat.writing)
-        self.navigationController?.pushViewController(controller, animated: true)
+        checkWordCount(controller: controller)
     }
     
     @objc func taskThreeButtonPressed(){
-        UserDefault.whichButton.set(ExerciseType.normal)
-        UserDefault.startPressed.set(3)
-        //checkSoundSetting()
         let controller = ListeningController(exerciseType: ExerciseType.normal,
                                              exerciseFormat: ExerciseFormat.listening)
-        self.navigationController?.pushViewController(controller, animated: true)
+        checkSoundSetting(controller: controller)
     }
     
     @objc func prizeButtonPressed(){
@@ -135,26 +126,22 @@ class DailyViewController: UIViewController {
     
     //MARK: - Helpers
     
-    func checkWordCount(){
+    func checkWordCount(controller: UIViewController){
         let wordCount = itemArray.count
         
         if wordCount < 2 {
-            let alert = UIAlertController(title: "Minimum two words are required", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            showAlert(title: "Minimum two words are required", message: "") { _ in
                 self.navigationController?.popToRootViewController(animated: true)
             }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
         } else {
-            pushExerciseViewController()
+            pushExerciseViewController(controller: controller)
         }
     }
     
-    func checkSoundSetting(){
+    func checkSoundSetting(controller: UIViewController){
         //0 is true, 1 is false
         if UserDefault.playSound.getInt() == 0 {
-            UserDefault.startPressed.set(3)
-            pushExerciseViewController()
+            checkWordCount(controller: controller)
         } else {
             showAlert(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "") { _ in
                 self.navigationController?.pushViewController(SettingsViewController(), animated: true)
@@ -183,8 +170,8 @@ class DailyViewController: UIViewController {
         }
     }
     
-    func pushExerciseViewController(){
-        self.navigationController?.pushViewController(ExerciseViewController(), animated: true)
+    func pushExerciseViewController(controller: UIViewController){
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func configureLayerButton(_ button: UIButton, _ color: UIColor?) {

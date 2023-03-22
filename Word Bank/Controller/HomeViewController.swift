@@ -71,8 +71,6 @@ final class HomeViewController: UIViewController, LevelDelegate {
     
     @objc func exerciseButtonPressed() {
         exerciseCP.bounce()
-        
-        UserDefault.whichButton.set(ExerciseType.normal)
         UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
         checkWordCount()
     }
@@ -84,8 +82,6 @@ final class HomeViewController: UIViewController, LevelDelegate {
         dropButton.setImage(image: Images.drop, width: 7, height: 7)
         dropButton.animateDropDown()
         
-        UserDefault.startPressed.set(1)
-        UserDefault.whichButton.set(ExerciseType.normal)
         goAddPage = 1
         viewDidLayoutSubviews()
         //performSegue(identifier: "goWords", second: 0.2)
@@ -96,8 +92,6 @@ final class HomeViewController: UIViewController, LevelDelegate {
     
     @objc func wordsButtonPressed() {
         wordsCP.bounce()
-        
-        UserDefault.whichButton.set(ExerciseType.normal)
         goAddPage = 0
         let controller = WordsViewController(exerciseType: ExerciseType.normal)
         pushViewController(controller: controller)
@@ -105,8 +99,6 @@ final class HomeViewController: UIViewController, LevelDelegate {
     
     @objc func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         hardCP.bounce()
-        
-        UserDefault.whichButton.set(ExerciseType.hard)
         let controller = WordsViewController(exerciseType: ExerciseType.hard)
         pushViewController(controller: controller)
     }

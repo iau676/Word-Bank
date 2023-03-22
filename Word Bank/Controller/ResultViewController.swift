@@ -39,7 +39,6 @@ class ResultViewController: UIViewController {
 
     var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
     var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
-    var whichStartPressed: Int { return UserDefault.startPressed.getInt() }
     var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
     
@@ -102,30 +101,24 @@ class ResultViewController: UIViewController {
     }
     
     @objc func refreshButtonPressed(_ sender: Any) {
-        if whichStartPressed == 4 {
-            let controller = CardViewController(exerciseType: ExerciseType.normal,
-                                                exerciseFormat: ExerciseFormat.card)
-            self.navigationController?.pushViewController(controller, animated: true)
-        } else {
-            var controller = UIViewController()
-            switch exerciseFormat {
-            case ExerciseFormat.test:
-                controller = TestController(exerciseType: exerciseType,
+        var controller = UIViewController()
+        switch exerciseFormat {
+        case ExerciseFormat.test:
+            controller = TestController(exerciseType: exerciseType,
+                                        exerciseFormat: exerciseFormat)
+        case ExerciseFormat.writing:
+            controller = WritingController(exerciseType: exerciseType,
+                                           exerciseFormat: exerciseFormat)
+        case ExerciseFormat.listening:
+            controller = ListeningController(exerciseType: exerciseType,
+                                             exerciseFormat: exerciseFormat)
+        case ExerciseFormat.card:
+            controller = CardViewController(exerciseType: exerciseType,
                                             exerciseFormat: exerciseFormat)
-            case ExerciseFormat.writing:
-                controller = WritingController(exerciseType: exerciseType,
-                                               exerciseFormat: exerciseFormat)
-            case ExerciseFormat.listening:
-                controller = ListeningController(exerciseType: exerciseType,
-                                                 exerciseFormat: exerciseFormat)
-            case ExerciseFormat.card:
-                controller = CardViewController(exerciseType: exerciseType,
-                                                exerciseFormat: exerciseFormat)
-            default: break
-            }
-            
-            self.navigationController?.pushViewController(controller, animated: true)
+        default: break
         }
+        
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     //MARK: - Helpers    
@@ -138,7 +131,7 @@ class ResultViewController: UIViewController {
     }
     
     func updateRefreshButtonVisibility(){
-        if UserDefault.whichButton.getString() == ExerciseType.hard && UserDefault.hardWordsCount.getInt() < 2 {
+        if exerciseType == ExerciseType.hard && UserDefault.hardWordsCount.getInt() < 2 {
             refreshButton.isHidden = true
         } else {
             refreshButton.isHidden = false
@@ -158,7 +151,7 @@ class ResultViewController: UIViewController {
     }
     
     func checkWhichExercise() {
-        if whichStartPressed == 4 {
+        if exerciseFormat == ExerciseFormat.card {
             numberOfTrue = userAnswerArray.count
         } else {
             scoreLabel.text = "\(numberOfTrue)/\(userAnswerArray.count)"
@@ -167,7 +160,7 @@ class ResultViewController: UIViewController {
     }
     
     func updateStatistic() {
-        if UserDefault.whichButton.getString() == ExerciseType.normal {
+        if exerciseType == ExerciseType.normal {
             updateExerciseCount(exerciseType: ExerciseType.normal)
         } else {
             updateExerciseCount(exerciseType: ExerciseType.hard)
@@ -186,21 +179,8 @@ class ResultViewController: UIViewController {
         let falseCount = Int16(userAnswerArray.count-numberOfTrue)
         let hintCount = Int16(UserDefault.hintCount.getInt())
         
-        switch whichStartPressed {
-        case 1:
-            wordBrain.addExercise(name: ExerciseFormat.test, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
-            break
-        case 2:
-            wordBrain.addExercise(name: ExerciseFormat.writing, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
-            break
-        case 3:
-            wordBrain.addExercise(name: ExerciseFormat.listening, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
-            break
-        case 4:
-            wordBrain.addExercise(name: ExerciseFormat.card, type: exerciseType, trueCount: trueCount, falseCount: falseCount, hintCount: hintCount)
-            break
-        default: break
-        }
+        wordBrain.addExercise(name: exerciseFormat, type: exerciseType, trueCount: trueCount,
+                              falseCount: falseCount, hintCount: hintCount)
     }
     
     func calculateNumberOfTrue() {
@@ -213,7 +193,6 @@ class ResultViewController: UIViewController {
     
     func checkAllTrue(){
         if numberOfTrue == userAnswerArray.count {
-            //showWordsButton.isHidden = whichStartPressed == 4 ?  true : false
             tableView.backgroundColor = .clear
             player.observeAppEvents()
             player.setupPlayerIfNeeded(view: view, videoName: Videos.alltrue)
@@ -260,7 +239,6 @@ extension ResultViewController: UITableViewDataSource {
         
         updateCellLabelText(cell, indexPath.row)
         updateCellCornerRadius(cell, indexPath.row)
-        updateCellForListeningExercise(cell)
         updateCellLabelTextSize(cell)
         updateCellLabelTextColor(cell)
        
@@ -277,13 +255,6 @@ extension ResultViewController: UITableViewDataSource {
         cell.engLabel.text = questionArray[index]
         cell.trLabel.text = answerArray[index]
         cell.numberLabel.text = String(index+1)
-    }
-    
-    func updateCellForListeningExercise(_ cell: WordCell){
-        if whichStartPressed == 3 {
-            cell.trView.isHidden = true
-            cell.engLabel.textAlignment = .center
-        }
     }
     
     func updateCellLabelTextSize(_ cell: WordCell) {
@@ -303,7 +274,7 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func updateCellViewBackgroundForWrong(_ cell: WordCell){
-        if whichStartPressed == 4 {
+        if exerciseFormat == ExerciseFormat.card {
             cell.engView.backgroundColor = Colors.yellow
             cell.trView.backgroundColor = Colors.lightYellow
         } else {
@@ -313,7 +284,7 @@ extension ResultViewController: UITableViewDataSource {
     }
     
     func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
-        if whichStartPressed != 4 {
+        if exerciseFormat != ExerciseFormat.card {
             cell.trLabel.attributedText = writeAnswerCell(userAnswerArray[i].strikeThrough(),
                                                           answerArray[i])
         }
@@ -361,8 +332,8 @@ extension ResultViewController: UITableViewDataSource {
 extension ResultViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if whichStartPressed == 3 {
-            player.playSound(soundSpeed, questionArray[indexPath.row])
+        if exerciseFormat == ExerciseFormat.listening {
+            player.playSound(soundSpeed, answerArray[indexPath.row])
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

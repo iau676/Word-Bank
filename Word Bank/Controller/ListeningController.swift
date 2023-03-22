@@ -31,7 +31,7 @@ class ListeningController: UIViewController {
     private var isAnswerSelected = false
     private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
     
-    private lazy var exerciseTopView = ExerciseTopView()
+    private lazy var exerciseTopView = ExerciseTopView(exerciseFormat: exerciseFormat)
     private var bubbleView = BubbleView()
     
     private let questionLabel: UILabel = {
@@ -83,7 +83,7 @@ class ListeningController: UIViewController {
     @objc private func updateUI() {
         bubbleView.isHidden = true
         if questionCounter < totalQuestionNumber {
-            questionText = wordBrain.getQuestionText(questionCounter, 2)
+            questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseType)
             questionLabel.text = questionText
             questionArray.append(questionText)
             configureAnswers()
@@ -198,7 +198,7 @@ class ListeningController: UIViewController {
     }
     
     private func configureAnswers() {
-        let answers = wordBrain.getListeningAnswers()
+        let answers = wordBrain.getListeningAnswers(exerciseType)
         buttonOne.setTitle(answers.0, for: .normal)
         buttonTwo.setTitle(answers.1, for: .normal)
         buttonThree.setTitle(answers.2, for: .normal)

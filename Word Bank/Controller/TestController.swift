@@ -22,6 +22,7 @@ class TestController: UIViewController {
     private var questionText = ""
     private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
     private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
+    private var wordSoundOpen: Bool { return UserDefault.playSound.getInt() == 0 }
     
     private var questionArray = [String]()
     private var answerArray = [String]()
@@ -29,7 +30,7 @@ class TestController: UIViewController {
     private var userAnswerArrayBool = [Bool]()
     
     private lazy var exerciseTopView: ExerciseTopView = {
-        let view = ExerciseTopView()
+        let view = ExerciseTopView(exerciseFormat: exerciseFormat)
         view.delegate = self
         return view
     }()
@@ -78,13 +79,14 @@ class TestController: UIViewController {
     @objc private func updateUI() {
         bubbleButton.isHidden = true
         if questionCounter < totalQuestionNumber {
-            questionText = wordBrain.getQuestionText(questionCounter, 1)
+            questionText = wordBrain.getQuestionText(questionCounter, 1, exerciseType)
             questionLabel.text = questionText
             questionArray.append(questionText)
-            refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0))
-            refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1))
+            refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0, exerciseType))
+            refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1, exerciseType))
 
             if selectedTestType == 0 {
+                if wordSoundOpen { playSound() }
                 answerArray.append(wordBrain.getMeaning(exerciseType: exerciseType))
             } else {
                 answerArray.append(wordBrain.getEnglish(exerciseType: exerciseType))
@@ -195,16 +197,17 @@ class TestController: UIViewController {
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
+    
+    private func playSound() {
+        let soundSpeed = UserDefault.soundSpeed.getDouble()
+        player.playSound(soundSpeed, questionText)
+    }
 }
 
 //MARK: - ExerciseTopDelegate
 
 extension TestController: ExerciseTopDelegate {
     func soundHintButtonPressed() {
-        //only english word
-        if UserDefault.selectedTestType.getInt() == 0 {
-            let soundSpeed = UserDefault.soundSpeed.getDouble()
-            player.playSound(soundSpeed, questionText)
-        }
+        playSound()
     }
 }

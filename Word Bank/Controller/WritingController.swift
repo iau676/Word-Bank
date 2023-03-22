@@ -32,7 +32,7 @@ class WritingController: UIViewController {
     private var answerText = ""
     
     private lazy var exerciseTopView: ExerciseTopView = {
-        let view = ExerciseTopView()
+        let view = ExerciseTopView(exerciseFormat: exerciseFormat)
         view.delegate = self
         return view
     }()
@@ -144,7 +144,7 @@ class WritingController: UIViewController {
         currentAnswerIndex = []
         
         if questionCounter < totalQuestionNumber {
-            questionText = wordBrain.getQuestionText(questionCounter, 2)
+            questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseType)
             answerText = wordBrain.getEnglish(exerciseType: exerciseType)
             questionLabel.text = questionText
             questionArray.append(questionText)

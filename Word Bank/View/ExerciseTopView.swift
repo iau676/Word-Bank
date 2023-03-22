@@ -44,22 +44,23 @@ class ExerciseTopView: UIView {
     private lazy var soundHintButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = Colors.f6f6f6
-        button.titleLabel?.font =  button.titleLabel?.font.withSize(15)
-        
         button.addTarget(self, action: #selector(soundHintButtonPressed), for: .touchUpInside)
         return button
     }()
     
     //MARK: - Lifecycle
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+        
+    init(exerciseFormat: String) {
+        super.init(frame: CGRect(x: 0, y: 0, width: 11, height: 11))
         
         WordBrain.shared.questionCounter = 0
         
-        switch UserDefault.startPressed.getInt() {
-        case 1: soundHintButton.setImage(image: Images.soundLeft, width: 40, height: 40)
-        case 2: soundHintButton.setImage(image: Images.question, width: 32, height: 32)
+        switch exerciseFormat {
+        case ExerciseFormat.test:
+            if UserDefault.selectedTestType.getInt() == 0 {
+                soundHintButton.setImage(image: Images.soundLeft, width: 40, height: 40)
+            }
+        case ExerciseFormat.writing: soundHintButton.setImage(image: Images.question, width: 32, height: 32)
         default: break
         }
         
@@ -81,16 +82,15 @@ class ExerciseTopView: UIView {
         addSubview(soundHintButton)
         soundHintButton.setDimensions(height: 40, width: 40)
         soundHintButton.anchor(top: userPointButton.bottomAnchor, right: rightAnchor,
-                           paddingTop: 16, paddingRight: 32)
+                               paddingTop: 16, paddingRight: 32)
         
         setHeight(height: 24+16+40)
-        
 
         xButton.isHidden = !(UserDefault.currentHour.getInt() == UserDefault.userSelectedHour.getInt())
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     //MARK: - Selectors

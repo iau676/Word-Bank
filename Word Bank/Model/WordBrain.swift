@@ -147,14 +147,14 @@ struct WordBrain {
        }
     }
     
-    mutating func getQuestionText(_ whichQuestion: Int, _ startPressed:Int) -> String {
+    mutating func getQuestionText(_ whichQuestion: Int, _ startPressed:Int, _ exerciseType: String) -> String{
         
         questionNumbers.removeAll()
         loadHardItemArray()
         loadItemArray()
 
         // these will be return a function
-        if UserDefault.whichButton.getString() == ExerciseType.normal {
+        if exerciseType == ExerciseType.normal {
             if itemArray.count > 20 {
                 switch whichQuestion {
                 case 0...4:
@@ -198,7 +198,7 @@ struct WordBrain {
         questionNumbersCopy = questionNumbers
         questionNumbersCopy.remove(at: questionNumber)
   
-        if UserDefault.whichButton.getString() == ExerciseType.normal {
+        if exerciseType == ExerciseType.normal {
             if startPressed == 1 {
                 return selectedTestType == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr!
             } else {
@@ -234,9 +234,9 @@ struct WordBrain {
         return Float(questionCounter) / Float(20.0)
     }
 
-    mutating func getAnswer(_ sender: Int) -> String {
+    mutating func getAnswer(_ sender: Int, _ exerciseType: String) -> String {
         if changedQuestionNumber % 2 == sender {
-            if UserDefault.whichButton.getString() == ExerciseType.normal {
+            if exerciseType == ExerciseType.normal {
                 return selectedTestType == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
             } else {
                 return selectedTestType == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
@@ -246,7 +246,7 @@ struct WordBrain {
                 answer = Int.random(in: 0..<questionNumbersCopy.count)
                 let temp = questionNumbersCopy[answer]
                      
-                if UserDefault.whichButton.getString() == ExerciseType.normal {
+                if exerciseType == ExerciseType.normal {
                     return selectedTestType == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
                 } else {
                     return selectedTestType == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
@@ -257,30 +257,19 @@ struct WordBrain {
         }
     }
     
-    mutating func getListeningAnswers() -> (String, String, String, String) {
-        let answer1 = getListeningAnswer(for: questionNumber)
-        let answer2 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count))
-        let answer3 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count))
+    mutating func getListeningAnswers(_ exerciseType: String) -> (String, String, String, String) {
+        let answer1 = getListeningAnswer(for: questionNumber, exerciseType)
+        let answer2 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count), exerciseType)
+        let answer3 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count), exerciseType)
         let array = [answer1, answer2, answer3].shuffled()
         
         return (array[0], array[1], array[2], answer1)
     }
     
-    private func getListeningAnswer(for number: Int) -> String {
-        return UserDefault.whichButton.getString() == ExerciseType.normal ?
+    private func getListeningAnswer(for number: Int, _ exerciseType: String) -> String {
+        return exerciseType == ExerciseType.normal ?
         itemArray[number].eng! :
         hardItemArray[number].eng!
-    }
-    
-    mutating func checkAnswer(userAnswer: String) -> Bool {
-        var trueAnswer = ""
-        if UserDefault.whichButton.getString() == ExerciseType.normal {
-             trueAnswer = selectedTestType == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
-        } else {
-             trueAnswer = selectedTestType == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
-        }
-        
-        return userAnswer == trueAnswer
     }
     
     mutating func updateCorrectCountHardWord() -> Bool {
