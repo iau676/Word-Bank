@@ -18,7 +18,7 @@ class WritingController: UIViewController {
     private var player = Player()
     private var timer = Timer()
     
-    private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
+    private var exercisePoint: Int { return wordBrain.getExercisePoint() }
     private var selectedTyping: Int { return UserDefault.selectedTyping.getInt() }
     
     private var questionArray = [String]()
@@ -27,7 +27,7 @@ class WritingController: UIViewController {
     private var userAnswerArrayBool = [Bool]()
     
     private var questionCounter = 0
-    private var totalQuestionNumber = 5
+    private var totalQuestionNumber = 2
     private var questionText = ""
     private var answerText = ""
     

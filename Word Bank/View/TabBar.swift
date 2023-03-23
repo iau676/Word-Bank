@@ -28,6 +28,7 @@ class TabBar: UIView {
     private let awardButton = UIButton()
     private let statisticButton = UIButton()
     private let settingsButton = UIButton()
+    private var timer = Timer()
     
     //MARK: - Life Cycle
     
@@ -93,6 +94,7 @@ class TabBar: UIView {
         dailyButton.configureForTabBar(image: wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()],
                                        title: "Daily", titleColor: color2,
                                        imageWidth: 26, imageHeight: 26)
+        updateDailyButton(color2: color2)
         
         awardButton.configureForTabBar(image: Images.award,
                                        title: "Awards", titleColor: color3,
@@ -112,5 +114,19 @@ class TabBar: UIView {
         statisticButton.addTarget(self, action: #selector(statisticButtonPressed), for: .primaryActionTriggered)
         settingsButton.addTarget(self, action: #selector(settingsButtonPressed), for: .primaryActionTriggered)
     }
-
+    
+    ///Update for daily icon ticks and 2x
+    func updateDailyButton(color2: UIColor = .darkGray) {
+        if wordBrain.getCurrentHour() == UserDefault.userSelectedHour.getInt() {
+            dailyButton.setImage(image: Images.x2Tab, width: 26, height: 26)
+        } else {
+            dailyButton.setImage(image: wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()]?.withTintColor(color2),width: 26, height: 26)
+        }
+    }
+    
+    func updateDailyButtonTitleColor() {
+        if wordBrain.getCurrentHour() == UserDefault.userSelectedHour.getInt() {
+            dailyButton.setTitleColor(Colors.pink, for: .normal)
+        }
+    }
 }

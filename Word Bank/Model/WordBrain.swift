@@ -400,6 +400,16 @@ extension WordBrain {
     func getFalsePointImage() -> UIImage? {
         return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.redBubble : Images.redCircle
     }
+    
+    func getExercisePoint() -> Int {
+        var exercisePoint = UserDefault.exercisePoint.getInt()
+        
+        if getCurrentHour() == UserDefault.userSelectedHour.getInt() {
+           exercisePoint *= 2
+        }
+        
+        return exercisePoint
+    }
 }
 
 //MARK: - Card Exercise
@@ -446,7 +456,7 @@ extension WordBrain {
         let testExerciseCount = getExerciseCountToday(for: ExerciseFormat.test) >= 10 ? 1 : 0
         let writingExerciseCount = getExerciseCountToday(for: ExerciseFormat.writing) >= 10 ? 10 : 0
         let listeningExerciseCount = getExerciseCountToday(for: ExerciseFormat.listening) >= 10 ? 100 : 0
-        
+        print("DEBUG:: >>>\(testExerciseCount + writingExerciseCount + listeningExerciseCount)")
         switch testExerciseCount + writingExerciseCount + listeningExerciseCount {
         case 0:
             UserDefault.dailyImageIndex.set(0)

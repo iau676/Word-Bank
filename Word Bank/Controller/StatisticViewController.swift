@@ -349,7 +349,7 @@ extension StatisticViewController {
         
         view.addSubview(tabBar)
         tabBar.setDimensions(width: view.bounds.width, height: 66)
-        tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
+        tabBar.anchor(bottom: view.bottomAnchor)
     }
 }
 

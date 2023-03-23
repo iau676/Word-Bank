@@ -130,7 +130,7 @@ class DailyViewController: UIViewController {
         let wordCount = itemArray.count
         
         if wordCount < 2 {
-            showAlert(title: "Minimum two words are required", message: "") { _ in
+            showAlert(title: "Minimum two words required", message: "") { _ in
                 self.navigationController?.popToRootViewController(animated: true)
             }
         } else {
@@ -423,7 +423,8 @@ extension DailyViewController {
         //tab bar
         view.addSubview(tabBar)
         tabBar.setDimensions(width: view.bounds.width, height: 66)
-        tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
+        tabBar.anchor(bottom: view.bottomAnchor)
+        tabBar.updateDailyButtonTitleColor()
     }
 }
 

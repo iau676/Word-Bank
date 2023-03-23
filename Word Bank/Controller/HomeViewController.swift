@@ -38,7 +38,6 @@ final class HomeViewController: UIViewController, LevelDelegate {
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
-        fixSoundProblemForRealDevice()
         style()
         layout()
     }
@@ -131,6 +130,7 @@ final class HomeViewController: UIViewController, LevelDelegate {
         wordsButton.setImage(image: Images.bank, width: 40, height: 40)
         hardWordsButton.setImage(image: Images.hard, width: 35, height: 35)
         dropButton.setImage(image: UIImage(), width: 7, height: 7)
+        tabBar.updateDailyButton()
     }
     
     func setupButtonShadow(_ button: UIButton, shadowColor: UIColor?){
@@ -189,19 +189,14 @@ final class HomeViewController: UIViewController, LevelDelegate {
         let wordCount = itemArray.count
         
         if wordCount < 2 {
-            showAlert(title: "Minimum two words are required", message: "")
+            showAlert(title: "Minimum two words required", message: "") { _ in
+                let controller = WordsViewController(exerciseType: ExerciseType.normal)
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
         } else {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
                 self.navigationController?.pushViewController(WheelController(), animated: true)
             }
-        }
-    }
-
-    func fixSoundProblemForRealDevice(){
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord)
-        } catch {
-            assertionFailure("Failed to configure `AVAAudioSession`: \(error.localizedDescription)")
         }
     }
 }
@@ -281,7 +276,7 @@ extension HomeViewController {
         
         view.addSubview(tabBar)
         tabBar.setDimensions(width: view.bounds.width, height: 66)
-        tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
+        tabBar.anchor(bottom: view.bottomAnchor)
     }
 }
 

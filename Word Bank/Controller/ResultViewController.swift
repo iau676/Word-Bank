@@ -15,32 +15,32 @@ class ResultViewController: UIViewController {
     private let exerciseType: String
     private let exerciseFormat: String
     
-    let confettiButton = UIButton()
-    let scoreLabel = UILabel()
-    let tableView = UITableView()
-    let addedHardWordsButton =  UIButton()
-    let buttonStackView = UIStackView()
-    let homeButton = UIButton()
-    let refreshButton = UIButton()
+    private var wordBrain = WordBrain()
+    private let player = Player()
     
-    var wordBrain = WordBrain()
-    let player = Player()
-    var itemArray: [Item] { return wordBrain.itemArray }
-    var numberOfTrue = 0
-    var lastLevel:Int = 0
-    var newLevel:Int = 0
-    var userWordCount = ""
-    var scoreLabelText = ""
+    private var numberOfTrue = 0
+    private var lastLevel:Int = 0
+    private var newLevel:Int = 0
+    private var userWordCount = ""
+    private var scoreLabelText = ""
+    
+    private let confettiButton = UIButton()
+    private let scoreLabel = UILabel()
+    private let tableView = UITableView()
+    private let addedHardWordsButton =  UIButton()
+    private let buttonStackView = UIStackView()
+    private let homeButton = UIButton()
+    private let refreshButton = UIButton()
+    
+    private var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
+    private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
+    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    private var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
     
     var questionArray = [String]()
     var answerArray = [String]()
     var userAnswerArray = [String]()
     var userAnswerArrayBool = [Bool]()
-
-    var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
-    var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
-    var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
-    var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
     
     //MARK: - Life Cycle
     
@@ -65,7 +65,7 @@ class ResultViewController: UIViewController {
         configureColor()
         calculateNumberOfTrue()
         checkLevelUp()
-        updateStatistic()
+        updateStats()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,14 +89,14 @@ class ResultViewController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc func addedHardWordsButtonPressed(_ sender: UIButton) {
+    @objc private func addedHardWordsButtonPressed(_ sender: UIButton) {
     }
     
-    @objc func homeButtonPressed(_ sender: UIButton) {
+    @objc private func homeButtonPressed(_ sender: UIButton) {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @objc func refreshButtonPressed(_ sender: Any) {
+    @objc private func refreshButtonPressed(_ sender: Any) {
         var controller = UIViewController()
         switch exerciseFormat {
         case ExerciseFormat.test:
@@ -119,14 +119,14 @@ class ResultViewController: UIViewController {
     
     //MARK: - Helpers    
     
-    func configureColor() {
+    private func configureColor() {
         view.backgroundColor = Colors.raven
         tableView.backgroundColor = Colors.raven
         scoreLabel.textColor = Colors.cellRight
         addedHardWordsButton.setTitleColor(Colors.yellow, for: .normal)
     }
     
-    func updateRefreshButtonVisibility(){
+    private func updateRefreshButtonVisibility(){
         if exerciseType == ExerciseType.hard && UserDefault.hardWordsCount.getInt() < 2 {
             refreshButton.isHidden = true
         } else {
@@ -134,7 +134,7 @@ class ResultViewController: UIViewController {
         }
     }
     
-    func updateHardWordText(){
+    private func updateHardWordText(){
         //print how many words added to hard words
         if addedHardWordsCount > 0 {
             addedHardWordsButton.isHidden = false
@@ -146,7 +146,7 @@ class ResultViewController: UIViewController {
         }
     }
     
-    func checkWhichExercise() {
+    private func checkWhichExercise() {
         if exerciseFormat == ExerciseFormat.card {
             numberOfTrue = userAnswerArray.count
         } else {
@@ -155,31 +155,29 @@ class ResultViewController: UIViewController {
         }
     }
     
-    func updateStatistic() {
+    private func updateStats() {
         if exerciseType == ExerciseType.normal {
             updateExerciseCount(exerciseType: ExerciseType.normal)
         } else {
             updateExerciseCount(exerciseType: ExerciseType.hard)
         }
-        updateUser()
+        wordBrain.updateTabBarDailyImage()
+        wordBrain.user[0].level      = Int16(UserDefault.level.getInt())
+        wordBrain.user[0].lastPoint  = Int32(UserDefault.lastPoint.getInt())
     }
     
-    func updateUser(){
-        wordBrain.user[0].level             = Int16(UserDefault.level.getInt())
-        wordBrain.user[0].lastPoint         = Int32(UserDefault.lastPoint.getInt())
-    }
-    
-    func updateExerciseCount(exerciseType: String) {
+    private func updateExerciseCount(exerciseType: String) {
         
         let trueCount = Int16(numberOfTrue)
         let falseCount = Int16(userAnswerArray.count-numberOfTrue)
         let hintCount = Int16(UserDefault.hintCount.getInt())
         
-        wordBrain.addExercise(name: exerciseFormat, type: exerciseType, trueCount: trueCount,
-                              falseCount: falseCount, hintCount: hintCount)
+        wordBrain.addExercise(name: exerciseFormat, type: exerciseType,
+                              trueCount: trueCount, falseCount: falseCount,
+                              hintCount: hintCount)
     }
     
-    func calculateNumberOfTrue() {
+    private func calculateNumberOfTrue() {
         for i in 0..<userAnswerArray.count {
             if userAnswerArrayBool[i] == true {
                 numberOfTrue += 1
@@ -187,7 +185,7 @@ class ResultViewController: UIViewController {
         }
     }
     
-    func checkAllTrue(){
+    private func checkAllTrue(){
         if numberOfTrue == userAnswerArray.count {
             tableView.backgroundColor = .clear
             player.observeAppEvents()
@@ -199,13 +197,13 @@ class ResultViewController: UIViewController {
         }
     }
     
-    func updateScoreLabelConstraint(){
+    private func updateScoreLabelConstraint(){
         NSLayoutConstraint.activate([
             scoreLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 45)
         ])
     }
 
-    func checkLevelUp(){
+    private func checkLevelUp(){
         lastLevel = UserDefault.level.getInt()
          _ = wordBrain.calculateLevel()
         newLevel = UserDefault.level.getInt()
@@ -247,29 +245,29 @@ extension ResultViewController: UITableViewDataSource {
         return cell
     }
     
-    func updateCellLabelText(_ cell: WordCell, _ index: Int) {
+    private func updateCellLabelText(_ cell: WordCell, _ index: Int) {
         cell.engLabel.text = questionArray[index]
         cell.trLabel.text = answerArray[index]
         cell.numberLabel.text = String(index+1)
     }
     
-    func updateCellLabelTextSize(_ cell: WordCell) {
+    private func updateCellLabelTextSize(_ cell: WordCell) {
         cell.updateLabelTextSize(cell.engLabel, textSize)
         cell.updateLabelTextSize(cell.trLabel, textSize)
         cell.updateLabelTextSize(cell.numberLabel, textSize-4)
     }
     
-    func updateCellLabelTextColor(_ cell: WordCell) {
+    private func updateCellLabelTextColor(_ cell: WordCell) {
         cell.engLabel.textColor = Colors.black
         cell.trLabel.textColor = Colors.black
     }
     
-    func updateCellViewBackgroundForRight(_ cell: WordCell){
+    private func updateCellViewBackgroundForRight(_ cell: WordCell){
         cell.engView.backgroundColor = Colors.green
         cell.trView.backgroundColor = Colors.lightGreen
     }
     
-    func updateCellViewBackgroundForWrong(_ cell: WordCell){
+    private func updateCellViewBackgroundForWrong(_ cell: WordCell){
         if exerciseFormat == ExerciseFormat.card {
             cell.engView.backgroundColor = Colors.yellow
             cell.trView.backgroundColor = Colors.lightYellow
@@ -279,14 +277,14 @@ extension ResultViewController: UITableViewDataSource {
         }
     }
     
-    func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
+    private func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
         if exerciseFormat != ExerciseFormat.card {
             cell.trLabel.attributedText = writeAnswerCell(userAnswerArray[i].strikeThrough(),
                                                           answerArray[i])
         }
     }
     
-    func writeAnswerCell(_ userAnswer: NSAttributedString, _ trueAnswer: String) -> NSMutableAttributedString {        
+    private func writeAnswerCell(_ userAnswer: NSAttributedString, _ trueAnswer: String) -> NSMutableAttributedString {
         let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: Fonts.AvenirNextMedium, size: textSize+2)]
         
         let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
@@ -312,7 +310,7 @@ extension ResultViewController: UITableViewDataSource {
         return combination
     }
     
-    func updateCellCornerRadius(_ cell: WordCell, _ index: Int){
+    private func updateCellCornerRadius(_ cell: WordCell, _ index: Int){
         if index == 0 {
             cell.updateTopCornerRadius(16)
         }
@@ -343,7 +341,7 @@ extension ResultViewController: UITableViewDelegate {
 
 extension ResultViewController {
     
-    func style(){
+    private func style(){
         navigationItem.leftBarButtonItem = UIBarButtonItem()
         
         confettiButton.setImage(image: Images.confetti, width: 66, height: 66)
@@ -379,7 +377,7 @@ extension ResultViewController {
                                 for: .primaryActionTriggered)
     }
     
-    func layout(){
+    private func layout(){
         view.addSubview(confettiButton)
         view.addSubview(scoreLabel)
         view.addSubview(tableView)

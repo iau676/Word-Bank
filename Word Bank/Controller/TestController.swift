@@ -20,7 +20,7 @@ class TestController: UIViewController {
     private var questionCounter = 0
     private var totalQuestionNumber = 5
     private var questionText = ""
-    private var exercisePoint: Int { return UserDefault.exercisePoint.getInt() }
+    private var exercisePoint: Int { return wordBrain.getExercisePoint() }
     private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     private var wordSoundOpen: Bool { return UserDefault.playSound.getInt() == 0 }
     
@@ -74,6 +74,7 @@ class TestController: UIViewController {
         wordBrain.sortWordsForExercise()
         configureUI()
         updateUI()
+        print("DEBUG::::: sdkfopsdkfopsdkfposdkf")
     }
     
     override func viewWillAppear(_ animated: Bool) {
