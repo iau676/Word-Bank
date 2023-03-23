@@ -21,7 +21,6 @@ class TabBar: UIView {
     
     weak var delegate: TabBarDelegate?
     
-    private let fireworkController = ClassicFireworkController()
     private var wordBrain = WordBrain()
     private let homeButton = UIButton()
     private let dailyButton = UIButton()
@@ -57,27 +56,22 @@ class TabBar: UIView {
     //MARK: - Selectors
     
     @objc func homeButtonPressed() {
-        fireworkController.addFireworks(count: 5, sparks: 5, around: homeButton)
         delegate?.homePressed()
     }
     
     @objc func dailyButtonPressed() {
-        fireworkController.addFireworks(count: 5, sparks: 5, around: dailyButton)
         delegate?.dailyPressed()
     }
     
     @objc func awardButtonPressed() {
-        fireworkController.addFireworks(count: 5, sparks: 5, around: awardButton)
         delegate?.awardPressed()
     }
     
     @objc func statisticButtonPressed() {
-        fireworkController.addFireworks(count: 5, sparks: 5, around: statisticButton)
         delegate?.statisticPressed()
     }
     
     @objc func settingsButtonPressed() {
-        fireworkController.addFireworks(count: 5, sparks: 5, around: settingsButton)
         delegate?.settingPressed()
     }
     

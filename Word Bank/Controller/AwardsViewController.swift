@@ -317,24 +317,18 @@ extension AwardsViewController: TabBarDelegate {
     }
     
     func dailyPressed() {
-        pushVC(vc: DailyViewController())
+        navigationController?.pushViewController(DailyViewController(), animated: true)
     }
     
     func awardPressed() {
-        //pushVC(vc: AwardsViewController())
+        
     }
     
     func statisticPressed() {
-        pushVC(vc: StatisticViewController())
+        navigationController?.pushViewController(StatisticViewController(), animated: true)
     }
     
     func settingPressed() {
-        pushVC(vc: SettingsViewController())
-    }
-    
-    func pushVC(vc: UIViewController){
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05){
-           self.navigationController?.pushViewController(vc, animated: true)
-        }
+        navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
 }

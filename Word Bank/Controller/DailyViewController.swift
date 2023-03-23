@@ -462,24 +462,18 @@ extension DailyViewController: TabBarDelegate {
     }
     
     func dailyPressed() {
-        //pushVC(vc: DailyViewController())
+        
     }
     
     func awardPressed() {
-        pushVC(vc: AwardsViewController())
+        navigationController?.pushViewController(AwardsViewController(), animated: true)
     }
     
     func statisticPressed() {
-        pushVC(vc: StatisticViewController())
+        navigationController?.pushViewController(StatisticViewController(), animated: true)
     }
     
     func settingPressed() {
-        pushVC(vc: SettingsViewController())
-    }
-    
-    func pushVC(vc: UIViewController){
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05){
-           self.navigationController?.pushViewController(vc, animated: true)
-        }
+        navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
 }

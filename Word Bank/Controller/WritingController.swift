@@ -27,7 +27,7 @@ class WritingController: UIViewController {
     private var userAnswerArrayBool = [Bool]()
     
     private var questionCounter = 0
-    private var totalQuestionNumber = 2
+    private var totalQuestionNumber = 5
     private var questionText = ""
     private var answerText = ""
     
@@ -54,6 +54,10 @@ class WritingController: UIViewController {
     private var hint = ""
     private var hintCount = 0
     private var letterCounter = 0
+    private var skeleton = ""
+    private var underscoreArr = [String]()
+    private var skeletonArr = [Int]()
+    private var randomArr = [Int]()
     
     private let hintLabel:  UILabel = {
        let label = UILabel()
@@ -70,16 +74,6 @@ class WritingController: UIViewController {
         tf.backgroundColor = .white
         tf.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
         return tf
-    }()
-    
-    private let decreaseLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 29)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.textColor = Colors.red
-        label.isHidden = true
-        return label
     }()
     
     // collection view
@@ -151,6 +145,7 @@ class WritingController: UIViewController {
             questionLabel.text = questionText
             questionArray.append(questionText)
             answerArray.append(answerText)
+            setHint()
             updateCV()
         } else {
             questionCounter = 0
@@ -261,10 +256,6 @@ class WritingController: UIViewController {
         bubbleButton.centerX(inView: questionLabel)
         bubbleButton.centerY(inView: questionLabel)
         
-        view.addSubview(decreaseLabel)
-        decreaseLabel.centerX(inView: questionLabel)
-        decreaseLabel.centerY(inView: questionLabel)
-        
         view.addSubview(letterCV)
         letterCV.anchor(top: stack.bottomAnchor, left: view.leftAnchor,
                         bottom: view.bottomAnchor, right: view.rightAnchor,
@@ -299,63 +290,42 @@ class WritingController: UIViewController {
 
 extension WritingController {
     
-    @objc private func hideDecreaseLabel() {
-        decreaseLabel.isHidden = true
-        questionLabel.isHidden = false
-    }
-    
-    @objc private func updateHintLabelColor() {
-        hintLabel.textColor = Colors.f6f6f6
+    private func setHint() {
+        skeleton = ""
+        underscoreArr.removeAll()
+        skeletonArr.removeAll()
+        randomArr.removeAll()
+        
+        for i in 0..<answerText.count {
+            if answerText[i] != " " {
+                underscoreArr.append("_")
+                skeletonArr.append(i)
+                randomArr.append(i)
+            } else {
+                underscoreArr.append(" ")
+            }
+        }
+        skeleton = underscoreArr.joined(separator: " ")
+      
     }
     
     private func getLetter() {
-        let answer = answerText
-        let answerWithoutSpace = answer.replace(string: " ", replacement: "")
-        var skeleton = ""
-        var skeletonArr = [Int]()
-        
-        for i in 0..<answer.count {
-            if answer[i] != " " {
-                skeleton.append(" _")
-            } else {
-                skeleton.append("  ")
-            }
-        }
-        
-        for i in 0..<skeleton.count {
-            if skeleton[i] == "_" {
-                skeletonArr.append(i)
-            }
-        }
-
         if letterCounter <= skeletonArr.count {
             if letterCounter == 0 {
                 hint = skeleton
             } else {
-                hint = hint.replace(skeletonArr[letterCounter-1], "\(answerWithoutSpace[letterCounter-1])")
-                decreasePoint()
-                player.playMP3(Sounds.beep)
+                let randomElement = randomArr.randomElement() ?? 0
+                randomArr = randomArr.filter { $0 != randomElement }
+                underscoreArr[randomElement] = "\(answerText[randomElement])"
+                hint = underscoreArr.joined(separator: " ")
+                //player.playMP3(Sounds.beep)
             }
+            hintCount += 1
             letterCounter += 1
             hintLabel.text = hint
-            hintCount += 1
         } else {
-            hintLabel.textColor = Colors.green
-            hintLabel.flash()
-            scheduledTimer(timeInterval: 0.8, #selector(updateHintLabelColor))
+            hintLabel.flash(withColor: Colors.green, originalColor: Colors.f6f6f6)
         }
-    }
-    
-    private func decreasePoint() {
-        let lastPoint = UserDefault.lastPoint.getInt()
-        questionLabel.isHidden = true
-        decreaseLabel.isHidden = false
-        decreaseLabel.text = "-\(exercisePoint)"
-        
-        scheduledTimer(timeInterval: 0.4, #selector(hideDecreaseLabel))
-        exerciseTopView.updatePoint(lastPoint: lastPoint,
-                                    exercisePoint: exercisePoint,
-                                    isIncrease: false)
     }
 }
 
@@ -363,7 +333,7 @@ extension WritingController {
 
 extension WritingController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
-        getLetter()
+        soundHintButtonPressed()
         return false
     }
 }
@@ -409,5 +379,6 @@ extension WritingController: UICollectionViewDelegateFlowLayout {
 extension WritingController: ExerciseTopDelegate {
     func soundHintButtonPressed() {
         getLetter()
+        ClassicFireworkController().addFireworks(count: 33, sparks: 5, around: exerciseTopView.userPointButton, maxVectorChange: view.frame.width)
     }
 }

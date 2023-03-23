@@ -19,4 +19,12 @@ extension UILabel {
         
         layer.add(flash, forKey: nil)
     }
+    
+    func flash(withColor color1: UIColor?, originalColor color2: UIColor?) {
+        self.flash()
+        self.textColor = color1
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.8) {
+            self.textColor = color2
+        }
+    }
 }

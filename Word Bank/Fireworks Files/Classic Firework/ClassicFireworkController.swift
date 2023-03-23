@@ -24,9 +24,9 @@ public class ClassicFireworkController {
                       sparks sparksCount: Int = 8,
                       around sourceButton: UIButton,
                       sparkSize: CGSize = CGSize(width: 6, height: 6),
-                      scale: CGFloat = 45.0,
+                      scale: CGFloat = 100.0,
                       maxVectorChange: CGFloat = 5.0,
-                      animationDuration: TimeInterval = 0.3,
+                      animationDuration: TimeInterval = 0.7,
                       canChangeZIndex: Bool = true) {
         guard let superview = sourceButton.superview else { fatalError() }
 

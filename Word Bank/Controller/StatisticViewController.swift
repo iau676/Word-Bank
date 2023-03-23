@@ -362,24 +362,18 @@ extension StatisticViewController: TabBarDelegate {
     }
     
     func dailyPressed() {
-        pushVC(vc: DailyViewController())
+        navigationController?.pushViewController(DailyViewController(), animated: true)
     }
     
     func awardPressed() {
-        pushVC(vc: AwardsViewController())
+        navigationController?.pushViewController(AwardsViewController(), animated: true)
     }
     
     func statisticPressed() {
-        //pushVC(vc: StatisticViewController())
+        
     }
     
     func settingPressed() {
-        pushVC(vc: SettingsViewController())
-    }
-    
-    func pushVC(vc: UIViewController){
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05){
-           self.navigationController?.pushViewController(vc, animated: true)
-        }
+        navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
 }

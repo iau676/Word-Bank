@@ -60,7 +60,7 @@ class ExerciseTopView: UIView {
             if UserDefault.selectedTestType.getInt() == 0 {
                 soundHintButton.setImage(image: Images.soundLeft, width: 40, height: 40)
             }
-        case ExerciseFormat.writing: soundHintButton.setImage(image: Images.question, width: 32, height: 32)
+        case ExerciseFormat.writing: soundHintButton.setImage(image: Images.magic, width: 32, height: 32)
         default: break
         }
         
