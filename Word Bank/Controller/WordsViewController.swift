@@ -277,26 +277,20 @@ class WordsViewController: UIViewController {
 
 extension WordsViewController: UISearchBarDelegate {
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if searchBar.text!.count > 0 {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let text = searchBar.text else { return }
+        if text.count > 0 {
             let request : NSFetchRequest<Item> = Item.fetchRequest()
-            request.predicate = NSPredicate(format: "eng CONTAINS[cd] %@", searchBar.text!)
+            let firstPredicate = NSPredicate(format: "eng CONTAINS[cd] %@", text)
+            let secondPredicate = NSPredicate(format: "tr CONTAINS[cd] %@", text)
+            request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [firstPredicate,
+                                                                                    secondPredicate])
             request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: true)]
             wordBrain.loadItemArray(with: request)
-            tableView.reloadData()
         } else {
             wordBrain.loadItemArray()
         }
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchBar.text?.count == 0 {
-            wordBrain.loadItemArray()
-            tableView.reloadData()
-            DispatchQueue.main.async {
-                searchBar.resignFirstResponder()
-            }
-        }
+        tableView.reloadData()
     }
     
     func updateSearchBarPlaceholder(){

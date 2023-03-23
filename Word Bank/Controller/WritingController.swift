@@ -253,8 +253,9 @@ class WritingController: UIViewController {
         
         view.addSubview(questionLabel)
         questionLabel.centerX(inView: view)
-        questionLabel.anchor(top: exerciseTopView.userPointButton.bottomAnchor,
-                             bottom: textField.topAnchor)
+        questionLabel.anchor(top: exerciseTopView.userPointButton.bottomAnchor, left: view.leftAnchor,
+                             bottom: textField.topAnchor, right: view.rightAnchor,
+                             paddingLeft: 32, paddingRight: 32)
         
         view.addSubview(bubbleButton)
         bubbleButton.centerX(inView: questionLabel)
