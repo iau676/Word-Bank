@@ -132,6 +132,27 @@ struct WordBrain {
         saveContext()
     }
     
+    mutating func deleteHardWord(_ item: Item) {
+        self.hardItemArray.forEach { hardItem in
+            if hardItem.uuid == item.uuid {
+                context.delete(hardItem)
+                UserDefault.hardWordsCount.set(UserDefault.hardWordsCount.getInt()-1)
+            }
+        }
+        saveContext()
+    }
+    
+    func updateHardItem(_ item: Item?, newEng: String, newMeaning: String) {
+        guard let itemm = item else { return }
+        self.hardItemArray.forEach { hardItem in
+            if hardItem.uuid == itemm.uuid {
+                hardItem.eng = newEng
+                hardItem.tr = newMeaning
+            }
+        }
+        saveContext()
+    }
+    
     mutating func sortWordsForExercise() {
         for i in 0..<itemArray.count {
             let j = itemArray[i].falseCount - itemArray[i].trueCount
@@ -456,7 +477,7 @@ extension WordBrain {
         let testExerciseCount = getExerciseCountToday(for: ExerciseFormat.test) >= 10 ? 1 : 0
         let writingExerciseCount = getExerciseCountToday(for: ExerciseFormat.writing) >= 10 ? 10 : 0
         let listeningExerciseCount = getExerciseCountToday(for: ExerciseFormat.listening) >= 10 ? 100 : 0
-        print("DEBUG:: >>>\(testExerciseCount + writingExerciseCount + listeningExerciseCount)")
+        
         switch testExerciseCount + writingExerciseCount + listeningExerciseCount {
         case 0:
             UserDefault.dailyImageIndex.set(0)

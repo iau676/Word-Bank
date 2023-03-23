@@ -71,6 +71,7 @@ class ListeningController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserDefault.addedHardWordsCount.set(0)
         wordBrain.getHour()
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()

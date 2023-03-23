@@ -167,9 +167,6 @@ enum UserDefault {
 
     static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")
     static var hintCount                 = UserDefaultsManager(key: "hintCount")
-    
-    static var engEdit                   = UserDefaultsManager(key: "engEdit")
-    static var trEdit                    = UserDefaultsManager(key: "trEdit")
 }
 
 enum Fonts {

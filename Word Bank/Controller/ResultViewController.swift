@@ -90,6 +90,8 @@ class ResultViewController: UIViewController {
     //MARK: - Selectors
     
     @objc private func addedHardWordsButtonPressed(_ sender: UIButton) {
+        let controller = WordsViewController(exerciseType: ExerciseType.hard)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc private func homeButtonPressed(_ sender: UIButton) {

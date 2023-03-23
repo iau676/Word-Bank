@@ -47,8 +47,8 @@ class CardController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wordBrain.loadItemArray()
         UserDefault.addedHardWordsCount.set(0)
+        wordBrain.loadItemArray()
         style()
         layout()
         updateWord()

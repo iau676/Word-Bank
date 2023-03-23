@@ -236,10 +236,6 @@ class WordsViewController: UIViewController {
         let controller = AddEditController()
         controller.modalPresentationStyle = .overCurrentContext
         controller.delegate = self
-        if goEdit == 1 {
-            controller.goEdit = 1
-            controller.editIndex = editIndex
-        }
         self.present(controller, animated: true)
     }
     
@@ -249,9 +245,7 @@ class WordsViewController: UIViewController {
         if wordCount < 2 {
             showAlert(title: "Minimum two words required", message: "") { _ in
                 if self.exerciseType == ExerciseType.normal {
-                    let controller = AddEditController()
-                    controller.modalPresentationStyle = .overCurrentContext
-                    self.present(controller, animated: true)
+                    self.goAddEdit()
                 } else {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
@@ -372,17 +366,21 @@ extension WordsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let item = self.itemArray[indexPath.row]
+        
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            let alert = UIAlertController(title: "'\(self.itemArray[indexPath.row].eng ?? "Word")' will be deleted", message: "This action cannot be undone", preferredStyle: .alert)
+            let alert = UIAlertController(title: "'\(item.eng ?? "Word")' will be deleted",
+                                          message: "This action cannot be undone", preferredStyle: .alert)
             let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+                
+                self.wordBrain.deleteHardWord(item)
                 self.wordBrain.removeWord(at: indexPath.row)
-                UserDefault.userWordCount.set(UserDefault.userWordCount.getInt()-1)
                 self.wordBrain.calculateExercisePoint()
-                if self.itemArray.count > 0 {
-                    tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
-                } else {
-                    tableView.reloadData()
-                }
+                UserDefault.userWordCount.set(UserDefault.userWordCount.getInt()-1)
+
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+                tableView.reloadData()
             }
             let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
                 alert.dismiss(animated: true, completion: nil)
@@ -398,11 +396,12 @@ extension WordsViewController: UITableViewDelegate {
         let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             self.goEdit = 1
             self.editIndex = indexPath.row
-            let engEdit = self.itemArray[indexPath.row].eng ?? "empty"
-            let trEdit = self.itemArray[indexPath.row].tr ?? "empty"
-            UserDefault.engEdit.set(engEdit)
-            UserDefault.trEdit.set(trEdit)
-            self.performSegue(withIdentifier: "goAdd", sender: self)
+            let controller = AddEditController()
+            controller.goEdit = 1
+            controller.item = item
+            controller.modalPresentationStyle = .overCurrentContext
+            controller.delegate = self
+            self.present(controller, animated: true)
             success(true)
         })
         editAction.setImage(image: Images.edit, width: 25, height: 25)

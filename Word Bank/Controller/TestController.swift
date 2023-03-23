@@ -68,17 +68,13 @@ class TestController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserDefault.addedHardWordsCount.set(0)
         wordBrain.getHour()
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
         wordBrain.sortWordsForExercise()
         configureUI()
         updateUI()
-        print("DEBUG::::: sdkfopsdkfopsdkfposdkf")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        UserDefault.addedHardWordsCount.set(0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -16,23 +16,21 @@ protocol AddEditControllerDelegate : AnyObject {
 
 class AddEditController: UIViewController {
     
+    var item: Item?
     weak var delegate: AddEditControllerDelegate?
     
-    let coinButtonView = UIButton()
-    let coinButton = UIButton()
+    private let coinButtonView = UIButton()
+    private let coinButton = UIButton()
     
-    let textView = UIView()
-    let stackView = UIStackView()
-    let engTxtField = UITextField()
-    let trTxtField = UITextField()
-    let addButton = UIButton()
+    private let textView = UIView()
+    private let stackView = UIStackView()
+    private let engTxtField = UITextField()
+    private let trTxtField = UITextField()
+    private let addButton = UIButton()
     
     var player = Player()
     var wordBrain = WordBrain()
-    var itemArray: [Item] { return wordBrain.itemArray }
-    var tapGesture = UITapGestureRecognizer()
     var goEdit = 0
-    var editIndex = 0
     var userWordCountInt = 0
     var userWordCountIntVariable = 0
     
@@ -46,6 +44,7 @@ class AddEditController: UIViewController {
     
     override func viewDidLoad() {
         wordBrain.loadItemArray()
+        wordBrain.loadHardItemArray()
         
         style()
         layout()
@@ -65,19 +64,22 @@ class AddEditController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc func addButtonPressed(_ sender: Any) {
+    @objc private func addButtonPressed(_ sender: Any) {
         addButton.bounce()
         if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
+            let eng = engTxtField.text!
+            let meaning = trTxtField.text!
            if engTxtField.text!.count <= 20 {
                 player.playMP3(Sounds.mario)
                 if goEdit == 0 {
-                    wordBrain.addWord(english: engTxtField.text!, meaning: trTxtField.text!)
+                    wordBrain.addWord(english: eng, meaning: meaning)
                     UserDefault.userWordCount.set(userWordCountIntVariable+1)
                     userWordCountIntVariable += 1
                     scheduledTimer(timeInterval: 0.1, #selector(goNewPoint))
                 } else {
-                    itemArray[editIndex].eng = engTxtField.text!
-                    itemArray[editIndex].tr = trTxtField.text!
+                    item?.eng = eng
+                    item?.tr = meaning
+                    wordBrain.updateHardItem(item, newEng: eng, newMeaning: meaning)
                     scheduledTimer(timeInterval: 0.8, #selector(dismissView))
                 }
                 
@@ -177,8 +179,9 @@ class AddEditController: UIViewController {
     
     func checkEditStatus() {
         if goEdit == 1 {
-            engTxtField.text = UserDefault.engEdit.getString()
-            trTxtField.text = UserDefault.trEdit.getString()
+            guard let item = item else { return }
+            engTxtField.text = item.eng
+            trTxtField.text = item.tr
             setupButton(button: addButton, buttonTitle: "Save", image: UIImage(), imageSize: 0, cornerRadius: 6)
         }
     }
@@ -199,8 +202,9 @@ class AddEditController: UIViewController {
             alert.addAction(actionCancel)
             
             if goEdit == 1 {
-                if engTxtField.text != UserDefault.engEdit.getString() ||
-                    trTxtField.text != UserDefault.trEdit.getString() {
+                guard let item = item else { return }
+                if engTxtField.text != item.eng ||
+                    trTxtField.text != item.tr {
                     present(alert, animated: true, completion: nil)
                 } else {
                     self.dismiss(animated: true, completion: nil)
