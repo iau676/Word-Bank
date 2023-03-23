@@ -156,7 +156,7 @@ extension CardController {
                                   bottom: view.bottomAnchor, right: view.rightAnchor,
                                   paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
         
-        imageView.setDimensions(height: 100, width: 100)
+        imageView.setDimensions(width: 100, height: 100)
         imageView.centerY(inView: cardView)
         imageView.centerX(inView: cardView)
         

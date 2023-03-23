@@ -24,7 +24,7 @@ class BubbleView: UIView {
         addSubview(button)
         button.centerX(inView: self)
         button.centerY(inView: self)
-        button.setDimensions(height: 90, width: 90)
+        button.setDimensions(width: 90, height: 90)
         
         addSubview(label)
         label.centerY(inView: button)

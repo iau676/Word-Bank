@@ -169,7 +169,7 @@ class ListeningController: UIViewController {
         
         view.addSubview(exerciseTopView)
         exerciseTopView.centerX(inView: view)
-        exerciseTopView.setWidth(width: view.bounds.width)
+        exerciseTopView.setWidth(view.bounds.width)
         exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
         
         view.addSubview(actionButton)
@@ -218,7 +218,7 @@ class ListeningController: UIViewController {
          button.backgroundColor = .clear
          button.layer.borderWidth = 5
          button.layer.borderColor = Colors.testAnswerLayer?.cgColor
-         button.setDimensions(height: 90, width: 90)
+         button.setDimensions(width: 90, height: 90)
          button.setButtonCornerRadius(90 / 2)
          button.titleLabel?.font = UIFont.systemFont(ofSize: 0)
          button.addTarget(self, action: #selector(answerSelected), for: .touchUpInside)

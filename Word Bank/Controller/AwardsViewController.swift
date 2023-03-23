@@ -253,7 +253,7 @@ extension AwardsViewController {
         view.addSubview(exerciseScoreLabel)
         
         //level
-        levelCV.setHeight(height: 140)
+        levelCV.setHeight(140)
         levelCV.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                        right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
         
@@ -261,7 +261,7 @@ extension AwardsViewController {
         levelLabel.anchor(left: view.leftAnchor, bottom: levelCV.topAnchor,
                           paddingLeft: 32, paddingBottom: 1)
         
-        levelButton.setHeight(height: 29)
+        levelButton.setHeight(29)
         levelButton.centerY(inView: levelLabel)
         levelButton.anchor(left: levelLabel.rightAnchor, paddingLeft: 8)
         
@@ -270,7 +270,7 @@ extension AwardsViewController {
         
         
         //words
-        wordsCV.setHeight(height: 140)
+        wordsCV.setHeight(140)
         wordsCV.anchor(top: levelCV.bottomAnchor, left: view.leftAnchor,
                        right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
         
@@ -278,7 +278,7 @@ extension AwardsViewController {
         wordsLabel.anchor(left: view.leftAnchor, bottom: wordsCV.topAnchor,
                           paddingLeft: 32, paddingBottom: 1)
         
-        wordsButton.setHeight(height: 29)
+        wordsButton.setHeight(29)
         wordsButton.centerY(inView: wordsLabel)
         wordsButton.anchor(left: wordsLabel.rightAnchor, paddingLeft: 8)
         
@@ -286,7 +286,7 @@ extension AwardsViewController {
         wordsScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
         
         //exercises
-        exercisesCV.setHeight(height: 140)
+        exercisesCV.setHeight(140)
         exercisesCV.anchor(top: wordsCV.bottomAnchor, left: view.leftAnchor,
                        right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
         
@@ -294,7 +294,7 @@ extension AwardsViewController {
         exercisesLabel.anchor(left: view.leftAnchor, bottom: exercisesCV.topAnchor,
                           paddingLeft: 32, paddingBottom: 1)
         
-        exercisesButton.setHeight(height: 29)
+        exercisesButton.setHeight(29)
         exercisesButton.centerY(inView: exercisesLabel)
         exercisesButton.anchor(left: exercisesLabel.rightAnchor, paddingLeft: 8)
         
@@ -303,7 +303,7 @@ extension AwardsViewController {
     
         
         view.addSubview(tabBar)
-        tabBar.setDimensions(height: 66, width: view.bounds.width)
+        tabBar.setDimensions(width: view.bounds.width, height: 66)
         tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
     }
 }

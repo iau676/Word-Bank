@@ -236,7 +236,7 @@ class WritingController: UIViewController {
         
         view.addSubview(exerciseTopView)
         exerciseTopView.centerX(inView: view)
-        exerciseTopView.setWidth(width: view.bounds.width)
+        exerciseTopView.setWidth(view.bounds.width)
         exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
         
         let stack = UIStackView(arrangedSubviews: [hintLabel, textField])
@@ -245,7 +245,7 @@ class WritingController: UIViewController {
         stack.spacing = 16
 
         view.addSubview(stack)
-        stack.setHeight(height: 86)
+        stack.setHeight(86)
         stack.centerY(inView: view)
         stack.anchor(left: view.leftAnchor, right: view.rightAnchor,
                      paddingLeft: 32, paddingRight: 32)
@@ -270,7 +270,7 @@ class WritingController: UIViewController {
                         paddingBottom: 32, paddingRight: 32)
         
         view.addSubview(backspaceButton)
-        backspaceButton.setDimensions(height: 50 , width: 50)
+        backspaceButton.setDimensions(width: 50, height: 50)
         backspaceButton.centerY(inView: textField)
         backspaceButton.anchor(right: textField.rightAnchor)
         

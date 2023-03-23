@@ -105,19 +105,42 @@ extension UIView {
         }
     }
     
-    func setDimensions(height: CGFloat, width: CGFloat) {
+    func setDimensions(width: CGFloat, height: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: height).isActive = true
         widthAnchor.constraint(equalToConstant: width).isActive = true
     }
     
-    func setHeight(height: CGFloat) {
+    func setHeight(_ height: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: height).isActive = true
     }
     
-    func setWidth(width: CGFloat) {
+    func setWidth(_ width: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
         widthAnchor.constraint(equalToConstant: width).isActive = true
+    }
+    
+    func fillSuperview() {
+        translatesAutoresizingMaskIntoConstraints = false
+        guard let view = superview else { return }
+        anchor(top: view.topAnchor, left: view.leftAnchor,
+               bottom: view.bottomAnchor, right: view.rightAnchor)
+    }
+    
+    func setHeightWithAnimation(_ h:CGFloat, animateTime:TimeInterval?=nil) {
+
+        if let c = self.constraints.first(where: { $0.firstAttribute == .height && $0.relation == .equal }) {
+            c.constant = CGFloat(h)
+
+            if let animateTime = animateTime {
+                UIView.animate(withDuration: animateTime, animations:{
+                    self.superview?.layoutIfNeeded()
+                })
+            }
+            else {
+                self.superview?.layoutIfNeeded()
+            }
+        }
     }
  }

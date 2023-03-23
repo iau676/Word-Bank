@@ -256,9 +256,9 @@ extension HomeViewController {
         centerLineView.anchor(top: view.topAnchor, left: levelCP.centerXAnchor)
         rightLineView.anchor(top: view.topAnchor, left: exerciseCP.centerXAnchor)
         
-        leftLineView.setDimensions(height: hardCP.center.y-40, width: 1)
-        centerLineView.setDimensions(height: wordsCP.center.y-40, width: 1)
-        rightLineView.setDimensions(height: exerciseCP.center.y-40, width: 1)
+        leftLineView.setDimensions(width: 1, height: hardCP.center.y-40)
+        centerLineView.setDimensions(width: 1, height: wordsCP.center.y-40)
+        rightLineView.setDimensions(width: 1, height: exerciseCP.center.y-40)
         
         levelButton.centerX(inView: levelCP)
         levelButton.centerY(inView: levelCP)
@@ -280,7 +280,7 @@ extension HomeViewController {
         
         
         view.addSubview(tabBar)
-        tabBar.setDimensions(height: 66, width: view.bounds.width)
+        tabBar.setDimensions(width: view.bounds.width, height: 66)
         tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
     }
 }

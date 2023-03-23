@@ -408,8 +408,8 @@ extension ResultViewController {
         buttonStackView.centerX(inView: view)
         buttonStackView.anchor(bottom: view.bottomAnchor, paddingBottom: 32)
         
-        homeButton.setDimensions(height: 40, width: 48)
-        refreshButton.setDimensions(height: 40, width: 35)
+        homeButton.setDimensions(width: 48, height: 40)
+        refreshButton.setDimensions(width: 35, height: 40)
         
         if addedHardWordsCount > 0 {
             tableView.anchor(bottom: buttonStackView.topAnchor, paddingBottom: 48)

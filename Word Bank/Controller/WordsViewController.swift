@@ -512,7 +512,7 @@ extension WordsViewController {
                                   bottom: buttonStackView.topAnchor, right: view.rightAnchor,
                                   paddingTop: 8, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
         
-        buttonStackView.setHeight(height: 55)
+        buttonStackView.setHeight(55)
         buttonStackView.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                right: view.rightAnchor, paddingLeft: 16,
                                paddingBottom: 40, paddingRight: 16)

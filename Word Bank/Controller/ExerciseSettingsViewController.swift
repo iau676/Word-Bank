@@ -122,7 +122,7 @@ class ExerciseSettingsViewController: UIViewController {
         testTypeStackView.addArrangedSubview(testTypeLabel)
         testTypeStackView.addArrangedSubview(testTypeSegmentedControl)
         
-        testTypeView.setHeight(height: 90)
+        testTypeView.setHeight(90)
         testTypeView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                             right: view.rightAnchor, paddingTop: 16,
                             paddingLeft: 32, paddingRight: 32)
@@ -137,7 +137,7 @@ class ExerciseSettingsViewController: UIViewController {
         pointView.addSubview(pointLabel)
         pointView.addSubview(pointCV)
         
-        pointView.setHeight(height: 160)
+        pointView.setHeight(160)
         pointView.anchor(top: testTypeView.bottomAnchor, left: testTypeView.leftAnchor,
                          right: testTypeView.rightAnchor, paddingTop: 16)
         
@@ -154,7 +154,7 @@ class ExerciseSettingsViewController: UIViewController {
         typingView.addSubview(typingLabel)
         typingView.addSubview(typingCV)
         
-        typingView.setHeight(height: 160)
+        typingView.setHeight(160)
         typingView.anchor(top: pointView.bottomAnchor, left: testTypeView.leftAnchor,
                           right: testTypeView.rightAnchor, paddingTop: 16)
         

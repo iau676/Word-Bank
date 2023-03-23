@@ -65,13 +65,13 @@ class ExerciseTopView: UIView {
         }
         
         addSubview(userPointButton)
-        userPointButton.setHeight(height: 24)
+        userPointButton.setHeight(24)
         userPointButton.setButtonCornerRadius(24 / 2)
         userPointButton.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
                                paddingLeft: 32, paddingRight: 32)
         
         addSubview(xButton)
-        xButton.setDimensions(height: 32, width: 32)
+        xButton.setDimensions(width: 32, height: 32)
         xButton.setButtonCornerRadius(32 / 2)
         xButton.centerY(inView: userPointButton, leftAnchor: userPointButton.leftAnchor)
         
@@ -80,11 +80,11 @@ class ExerciseTopView: UIView {
                            paddingTop: 8, paddingLeft: 40, paddingRight: 40)
         
         addSubview(soundHintButton)
-        soundHintButton.setDimensions(height: 40, width: 40)
+        soundHintButton.setDimensions(width: 40, height: 40)
         soundHintButton.anchor(top: userPointButton.bottomAnchor, right: rightAnchor,
                                paddingTop: 16, paddingRight: 32)
         
-        setHeight(height: 24+16+40)
+        setHeight(24+16+40)
 
         xButton.isHidden = !(UserDefault.currentHour.getInt() == UserDefault.userSelectedHour.getInt())
     }

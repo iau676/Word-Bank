@@ -48,6 +48,11 @@ class TestController: UIViewController {
         label.textAlignment = .center
         return label
     }()
+
+    private let timerView = UIView()
+    private var timer = Timer()
+    private var timerCounter: CGFloat = 0
+    private let second: CGFloat = 10
     
     //MARK: - Lifecycle
     
@@ -75,11 +80,17 @@ class TestController: UIViewController {
         UserDefault.addedHardWordsCount.set(0)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopTimer()
+    }
+    
     //MARK: - Selectors
     
     @objc private func updateUI() {
         bubbleButton.isHidden = true
         if questionCounter < totalQuestionNumber {
+            startTimer()
             questionText = wordBrain.getQuestionText(questionCounter, 1, exerciseType)
             questionLabel.text = questionText
             questionArray.append(questionText)
@@ -105,7 +116,49 @@ class TestController: UIViewController {
     }
     
     @objc private func answerPressed(_ sender: UIButton) {
+        stopTimer()
         guard let userAnswer = sender.currentTitle else { return }
+        checkAnswer(userAnswer: userAnswer, sender: sender)
+    }
+    
+    //MARK: - Helpers
+    
+    private func configureUI(){
+        configureNavigationBar()
+        view.backgroundColor = Colors.raven
+        
+        timerView.backgroundColor = Colors.red
+        view.addSubview(timerView)
+        timerView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        timerView.setHeight(0)
+        
+        view.addSubview(exerciseTopView)
+        exerciseTopView.centerX(inView: view)
+        exerciseTopView.setWidth(view.bounds.width)
+        exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        
+        let answerStackView = UIStackView(arrangedSubviews: [answer1Button, answer2Button])
+        answerStackView.distribution = .fillEqually
+        answerStackView.axis = .vertical
+        answerStackView.spacing = 16
+        
+        answer1Button.setHeight(120)
+        view.addSubview(answerStackView)
+        answerStackView.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                               right: view.rightAnchor, paddingLeft: 32,
+                               paddingBottom: 66, paddingRight: 32)
+        
+        view.addSubview(questionLabel)
+        questionLabel.centerX(inView: view)
+        questionLabel.anchor(top: exerciseTopView.userPointButton.bottomAnchor,
+                             bottom: answerStackView.topAnchor)
+        
+        view.addSubview(bubbleButton)
+        bubbleButton.centerX(inView: questionLabel)
+        bubbleButton.centerY(inView: questionLabel)
+    }
+    
+    private func checkAnswer(userAnswer: String, sender: UIButton? = nil) {
         let userGotItRight = answerArray[questionCounter] == userAnswer
         let lastPoint = UserDefault.lastPoint.getInt()
         
@@ -132,7 +185,7 @@ class TestController: UIViewController {
                 wordBrain.updateWrongCountHardWords()
             }
         }
-        sender.backgroundColor = userGotItRight ? Colors.green : Colors.red
+        sender?.backgroundColor = userGotItRight ? Colors.green : Colors.red
         exerciseTopView.updatePoint(lastPoint: lastPoint,
                                     exercisePoint: exercisePoint,
                                     isIncrease: userGotItRight)
@@ -141,38 +194,6 @@ class TestController: UIViewController {
         bubbleButton.update(answer: userGotItRight, point: exercisePoint)
         bubbleButton.rotate()
         scheduledTimer(timeInterval: 0.7, #selector(updateUI))
-    }
-    
-    //MARK: - Helpers
-    
-    private func configureUI(){
-        configureNavigationBar()
-        view.backgroundColor = Colors.raven
-        
-        view.addSubview(exerciseTopView)
-        exerciseTopView.centerX(inView: view)
-        exerciseTopView.setWidth(width: view.bounds.width)
-        exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
-        
-        let answerStackView = UIStackView(arrangedSubviews: [answer1Button, answer2Button])
-        answerStackView.distribution = .fillEqually
-        answerStackView.axis = .vertical
-        answerStackView.spacing = 16
-        
-        answer1Button.setHeight(height: 120)
-        view.addSubview(answerStackView)
-        answerStackView.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                               right: view.rightAnchor, paddingLeft: 32,
-                               paddingBottom: 66, paddingRight: 32)
-        
-        view.addSubview(questionLabel)
-        questionLabel.centerX(inView: view)
-        questionLabel.anchor(top: exerciseTopView.userPointButton.bottomAnchor,
-                             bottom: answerStackView.topAnchor)
-        
-        view.addSubview(bubbleButton)
-        bubbleButton.centerX(inView: questionLabel)
-        bubbleButton.centerY(inView: questionLabel)
     }
     
     private func refreshAnswerButton(_ button: UIButton, title: String) {
@@ -202,6 +223,28 @@ class TestController: UIViewController {
     private func playSound() {
         let soundSpeed = UserDefault.soundSpeed.getDouble()
         player.playSound(soundSpeed, questionText)
+    }
+    
+    private func handleTimer() {
+        timerCounter += 1
+        if timerCounter == second+1 {
+            stopTimer()
+            checkAnswer(userAnswer: "")
+        } else {
+            timerView.setHeightWithAnimation(view.bounds.height/second*timerCounter, animateTime: 1.5)
+        }
+    }
+    
+    private func startTimer() {
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            self.handleTimer()
+        })
+    }
+    
+    private func stopTimer() {
+        timerCounter = 0
+        timer.invalidate()
+        timerView.setHeightWithAnimation(0)
     }
 }
 

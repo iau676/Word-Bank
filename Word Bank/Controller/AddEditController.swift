@@ -297,17 +297,18 @@ extension AddEditController {
         textView.addSubview(stackView)
         view.addSubview(textView)
         
-        coinButtonView.setDimensions(height: view.frame.size.height-(view.center.y+130), width: view.bounds.width)
+        coinButtonView.setDimensions(width: view.bounds.width,
+                                     height: view.frame.size.height-(view.center.y+130))
         coinButtonView.anchor(top: view.topAnchor, paddingTop: 32)
         
-        coinButton.setDimensions(height: 120, width: 120)
+        coinButton.setDimensions(width: 120, height: 120)
         coinButton.centerX(inView: view)
         
-        textView.setDimensions(height: 214, width: view.frame.size.width-32)
+        textView.setDimensions(width: view.frame.size.width-32, height: 214)
         textView.centerX(inView: view)
         textView.centerY(inView: view)
         
-        stackView.setDimensions(height: 182, width: view.bounds.width-64)
+        stackView.setDimensions(width: view.bounds.width-64, height: 182)
         stackView.centerY(inView: view)
         stackView.centerX(inView: view)
     }

@@ -101,7 +101,7 @@ extension LevelUpViewController {
         levelLabel.centerX(inView: view)
         levelLabel.anchor(top: levelUpLabel.bottomAnchor)
         
-        continueButton.setHeight(height: 45)
+        continueButton.setHeight(45)
         continueButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
                               right: view.rightAnchor, paddingLeft: 32,
                               paddingBottom: 66, paddingRight: 32)

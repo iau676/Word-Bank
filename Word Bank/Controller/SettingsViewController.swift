@@ -389,16 +389,16 @@ extension SettingsViewController {
         exerciseSettingsButton.anchor(top: textSizeView.bottomAnchor, left: textSizeView.leftAnchor,
                                       right: textSizeView.rightAnchor, paddingTop: 16)
         
-        xView.setHeight(height: 40)
-        appSoundView.setHeight(height: 40)
-        wordSoundView.setHeight(height: 40)
-        soundSpeedView.setHeight(height: 90)
-        textSizeView.setHeight(height: 90)
-        exerciseSettingsButton.setHeight(height: 40)
+        xView.setHeight(40)
+        appSoundView.setHeight(40)
+        wordSoundView.setHeight(40)
+        soundSpeedView.setHeight(90)
+        textSizeView.setHeight(90)
+        exerciseSettingsButton.setHeight(40)
         exerciseSettingsButton.moveImageRight()
         
         view.addSubview(tabBar)
-        tabBar.setDimensions(height: 66, width: view.bounds.width)
+        tabBar.setDimensions(width: view.bounds.width, height: 66)
         tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
     }
 }

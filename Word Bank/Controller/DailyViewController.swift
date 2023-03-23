@@ -171,7 +171,7 @@ class DailyViewController: UIViewController {
     }
     
     func configureLayerButton(_ button: UIButton, _ color: UIColor?) {
-        button.setHeight(height: 60)
+        button.setHeight(60)
         button.setButtonCornerRadius(8)
         button.backgroundColor = color
     }
@@ -353,11 +353,11 @@ extension DailyViewController {
                           paddingBottom: 82, paddingRight: 32)
 
         //top tabBar
-        topTapBarStackView.setHeight(height: 66)
+        topTapBarStackView.setHeight(66)
         topTapBarStackView.anchor(top: secondView.topAnchor, left: secondView.leftAnchor,
                                   right: secondView.rightAnchor)
         
-        lineView.setHeight(height: 1)
+        lineView.setHeight(1)
         lineView.anchor(top: topTapBarStackView.bottomAnchor, left: secondView.leftAnchor,
                         right: secondView.rightAnchor)
         
@@ -372,33 +372,33 @@ extension DailyViewController {
         
         secondView.addSubview(stackViewRaven)
         stackViewRaven.centerX(inView: view)
-        stackViewRaven.setWidth(width: taskButtonW)
+        stackViewRaven.setWidth(taskButtonW)
         stackViewRaven.anchor(top: topTapBarStackView.bottomAnchor, paddingTop: 32)
   
         //blue layer
         taskOneButtonRavenLayer.addSubview(taskOneButtonBlueLayer)
-        taskOneButtonBlueLayer.setWidth(width: taskOneBlueLayerWidth)
+        taskOneButtonBlueLayer.setWidth(taskOneBlueLayerWidth)
         
         taskTwoButtonRavenLayer.addSubview(taskTwoButtonBlueLayer)
-        taskTwoButtonBlueLayer.setWidth(width: taskTwoBlueLayerWidth)
+        taskTwoButtonBlueLayer.setWidth(taskTwoBlueLayerWidth)
 
         taskThreeButtonRavenLayer.addSubview(taskThreeButtonBlueLayer)
-        taskThreeButtonBlueLayer.setWidth(width: taskThreeBlueLayerWidth)
+        taskThreeButtonBlueLayer.setWidth(taskThreeBlueLayerWidth)
         
         //button layer
         taskOneButtonRavenLayer.addSubview(taskOneButton)
-        taskOneButton.setDimensions(height: 60, width: taskButtonW)
+        taskOneButton.setDimensions(width: taskButtonW, height: 60)
         
         taskTwoButtonRavenLayer.addSubview(taskTwoButton)
-        taskTwoButton.setDimensions(height: 60, width: taskButtonW)
+        taskTwoButton.setDimensions(width: taskButtonW, height: 60)
         
         taskThreeButtonRavenLayer.addSubview(taskThreeButton)
-        taskThreeButton.setDimensions(height: 60, width: taskButtonW)
+        taskThreeButton.setDimensions(width: taskButtonW, height: 60)
 
         //prize button
         secondView.addSubview(prizeButton)
         prizeButton.centerX(inView: secondView)
-        prizeButton.setDimensions(height: 128, width: 128)
+        prizeButton.setDimensions(width: 128, height: 128)
         prizeButton.anchor(top: stackViewRaven.bottomAnchor, paddingTop: 32)
 
         
@@ -412,17 +412,17 @@ extension DailyViewController {
         //wheelButton
         secondView.addSubview(wheelButton)
         wheelButton.centerX(inView: secondView)
-        wheelButton.setDimensions(height: 128, width: 128)
+        wheelButton.setDimensions(width: 128, height: 128)
         wheelButton.anchor(top: x2Label.bottomAnchor, paddingTop: 32)
         
         secondView.addSubview(whiteCircleButton)
         whiteCircleButton.centerX(inView: wheelButton)
         whiteCircleButton.centerY(inView: wheelButton)
-        whiteCircleButton.setDimensions(height: 18, width: 18)
+        whiteCircleButton.setDimensions(width: 18, height: 18)
 
         //tab bar
         view.addSubview(tabBar)
-        tabBar.setDimensions(height: 66, width: view.bounds.width)
+        tabBar.setDimensions(width: view.bounds.width, height: 66)
         tabBar.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
     }
 }
