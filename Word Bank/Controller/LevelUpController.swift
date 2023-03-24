@@ -9,14 +9,14 @@ import UIKit
 import AVFoundation
 import Combine
 
-class LevelUpViewController: UIViewController {
+class LevelUpController: UIViewController {
     
-    let levelUpLabel = UILabel()
-    let levelLabel = UILabel()
-    let continueButton = UIButton()
+    private let levelUpLabel = UILabel()
+    private let levelLabel = UILabel()
+    private let continueButton = UIButton()
     
-    var wordBrain = WordBrain()
-    let player = Player()
+    private var wordBrain = WordBrain()
+    private let player = Player()
     
     //MARK: - Life Cycle
     
@@ -24,8 +24,6 @@ class LevelUpViewController: UIViewController {
         super.viewDidLoad()
         style()
         layout()
-        configureColor()
-        levelLabel.text = UserDefault.level.getString()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +48,7 @@ class LevelUpViewController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc func continueButtonPressed(_ sender: UIButton) {
+    @objc private func continueButtonPressed(_ sender: UIButton) {
         continueButton.bounce()
         continueButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
@@ -60,24 +58,18 @@ class LevelUpViewController: UIViewController {
     
     //MARK: - Helpers
     
-    func configureColor() {
-        levelUpLabel.textColor = Colors.f6f6f6
-        levelLabel.textColor = Colors.f6f6f6
-        continueButton.changeBackgroundColor(to: .darkGray)
-        continueButton.setTitleColor(Colors.f6f6f6, for: .normal)
-    }
-}
-
-extension LevelUpViewController {
-    func style() {
+    private func style() {
         levelUpLabel.text = "LEVEL UP"
         levelUpLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 17)
         levelUpLabel.textAlignment = .center
         levelUpLabel.numberOfLines = 1
+        levelUpLabel.textColor = Colors.f6f6f6
         
         levelLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 70)
         levelLabel.textAlignment = .center
         levelLabel.numberOfLines = 1
+        levelLabel.textColor = Colors.f6f6f6
+        levelLabel.text = UserDefault.level.getString()
         
         continueButton.setTitle("Continue", for: .normal)
         continueButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 23)
@@ -87,10 +79,12 @@ extension LevelUpViewController {
         continueButton.layer.shadowRadius = 0.0
         continueButton.setButtonCornerRadius(16)
         continueButton.layer.masksToBounds = false
+        continueButton.changeBackgroundColor(to: .darkGray)
+        continueButton.setTitleColor(Colors.f6f6f6, for: .normal)
         continueButton.addTarget(self, action: #selector(continueButtonPressed(_:)), for: .primaryActionTriggered)
     }
     
-    func layout() {
+    private func layout() {
         view.addSubview(levelUpLabel)
         view.addSubview(levelLabel)
         view.addSubview(continueButton)

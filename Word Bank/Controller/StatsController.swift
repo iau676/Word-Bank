@@ -8,19 +8,19 @@
 import UIKit
 import Charts
 
-class StatisticViewController: UIViewController, ChartViewDelegate {
+class StatsController: UIViewController, ChartViewDelegate {
     
-    let scrollView = UIScrollView()
-    let stackView = UIStackView()
-    let barView = UIView()
-    let lineView = UIView()
-    let pieView = UIView()
+    private let scrollView = UIScrollView()
+    private let stackView = UIStackView()
+    private let barView = UIView()
+    private let lineView = UIView()
+    private let pieView = UIView()
     
-    var scrollViewWidth = 0
+    private var scrollViewWidth = 0
     
-    var barChart = BarChartView()
-    var lineChart = LineChartView()
-    var pieChart = PieChartView()
+    private var barChart = BarChartView()
+    private var lineChart = LineChartView()
+    private var pieChart = PieChartView()
     
     private let barChartLabel = UILabel()
     private let lineChartLabel = UILabel()
@@ -47,7 +47,7 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
     private var wordsWeekCount = 0
     private var exercisesWeekCount = 0
     
-    enum Chart {
+    private enum Chart {
         case bar
         case line
     }
@@ -159,16 +159,8 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-    func configureNavigationBar(){
-        let backButton: UIButton = UIButton()
-        let image = UIImage();
-        backButton.setImage(image, for: .normal)
-        backButton.setTitle("", for: .normal);
-        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
-        backButton.setTitleColor(.black, for: .normal)
-        backButton.sizeToFit()
-        let barButton = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = barButton
+    private func configureNavigationBar(){
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem()
         title = "Statistic"
     }
     
@@ -203,9 +195,9 @@ class StatisticViewController: UIViewController, ChartViewDelegate {
 
 //MARK: - Charts
 
-extension StatisticViewController {
+extension StatsController {
     
-    func configureBarChart(){
+    private func configureBarChart(){
         var entries = [BarChartDataEntry()]
         
         for i in 0..<dateArray.count {
@@ -228,7 +220,7 @@ extension StatisticViewController {
         barChart.data?.setValueFont(UIFont.systemFont(ofSize: 10))
     }
     
-    func configureLineChart(){
+    private func configureLineChart(){
         var entries = [ChartDataEntry()]
         
         for i in 0..<dateArray.count {
@@ -251,7 +243,7 @@ extension StatisticViewController {
         lineChart.data?.setValueFont(UIFont.systemFont(ofSize: 10))
     }
     
-    func configurePieChart(){
+    private func configurePieChart(){
         var entries = [ChartDataEntry()]
         
         entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseFormat.card] ?? 0), label: "Card"))
@@ -274,9 +266,9 @@ extension StatisticViewController {
 
 //MARK: - Layout
 
-extension StatisticViewController {
+extension StatsController {
     
-    func style() {
+    private func style() {
         view.backgroundColor = Colors.cellLeft
         
         tabBar.delegate = self
@@ -305,7 +297,7 @@ extension StatisticViewController {
         barChart.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
     }
     
-    func layout() {
+    private func layout() {
         
         barView.addSubview(barChart)
         lineView.addSubview(lineChart)
@@ -355,18 +347,18 @@ extension StatisticViewController {
 
 //MARK: - TabBarDelegate
 
-extension StatisticViewController: TabBarDelegate {
+extension StatsController: TabBarDelegate {
     
     func homePressed() {
         navigationController?.popToRootViewController(animated: true)
     }
     
     func dailyPressed() {
-        navigationController?.pushViewController(DailyViewController(), animated: true)
+        navigationController?.pushViewController(DailyController(), animated: true)
     }
     
     func awardPressed() {
-        navigationController?.pushViewController(AwardsViewController(), animated: true)
+        navigationController?.pushViewController(AwardsController(), animated: true)
     }
     
     func statisticPressed() {
@@ -374,6 +366,6 @@ extension StatisticViewController: TabBarDelegate {
     }
     
     func settingPressed() {
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }

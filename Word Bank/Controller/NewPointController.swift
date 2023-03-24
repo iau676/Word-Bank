@@ -9,27 +9,25 @@ import UIKit
 import AVFoundation
 import Combine
 
-class NewPointViewController: UIViewController {
+class NewPointController: UIViewController {
     
-    let wordCountLabel = UILabel()
-    let wordsLabel = UILabel()
-    let newPointLabel = UILabel()
-    let continueButton = UIButton()
+    private let wordCountLabel = UILabel()
+    private let wordsLabel = UILabel()
+    private let newPointLabel = UILabel()
+    private let continueButton = UIButton()
     
-    var textForLabel = ""
-    var userWordCount = ""
-    let player = Player()
-    var wordBrain = WordBrain()
-    var itemArray: [Item] { return wordBrain.itemArray }
+    private var textForLabel = ""
+    private var userWordCount = ""
+    private let player = Player()
+    var newWordsCount = 0
+    var newExercisePoint = 0
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wordBrain.loadItemArray()
         style()
         layout()
-        configureColor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +52,7 @@ class NewPointViewController: UIViewController {
         
     //MARK: - Selectors
     
-    @objc func continueButtonPressed(_ sender: UIButton) {
+    @objc private func continueButtonPressed(_ sender: UIButton) {
         continueButton.bounce()
         continueButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
@@ -64,34 +62,24 @@ class NewPointViewController: UIViewController {
     
     //MARK: - Helpers
     
-    func configureColor() {
-        wordCountLabel.textColor = .darkGray
-        wordsLabel.textColor = .darkGray
-        newPointLabel.textColor = .darkGray
-        continueButton.changeBackgroundColor(to: .darkGray)
-        continueButton.setTitleColor(Colors.cellRight, for: .normal)
-    }
-}
-
-//MARK: - Layout
-
-extension NewPointViewController {
-    
-    func style() {
-        wordCountLabel.text = String(itemArray.count)
+    private func style() {
+        wordCountLabel.text = "\(newWordsCount)"
         wordCountLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 70)
         wordCountLabel.textAlignment = .center
         wordCountLabel.numberOfLines = 0
+        wordCountLabel.textColor = .darkGray
         
         wordsLabel.text = "Words!"
         wordsLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 21)
         wordsLabel.textAlignment = .center
         wordsLabel.numberOfLines = 0
+        wordsLabel.textColor = .darkGray
         
-        newPointLabel.text = "You will get +\(UserDefault.exercisePoint.getInt()-10) points for each correct answer."
+        newPointLabel.text = "You will get \(newExercisePoint) points for each correct answer."
         newPointLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 21)
         newPointLabel.textAlignment = .center
         newPointLabel.numberOfLines = 0
+        newPointLabel.textColor = .darkGray
         
         continueButton.setTitle("Continue", for: .normal)
         continueButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 23)
@@ -101,10 +89,12 @@ extension NewPointViewController {
         continueButton.layer.shadowRadius = 0.0
         continueButton.setButtonCornerRadius(16)
         continueButton.layer.masksToBounds = false
+        continueButton.changeBackgroundColor(to: .darkGray)
+        continueButton.setTitleColor(Colors.cellRight, for: .normal)
         continueButton.addTarget(self, action: #selector(continueButtonPressed(_:)), for: .primaryActionTriggered)
     }
     
-    func layout() {
+    private func layout() {
         view.addSubview(wordCountLabel)
         view.addSubview(wordsLabel)
         view.addSubview(newPointLabel)

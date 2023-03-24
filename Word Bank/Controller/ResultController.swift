@@ -10,7 +10,7 @@ import CoreData
 import AVFoundation
 import Combine
 
-class ResultViewController: UIViewController {
+class ResultController: UIViewController {
 
     private let exerciseType: String
     private let exerciseFormat: String
@@ -90,7 +90,7 @@ class ResultViewController: UIViewController {
     //MARK: - Selectors
     
     @objc private func addedHardWordsButtonPressed(_ sender: UIButton) {
-        let controller = WordsViewController(exerciseType: ExerciseType.hard)
+        let controller = WordsController(exerciseType: ExerciseType.hard)
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -214,7 +214,7 @@ class ResultViewController: UIViewController {
         
         if newLevel - lastLevel > 0 {
             DispatchQueue.main.async(){
-                let vc = LevelUpViewController()
+                let vc = LevelUpController()
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }
@@ -224,7 +224,7 @@ class ResultViewController: UIViewController {
 
     //MARK: - UITableViewDataSource
 
-extension ResultViewController: UITableViewDataSource {
+extension ResultController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userAnswerArray.count
@@ -325,7 +325,7 @@ extension ResultViewController: UITableViewDataSource {
 
 //MARK: - UITableViewDelegate
 
-extension ResultViewController: UITableViewDelegate {
+extension ResultController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if exerciseFormat == ExerciseFormat.listening {
@@ -341,7 +341,7 @@ extension ResultViewController: UITableViewDelegate {
 
 //MARK: - Layout
 
-extension ResultViewController {
+extension ResultController {
     
     private func style(){
         navigationItem.leftBarButtonItem = UIBarButtonItem()

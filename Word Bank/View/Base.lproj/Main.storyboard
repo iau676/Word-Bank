@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mvk-aa-Pkg">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home View Controller-->
+        <!--Home Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="goHome" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="HomeViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="goHome" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="HomeController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -37,7 +35,7 @@
             <objects>
                 <viewController id="R4c-Ok-iJX" customClass="CardController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6vK-5d-cBl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="RVV-bz-iHl"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -52,12 +50,12 @@
             </objects>
             <point key="canvasLocation" x="5600" y="-645"/>
         </scene>
-        <!--Result View Controller-->
+        <!--Result Controller-->
         <scene sceneID="y88-tD-Saz">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="oeL-n5-M7B" customClass="ResultViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="oeL-n5-M7B" customClass="ResultController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KDH-vU-C5Y">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="iXQ-jl-LTN"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -78,7 +76,7 @@
             <objects>
                 <viewController id="baS-AH-7tq" customClass="AddViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CeW-4Z-2ix">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <viewLayoutGuide key="safeArea" id="xdd-5p-6ki"/>
                         <color key="backgroundColor" systemColor="labelColor"/>
@@ -91,12 +89,12 @@
             </objects>
             <point key="canvasLocation" x="4641" y="-646"/>
         </scene>
-        <!--Words View Controller-->
+        <!--Words Controller-->
         <scene sceneID="GkB-hd-Q59">
             <objects>
-                <viewController id="9q6-8v-FQ1" customClass="WordsViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9q6-8v-FQ1" customClass="WordsController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WVg-dI-ycn">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="5Tp-Me-Byh"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -122,7 +120,7 @@
             <objects>
                 <viewController id="hrk-6E-n2d" customClass="WheelController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MW1-YE-jFE">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="yeb-YD-eML"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -142,7 +140,7 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="zXo-IR-Z84" customClass="ExerciseViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c8r-up-S3W">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="A1K-5x-0La"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -178,16 +176,16 @@
             </objects>
             <point key="canvasLocation" x="2760.8000000000002" y="36.431784107946029"/>
         </scene>
-        <!--Settings View Controller-->
+        <!--Settings Controller-->
         <scene sceneID="cZc-ST-Gb1">
             <objects>
-                <viewController id="7xT-ax-mw9" customClass="SettingsViewController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7xT-ax-mw9" customClass="SettingsController" customModule="Word_Bank" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eSW-tB-4g6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lxj-ap-W7w">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qew-xl-Ddk"/>

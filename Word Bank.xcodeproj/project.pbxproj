@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		700458532917EC8E0077A4D2 /* WordBrain+PrizePoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700458522917EC8E0077A4D2 /* WordBrain+PrizePoints.swift */; };
 		700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700814F328D3909200DF177D /* UIImage+Extensions.swift */; };
-		7009BDE729112BAA0068E2F6 /* DailyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7009BDE629112BAA0068E2F6 /* DailyViewController.swift */; };
+		7009BDE729112BAA0068E2F6 /* DailyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7009BDE629112BAA0068E2F6 /* DailyController.swift */; };
 		700BC57F2892FE9E00903C04 /* WordBrain+calculateLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */; };
 		700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */; };
-		700C439927A856FD00D94497 /* LevelInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700C439827A856FD00D94497 /* LevelInfoViewController.swift */; };
+		700C439927A856FD00D94497 /* LevelInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700C439827A856FD00D94497 /* LevelInfoController.swift */; };
 		7011749B29B4C47200019D69 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011749A29B4C47200019D69 /* TabBar.swift */; };
 		7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */; };
 		7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FF289571A100A42314 /* UIColor+Extensions.swift */; };
@@ -35,13 +35,13 @@
 		70134191291D5888001967E1 /* ClassicFireworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134190291D5888001967E1 /* ClassicFireworkController.swift */; };
 		70134193291D589A001967E1 /* ClassicSparkTrajectoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134192291D589A001967E1 /* ClassicSparkTrajectoryFactory.swift */; };
 		70134195291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134194291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift */; };
-		7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7014743527AAB4EE005E1854 /* LevelUpViewController.swift */; };
-		701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701581BC27DE80D800796ADE /* SettingsViewController.swift */; };
+		7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7014743527AAB4EE005E1854 /* LevelUpController.swift */; };
+		701581BD27DE80D800796ADE /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701581BC27DE80D800796ADE /* SettingsController.swift */; };
 		70175BC427E71F170053CBDB /* CardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70175BC327E71F170053CBDB /* CardController.swift */; };
 		702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */; };
 		70209B2B2759613900D527D3 /* WordBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70209B2A2759613900D527D3 /* WordBrain.swift */; };
-		7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* WordsViewController.swift */; };
-		702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A978227EB378A00AEECF7 /* X2SettingViewController.swift */; };
+		7027F691275B9B84001F6068 /* WordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* WordsController.swift */; };
+		702A978327EB378A00AEECF7 /* X2SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A978227EB378A00AEECF7 /* X2SettingController.swift */; };
 		702AF782292365D600CD0B86 /* silent.aac in Resources */ = {isa = PBXBuildFile; fileRef = 702AF781292365D600CD0B86 /* silent.aac */; };
 		7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7039B87927A6A04700519D39 /* CircularProgressView.swift */; };
 		704B055528364098006C7F96 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* Word.swift */; };
@@ -49,6 +49,7 @@
 		70509AA829C9CCDE00372655 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA729C9CCDE00372655 /* BubbleView.swift */; };
 		70509AAA29C9DAD000372655 /* WritingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA929C9DAD000372655 /* WritingController.swift */; };
 		70509AAC29CA14D700372655 /* ListeningController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AAB29CA14D700372655 /* ListeningController.swift */; };
+		70509AAE29CDCF3300372655 /* ExerciseSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AAD29CDCF3300372655 /* ExerciseSettingsCell.swift */; };
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
 		705B3D0929BE108C005CFEC2 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0829BE108C005CFEC2 /* TestController.swift */; };
 		705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */; };
@@ -66,7 +67,7 @@
 		705D92F028F8A49B001C4F38 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 705D92EF28F8A49B001C4F38 /* GameScene.sks */; };
 		706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB227592F8D008B4773 /* AppDelegate.swift */; };
 		706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB427592F8D008B4773 /* SceneDelegate.swift */; };
-		706CBAB727592F8D008B4773 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB627592F8D008B4773 /* HomeViewController.swift */; };
+		706CBAB727592F8D008B4773 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAB627592F8D008B4773 /* HomeController.swift */; };
 		706CBABA27592F8D008B4773 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 706CBAB827592F8D008B4773 /* Main.storyboard */; };
 		706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 706CBABB27592F8D008B4773 /* _3.xcdatamodeld */; };
 		706CBABF27592F8E008B4773 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 706CBABE27592F8E008B4773 /* Assets.xcassets */; };
@@ -80,19 +81,19 @@
 		707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */; };
 		707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC38A288DAA4A00832F35 /* Int+Extensions.swift */; };
 		70803511290C393E00F1F93A /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 70803510290C393E00F1F93A /* Charts */; };
-		70803513290C3BA600F1F93A /* StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70803512290C3BA600F1F93A /* StatisticViewController.swift */; };
+		70803513290C3BA600F1F93A /* StatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70803512290C3BA600F1F93A /* StatsController.swift */; };
 		7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */; };
-		7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081AB0127CCD15700E2996A /* NewPointViewController.swift */; };
+		7081AB0227CCD15700E2996A /* NewPointController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081AB0127CCD15700E2996A /* NewPointController.swift */; };
 		7081AB0527CCD3CB00E2996A /* alltrue.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0427CCD3CB00E2996A /* alltrue.mp4 */; };
 		7081AB0727CCFA4300E2996A /* newpoint.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0627CCFA4300E2996A /* newpoint.mp4 */; };
 		708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD87288719D300E09AE1 /* Date+Extensions.swift */; };
 		708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD89288719F900E09AE1 /* UIView+Extensions.swift */; };
 		708C0E1427A8894F00E9105F /* AddEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C0E1327A8894F00E9105F /* AddEditController.swift */; };
-		708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */; };
-		7094D8C4290D25B5007E422F /* AwardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C3290D25B5007E422F /* AwardsViewController.swift */; };
+		708C27D1275AC3F1005D2EC8 /* ResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C27D0275AC3F0005D2EC8 /* ResultController.swift */; };
+		7094D8C4290D25B5007E422F /* AwardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C3290D25B5007E422F /* AwardsController.swift */; };
 		7094D8C6290D694D007E422F /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C5290D694D007E422F /* BadgeView.swift */; };
 		709ED6A72899312800A34007 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709ED6A62899312800A34007 /* Constants.swift */; };
-		70A70D9D29439D93007F3C25 /* ExerciseSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A70D9C29439D93007F3C25 /* ExerciseSettingsViewController.swift */; };
+		70A70D9D29439D93007F3C25 /* ExerciseSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A70D9C29439D93007F3C25 /* ExerciseSettingsController.swift */; };
 		70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */; };
 		70C357E528882DFC00F3AD86 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E428882DFC00F3AD86 /* Player.swift */; };
 		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
@@ -110,10 +111,10 @@
 /* Begin PBXFileReference section */
 		700458522917EC8E0077A4D2 /* WordBrain+PrizePoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+PrizePoints.swift"; sourceTree = "<group>"; };
 		700814F328D3909200DF177D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
-		7009BDE629112BAA0068E2F6 /* DailyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewController.swift; sourceTree = "<group>"; };
+		7009BDE629112BAA0068E2F6 /* DailyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyController.swift; sourceTree = "<group>"; };
 		700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateLevel.swift"; sourceTree = "<group>"; };
 		700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+LevelPoints.swift"; sourceTree = "<group>"; };
-		700C439827A856FD00D94497 /* LevelInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelInfoViewController.swift; sourceTree = "<group>"; };
+		700C439827A856FD00D94497 /* LevelInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelInfoController.swift; sourceTree = "<group>"; };
 		7011749A29B4C47200019D69 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContextualAction+Extensions.swift"; sourceTree = "<group>"; };
 		7011E3FF289571A100A42314 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -136,14 +137,14 @@
 		70134190291D5888001967E1 /* ClassicFireworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicFireworkController.swift; sourceTree = "<group>"; };
 		70134192291D589A001967E1 /* ClassicSparkTrajectoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicSparkTrajectoryFactory.swift; sourceTree = "<group>"; };
 		70134194291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicSparkTrajectoryFactoryProtocol.swift; sourceTree = "<group>"; };
-		7014743527AAB4EE005E1854 /* LevelUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpViewController.swift; sourceTree = "<group>"; };
-		701581BC27DE80D800796ADE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		7014743527AAB4EE005E1854 /* LevelUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpController.swift; sourceTree = "<group>"; };
+		701581BC27DE80D800796ADE /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		70175BC327E71F170053CBDB /* CardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardController.swift; sourceTree = "<group>"; };
 		701FA77628DFDC28001ADA07 /* Word Bank.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Word Bank.entitlements"; sourceTree = "<group>"; };
 		702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extensions.swift"; sourceTree = "<group>"; };
 		70209B2A2759613900D527D3 /* WordBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBrain.swift; sourceTree = "<group>"; };
-		7027F690275B9B84001F6068 /* WordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
-		702A978227EB378A00AEECF7 /* X2SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2SettingViewController.swift; sourceTree = "<group>"; };
+		7027F690275B9B84001F6068 /* WordsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsController.swift; sourceTree = "<group>"; };
+		702A978227EB378A00AEECF7 /* X2SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2SettingController.swift; sourceTree = "<group>"; };
 		702AF781292365D600CD0B86 /* silent.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = silent.aac; sourceTree = "<group>"; };
 		7039B87927A6A04700519D39 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		704B055428364098006C7F96 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
@@ -151,6 +152,7 @@
 		70509AA729C9CCDE00372655 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 		70509AA929C9DAD000372655 /* WritingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingController.swift; sourceTree = "<group>"; };
 		70509AAB29CA14D700372655 /* ListeningController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningController.swift; sourceTree = "<group>"; };
+		70509AAD29CDCF3300372655 /* ExerciseSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSettingsCell.swift; sourceTree = "<group>"; };
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
 		705B3D0829BE108C005CFEC2 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTopView.swift; sourceTree = "<group>"; };
@@ -169,7 +171,7 @@
 		706CBAAF27592F8D008B4773 /* Word Bank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Bank.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		706CBAB227592F8D008B4773 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		706CBAB427592F8D008B4773 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		706CBAB627592F8D008B4773 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		706CBAB627592F8D008B4773 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		706CBAB927592F8D008B4773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		706CBABC27592F8D008B4773 /* _3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = _3.xcdatamodel; sourceTree = "<group>"; };
 		706CBABE27592F8E008B4773 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -183,19 +185,19 @@
 		707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		707EC38A288DAA4A00832F35 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
-		70803512290C3BA600F1F93A /* StatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewController.swift; sourceTree = "<group>"; };
+		70803512290C3BA600F1F93A /* StatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsController.swift; sourceTree = "<group>"; };
 		7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
-		7081AB0127CCD15700E2996A /* NewPointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPointViewController.swift; sourceTree = "<group>"; };
+		7081AB0127CCD15700E2996A /* NewPointController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPointController.swift; sourceTree = "<group>"; };
 		7081AB0427CCD3CB00E2996A /* alltrue.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = alltrue.mp4; sourceTree = "<group>"; };
 		7081AB0627CCFA4300E2996A /* newpoint.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = newpoint.mp4; sourceTree = "<group>"; };
 		708AFD87288719D300E09AE1 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		708AFD89288719F900E09AE1 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		708C0E1327A8894F00E9105F /* AddEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditController.swift; sourceTree = "<group>"; };
-		708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
-		7094D8C3290D25B5007E422F /* AwardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardsViewController.swift; sourceTree = "<group>"; };
+		708C27D0275AC3F0005D2EC8 /* ResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultController.swift; sourceTree = "<group>"; };
+		7094D8C3290D25B5007E422F /* AwardsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardsController.swift; sourceTree = "<group>"; };
 		7094D8C5290D694D007E422F /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		709ED6A62899312800A34007 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		70A70D9C29439D93007F3C25 /* ExerciseSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSettingsViewController.swift; sourceTree = "<group>"; };
+		70A70D9C29439D93007F3C25 /* ExerciseSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSettingsController.swift; sourceTree = "<group>"; };
 		70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+setNotification.swift"; sourceTree = "<group>"; };
 		70C357E428882DFC00F3AD86 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		70C357E72888638300F3AD86 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
@@ -283,19 +285,19 @@
 		70209B1C27595DD000D527D3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				706CBAB627592F8D008B4773 /* HomeViewController.swift */,
-				7027F690275B9B84001F6068 /* WordsViewController.swift */,
+				706CBAB627592F8D008B4773 /* HomeController.swift */,
+				7027F690275B9B84001F6068 /* WordsController.swift */,
 				708C0E1327A8894F00E9105F /* AddEditController.swift */,
-				708C27D0275AC3F0005D2EC8 /* ResultViewController.swift */,
-				700C439827A856FD00D94497 /* LevelInfoViewController.swift */,
-				7014743527AAB4EE005E1854 /* LevelUpViewController.swift */,
-				7081AB0127CCD15700E2996A /* NewPointViewController.swift */,
-				7009BDE629112BAA0068E2F6 /* DailyViewController.swift */,
-				7094D8C3290D25B5007E422F /* AwardsViewController.swift */,
-				70803512290C3BA600F1F93A /* StatisticViewController.swift */,
-				701581BC27DE80D800796ADE /* SettingsViewController.swift */,
-				70A70D9C29439D93007F3C25 /* ExerciseSettingsViewController.swift */,
-				702A978227EB378A00AEECF7 /* X2SettingViewController.swift */,
+				708C27D0275AC3F0005D2EC8 /* ResultController.swift */,
+				700C439827A856FD00D94497 /* LevelInfoController.swift */,
+				7014743527AAB4EE005E1854 /* LevelUpController.swift */,
+				7081AB0127CCD15700E2996A /* NewPointController.swift */,
+				7009BDE629112BAA0068E2F6 /* DailyController.swift */,
+				7094D8C3290D25B5007E422F /* AwardsController.swift */,
+				70803512290C3BA600F1F93A /* StatsController.swift */,
+				701581BC27DE80D800796ADE /* SettingsController.swift */,
+				70A70D9C29439D93007F3C25 /* ExerciseSettingsController.swift */,
+				702A978227EB378A00AEECF7 /* X2SettingController.swift */,
 				705D92D428F895BA001C4F38 /* WheelController.swift */,
 				705B3D0829BE108C005CFEC2 /* TestController.swift */,
 				70509AA929C9DAD000372655 /* WritingController.swift */,
@@ -312,12 +314,13 @@
 				7094D8C5290D694D007E422F /* BadgeView.swift */,
 				70C7C22929522704006E65A2 /* LetterCell.swift */,
 				706CBAD427593993008B4773 /* WordCell.swift */,
+				70509AAD29CDCF3300372655 /* ExerciseSettingsCell.swift */,
 				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
+				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
+				70509AA729C9CCDE00372655 /* BubbleView.swift */,
 				7011749A29B4C47200019D69 /* TabBar.swift */,
 				706CBAD527593993008B4773 /* WordCell.xib */,
 				706CBAB827592F8D008B4773 /* Main.storyboard */,
-				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
-				70509AA729C9CCDE00372655 /* BubbleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -574,19 +577,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */,
-				706CBAB727592F8D008B4773 /* HomeViewController.swift in Sources */,
+				706CBAB727592F8D008B4773 /* HomeController.swift in Sources */,
 				70134186291D581F001967E1 /* SparkView.swift in Sources */,
 				708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */,
 				70134191291D5888001967E1 /* ClassicFireworkController.swift in Sources */,
-				7014743627AAB4EE005E1854 /* LevelUpViewController.swift in Sources */,
+				7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */,
 				70134182291D57FC001967E1 /* SparkTrajectory.swift in Sources */,
 				705B3D0929BE108C005CFEC2 /* TestController.swift in Sources */,
 				7013418F291D5877001967E1 /* ClassicFireworkAnimator.swift in Sources */,
 				700458532917EC8E0077A4D2 /* WordBrain+PrizePoints.swift in Sources */,
 				7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */,
-				7009BDE729112BAA0068E2F6 /* DailyViewController.swift in Sources */,
+				7009BDE729112BAA0068E2F6 /* DailyController.swift in Sources */,
 				706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */,
 				70C357E528882DFC00F3AD86 /* Player.swift in Sources */,
+				70509AAE29CDCF3300372655 /* ExerciseSettingsCell.swift in Sources */,
 				70509AA829C9CCDE00372655 /* BubbleView.swift in Sources */,
 				70134176291D577A001967E1 /* ImageSparkViewFactory.swift in Sources */,
 				700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */,
@@ -598,20 +602,20 @@
 				7013418D291D5867001967E1 /* ClassicFirework.swift in Sources */,
 				705D92ED28F89625001C4F38 /* CGFloat+Extensions.swift in Sources */,
 				70134184291D580F001967E1 /* SparkTrajectoryFactory.swift in Sources */,
-				7027F691275B9B84001F6068 /* WordsViewController.swift in Sources */,
+				7027F691275B9B84001F6068 /* WordsController.swift in Sources */,
 				707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */,
 				7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */,
-				7094D8C4290D25B5007E422F /* AwardsViewController.swift in Sources */,
-				70803513290C3BA600F1F93A /* StatisticViewController.swift in Sources */,
+				7094D8C4290D25B5007E422F /* AwardsController.swift in Sources */,
+				70803513290C3BA600F1F93A /* StatsController.swift in Sources */,
 				707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */,
 				706D707D28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift in Sources */,
 				704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */,
-				700C439927A856FD00D94497 /* LevelInfoViewController.swift in Sources */,
+				700C439927A856FD00D94497 /* LevelInfoController.swift in Sources */,
 				7075B371291679B40007EDF7 /* UIViewController+Extensions.swift in Sources */,
 				708C0E1427A8894F00E9105F /* AddEditController.swift in Sources */,
 				70134195291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,
-				70A70D9D29439D93007F3C25 /* ExerciseSettingsViewController.swift in Sources */,
+				70A70D9D29439D93007F3C25 /* ExerciseSettingsController.swift in Sources */,
 				70134174291D5751001967E1 /* ImageSparkView.swift in Sources */,
 				7013417E291D57D5001967E1 /* FireworkSpark.swift in Sources */,
 				707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */,
@@ -629,11 +633,11 @@
 				707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */,
 				705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,
-				7081AB0227CCD15700E2996A /* NewPointViewController.swift in Sources */,
+				7081AB0227CCD15700E2996A /* NewPointController.swift in Sources */,
 				70134179291D57A1001967E1 /* CGPoint+Extensions.swift in Sources */,
 				7013417C291D57C1001967E1 /* Firework.swift in Sources */,
-				708C27D1275AC3F1005D2EC8 /* ResultViewController.swift in Sources */,
-				702A978327EB378A00AEECF7 /* X2SettingViewController.swift in Sources */,
+				708C27D1275AC3F1005D2EC8 /* ResultController.swift in Sources */,
+				702A978327EB378A00AEECF7 /* X2SettingController.swift in Sources */,
 				70134188291D582E001967E1 /* SparkViewAnimator.swift in Sources */,
 				705D92E328F89625001C4F38 /* PushButton.swift in Sources */,
 				70C7C228295226E6006E65A2 /* AwardCell.swift in Sources */,
@@ -642,7 +646,7 @@
 				705D92EB28F89625001C4F38 /* SpinWheel.swift in Sources */,
 				7011749B29B4C47200019D69 /* TabBar.swift in Sources */,
 				705D92E628F89625001C4F38 /* GameScene.swift in Sources */,
-				701581BD27DE80D800796ADE /* SettingsViewController.swift in Sources */,
+				701581BD27DE80D800796ADE /* SettingsController.swift in Sources */,
 				705D92D528F895BA001C4F38 /* WheelController.swift in Sources */,
 				7094D8C6290D694D007E422F /* BadgeView.swift in Sources */,
 				70C7C22A29522704006E65A2 /* LetterCell.swift in Sources */,

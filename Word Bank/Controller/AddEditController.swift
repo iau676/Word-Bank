@@ -28,17 +28,19 @@ class AddEditController: UIViewController {
     private let trTxtField = UITextField()
     private let addButton = UIButton()
     
-    var player = Player()
-    var wordBrain = WordBrain()
+    private var player = Player()
+    private var wordBrain = WordBrain()
+    
     var goEdit = 0
-    var userWordCountInt = 0
-    var userWordCountIntVariable = 0
+    private var userWordCountInt = 0
+    private var userWordCountIntVariable = 0
     
-    var coinButtonImage: UIImage { return goEdit == 0 ? Images.coin! : Images.check!}
-    var coinButtonAnimation: UIView.AnimationOptions { return goEdit == 0 ? .transitionFlipFromTop : .transitionFlipFromLeft }
+    private var coinButtonImage: UIImage { return goEdit == 0 ? Images.coin! : Images.check!}
+    private var coinButtonAnimation: UIView.AnimationOptions { return goEdit == 0 ?
+        .transitionFlipFromTop : .transitionFlipFromLeft }
     
-    var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
-    let textViewHeight: CGFloat = 214
+    private var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
+    private let textViewHeight: CGFloat = 214
     
     //MARK: - Life Cycle
     
@@ -95,26 +97,28 @@ class AddEditController: UIViewController {
         }
     }
     
-    @objc func coinButtonViewPressed(_ sender: UIButton) {
+    @objc private func coinButtonViewPressed(_ sender: UIButton) {
         checkAction()
     }
     
-    @objc func coinButtonPressed(_ sender: UIButton) {
+    @objc private func coinButtonPressed(_ sender: UIButton) {
         checkAction()
     }
         
-    @objc func dismissView(){
+    @objc private func dismissView(){
         view.backgroundColor = UIColor.clear
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func goNewPoint(){
+    @objc private func goNewPoint(){
         let lastPoint = UserDefault.exercisePoint.getInt()
         wordBrain.calculateExercisePoint(userWordCount: userWordCountIntVariable)
         let newPoint = UserDefault.exercisePoint.getInt()
         
         if newPoint != lastPoint {
-            let vc = NewPointViewController()
+            let vc = NewPointController()
+            vc.newWordsCount = wordBrain.itemArray.count
+            vc.newExercisePoint = newPoint
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
@@ -122,7 +126,7 @@ class AddEditController: UIViewController {
     
     //MARK: - Helpers
     
-    func configureColor(){
+    private func configureColor(){
         engTxtField.textColor = Colors.black
         trTxtField.textColor = Colors.black
         engTxtField.backgroundColor = Colors.cellRight
@@ -131,12 +135,12 @@ class AddEditController: UIViewController {
         addButton.setTitleColor(Colors.cellRight, for: .normal)
     }
 
-    func setupButtons(){
+    private func setupButtons(){
         setupButton(button: addButton, buttonTitle: "", image: Images.plus, imageSize: 23, cornerRadius: 6)
         coinButton.deleteBackgroundImage()
     }
     
-    func configureTextFields(){
+    private func configureTextFields(){
         setupTxtField(txtFld: engTxtField, placeholder: "English")
         setupTxtField(txtFld: trTxtField, placeholder: "Meaning")
         
@@ -156,20 +160,20 @@ class AddEditController: UIViewController {
         }
     }
     
-    func cofigureTextViewYAnchor(){
+    private func cofigureTextViewYAnchor(){
         if keyboardHeight+(textViewHeight/2) > view.frame.height/2 {
             textView.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-120).isActive = true
             stackView.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-120).isActive = true
         }
     }
     
-    func setupButton(button: UIButton, buttonTitle: String, image: UIImage?, imageSize: CGFloat=0, cornerRadius: Int){
+    private func setupButton(button: UIButton, buttonTitle: String, image: UIImage?, imageSize: CGFloat=0, cornerRadius: Int){
         button.setTitle(buttonTitle, for: .normal)
         button.setImage(image: image, width: imageSize, height: imageSize)
         button.layer.cornerRadius = CGFloat(cornerRadius)
     }
     
-    func setupTxtField(txtFld: UITextField, placeholder: String){
+    private func setupTxtField(txtFld: UITextField, placeholder: String){
         txtFld.delegate = self
         txtFld.attributedPlaceholder = NSAttributedString(
             string: placeholder,
@@ -177,7 +181,7 @@ class AddEditController: UIViewController {
         )
     }
     
-    func checkEditStatus() {
+    private func checkEditStatus() {
         if goEdit == 1 {
             guard let item = item else { return }
             engTxtField.text = item.eng
@@ -186,7 +190,7 @@ class AddEditController: UIViewController {
         }
     }
     
-    func checkAction(){
+    private func checkAction(){
         if engTxtField.text!.count > 0 || trTxtField.text!.count > 0 {
             let alert = UIAlertController(title: "Your changes could not be saved", message: "", preferredStyle: .alert)
 
@@ -235,7 +239,7 @@ extension AddEditController: UITextFieldDelegate {
 
 extension AddEditController {
     
-    func flipCoinButton(){
+    private func flipCoinButton(){
         coinButton.setBackgroundImage(coinButtonImage, for: .normal)
         UIView.transition(with: coinButton, duration: 0.2, options: coinButtonAnimation, animations: nil, completion: nil)
         scheduledTimer(timeInterval: 0.3, #selector(flipSecond))
@@ -243,15 +247,15 @@ extension AddEditController {
         scheduledTimer(timeInterval: 1.5, #selector(deleteButtonBackgroundImage))
     }
     
-    @objc func flipSecond(){
+    @objc private func flipSecond(){
         UIView.transition(with: coinButton, duration: 0.5, options: coinButtonAnimation, animations: nil, completion: nil)
     }
     
-    @objc func animateDown(){
+    @objc private func animateDown(){
         coinButton.animateCoinDown(y: self.view.frame.height-UserDefault.keyboardHeight.getCGFloat()-66)
     }
 
-    @objc func deleteButtonBackgroundImage(){
+    @objc private func deleteButtonBackgroundImage(){
         coinButton.deleteBackgroundImage()
     }
 }
@@ -260,7 +264,7 @@ extension AddEditController {
 
 extension AddEditController {
     
-    func style(){
+    private func style(){
         view.backgroundColor = Colors.darkBackground
         
         coinButton.addTarget(self, action: #selector(coinButtonPressed), for: .touchUpInside)
@@ -290,7 +294,7 @@ extension AddEditController {
         addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
     }
     
-    func layout(){
+    private func layout(){
         coinButtonView.addSubview(coinButton)
         view.addSubview(coinButtonView)
         
@@ -322,7 +326,7 @@ extension AddEditController {
 
 extension AddEditController {
     
-    func addGestureRecognizer(){
+    private func addGestureRecognizer(){
         let dismissView = UITapGestureRecognizer(target: self, action:  #selector(coinButtonViewPressed))
         self.coinButtonView.addGestureRecognizer(dismissView)
         
@@ -331,7 +335,7 @@ extension AddEditController {
         view.addGestureRecognizer(swipeDown)
     }
     
-    @objc func swipeDownGesture(_ sender: UISwipeGestureRecognizer) {
+    @objc private func swipeDownGesture(_ sender: UISwipeGestureRecognizer) {
         checkAction()
     }
 }

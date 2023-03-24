@@ -8,34 +8,35 @@
 import UIKit
 import CoreData
 
-class WordsViewController: UIViewController {
+class WordsController: UIViewController {
     
     //MARK: - Properties
     
     private let exerciseType: String
     
-    let searchBar = UISearchBar()
-    let tableView = UITableView()
-    let tableViewStackView = UIStackView()
+    private let searchBar = UISearchBar()
+    private let tableView = UITableView()
+    private let tableViewStackView = UIStackView()
     
-    let testExerciseButton = UIButton()
-    let writingExerciseButton = UIButton()
-    let listeningExerciseButton = UIButton()
-    let cardExerciseButton = UIButton()
-    let buttonStackView = UIStackView()
+    private let testExerciseButton = UIButton()
+    private let writingExerciseButton = UIButton()
+    private let listeningExerciseButton = UIButton()
+    private let cardExerciseButton = UIButton()
+    private let buttonStackView = UIStackView()
     
-    let testExerciseLabel = UILabel()
-    let writingExerciseLabel = UILabel()
-    let listeningExerciseLabel = UILabel()
-    let cardExerciseLabel = UILabel()
+    private let testExerciseLabel = UILabel()
+    private let writingExerciseLabel = UILabel()
+    private let listeningExerciseLabel = UILabel()
+    private let cardExerciseLabel = UILabel()
     
-    var goEdit = 0
-    var editIndex = 0
     var goAddPage = 0
-    var wordBrain = WordBrain()
-    var itemArray: [Item] { return wordBrain.itemArray }
-    var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
-    var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    private var goEdit = 0
+    private var editIndex = 0
+    
+    private var wordBrain = WordBrain()
+    private var itemArray: [Item] { return wordBrain.itemArray }
+    private var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
+    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
     //MARK: - Life Cycle
     
@@ -76,12 +77,12 @@ class WordsViewController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc func addBarButtonPressed(_ sender: UIBarButtonItem) {
+    @objc private func addBarButtonPressed(_ sender: UIBarButtonItem) {
         goAddPage = 1
         checkGoAddPage()
     }
     
-    @objc func testExerciseButtonPressed(_ sender: Any) {
+    @objc private func testExerciseButtonPressed(_ sender: Any) {
         testExerciseButton.bounce()
         testExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         let controller = TestController(exerciseType: exerciseType,
@@ -89,7 +90,7 @@ class WordsViewController: UIViewController {
         checkWordCount(controller: controller)
     }
     
-    @objc func writingExerciseButtonPressed(_ sender: UIButton) {
+    @objc private func writingExerciseButtonPressed(_ sender: UIButton) {
         writingExerciseButton.bounce()
         writingExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         let controller = WritingController(exerciseType: exerciseType,
@@ -97,13 +98,15 @@ class WordsViewController: UIViewController {
         checkWordCount(controller: controller)
     }
     
-    @objc func listeningExerciseButtonPressed(_ sender: UIButton) {
+    @objc private func listeningExerciseButtonPressed(_ sender: UIButton) {
         listeningExerciseButton.bounce()
         listeningExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
-        checkSoundSetting()
+        let controller = ListeningController(exerciseType: exerciseType,
+                                            exerciseFormat: ExerciseFormat.listening)
+        checkWordCount(controller: controller)
     }
     
-    @objc func cardExerciseButtonPressed(_ sender: UIButton) {
+    @objc private func cardExerciseButtonPressed(_ sender: UIButton) {
         cardExerciseButton.bounce()
         cardExerciseButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         let controller = CardController(exerciseType: exerciseType,
@@ -113,13 +116,13 @@ class WordsViewController: UIViewController {
 
     //MARK: - Helpers
     
-    func setupView(){
+    private func setupView(){
         updateView()
         setupBackgroundColor()
         setupCornerRadius()
     }
     
-    func updateView(){
+    private func updateView(){
         if exerciseType == ExerciseType.normal {
             searchBar.updateSearchBarVisibility(false)
             tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
@@ -133,14 +136,14 @@ class WordsViewController: UIViewController {
         tableView.reloadData()
     }
     
-    func configureButton(){
+    private func configureButton(){
         testExerciseButton.changeBackgroundColor(to: Colors.raven)
         writingExerciseButton.changeBackgroundColor(to: Colors.raven)
         listeningExerciseButton.changeBackgroundColor(to: Colors.raven)
         cardExerciseButton.changeBackgroundColor(to: Colors.raven)
     }
    
-    func setupSearchBar() {
+    private func setupSearchBar() {
         searchBar.delegate = self
         searchBar.isHidden = true
         
@@ -166,7 +169,7 @@ class WordsViewController: UIViewController {
         }
     }
     
-    func setupCornerRadius() {
+    private func setupCornerRadius() {
         testExerciseButton.setButtonCornerRadius(10)
         writingExerciseButton.setButtonCornerRadius(10)
         listeningExerciseButton.setButtonCornerRadius(10)
@@ -174,14 +177,14 @@ class WordsViewController: UIViewController {
         tableView.setViewCornerRadius(10)
     }
     
-    func configureLabel(_ label: UILabel, _ text: String){
+    private func configureLabel(_ label: UILabel, _ text: String){
         label.textColor = Colors.black
         label.text = text
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
         label.numberOfLines = 1
     }
     
-    func setupBackgroundColor(){
+    private func setupBackgroundColor(){
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
         if exerciseType == ExerciseType.normal {
@@ -192,7 +195,7 @@ class WordsViewController: UIViewController {
         view.layer.insertSublayer(gradient, at: 0)
     }
     
-    func setupNavigationBar(){
+    private func setupNavigationBar(){
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         
         if exerciseType == ExerciseType.normal {
@@ -202,7 +205,7 @@ class WordsViewController: UIViewController {
         }
     }
     
-    func setupButtons(){
+    private func setupButtons(){
         setupButtonImage(testExerciseButton, image: Images.testExercise, width: 30, height: 15)
         setupButtonImage(writingExerciseButton, image: Images.writingExercise, width: 30, height: 15)
         setupButtonImage(listeningExerciseButton, image: Images.listeningExercise, width: 30, height: 15)
@@ -214,11 +217,11 @@ class WordsViewController: UIViewController {
         setupButtonShadow(cardExerciseButton)
     }
     
-    func setupButtonImage(_ button: UIButton, image: UIImage?, width: CGFloat, height: CGFloat){
+    private func setupButtonImage(_ button: UIButton, image: UIImage?, width: CGFloat, height: CGFloat){
         button.setImage(image: image, width: width+textSize, height: height+textSize)
     }
     
-    func setupButtonShadow(_ button: UIButton) {
+    private  func setupButtonShadow(_ button: UIButton) {
         button.layer.shadowColor = Colors.ravenShadow?.cgColor
         button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         button.layer.shadowOpacity = 1.0
@@ -226,7 +229,7 @@ class WordsViewController: UIViewController {
         button.layer.masksToBounds = false
     }
 
-    func checkGoAddPage(){
+    private func checkGoAddPage(){
         if goAddPage == 1 && exerciseType == ExerciseType.normal{
             goAddEdit()
         }
@@ -239,7 +242,7 @@ class WordsViewController: UIViewController {
         self.present(controller, animated: true)
     }
     
-    func checkWordCount(controller: UIViewController){
+    private func checkWordCount(controller: UIViewController){
         let wordCount = (exerciseType == ExerciseType.normal) ? itemArray.count : hardItemArray.count
         
         if wordCount < 2 {
@@ -257,25 +260,11 @@ class WordsViewController: UIViewController {
             }
         }
     }
-    
-    func checkSoundSetting(){
-        //0 is true, 1 is false
-        if UserDefault.playSound.getInt() == 0 {
-            let controller = ListeningController(exerciseType: exerciseType,
-                                                exerciseFormat: ExerciseFormat.listening)
-            checkWordCount(controller: controller)
-        } else {
-            showAlert(title: "To start this exercise, you need to activate the \"Word Sound\" feature.",
-                      message: "") { OKpressed in
-                self.navigationController?.pushViewController(SettingsViewController(), animated: true)
-            }
-        }
-    }
 }
 
     //MARK: - Search Bar
 
-extension WordsViewController: UISearchBarDelegate {
+extension WordsController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let text = searchBar.text else { return }
@@ -293,7 +282,7 @@ extension WordsViewController: UISearchBarDelegate {
         tableView.reloadData()
     }
     
-    func updateSearchBarPlaceholder(){
+    private func updateSearchBarPlaceholder(){
         if itemArray.count > 0 {
             searchBar.placeholder = "Search in \(itemArray.count) words"
         } else {
@@ -304,7 +293,7 @@ extension WordsViewController: UISearchBarDelegate {
 
     //MARK: - UITableViewDataSource
 
-extension WordsViewController: UITableViewDataSource {
+extension WordsController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         updateSearchBarPlaceholder()
         if exerciseType == ExerciseType.normal {
@@ -344,7 +333,7 @@ extension WordsViewController: UITableViewDataSource {
         return cell
     }
     
-    func showAlertIfHardWordsEmpty(){
+    private func showAlertIfHardWordsEmpty(){
         if hardItemArray.count <= 0 {
             showAlert(title: "Nothing to see here yet",
                       message: "When you answer a word incorrectly in the exercises, that word is added to this page. In order to delete that word from here, you should answer correctly 5 times.") { _ in
@@ -356,7 +345,7 @@ extension WordsViewController: UITableViewDataSource {
 
     //MARK: - UITableViewDelegate
 
-extension WordsViewController: UITableViewDelegate {
+extension WordsController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -428,7 +417,7 @@ extension WordsViewController: UITableViewDelegate {
     }
 }
 
-extension WordsViewController {
+extension WordsController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -441,8 +430,8 @@ extension WordsViewController {
 
 //MARK: - Layout
 
-extension WordsViewController {
-    func style(){
+extension WordsController {
+    private func style(){
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"),
                                                             style: .plain, target: self,
                                                             action: #selector(addBarButtonPressed))
@@ -484,7 +473,7 @@ extension WordsViewController {
         configureLabel(cardExerciseLabel, "Card")
     }
     
-    func layout(){
+    private func layout(){
         tableViewStackView.addArrangedSubview(searchBar)
         tableViewStackView.addArrangedSubview(tableView)
         
@@ -521,21 +510,13 @@ extension WordsViewController {
         
         cardExerciseLabel.centerX(inView: cardExerciseButton)
         cardExerciseLabel.anchor(top: cardExerciseButton.bottomAnchor, paddingTop: 8)
-        
-//        UIView.transition(with: tableView, duration: 0.6,
-//                          options: .transitionCrossDissolve,
-//                          animations: {
-//            self.view.layoutIfNeeded()
-//            self.tableViewStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
-//            self.buttonStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -48).isActive = true
-//        })
     }
 }
 
 //MARK: - Swipe Gesture
 
-extension WordsViewController {
-    func addGestureRecognizer(){
+extension WordsController {
+    private func addGestureRecognizer(){
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeftGesture))
         swipeLeft.direction = .left
         
@@ -546,18 +527,18 @@ extension WordsViewController {
         view.addGestureRecognizer(swipeRight)
     }
     
-    @objc func respondToSwipeLeftGesture(gesture: UISwipeGestureRecognizer) {
+    @objc private func respondToSwipeLeftGesture(gesture: UISwipeGestureRecognizer) {
         if exerciseType == ExerciseType.normal { goAddEdit() }
     }
     
-    @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
+    @objc private func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
         self.navigationController?.popToRootViewController(animated: true)
     }
 }
 
 //MARK: - AddEditControllerDelegate
 
-extension WordsViewController: AddEditControllerDelegate {
+extension WordsController: AddEditControllerDelegate {
     func updateTableView() {
         wordBrain.saveContext()
         wordBrain.loadItemArray()

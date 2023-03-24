@@ -9,42 +9,42 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class SettingsViewController: UIViewController, UITextFieldDelegate {
+class SettingsController: UIViewController, UITextFieldDelegate {
         
-    let xView = UIView()
-    let appSoundView = UIView()
-    let wordSoundView = UIView()
-    let soundSpeedView = UIView()
-    let textSizeView = UIView()
+    private let xView = UIView()
+    private let appSoundView = UIView()
+    private let wordSoundView = UIView()
+    private let soundSpeedView = UIView()
+    private let textSizeView = UIView()
     
-    let soundSpeedStackView = UIStackView()
-    let textSizeStackView = UIStackView()
+    private let soundSpeedStackView = UIStackView()
+    private let textSizeStackView = UIStackView()
     
-    let x2Label = UILabel()
-    let x2HoursLabel = UILabel()
-    let appSoundLabel = UILabel()
-    let wordSoundLabel = UILabel()
-    let soundSpeedLabel = UILabel()
-    let textSizeLabel = UILabel()
+    private let x2Label = UILabel()
+    private let x2HoursLabel = UILabel()
+    private let appSoundLabel = UILabel()
+    private let wordSoundLabel = UILabel()
+    private let soundSpeedLabel = UILabel()
+    private let textSizeLabel = UILabel()
     
-    let appSoundSwitch = UISwitch()
-    let wordSoundSwitch = UISwitch()
+    private let appSoundSwitch = UISwitch()
+    private let wordSoundSwitch = UISwitch()
     
-    let soundSpeedSegmentedControl = UISegmentedControl()
-    let textSegmentedControl = UISegmentedControl()
+    private let soundSpeedSegmentedControl = UISegmentedControl()
+    private let textSegmentedControl = UISegmentedControl()
     
-    let xButton = UIButton()
-    let soundSpeedButton = UIButton()
-    let exerciseSettingsButton = UIButton()
+    private let xButton = UIButton()
+    private let soundSpeedButton = UIButton()
+    private let exerciseSettingsButton = UIButton()
     
-    var player = Player()
-    var wordBrain = WordBrain()
-    var soundSpeed = 0.0
-    var soundImageName = ""
-    var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    private var player = Player()
+    private var wordBrain = WordBrain()
+    private var soundSpeed = 0.0
+    private var soundImageName = ""
+    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
-    let textSizeArray = [9, 11, 13, 15, 17, 19, 21]
-    let soundSpeedArray = [0.3, 0.5, 0.7]
+    private let textSizeArray = [9, 11, 13, 15, 17, 19, 21]
+    private let soundSpeedArray = [0.3, 0.5, 0.7]
     
     private let tabBar = TabBar(color5: Colors.blue ?? .systemBlue)
     
@@ -63,15 +63,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Selectors
     
-    @objc func xViewPressed(gesture: UISwipeGestureRecognizer) {
-        let vc = X2SettingViewController()
+    @objc private func xViewPressed(gesture: UISwipeGestureRecognizer) {
+        let vc = X2SettingController()
         vc.modalPresentationStyle = .popover
         vc.popoverPresentationController?.sourceView = UIView()
         vc.delegate = self
         present(vc, animated: true)
     }
 
-    @objc func wordSoundChanged(_ sender: UISwitch) {
+    @objc private func wordSoundChanged(_ sender: UISwitch) {
         if sender.isOn {
             UserDefault.playSound.set(0)
             changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
@@ -81,34 +81,34 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @objc func appSoundChanged(_ sender: UISwitch) {
+    @objc private func appSoundChanged(_ sender: UISwitch) {
         UserDefault.playAppSound.set(sender.isOn == true ? 0 : 1)
     }
     
-    @objc func soundSpeedChanged(_ sender: UISegmentedControl) {
+    @objc private func soundSpeedChanged(_ sender: UISegmentedControl) {
         UserDefault.soundSpeed.set(soundSpeedArray[sender.selectedSegmentIndex])
         soundSpeed = soundSpeedArray[sender.selectedSegmentIndex]
         soundSpeedButton.flash()
         player.playSound(soundSpeed, "how are you?")
     }
     
-    @objc func soundSpeedButtonPressed(_ sender: UIButton) {
+    @objc private func soundSpeedButtonPressed(_ sender: UIButton) {
         soundSpeedButton.flash()
         player.playSound(soundSpeed, "how are you?")
     }
     
-    @objc func exerciseSettingsButtonPressed(gesture: UISwipeGestureRecognizer) {
-        self.navigationController?.pushViewController(ExerciseSettingsViewController(), animated: false)
+    @objc private func exerciseSettingsButtonPressed(gesture: UISwipeGestureRecognizer) {
+        self.navigationController?.pushViewController(ExerciseSettingsController(), animated: false)
     }
     
-    @objc func textSizeChanged(_ sender: UISegmentedControl) {
+    @objc private func textSizeChanged(_ sender: UISegmentedControl) {
         UserDefault.textSize.set(textSizeArray[sender.selectedSegmentIndex])
         updateTextSize()
     }
     
     //MARK: - Helpers
     
-    func configureColor() {
+    private func configureColor() {
         view.backgroundColor = Colors.cellLeft
         xView.backgroundColor = Colors.cellRight
         appSoundView.backgroundColor = Colors.cellRight
@@ -132,7 +132,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         soundSpeedSegmentedControl.tintColor = .black
     }
         
-    func configureNavigationBar(){
+    private func configureNavigationBar(){
         let backButton: UIButton = UIButton()
         let image = UIImage();
         backButton.setImage(image, for: .normal)
@@ -145,18 +145,18 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         title = "Settings"
     }
 
-    func setupButton(_ button: UIButton){
+    private func setupButton(_ button: UIButton){
         button.setImage(image: Images.soundBlack, width: 30, height: 30)
     }
     
-    func setupCornerRadius(){
+    private func setupCornerRadius(){
         wordSoundView.layer.cornerRadius = 8
         textSizeView.layer.cornerRadius = 8
         appSoundView.layer.cornerRadius = 8
         soundSpeedView.layer.cornerRadius = 8
     }
     
-    func setupDefaults(){
+    private func setupDefaults(){
         
         if UserDefault.textSize.getInt() == 0 {
             UserDefault.textSize.set(15)
@@ -183,7 +183,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         textSegmentedControl.selectedSegmentIndex = textSizeIndex
     }
 
-    func updateTextSize(){
+    private func updateTextSize(){
         updateLabelTextSize(wordSoundLabel)
         updateLabelTextSize(textSizeLabel)
         updateLabelTextSize(x2Label)
@@ -197,23 +197,19 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         updateButtonTextSize(exerciseSettingsButton)
     }
     
-    func updateSegmentedControlTextSize(_ segmentedControl: UISegmentedControl){
+    private func updateSegmentedControlTextSize(_ segmentedControl: UISegmentedControl){
         segmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
     }
     
-    func updateLabelTextSize(_ label: UILabel){
+    private func updateLabelTextSize(_ label: UILabel){
         label.font = label.font.withSize(textSize)
     }
     
-    func updateButtonTextSize(_ button: UIButton){
+    private func updateButtonTextSize(_ button: UIButton){
         button.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
     }
-    
-    func dismissView(){
-        self.dismiss(animated: true, completion: nil)
-    }
 
-    func changeViewState(_ uiview: UIView, alpha a: CGFloat, isUserInteraction bool: Bool){
+    private func changeViewState(_ uiview: UIView, alpha a: CGFloat, isUserInteraction bool: Bool){
         UIView.transition(with: uiview, duration: 0.4,
                           options: (a < 1 ? .transitionFlipFromTop : .transitionFlipFromBottom),
                           animations: {
@@ -223,9 +219,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-//MARK: - X2HourDelegate
+//MARK: - X2SettingControllerDelegate
 
-extension SettingsViewController: X2HourDelegate {
+extension SettingsController: X2SettingControllerDelegate {
     func x2HourChanged(_ userSelectedHour: Int) {
         self.x2HoursLabel.text = self.wordBrain.hours[userSelectedHour]
     }
@@ -233,9 +229,9 @@ extension SettingsViewController: X2HourDelegate {
 
 //MARK: - Layout
 
-extension SettingsViewController {
+extension SettingsController {
     
-    func style() {
+    private func style() {
         
         tabBar.delegate = self
         
@@ -300,7 +296,7 @@ extension SettingsViewController {
                                          for: .primaryActionTriggered)
     }
     
-    func layout() {
+    private func layout() {
 
         xView.addSubview(x2Label)
         xView.addSubview(x2HoursLabel)
@@ -405,22 +401,22 @@ extension SettingsViewController {
 
 //MARK: - TabBarDelegate
 
-extension SettingsViewController: TabBarDelegate {
+extension SettingsController: TabBarDelegate {
     
     func homePressed() {
         navigationController?.popToRootViewController(animated: true)
     }
     
     func dailyPressed() {
-        navigationController?.pushViewController(DailyViewController(), animated: true)
+        navigationController?.pushViewController(DailyController(), animated: true)
     }
     
     func awardPressed() {
-        navigationController?.pushViewController(AwardsViewController(), animated: true)
+        navigationController?.pushViewController(AwardsController(), animated: true)
     }
     
     func statisticPressed() {
-        navigationController?.pushViewController(StatisticViewController(), animated: true)
+        navigationController?.pushViewController(StatsController(), animated: true)
     }
     
     func settingPressed() {

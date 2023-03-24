@@ -9,41 +9,31 @@ import UIKit
 import CoreData
 import UserNotifications
 
-protocol X2HourDelegate: AnyObject {
+protocol X2SettingControllerDelegate: AnyObject {
     func x2HourChanged(_ userSelectedHour: Int)
 }
 
-class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class X2SettingController: UIViewController {
     
-    //MARK: - IBOutlet
-
-    var wordBrain = WordBrain()
+    //MARK: - Properties
     
-    let pickerView = UIPickerView()
-    let saveButton = UIButton()
-    let lastEditLabel = UILabel()
-    let infoLabel = UILabel()
-    let allowNotificationButton = UIButton()
-    var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    var delegate: X2SettingControllerDelegate?
+    private var wordBrain = WordBrain()
+    private var userSelectedHour = 0
     
-    var delegate: X2HourDelegate?
-    
-    //MARK: - Variables
-    
-    var onViewWillDisappear:((_ id: Int) -> Void)?
-    var userSelectedHour = 0
-    let notificationCenter = UNUserNotificationCenter.current()
+    private let pickerView = UIPickerView()
+    private let saveButton = UIButton()
+    private let lastEditLabel = UILabel()
+    private let infoLabel = UILabel()
+    private let allowNotificationButton = UIButton()
+    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
-        configureColor()
-        configureButtons()
-        configurePickerView()
-        configureLastEditLabel()
         checkNotificationAllowed()
-        style()
         updateInfoLabel()
+        style()
         layout()
     }
     
@@ -56,7 +46,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     //MARK: - Selectors
     
-    @objc func saveButtonPressed(_ sender: UIButton) {
+    @objc private func saveButtonPressed(_ sender: UIButton) {
         
         // subtract date from now
         let dateComponents = Calendar.current.dateComponents([.day], from: UserDefault.x2Time.getValue() as! Date, to: Date())
@@ -100,7 +90,7 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
         updateInfoLabel()
     }
     
-    @objc func notificationButtonPressed(_ sender: UIButton) {
+    @objc private func notificationButtonPressed(_ sender: UIButton) {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
@@ -108,84 +98,18 @@ class X2SettingViewController: UIViewController, UIPickerViewDataSource, UIPicke
     
     //MARK: - Helpers
     
-    func configureColor() {
-        infoLabel.textColor = Colors.black
-        lastEditLabel.textColor = Colors.black
-        saveButton.changeBackgroundColor(to: Colors.cellLeft)
-        saveButton.setTitleColor(Colors.black, for: .normal)
-    }
-    
-    func configureButtons(){
-        saveButton.setButtonCornerRadius(8)
-        allowNotificationButton.setButtonCornerRadius(8)
-    }
-    
-    func configureLastEditLabel(){
-        let lastEdit = UserDefault.lastEditLabel.getString()
+    private func style() {
+        view.backgroundColor = Colors.cellLeft
         
-        if lastEdit != "empty" {
-            lastEditLabel.text = "Last changed on \(lastEdit)"
-        } else {
-            lastEditLabel.text = ""
-        }
-    }
-    
-    func updateInfoLabel(){
-        infoLabel.text = "You will earn 2x points for each correct answer between \(wordBrain.hours[UserDefault.userSelectedHour.getInt()])  hours."
-    }
-    
-    func checkNotificationAllowed() {
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            if settings.authorizationStatus == .authorized {
-                DispatchQueue.main.async {
-                    self.allowNotificationButton.isHidden = true
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.allowNotificationButton.isHidden = false
-                }
-            }
-        }
-    }
-    
-    //MARK: - pickerView
-    
-    func configurePickerView(){
         pickerView.dataSource = self
         pickerView.delegate = self
         pickerView.selectRow(UserDefault.userSelectedHour.getInt(), inComponent: 0, animated: true)
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return wordBrain.hours.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return wordBrain.hours[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        userSelectedHour = row
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: wordBrain.hours[row], attributes: [NSAttributedString.Key.foregroundColor: Colors.black!])
-    }
-}
-
-extension X2SettingViewController {
-    
-    func style() {
-        view.backgroundColor = Colors.cellLeft
         
         saveButton.backgroundColor = .darkGray
         saveButton.setTitle("Save", for: .normal)
-        saveButton.setTitleColor(.white, for: .normal)
         saveButton.titleLabel?.font =  UIFont(name: Fonts.AvenirNextRegular, size: textSize)
+        saveButton.setTitleColor(.white, for: .normal)
+        saveButton.setButtonCornerRadius(8)
         saveButton.addTarget(self, action: #selector(saveButtonPressed(_:)),
                              for: .primaryActionTriggered)
         
@@ -193,21 +117,25 @@ extension X2SettingViewController {
         lastEditLabel.textAlignment = .center
         lastEditLabel.numberOfLines = 0
         lastEditLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
+        lastEditLabel.textColor = Colors.black
+        configureLastEditLabel()
         
         infoLabel.textColor = Colors.black
         infoLabel.textAlignment = .center
         infoLabel.numberOfLines = 0
         infoLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
+        infoLabel.textColor = Colors.black
         
         allowNotificationButton.backgroundColor = .darkGray
         allowNotificationButton.setTitle("Allow Notification", for: .normal)
-        allowNotificationButton.setTitleColor(.white, for: .normal)
         allowNotificationButton.titleLabel?.font =  UIFont(name: Fonts.AvenirNextRegular, size: textSize)
+        allowNotificationButton.setTitleColor(.white, for: .normal)
+        allowNotificationButton.setButtonCornerRadius(8)
         allowNotificationButton.addTarget(self, action: #selector(notificationButtonPressed(_:)),
                                           for: .primaryActionTriggered)
     }
     
-    func layout() {
+    private func layout() {
         view.addSubview(pickerView)
         view.addSubview(saveButton)
         view.addSubview(lastEditLabel)
@@ -232,5 +160,62 @@ extension X2SettingViewController {
         allowNotificationButton.anchor(top: infoLabel.bottomAnchor, left: view.leftAnchor,
                                        right: view.rightAnchor, paddingTop: 16,
                                        paddingLeft: 32, paddingRight: 32)
+    }
+    
+    private func configureLastEditLabel(){
+        let lastEdit = UserDefault.lastEditLabel.getString()
+        
+        if lastEdit != "empty" {
+            lastEditLabel.text = "Last changed on \(lastEdit)"
+        } else {
+            lastEditLabel.text = ""
+        }
+    }
+    
+    private func updateInfoLabel(){
+        infoLabel.text = "You will earn 2x points for each correct answer between \(wordBrain.hours[UserDefault.userSelectedHour.getInt()])  hours."
+    }
+    
+    private func checkNotificationAllowed() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            if settings.authorizationStatus == .authorized {
+                DispatchQueue.main.async {
+                    self.allowNotificationButton.isHidden = true
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.allowNotificationButton.isHidden = false
+                }
+            }
+        }
+    }
+}
+
+//MARK: - UIPickerViewDataSource
+
+extension X2SettingController: UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return wordBrain.hours.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return wordBrain.hours[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return NSAttributedString(string: wordBrain.hours[row], attributes: [NSAttributedString.Key.foregroundColor: Colors.black!])
+    }
+}
+
+//MARK: - UIPickerViewDelegate
+
+extension X2SettingController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        userSelectedHour = row
     }
 }

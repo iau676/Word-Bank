@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 import CoreData
 
-final class HomeViewController: UIViewController, LevelDelegate {
+final class HomeController: UIViewController {
     
     private let leftLineView = UIView()
     private let centerLineView = UIView()
@@ -57,24 +57,24 @@ final class HomeViewController: UIViewController, LevelDelegate {
     
     //MARK: - Selectors
     
-    @objc func levelButtonPressed() {
+    @objc private func levelButtonPressed() {
         levelCP.bounce()
         levelButton.flip()
         
-        let vc = LevelInfoViewController()
+        let vc = LevelInfoController()
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         self.updateLevelButtonTitleAfterPressed(isInt: false)
         self.present(vc, animated: false)
     }
     
-    @objc func exerciseButtonPressed() {
+    @objc private func exerciseButtonPressed() {
         exerciseCP.bounce()
         UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
         checkWordCount()
     }
     
-    @objc func newWordsButtonPressed() {
+    @objc private func newWordsButtonPressed() {
         newWordCP.bounce()
         
         newWordsButton.setImage(image: Images.onlyHand, width: 35, height: 35)
@@ -83,40 +83,25 @@ final class HomeViewController: UIViewController, LevelDelegate {
         
         goAddPage = 1
         viewDidLayoutSubviews()
-        let controller = WordsViewController(exerciseType: ExerciseType.normal)
+        let controller = WordsController(exerciseType: ExerciseType.normal)
         controller.goAddPage = 1
         pushViewController(controller: controller)
     }
     
-    @objc func wordsButtonPressed() {
+    @objc private func wordsButtonPressed() {
         wordsCP.bounce()
         goAddPage = 0
-        let controller = WordsViewController(exerciseType: ExerciseType.normal)
+        let controller = WordsController(exerciseType: ExerciseType.normal)
         pushViewController(controller: controller)
     }
     
-    @objc func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
+    @objc private func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         hardCP.bounce()
-        let controller = WordsViewController(exerciseType: ExerciseType.hard)
+        let controller = WordsController(exerciseType: ExerciseType.hard)
         pushViewController(controller: controller)
     }
     
     //MARK: - Helpers
-    
-    func updateLevelButtonTitleAfterPressed(isInt: Bool) {
-        if isInt {
-            UIView.transition(with: self.levelButton, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
-                self.levelButton.setTitle(UserDefault.level.getString(), for: .normal)
-                self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
-            }
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
-                self.levelButton.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
-                self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 20)
-            }
-        }
-    }
     
     private func pushViewController(controller: UIViewController) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
@@ -124,7 +109,7 @@ final class HomeViewController: UIViewController, LevelDelegate {
         }
     }
  
-    func setupButtonImages(){
+    private func setupButtonImages(){
         exerciseButton.setImage(image: Images.wheelicon, width: 35, height: 35)
         newWordsButton.setImage(image: Images.new, width: 35, height: 35)
         wordsButton.setImage(image: Images.bank, width: 40, height: 40)
@@ -133,15 +118,7 @@ final class HomeViewController: UIViewController, LevelDelegate {
         tabBar.updateDailyButton()
     }
     
-    func setupButtonShadow(_ button: UIButton, shadowColor: UIColor?){
-        button.layer.shadowColor = shadowColor?.cgColor
-        button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
-        button.layer.shadowOpacity = 1.0
-        button.layer.shadowRadius = 0.0
-        button.layer.masksToBounds = false
-    }
-    
-    func setupNavigationBar(){
+    private func setupNavigationBar(){
         navigationController?.navigationBar.tintColor = Colors.black
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.black!]
     
@@ -150,7 +127,7 @@ final class HomeViewController: UIViewController, LevelDelegate {
         navigationController?.navigationBar.isTranslucent = true
     }
     
-    func setupCircularProgress(){
+    private func setupCircularProgress(){
         progressValue = wordBrain.calculateLevel()
         levelButton.setTitle(UserDefault.level.getString(), for: .normal)
         
@@ -190,7 +167,7 @@ final class HomeViewController: UIViewController, LevelDelegate {
         
         if wordCount < 2 {
             showAlert(title: "Minimum two words required", message: "") { _ in
-                let controller = WordsViewController(exerciseType: ExerciseType.normal)
+                let controller = WordsController(exerciseType: ExerciseType.normal)
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         } else {
@@ -203,7 +180,7 @@ final class HomeViewController: UIViewController, LevelDelegate {
 
 //MARK: - Layout
 
-extension HomeViewController {
+extension HomeController {
     
     func style() {
         title = "Word Bank"
@@ -273,41 +250,59 @@ extension HomeViewController {
         dropButton.centerX(inView: newWordCP)
         dropButton.centerY(inView: newWordCP, constant: 16)
         
-        
         view.addSubview(tabBar)
         tabBar.setDimensions(width: view.bounds.width, height: 66)
         tabBar.anchor(bottom: view.bottomAnchor)
     }
 }
 
+//MARK: - LevelInfoControllerDelegate
+
+extension HomeController: LevelInfoControllerDelegate {
+    func updateLevelButtonTitleAfterPressed(isInt: Bool) {
+        if isInt {
+            UIView.transition(with: self.levelButton, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
+                self.levelButton.setTitle(UserDefault.level.getString(), for: .normal)
+                self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
+                self.levelButton.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
+                self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 20)
+            }
+        }
+    }
+}
+
 //MARK: - TabBarDelegate
 
-extension HomeViewController: TabBarDelegate {
+extension HomeController: TabBarDelegate {
     
     func homePressed() {
         //navigationController?.popToRootViewController(animated: true)
     }
     
     func dailyPressed() {
-        navigationController?.pushViewController(DailyViewController(), animated: true)
+        navigationController?.pushViewController(DailyController(), animated: true)
     }
     
     func awardPressed() {
-        navigationController?.pushViewController(AwardsViewController(), animated: true)
+        navigationController?.pushViewController(AwardsController(), animated: true)
     }
     
     func statisticPressed() {
-        navigationController?.pushViewController(StatisticViewController(), animated: true)
+        navigationController?.pushViewController(StatsController(), animated: true)
     }
     
     func settingPressed() {
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }
 
 //MARK: - Keyboard Height
 
-extension HomeViewController {
+extension HomeController {
     func getKeyboardHeight(){
         let textField = UITextField()
         view.addSubview(textField)
@@ -334,7 +329,7 @@ extension HomeViewController {
 
 //MARK: - Top Bar Height
 
-extension HomeViewController {
+extension HomeController {
     func getTopBarHeight(){
         UserDefault.topBarHeight.set(self.topbarHeight)
     }
@@ -342,7 +337,7 @@ extension HomeViewController {
 
 //MARK: - First Launch
 
-extension HomeViewController {
+extension HomeController {
     
     func setupFirstLaunch() {
         //version 2.0.1

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DailyViewController: UIViewController {
+class DailyController: UIViewController {
         
     private let secondView = UIView()
     
@@ -81,25 +81,25 @@ class DailyViewController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc func taskOneButtonPressed(){
+    @objc private func taskOneButtonPressed(){
         let controller = TestController(exerciseType: ExerciseType.normal,
                                         exerciseFormat: ExerciseFormat.test)
         checkWordCount(controller: controller)
     }
     
-    @objc func taskTwoButtonPressed(){
+    @objc private func taskTwoButtonPressed(){
         let controller = WritingController(exerciseType: ExerciseType.normal,
                                            exerciseFormat: ExerciseFormat.writing)
         checkWordCount(controller: controller)
     }
     
-    @objc func taskThreeButtonPressed(){
+    @objc private func taskThreeButtonPressed(){
         let controller = ListeningController(exerciseType: ExerciseType.normal,
                                              exerciseFormat: ExerciseFormat.listening)
-        checkSoundSetting(controller: controller)
+        checkWordCount(controller: controller)
     }
     
-    @objc func prizeButtonPressed(){
+    @objc private func prizeButtonPressed(){
         prizeButton.bounce()
         UserDefault.userGotDailyPrize.set("willGet")
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
@@ -107,26 +107,26 @@ class DailyViewController: UIViewController {
         }
     }
     
-    @objc func wheelButtonPressed(){
+    @objc private func wheelButtonPressed(){
         wheelButton.bounce()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
             self.navigationController?.pushViewController(WheelController(), animated: true)
         }
     }
     
-    @objc func x2EventButtonPressed(){
+    @objc private func x2EventButtonPressed(){
         hideDailyTask()
         show2xEvent()
     }
     
-    @objc func dailyTaskButtonPressed(){
+    @objc private func dailyTaskButtonPressed(){
         showDailyTask()
         hide2xEvent()
     }
     
     //MARK: - Helpers
     
-    func checkWordCount(controller: UIViewController){
+    private func checkWordCount(controller: UIViewController){
         let wordCount = itemArray.count
         
         if wordCount < 2 {
@@ -138,18 +138,7 @@ class DailyViewController: UIViewController {
         }
     }
     
-    func checkSoundSetting(controller: UIViewController){
-        //0 is true, 1 is false
-        if UserDefault.playSound.getInt() == 0 {
-            checkWordCount(controller: controller)
-        } else {
-            showAlert(title: "To start this exercise, you need to activate the \"Word Sound\" feature.", message: "") { _ in
-                self.navigationController?.pushViewController(SettingsViewController(), animated: true)
-            }
-        }
-    }
-    
-    func updateButtons(){
+    private func updateButtons(){
         
         if testExerciseCount >= 10 && writingExerciseCount >= 10 && listeningExerciseCount >= 10 {
             if UserDefault.userGotDailyPrize.getString() != todayDate {
@@ -170,28 +159,20 @@ class DailyViewController: UIViewController {
         }
     }
     
-    func configureLayerButton(_ button: UIButton, _ color: UIColor?) {
+    private func configureLayerButton(_ button: UIButton, _ color: UIColor?) {
         button.setHeight(60)
         button.setButtonCornerRadius(8)
         button.backgroundColor = color
     }
     
-    func configureButton(_ button: UIButton, _ text: String){
+    private func configureButton(_ button: UIButton, _ text: String){
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
         button.setButtonCornerRadius(8)
     }
     
-    func configureNavigationBar(){
-        let backButton: UIButton = UIButton()
-        let image = UIImage();
-        backButton.setImage(image, for: .normal)
-        backButton.setTitle("", for: .normal);
-        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
-        backButton.setTitleColor(.black, for: .normal)
-        backButton.sizeToFit()
-        let barButton = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = barButton
+    private func configureNavigationBar(){
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem()
         title = "Daily"
     }
     
@@ -254,7 +235,7 @@ class DailyViewController: UIViewController {
 
 //MARK: - Layout
 
-extension DailyViewController {
+extension DailyController {
     
     private func style(){
         view.backgroundColor = Colors.cellLeft
@@ -430,7 +411,7 @@ extension DailyViewController {
 
 //MARK: - Swipe Gesture
 
-extension DailyViewController {
+extension DailyController {
     private func addGestureRecognizer(){
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeLeft))
         swipeLeft.direction = .left
@@ -455,7 +436,7 @@ extension DailyViewController {
 
 //MARK: - TabBarDelegate
 
-extension DailyViewController: TabBarDelegate {
+extension DailyController: TabBarDelegate {
     
     func homePressed() {
         navigationController?.popToRootViewController(animated: true)
@@ -466,14 +447,14 @@ extension DailyViewController: TabBarDelegate {
     }
     
     func awardPressed() {
-        navigationController?.pushViewController(AwardsViewController(), animated: true)
+        navigationController?.pushViewController(AwardsController(), animated: true)
     }
     
     func statisticPressed() {
-        navigationController?.pushViewController(StatisticViewController(), animated: true)
+        navigationController?.pushViewController(StatsController(), animated: true)
     }
     
     func settingPressed() {
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }

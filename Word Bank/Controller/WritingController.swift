@@ -149,7 +149,7 @@ class WritingController: UIViewController {
             updateCV()
         } else {
             questionCounter = 0
-            let controller = ResultViewController(exerciseType: exerciseType,
+            let controller = ResultController(exerciseType: exerciseType,
                                                   exerciseFormat: exerciseFormat)
             controller.questionArray = questionArray
             controller.answerArray = answerArray

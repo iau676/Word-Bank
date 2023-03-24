@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol LevelDelegate: AnyObject {
+protocol LevelInfoControllerDelegate: AnyObject {
     func updateLevelButtonTitleAfterPressed(isInt: Bool)
 }
 
-class LevelInfoViewController: UIViewController {
+class LevelInfoController: UIViewController {
     
-    var delegate: LevelDelegate?
+    var delegate: LevelInfoControllerDelegate?
     
     // define lazy views
     lazy var levelLabel: UILabel = {

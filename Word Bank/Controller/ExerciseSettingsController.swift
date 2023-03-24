@@ -7,15 +7,15 @@
 
 import UIKit
 
-class ExerciseSettingsViewController: UIViewController {
+class ExerciseSettingsController: UIViewController {
     
-    let testTypeView = UIView()
-    let testTypeStackView = UIStackView()
-    let testTypeLabel = UILabel()
-    let testTypeSegmentedControl = UISegmentedControl()
+    private let testTypeView = UIView()
+    private let testTypeStackView = UIStackView()
+    private let testTypeLabel = UILabel()
+    private let testTypeSegmentedControl = UISegmentedControl()
     
-    let pointView = UIView()
-    let pointLabel = UILabel()
+    private let pointView = UIView()
+    private let pointLabel = UILabel()
     fileprivate let pointCV:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -27,8 +27,8 @@ class ExerciseSettingsViewController: UIViewController {
         return cv
     }()
     
-    let typingView = UIView()
-    let typingLabel = UILabel()
+    private let typingView = UIView()
+    private let typingLabel = UILabel()
     fileprivate let typingCV:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -40,8 +40,8 @@ class ExerciseSettingsViewController: UIViewController {
         return cv
     }()
     
-    var wordBrain = WordBrain()
-    var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    private var wordBrain = WordBrain()
+    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
     private let tabBar = TabBar(color5: Colors.blue ?? .systemBlue)
     
@@ -53,26 +53,16 @@ class ExerciseSettingsViewController: UIViewController {
     }
     
     //MARK: - Helpers
-    
-    private func setColors(){
-        view.backgroundColor = Colors.cellLeft
-        testTypeView.backgroundColor = Colors.cellRight
-        testTypeLabel.textColor = Colors.black
-        testTypeSegmentedControl.tintColor = .black
-        pointView.backgroundColor = Colors.cellRight
-        typingView.backgroundColor = Colors.cellRight
-    }
-    
-    //MARK: - Layout
-    
+
     private func style(){
         title = "Exercise Settings"
+        view.backgroundColor = Colors.cellLeft
         
-        setColors()
         tabBar.delegate = self
         
         //Test Type
         testTypeView.setViewCornerRadius(8)
+        testTypeView.backgroundColor = Colors.cellRight
         
         testTypeStackView.axis = .vertical
         testTypeStackView.spacing = 8
@@ -80,7 +70,9 @@ class ExerciseSettingsViewController: UIViewController {
         
         testTypeLabel.text = "Test Type"
         testTypeLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
+        testTypeLabel.textColor = Colors.black
         
+        testTypeSegmentedControl.tintColor = .black
         testTypeSegmentedControl.replaceSegments(segments: ["English - Meaning", "Meaning - English"])
         testTypeSegmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black ?? .black,
                                                          .font: UIFont.systemFont(ofSize: textSize-3),], for: .normal)
@@ -90,6 +82,7 @@ class ExerciseSettingsViewController: UIViewController {
         
         //Point Effect
         pointView.setViewCornerRadius(8)
+        pointView.backgroundColor = Colors.cellRight
         
         pointLabel.text = "Point Effect"
         pointLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
@@ -99,6 +92,7 @@ class ExerciseSettingsViewController: UIViewController {
         
         //Typing
         typingView.setViewCornerRadius(8)
+        typingView.backgroundColor = Colors.cellRight
         
         typingLabel.text = "Typing"
         typingLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
@@ -167,17 +161,14 @@ class ExerciseSettingsViewController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc func testTypeChanged(_ sender: UISegmentedControl) {
+    @objc private func testTypeChanged(_ sender: UISegmentedControl) {
         UserDefault.selectedTestType.set(sender.selectedSegmentIndex)
     }
 }
 
-//MARK: - Collection View
+//MARK: - UICollectionViewDataSource
 
-extension ExerciseSettingsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 99, height: 99)
-    }
+extension ExerciseSettingsController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
@@ -198,6 +189,15 @@ extension ExerciseSettingsViewController: UICollectionViewDelegateFlowLayout, UI
         }
         return cell
     }
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+
+extension ExerciseSettingsController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 99, height: 99)
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView {
@@ -211,58 +211,27 @@ extension ExerciseSettingsViewController: UICollectionViewDelegateFlowLayout, UI
     }
 }
 
-//MARK: - ExerciseSettingsCell
-
-class ExerciseSettingsCell: UICollectionViewCell {
-    
-    lazy var imageView: UIImageView = {
-        var imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        contentView.backgroundColor = .clear
-        contentView.layer.borderWidth = 2
-        contentView.setViewCornerRadius(8)
-        
-        contentView.addSubview(imageView)
-        
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-        ])
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 //MARK: - TabBarDelegate
 
-extension ExerciseSettingsViewController: TabBarDelegate {
+extension ExerciseSettingsController: TabBarDelegate {
     
     func homePressed() {
         navigationController?.popToRootViewController(animated: true)
     }
     
     func dailyPressed() {
-        navigationController?.pushViewController(DailyViewController(), animated: true)
+        navigationController?.pushViewController(DailyController(), animated: true)
     }
     
     func awardPressed() {
-        navigationController?.pushViewController(AwardsViewController(), animated: true)
+        navigationController?.pushViewController(AwardsController(), animated: true)
     }
     
     func statisticPressed() {
-        navigationController?.pushViewController(StatisticViewController(), animated: true)
+        navigationController?.pushViewController(StatsController(), animated: true)
     }
     
     func settingPressed() {
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }

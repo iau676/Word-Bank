@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AwardsViewController: UIViewController {
+class AwardsController: UIViewController {
     
     private let levelLabel = UILabel()
     private let wordsLabel = UILabel()
@@ -82,14 +82,14 @@ class AwardsViewController: UIViewController {
     
     //MARK: - Helpers
     
-    func configureLabel(_ label: UILabel, _ text: String){
+    private func configureLabel(_ label: UILabel, _ text: String){
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
         label.textColor = Colors.black
     }
     
-    func configureButton(_ button: UIButton, _ text: String){
+    private func configureButton(_ button: UIButton, _ text: String){
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
@@ -98,7 +98,7 @@ class AwardsViewController: UIViewController {
         button.backgroundColor = Colors.blue
     }
     
-    func configureNavigationBar(){
+    private func configureNavigationBar(){
         let backButton: UIButton = UIButton()
         let image = UIImage();
         backButton.setImage(image, for: .normal)
@@ -133,7 +133,7 @@ class AwardsViewController: UIViewController {
 
 //MARK: - Collection View
 
-extension AwardsViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 130, height: 150)
@@ -206,7 +206,7 @@ extension AwardsViewController: UICollectionViewDelegateFlowLayout, UICollection
 
 //MARK: - Layout
 
-extension AwardsViewController {
+extension AwardsController {
     private func style(){
         view.backgroundColor = Colors.cellLeft
         
@@ -310,14 +310,14 @@ extension AwardsViewController {
 
 //MARK: - TabBarDelegate
 
-extension AwardsViewController: TabBarDelegate {
+extension AwardsController: TabBarDelegate {
     
     func homePressed() {
         navigationController?.popToRootViewController(animated: true)
     }
     
     func dailyPressed() {
-        navigationController?.pushViewController(DailyViewController(), animated: true)
+        navigationController?.pushViewController(DailyController(), animated: true)
     }
     
     func awardPressed() {
@@ -325,10 +325,10 @@ extension AwardsViewController: TabBarDelegate {
     }
     
     func statisticPressed() {
-        navigationController?.pushViewController(StatisticViewController(), animated: true)
+        navigationController?.pushViewController(StatsController(), animated: true)
     }
     
     func settingPressed() {
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }
