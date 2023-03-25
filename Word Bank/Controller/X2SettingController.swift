@@ -47,47 +47,30 @@ class X2SettingController: UIViewController {
     //MARK: - Selectors
     
     @objc private func saveButtonPressed(_ sender: UIButton) {
+    // subtract date from now
+    let dateComponents = Calendar.current.dateComponents([.day], from: UserDefault.x2Time.getValue() as! Date, to: Date())
+    
+    if let dayCount = dateComponents.day {
         
-        // subtract date from now
-        let dateComponents = Calendar.current.dateComponents([.day], from: UserDefault.x2Time.getValue() as! Date, to: Date())
-        
-        if let dayCount = dateComponents.day {
-            
-            var title = ""
-            var message = ""
-            
-            if dayCount >= 1 {
-                title = "You will earn 2x points for each correct answer between \(wordBrain.hours[userSelectedHour]) hours."
-                message = "You can change this feature only once a day."
-            } else {
-                title = "You can change this feature only once a day."
-                message = ""
-            }
-            
-            let alert = UIAlertController(title:  title , message: message, preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default) { (action) in
-                    if dayCount >= 1 {
-                        UserDefault.x2Time.set(Date())
-                        let lastEditLabel = Date().getFormattedDate(format: "dd/MM/yyyy, HH:mm")
-                        UserDefault.lastEditLabel.set(lastEditLabel)
-                        self.lastEditLabel.text = "Last changed on \(lastEditLabel)"
-                        UserDefault.userSelectedHour.set(self.userSelectedHour)
-                        self.delegate?.x2HourChanged(self.userSelectedHour)
-                        self.wordBrain.setNotification()
-                    }
-                    self.dismiss(animated: true, completion: nil)
-                }
-                let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                }
-                alert.addAction(action)
-            
+        let title = dayCount >= 1 ?
+        "You will earn 2x points for each correct answer between \(wordBrain.hours[userSelectedHour]) hours." :
+        "You can change this feature only once a day."
+        let message = dayCount >= 1 ? "You can change this feature only once a day." : ""
+    
+            showAlertWithCancel(title: title, message: message) { OK in
                 if dayCount >= 1 {
-                    alert.addAction(actionCancel)
+                    UserDefault.x2Time.set(Date())
+                    let lastEditLabel = Date().getFormattedDate(format: "dd/MM/yyyy, HH:mm")
+                    UserDefault.lastEditLabel.set(lastEditLabel)
+                    self.lastEditLabel.text = "Last changed on \(lastEditLabel)"
+                    UserDefault.userSelectedHour.set(self.userSelectedHour)
+                    self.delegate?.x2HourChanged(self.userSelectedHour)
+                    self.wordBrain.setNotification()
+                    self.updateInfoLabel()
                 }
-                self.present(alert, animated: true, completion: nil)
+                self.dismiss(animated: true)
             }
-        updateInfoLabel()
+        }
     }
     
     @objc private func notificationButtonPressed(_ sender: UIButton) {
@@ -164,12 +147,7 @@ class X2SettingController: UIViewController {
     
     private func configureLastEditLabel(){
         let lastEdit = UserDefault.lastEditLabel.getString()
-        
-        if lastEdit != "empty" {
-            lastEditLabel.text = "Last changed on \(lastEdit)"
-        } else {
-            lastEditLabel.text = ""
-        }
+        lastEditLabel.text = lastEdit.count > 5 ? "Last changed on \(lastEdit)" : ""
     }
     
     private func updateInfoLabel(){

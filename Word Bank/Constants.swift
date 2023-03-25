@@ -127,7 +127,6 @@ enum UserDefault {
     
     static var userInterfaceStyle        = ""
     static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
-    static var topBarHeight              = UserDefaultsManager(key: "topBarHeight")
     static var dailyImageIndex           = UserDefaultsManager(key: "dailyImageIndex")
     static var userGotDailyPrize         = UserDefaultsManager(key: "userGotDailyPrize")
     static var userGotWheelPrize         = UserDefaultsManager(key: "userGotWheelPrize")
@@ -165,7 +164,6 @@ enum UserDefault {
     static var exercisePoint             = UserDefaultsManager(key: "pointForMyWords")
     static var userAnswers               = UserDefaultsManager(key: "userAnswers")
     static var userWordCount             = UserDefaultsManager(key: "userWordCount")
-    static var hardWordsCount            = UserDefaultsManager(key: "hardWordsCount")
     static var spinWheelCount            = UserDefaultsManager(key: "spinWheelCount")
 
     static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")

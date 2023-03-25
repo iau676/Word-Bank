@@ -324,14 +324,6 @@ extension HomeController {
     }
 }
 
-//MARK: - Top Bar Height
-
-extension HomeController {
-    func getTopBarHeight(){
-        UserDefault.topBarHeight.set(self.topbarHeight)
-    }
-}
-
 //MARK: - First Launch
 
 extension HomeController {
@@ -348,16 +340,14 @@ extension HomeController {
             UserDefault.textSize.set(15)
             askNotificationPermission()
             showOnboarding()
-        }
-        
-        //version 2.0.2
-        if UserDefault.exerciseCount.getValue() == nil {
+            getKeyboardHeight()
+            wordBrain.setNotification()
+            UserDefault.setNotificationFirstTime.set(1)
+            
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5){
                 self.wordBrain.loadUser()
                 self.wordBrain.loadItemArray()
                 self.wordBrain.loadHardItemArray()
-                
-                UserDefault.hardWordsCount.set(self.wordBrain.hardItemArray.count)
                 
                 let wordCount = self.wordBrain.itemArray.count
                 if wordCount == 0 {
@@ -389,21 +379,6 @@ extension HomeController {
                     UserDefault.falseCount.set(self.wordBrain.user[0].falseCount)
                 }
             }
-        }
-        
-        //version 2.0.3
-        if UserDefault.keyboardHeight.getCGFloat() == 0 {
-            getKeyboardHeight()
-            //getTopBarHeight()
-        }
-        
-        if UserDefault.topBarHeight.getCGFloat() == 0 {
-            getTopBarHeight()
-        }
-        
-        if UserDefault.setNotificationFirstTime.getInt() == 0 {
-            wordBrain.setNotification()
-            UserDefault.setNotificationFirstTime.set(1)
         }
     }
     

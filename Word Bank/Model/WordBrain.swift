@@ -126,8 +126,6 @@ struct WordBrain {
         UserDefault.addedHardWordsCount.set(addedHardWordsCount)
         
         itemArray[index].addedHardWords = true
-        let lastCount = UserDefault.hardWordsCount.getInt()
-        UserDefault.hardWordsCount.set(lastCount+1)
     
         saveContext()
     }
@@ -136,7 +134,6 @@ struct WordBrain {
         self.hardItemArray.forEach { hardItem in
             if hardItem.uuid == item.uuid {
                 context.delete(hardItem)
-                UserDefault.hardWordsCount.set(UserDefault.hardWordsCount.getInt()-1)
             }
         }
         saveContext()
@@ -303,12 +300,10 @@ struct WordBrain {
                 }
                 context.delete(hardItemArray[questionNumber])
                 hardItemArray.remove(at: questionNumber)
-                UserDefault.hardWordsCount.set(UserDefault.hardWordsCount.getInt()-1)
             }
         } else {
             context.delete(hardItemArray[questionNumber])
             hardItemArray.remove(at: questionNumber)
-            UserDefault.hardWordsCount.set(UserDefault.hardWordsCount.getInt()-1)
         }
         saveContext()
         return hardItemArray.count < 2 ? true : false
@@ -408,10 +403,6 @@ extension WordBrain {
         } else {
             return false
         }
-    }
-    
-    func getTopBarHeight() -> CGFloat {
-        return UserDefault.topBarHeight.getCGFloat()
     }
     
     func getTruePointImage() -> UIImage? {

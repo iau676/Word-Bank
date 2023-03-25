@@ -9,11 +9,6 @@ import UIKit
 
 extension UIViewController {
     
-    var topbarHeight: CGFloat {
-            return (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
-                (self.navigationController?.navigationBar.frame.height ?? 0.0)
-    }
-    
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
@@ -31,6 +26,20 @@ extension UIViewController {
         }
         alert.addAction(actionOK)
         present(alert, animated: true)
+    }
+    
+    func showAlertWithCancel(title: String, message: String, completion: @escaping(Bool)-> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            alert.dismiss(animated: false, completion: nil)
+            completion(true)
+        }
+        let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        if message.count > 0 { alert.addAction(actionCancel) }
+        present(alert, animated: true, completion: nil)
     }
     
     func scheduledTimer(timeInterval: Double, _ selector : Selector) {
