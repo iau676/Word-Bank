@@ -40,19 +40,16 @@ final class HomeController: UIViewController {
     override func viewDidLoad() {
         style()
         layout()
+        setupFirstLaunch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         wordBrain.loadItemArray()
+        wordBrain.updateTabBarDailyImage()
         setupCircularProgress()
         setupButtonImages()
         setupNavigationBar()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setupFirstLaunch()
     }
     
     //MARK: - Selectors

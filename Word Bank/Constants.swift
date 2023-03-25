@@ -67,6 +67,9 @@ enum Sounds {
 }
 
 enum Images {
+    static let house                     = UIImage(systemName: "house.fill")
+    static let refresh                   = UIImage(systemName: "arrow.clockwise")
+    
     static let check                     = UIImage(named: "check")
     static let whiteCircle               = UIImage(named: "whiteCircle")
     static let wheel_prize_present       = UIImage(named: "wheel_prize_present")

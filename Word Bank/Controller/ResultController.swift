@@ -56,6 +56,7 @@ class ResultController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
         wordBrain.loadUser()
         
@@ -128,15 +129,11 @@ class ResultController: UIViewController {
         addedHardWordsButton.setTitleColor(Colors.yellow, for: .normal)
     }
     
-    private func updateRefreshButtonVisibility(){
-        if exerciseType == ExerciseType.hard && UserDefault.hardWordsCount.getInt() < 2 {
-            refreshButton.isHidden = true
-        } else {
-            refreshButton.isHidden = false
-        }
+    private func updateRefreshButtonVisibility() {
+        refreshButton.isHidden = exerciseType == ExerciseType.hard && wordBrain.hardItemArray.count < 2
     }
     
-    private func updateHardWordText(){
+    private func updateHardWordText() {
         //print how many words added to hard words
         if addedHardWordsCount > 0 {
             addedHardWordsButton.isHidden = false
@@ -163,7 +160,6 @@ class ResultController: UIViewController {
         } else {
             updateExerciseCount(exerciseType: ExerciseType.hard)
         }
-        wordBrain.updateTabBarDailyImage()
         wordBrain.user[0].level      = Int16(UserDefault.level.getInt())
         wordBrain.user[0].lastPoint  = Int32(UserDefault.lastPoint.getInt())
     }
@@ -368,12 +364,12 @@ extension ResultController {
         buttonStackView.distribution = .fill
         buttonStackView.spacing = 130
         
-        homeButton.setBackgroundImage(UIImage(systemName: "house.fill"), for: .normal)
+        homeButton.setBackgroundImage(Images.house, for: .normal)
         homeButton.tintColor = .white
         homeButton.addTarget(self, action: #selector(homeButtonPressed(_:)),
                              for: .primaryActionTriggered)
         
-        refreshButton.setBackgroundImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+        refreshButton.setBackgroundImage(Images.refresh, for: .normal)
         refreshButton.tintColor = .white
         refreshButton.addTarget(self, action: #selector(refreshButtonPressed(_:)),
                                 for: .primaryActionTriggered)
