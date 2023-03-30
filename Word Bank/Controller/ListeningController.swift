@@ -18,7 +18,7 @@ class ListeningController: UIViewController {
     private var player = Player()
     
     private var questionCounter = 0
-    private var totalQuestionNumber = 1
+    private var totalQuestionNumber = 10
     private var questionText = ""
     private var userAnswer = ""
     private var trueAnswer = ""
@@ -171,7 +171,7 @@ class ListeningController: UIViewController {
         view.addSubview(exerciseTopView)
         exerciseTopView.centerX(inView: view)
         exerciseTopView.setWidth(view.bounds.width)
-        exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor)
         
         view.addSubview(actionButton)
         actionButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,

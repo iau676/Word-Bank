@@ -249,7 +249,7 @@ struct WordBrain {
         
     mutating func getProgress() -> Float {
         questionCounter += 1
-        return Float(questionCounter) / Float(20.0)
+        return Float(questionCounter) / Float(10.0)
     }
 
     mutating func getAnswer(_ sender: Int, _ exerciseType: String) -> String {

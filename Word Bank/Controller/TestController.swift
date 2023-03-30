@@ -18,7 +18,7 @@ class TestController: UIViewController {
     private var player = Player()
     
     private var questionCounter = 0
-    private var totalQuestionNumber = 5
+    private var totalQuestionNumber = 10
     private var questionText = ""
     private var exercisePoint: Int { return wordBrain.getExercisePoint() }
     private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
@@ -132,7 +132,7 @@ class TestController: UIViewController {
         view.addSubview(exerciseTopView)
         exerciseTopView.centerX(inView: view)
         exerciseTopView.setWidth(view.bounds.width)
-        exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor)
         
         let answerStackView = UIStackView(arrangedSubviews: [answer1Button, answer2Button])
         answerStackView.distribution = .fillEqually

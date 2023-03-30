@@ -387,7 +387,7 @@ extension ResultController {
         view.addSubview(buttonStackView)
         
         confettiButton.centerX(inView: view)
-        confettiButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        confettiButton.anchor(top: view.safeAreaLayoutGuide.topAnchor)
         
         scoreLabel.centerX(inView: view)
         scoreLabel.anchor(top: confettiButton.bottomAnchor, paddingTop: 16)

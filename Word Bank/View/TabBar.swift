@@ -83,7 +83,7 @@ class TabBar: UIView {
         
         homeButton.configureForTabBar(image: Images.home,
                                       title: "Home", titleColor: color1,
-                                      imageWidth: 25, imageHeight: 25)
+                                      imageWidth: 26, imageHeight: 26)
         
         dailyButton.configureForTabBar(image: wordBrain.dailyImages[UserDefault.dailyImageIndex.getInt()],
                                        title: "Daily", titleColor: color2,

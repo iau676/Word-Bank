@@ -27,7 +27,7 @@ class WritingController: UIViewController {
     private var userAnswerArrayBool = [Bool]()
     
     private var questionCounter = 0
-    private var totalQuestionNumber = 5
+    private var totalQuestionNumber = 10
     private var questionText = ""
     private var answerText = ""
     
@@ -233,7 +233,7 @@ class WritingController: UIViewController {
         view.addSubview(exerciseTopView)
         exerciseTopView.centerX(inView: view)
         exerciseTopView.setWidth(view.bounds.width)
-        exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        exerciseTopView.anchor(top: view.safeAreaLayoutGuide.topAnchor)
         
         let stack = UIStackView(arrangedSubviews: [hintLabel, textField])
         stack.axis = .vertical
@@ -273,6 +273,7 @@ class WritingController: UIViewController {
         textField.delegate = self
         textField.isEnabled = !(selectedTyping == 0)
         textField.tintColor = (selectedTyping == 0) ? .clear : Colors.raven
+        if selectedTyping == 1 { textField.becomeFirstResponder() }
     }
     
     private func configureNavigationBar() {
