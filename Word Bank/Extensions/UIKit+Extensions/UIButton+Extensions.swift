@@ -115,7 +115,7 @@ extension UIButton {
         }
     }
     
-    func alignTextBelow(spacing: CGFloat = 1.0){
+    func alignTextBelow(spacing: CGFloat = 2.0){
         if let image = self.imageView?.image{
             let imageSize: CGSize = image.size
             self.titleEdgeInsets = UIEdgeInsets(top: spacing, left: -imageSize.width, bottom: -(imageSize.height), right: 0.0)
@@ -129,7 +129,7 @@ extension UIButton {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .white
         self.setTitle(title, for: .normal)
-        self.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: 11)
+        self.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
         self.setTitleColor(titleColor, for: .normal)
         self.setImageWithRenderingMode(image: image, width: imageWidth, height: imageHeight, color: titleColor)
         self.alignTextBelow()

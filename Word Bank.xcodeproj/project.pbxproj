@@ -90,6 +90,8 @@
 		708AFD8A288719F900E09AE1 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD89288719F900E09AE1 /* UIView+Extensions.swift */; };
 		708C0E1427A8894F00E9105F /* AddEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C0E1327A8894F00E9105F /* AddEditController.swift */; };
 		708C27D1275AC3F1005D2EC8 /* ResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708C27D0275AC3F0005D2EC8 /* ResultController.swift */; };
+		70925E382C6E8B04007CB4E9 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70925E372C6E8B04007CB4E9 /* MenuView.swift */; };
+		70925E3A2C6E8EB6007CB4E9 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70925E392C6E8EB6007CB4E9 /* Factories.swift */; };
 		7094D8C4290D25B5007E422F /* AwardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C3290D25B5007E422F /* AwardsController.swift */; };
 		7094D8C6290D694D007E422F /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C5290D694D007E422F /* BadgeView.swift */; };
 		709ED6A72899312800A34007 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709ED6A62899312800A34007 /* Constants.swift */; };
@@ -194,6 +196,8 @@
 		708AFD89288719F900E09AE1 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		708C0E1327A8894F00E9105F /* AddEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditController.swift; sourceTree = "<group>"; };
 		708C27D0275AC3F0005D2EC8 /* ResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultController.swift; sourceTree = "<group>"; };
+		70925E372C6E8B04007CB4E9 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		70925E392C6E8EB6007CB4E9 /* Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
 		7094D8C3290D25B5007E422F /* AwardsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardsController.swift; sourceTree = "<group>"; };
 		7094D8C5290D694D007E422F /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		709ED6A62899312800A34007 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -321,6 +325,7 @@
 				7011749A29B4C47200019D69 /* TabBar.swift */,
 				706CBAD527593993008B4773 /* WordCell.xib */,
 				706CBAB827592F8D008B4773 /* Main.storyboard */,
+				70925E372C6E8B04007CB4E9 /* MenuView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -411,6 +416,7 @@
 			children = (
 				70C7C23529522B12006E65A2 /* Files */,
 				709ED6A62899312800A34007 /* Constants.swift */,
+				70925E392C6E8EB6007CB4E9 /* Factories.swift */,
 				70C7541829523ACE00192DE6 /* Sounds */,
 				70C357E62888330600F3AD86 /* Videos */,
 				708AFD86288719BA00E09AE1 /* Extensions */,
@@ -634,6 +640,7 @@
 				705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,
 				7081AB0227CCD15700E2996A /* NewPointController.swift in Sources */,
+				70925E3A2C6E8EB6007CB4E9 /* Factories.swift in Sources */,
 				70134179291D57A1001967E1 /* CGPoint+Extensions.swift in Sources */,
 				7013417C291D57C1001967E1 /* Firework.swift in Sources */,
 				708C27D1275AC3F1005D2EC8 /* ResultController.swift in Sources */,
@@ -646,6 +653,7 @@
 				705D92EB28F89625001C4F38 /* SpinWheel.swift in Sources */,
 				7011749B29B4C47200019D69 /* TabBar.swift in Sources */,
 				705D92E628F89625001C4F38 /* GameScene.swift in Sources */,
+				70925E382C6E8B04007CB4E9 /* MenuView.swift in Sources */,
 				701581BD27DE80D800796ADE /* SettingsController.swift in Sources */,
 				705D92D528F895BA001C4F38 /* WheelController.swift in Sources */,
 				7094D8C6290D694D007E422F /* BadgeView.swift in Sources */,

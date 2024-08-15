@@ -16,7 +16,7 @@ final class HomeController: UIViewController {
     private let rightLineView = UIView()
     
     private let levelButton = UIButton()
-    private let exerciseButton = UIButton()
+    private let menuButton = UIButton()
     private let newWordsButton = UIButton()
     private let wordsButton = UIButton()
     private let hardWordsButton = UIButton()
@@ -25,8 +25,10 @@ final class HomeController: UIViewController {
     private let levelCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     private let newWordCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     private let wordsCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    private let exerciseCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    private let menuCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
     private let hardCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    
+    private let menuView = MenuView()
     
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
@@ -66,9 +68,10 @@ final class HomeController: UIViewController {
     }
     
     @objc private func exerciseButtonPressed() {
-        exerciseCP.bounce()
-        UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
-        checkWordCount()
+        menuCP.bounce()
+//        UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
+//        checkWordCount()
+        configureMenuView()
     }
     
     @objc private func newWordsButtonPressed() {
@@ -100,6 +103,25 @@ final class HomeController: UIViewController {
     
     //MARK: - Helpers
     
+    private func configureMenuView() {
+//        menuView.delegate = self
+        view.addSubview(menuView)
+        menuView.anchor(top: view.topAnchor, left: view.leftAnchor,
+                          right: view.rightAnchor, height: view.frame.height)
+        menuView.alpha = 0
+
+        UIView.animate(withDuration: 0.5, animations: {
+            self.menuView.alpha = 1
+        })
+    }
+    
+    private func dismissMenuView(completion: ((Bool) -> Void)? = nil) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.menuView.alpha = 0
+            self.menuView.removeFromSuperview()
+        }, completion: completion)
+    }
+    
     private func pushViewController(controller: UIViewController) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
             self.navigationController?.pushViewController(controller, animated: true)
@@ -107,7 +129,7 @@ final class HomeController: UIViewController {
     }
  
     private func setupButtonImages(){
-        exerciseButton.setImage(image: Images.wheelicon, width: 35, height: 35)
+        menuButton.setImage(image: Images.menu, width: 35, height: 35)
         newWordsButton.setImage(image: Images.new, width: 35, height: 35)
         wordsButton.setImage(image: Images.bank, width: 40, height: 40)
         hardWordsButton.setImage(image: Images.hard, width: 35, height: 35)
@@ -135,13 +157,13 @@ final class HomeController: UIViewController {
         newWordCP.backgroundColor = Colors.greenLight
         wordsCP.backgroundColor = Colors.blueLight
         hardCP.backgroundColor =  Colors.yellowLight
-        exerciseCP.backgroundColor = Colors.purpleLight
+        menuCP.backgroundColor = Colors.purpleLight
         
         levelCP.progressColor = Colors.pink ?? .systemPink
         newWordCP.trackColor = Colors.green ?? .green
         wordsCP.trackColor = Colors.blue ?? .blue
         hardCP.trackColor = Colors.yellow ?? .yellow
-        exerciseCP.trackColor = Colors.purple ?? .purple
+        menuCP.trackColor = Colors.purple ?? .purple
         
         let goLevelInfo = UITapGestureRecognizer(target: self, action:  #selector(levelButtonPressed))
         levelCP.addGestureRecognizer(goLevelInfo)
@@ -153,7 +175,7 @@ final class HomeController: UIViewController {
         wordsCP.addGestureRecognizer(goWordsCP)
         
         let goExerciseCP = UITapGestureRecognizer(target: self, action:  #selector(exerciseButtonPressed))
-        exerciseCP.addGestureRecognizer(goExerciseCP)
+        menuCP.addGestureRecognizer(goExerciseCP)
         
         let goHardCP = UITapGestureRecognizer(target: self, action:  #selector(hardWordsButtonPressed))
         hardCP.addGestureRecognizer(goHardCP)
@@ -189,7 +211,7 @@ extension HomeController {
         
         levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
         levelButton.addTarget(self, action: #selector(levelButtonPressed), for: .primaryActionTriggered)
-        exerciseButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)
+        menuButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)
         newWordsButton.addTarget(self, action: #selector(newWordsButtonPressed), for: .primaryActionTriggered)
         wordsButton.addTarget(self, action: #selector(wordsButtonPressed), for: .primaryActionTriggered)
         hardWordsButton.addTarget(self, action: #selector(hardWordsButtonPressed), for: .primaryActionTriggered)
@@ -203,13 +225,13 @@ extension HomeController {
         view.addSubview(rightLineView)
         
         view.addSubview(levelCP)
-        view.addSubview(exerciseCP)
+        view.addSubview(menuCP)
         view.addSubview(newWordCP)
         view.addSubview(wordsCP)
         view.addSubview(hardCP)
         
         view.addSubview(levelButton)
-        view.addSubview(exerciseButton)
+        view.addSubview(menuButton)
         view.addSubview(newWordsButton)
         view.addSubview(wordsButton)
         view.addSubview(hardWordsButton)
@@ -218,22 +240,22 @@ extension HomeController {
         levelCP.center = CGPoint(x: view.center.x, y: view.center.y-121)
         newWordCP.center = CGPoint(x: view.center.x, y: view.center.y)
         wordsCP.center = CGPoint(x: view.center.x, y: view.center.y+121)
-        exerciseCP.center = CGPoint(x: view.center.x+121, y: view.center.y)
+        menuCP.center = CGPoint(x: view.center.x+121, y: view.center.y)
         hardCP.center = CGPoint(x: view.center.x-121, y: view.center.y)
         
         leftLineView.anchor(top: view.topAnchor, left: hardCP.centerXAnchor)
         centerLineView.anchor(top: view.topAnchor, left: levelCP.centerXAnchor)
-        rightLineView.anchor(top: view.topAnchor, left: exerciseCP.centerXAnchor)
+        rightLineView.anchor(top: view.topAnchor, left: menuCP.centerXAnchor)
         
         leftLineView.setDimensions(width: 1, height: hardCP.center.y-40)
         centerLineView.setDimensions(width: 1, height: wordsCP.center.y-40)
-        rightLineView.setDimensions(width: 1, height: exerciseCP.center.y-40)
+        rightLineView.setDimensions(width: 1, height: menuCP.center.y-40)
         
         levelButton.centerX(inView: levelCP)
         levelButton.centerY(inView: levelCP)
         
-        exerciseButton.centerX(inView: exerciseCP)
-        exerciseButton.centerY(inView: exerciseCP)
+        menuButton.centerX(inView: menuCP)
+        menuButton.centerY(inView: menuCP)
         
         newWordsButton.centerX(inView: newWordCP)
         newWordsButton.centerY(inView: newWordCP)
