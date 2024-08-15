@@ -13,7 +13,6 @@
 		700BC57F2892FE9E00903C04 /* WordBrain+calculateLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */; };
 		700BC5832893069A00903C04 /* WordBrain+LevelPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */; };
 		700C439927A856FD00D94497 /* LevelInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700C439827A856FD00D94497 /* LevelInfoController.swift */; };
-		7011749B29B4C47200019D69 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011749A29B4C47200019D69 /* TabBar.swift */; };
 		7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */; };
 		7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FF289571A100A42314 /* UIColor+Extensions.swift */; };
 		7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */; };
@@ -117,7 +116,6 @@
 		700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateLevel.swift"; sourceTree = "<group>"; };
 		700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+LevelPoints.swift"; sourceTree = "<group>"; };
 		700C439827A856FD00D94497 /* LevelInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelInfoController.swift; sourceTree = "<group>"; };
-		7011749A29B4C47200019D69 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContextualAction+Extensions.swift"; sourceTree = "<group>"; };
 		7011E3FF289571A100A42314 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateExercisePoint.swift"; sourceTree = "<group>"; };
@@ -322,7 +320,6 @@
 				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
 				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
 				70509AA729C9CCDE00372655 /* BubbleView.swift */,
-				7011749A29B4C47200019D69 /* TabBar.swift */,
 				706CBAD527593993008B4773 /* WordCell.xib */,
 				706CBAB827592F8D008B4773 /* Main.storyboard */,
 				70925E372C6E8B04007CB4E9 /* MenuView.swift */,
@@ -651,7 +648,6 @@
 				70509AAC29CA14D700372655 /* ListeningController.swift in Sources */,
 				7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */,
 				705D92EB28F89625001C4F38 /* SpinWheel.swift in Sources */,
-				7011749B29B4C47200019D69 /* TabBar.swift in Sources */,
 				705D92E628F89625001C4F38 /* GameScene.swift in Sources */,
 				70925E382C6E8B04007CB4E9 /* MenuView.swift in Sources */,
 				701581BD27DE80D800796ADE /* SettingsController.swift in Sources */,

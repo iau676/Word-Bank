@@ -41,8 +41,6 @@ class DailyController: UIViewController {
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
     private var todayDate: String { return wordBrain.getTodayDate() }
-
-    private let tabBar = TabBar(color2: Colors.blue ?? .systemBlue)
     
     private lazy var testExerciseCount: Int = {
         let int = wordBrain.getExerciseCountToday(for: ExerciseFormat.test)
@@ -64,7 +62,6 @@ class DailyController: UIViewController {
         wordBrain.loadExerciseArray()
         wordBrain.findExercisesCompletedToday()
 
-        configureNavigationBar()
         style()
         updateButtons()
         
@@ -171,11 +168,6 @@ class DailyController: UIViewController {
         button.setButtonCornerRadius(8)
     }
     
-    private func configureNavigationBar(){
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem()
-        title = "Daily"
-    }
-    
     private func showDailyTask(){
         taskOneButton.isHidden = false
         taskOneButtonBlueLayer.isHidden = false
@@ -238,9 +230,8 @@ class DailyController: UIViewController {
 extension DailyController {
     
     private func style(){
+        title = "Daily"
         view.backgroundColor = Colors.cellLeft
-        
-        tabBar.delegate = self
         
         secondView.backgroundColor = Colors.cellRight
         secondView.setViewCornerRadius(10)
@@ -400,12 +391,6 @@ extension DailyController {
         whiteCircleButton.centerX(inView: wheelButton)
         whiteCircleButton.centerY(inView: wheelButton)
         whiteCircleButton.setDimensions(width: 18, height: 18)
-
-        //tab bar
-        view.addSubview(tabBar)
-        tabBar.setDimensions(width: view.bounds.width, height: 66)
-        tabBar.anchor(bottom: view.bottomAnchor)
-        tabBar.updateDailyButtonTitleColor()
     }
 }
 
@@ -431,30 +416,5 @@ extension DailyController {
     @objc private func respondToSwipeRight(gesture: UISwipeGestureRecognizer) {
         showDailyTask()
         hide2xEvent()
-    }
-}
-
-//MARK: - TabBarDelegate
-
-extension DailyController: TabBarDelegate {
-    
-    func homePressed() {
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func dailyPressed() {
-        
-    }
-    
-    func awardPressed() {
-        navigationController?.pushViewController(AwardsController(), animated: true)
-    }
-    
-    func statisticPressed() {
-        navigationController?.pushViewController(StatsController(), animated: true)
-    }
-    
-    func settingPressed() {
-        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }

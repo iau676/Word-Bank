@@ -43,8 +43,6 @@ class ExerciseSettingsController: UIViewController {
     private var wordBrain = WordBrain()
     private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
-    private let tabBar = TabBar(color5: Colors.blue ?? .systemBlue)
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -57,8 +55,6 @@ class ExerciseSettingsController: UIViewController {
     private func style(){
         title = "Exercise Settings"
         view.backgroundColor = Colors.cellLeft
-        
-        tabBar.delegate = self
         
         //Test Type
         testTypeView.setViewCornerRadius(8)
@@ -153,10 +149,6 @@ class ExerciseSettingsController: UIViewController {
                         bottom: typingView.bottomAnchor, right: typingView.rightAnchor,
                         paddingTop: 8, paddingLeft: 16,
                         paddingBottom: 16, paddingRight: 16)
-        
-        view.addSubview(tabBar)
-        tabBar.setDimensions(width: view.bounds.width, height: 66)
-        tabBar.anchor(bottom: view.bottomAnchor)
     }
     
     //MARK: - Selectors
@@ -208,30 +200,5 @@ extension ExerciseSettingsController: UICollectionViewDelegateFlowLayout {
         default: break
         }
         collectionView.reloadData()
-    }
-}
-
-//MARK: - TabBarDelegate
-
-extension ExerciseSettingsController: TabBarDelegate {
-    
-    func homePressed() {
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func dailyPressed() {
-        navigationController?.pushViewController(DailyController(), animated: true)
-    }
-    
-    func awardPressed() {
-        navigationController?.pushViewController(AwardsController(), animated: true)
-    }
-    
-    func statisticPressed() {
-        navigationController?.pushViewController(StatsController(), animated: true)
-    }
-    
-    func settingPressed() {
-        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }

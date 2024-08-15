@@ -66,15 +66,12 @@ class AwardsController: UIViewController {
         return cv
     }()
     
-    private let tabBar = TabBar(color3: Colors.blue ?? .systemBlue)
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         wordBrain.loadItemArray()
         wordBrain.loadExerciseArray()
-        configureNavigationBar()
         style()
         layout()
         updateScoreLabels()
@@ -96,19 +93,6 @@ class AwardsController: UIViewController {
         button.setButtonCornerRadius(8)
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         button.backgroundColor = Colors.blue
-    }
-    
-    private func configureNavigationBar(){
-        let backButton: UIButton = UIButton()
-        let image = UIImage();
-        backButton.setImage(image, for: .normal)
-        backButton.setTitle("", for: .normal);
-        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
-        backButton.setTitleColor(.black, for: .normal)
-        backButton.sizeToFit()
-        let barButton = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = barButton
-        title = "Awards"
     }
     
     private func updateScoreLabels(){
@@ -208,9 +192,8 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
 
 extension AwardsController {
     private func style(){
+        title = "Awards"
         view.backgroundColor = Colors.cellLeft
-        
-        tabBar.delegate = self
         
         configureLabel(levelLabel, "LEVEL")
         configureLabel(wordsLabel, "WORDS")
@@ -300,35 +283,5 @@ extension AwardsController {
         
         exerciseScoreLabel.centerY(inView: exercisesLabel)
         exerciseScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
-    
-        
-        view.addSubview(tabBar)
-        tabBar.setDimensions(width: view.bounds.width, height: 66)
-        tabBar.anchor(bottom: view.bottomAnchor)
-    }
-}
-
-//MARK: - TabBarDelegate
-
-extension AwardsController: TabBarDelegate {
-    
-    func homePressed() {
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func dailyPressed() {
-        navigationController?.pushViewController(DailyController(), animated: true)
-    }
-    
-    func awardPressed() {
-        
-    }
-    
-    func statisticPressed() {
-        navigationController?.pushViewController(StatsController(), animated: true)
-    }
-    
-    func settingPressed() {
-        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }

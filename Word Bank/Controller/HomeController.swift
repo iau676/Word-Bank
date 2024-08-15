@@ -35,8 +35,6 @@ final class HomeController: UIViewController {
     private var goAddPage = 0
     private var progressValue:Float = 0.0
     
-    private let tabBar = TabBar(color1: Colors.blue ?? .systemBlue)
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -104,7 +102,7 @@ final class HomeController: UIViewController {
     //MARK: - Helpers
     
     private func configureMenuView() {
-//        menuView.delegate = self
+        menuView.delegate = self
         view.addSubview(menuView)
         menuView.anchor(top: view.topAnchor, left: view.leftAnchor,
                           right: view.rightAnchor, height: view.frame.height)
@@ -134,7 +132,6 @@ final class HomeController: UIViewController {
         wordsButton.setImage(image: Images.bank, width: 40, height: 40)
         hardWordsButton.setImage(image: Images.hard, width: 35, height: 35)
         dropButton.setImage(image: UIImage(), width: 7, height: 7)
-        tabBar.updateDailyButton()
     }
     
     private func setupNavigationBar(){
@@ -215,8 +212,6 @@ extension HomeController {
         newWordsButton.addTarget(self, action: #selector(newWordsButtonPressed), for: .primaryActionTriggered)
         wordsButton.addTarget(self, action: #selector(wordsButtonPressed), for: .primaryActionTriggered)
         hardWordsButton.addTarget(self, action: #selector(hardWordsButtonPressed), for: .primaryActionTriggered)
-        
-        tabBar.delegate = self
     }
     
     func layout() {
@@ -268,10 +263,6 @@ extension HomeController {
         
         dropButton.centerX(inView: newWordCP)
         dropButton.centerY(inView: newWordCP, constant: 16)
-        
-        view.addSubview(tabBar)
-        tabBar.setDimensions(width: view.bounds.width, height: 66)
-        tabBar.anchor(bottom: view.bottomAnchor)
     }
 }
 
@@ -291,31 +282,6 @@ extension HomeController: LevelInfoControllerDelegate {
                 self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 20)
             }
         }
-    }
-}
-
-//MARK: - TabBarDelegate
-
-extension HomeController: TabBarDelegate {
-    
-    func homePressed() {
-        //navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func dailyPressed() {
-        navigationController?.pushViewController(DailyController(), animated: true)
-    }
-    
-    func awardPressed() {
-        navigationController?.pushViewController(AwardsController(), animated: true)
-    }
-    
-    func statisticPressed() {
-        navigationController?.pushViewController(StatsController(), animated: true)
-    }
-    
-    func settingPressed() {
-        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }
 
@@ -426,4 +392,28 @@ extension HomeController {
         }
         UserDefault.userWordCount.set(defaultWordsCount)
      }
+}
+
+//MARK: - MenuViewDelegate
+
+extension HomeController: MenuViewDelegate {
+    func cancel() {
+        dismissMenuView()
+    }
+    
+    func daily() {
+        navigationController?.pushViewController(DailyController(), animated: true)
+    }
+    
+    func awards() {
+        navigationController?.pushViewController(AwardsController(), animated: true)
+    }
+    
+    func stats() {
+        navigationController?.pushViewController(StatsController(), animated: true)
+    }
+    
+    func settings() {
+        navigationController?.pushViewController(SettingsController(), animated: true)
+    }
 }

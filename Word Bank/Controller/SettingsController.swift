@@ -46,8 +46,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private let textSizeArray = [9, 11, 13, 15, 17, 19, 21]
     private let soundSpeedArray = [0.3, 0.5, 0.7]
     
-    private let tabBar = TabBar(color5: Colors.blue ?? .systemBlue)
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -55,7 +53,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         updateTextSize()
         setupCornerRadius()
         setupButton(soundSpeedButton)
-        configureNavigationBar()
         style()
         setupDefaults()
         layout()
@@ -130,19 +127,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         
         textSegmentedControl.tintColor = .black
         soundSpeedSegmentedControl.tintColor = .black
-    }
-        
-    private func configureNavigationBar(){
-        let backButton: UIButton = UIButton()
-        let image = UIImage();
-        backButton.setImage(image, for: .normal)
-        backButton.setTitle("", for: .normal);
-        backButton.titleLabel?.font =  UIFont.systemFont(ofSize: 17)
-        backButton.setTitleColor(.black, for: .normal)
-        backButton.sizeToFit()
-        let barButton = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = barButton
-        title = "Settings"
     }
 
     private func setupButton(_ button: UIButton){
@@ -232,8 +216,7 @@ extension SettingsController: X2SettingControllerDelegate {
 extension SettingsController {
     
     private func style() {
-        
-        tabBar.delegate = self
+        title = "Settings"
         
         xView.setViewCornerRadius(8)
         let xViewGesture = UITapGestureRecognizer(target: self, action:  #selector(self.xViewPressed))
@@ -297,7 +280,6 @@ extension SettingsController {
     }
     
     private func layout() {
-
         xView.addSubview(x2Label)
         xView.addSubview(x2HoursLabel)
         
@@ -392,34 +374,5 @@ extension SettingsController {
         textSizeView.setHeight(90)
         exerciseSettingsButton.setHeight(40)
         exerciseSettingsButton.moveImageRight()
-        
-        view.addSubview(tabBar)
-        tabBar.setDimensions(width: view.bounds.width, height: 66)
-        tabBar.anchor(bottom: view.bottomAnchor)
-    }
-}
-
-//MARK: - TabBarDelegate
-
-extension SettingsController: TabBarDelegate {
-    
-    func homePressed() {
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func dailyPressed() {
-        navigationController?.pushViewController(DailyController(), animated: true)
-    }
-    
-    func awardPressed() {
-        navigationController?.pushViewController(AwardsController(), animated: true)
-    }
-    
-    func statisticPressed() {
-        navigationController?.pushViewController(StatsController(), animated: true)
-    }
-    
-    func settingPressed() {
-        
     }
 }

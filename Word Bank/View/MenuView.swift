@@ -7,7 +7,17 @@
 
 import UIKit
 
+protocol MenuViewDelegate {
+    func cancel()
+    func daily()
+    func awards()
+    func stats()
+    func settings()
+}
+
 class MenuView: UIView {
+    
+    var delegate: MenuViewDelegate?
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
@@ -41,7 +51,7 @@ class MenuView: UIView {
     
     private lazy var settingsButton: UIButton = {
         let button = makeMenuButton(title: "Settings", image: Images.settings)
-        button.addTarget(self, action: #selector(dailyButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(settingsButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -73,22 +83,22 @@ class MenuView: UIView {
     }
     
     @objc private func closeButtonPressed() {
-        print("DEBUG::closeButtonPressed")
+        delegate?.cancel()
     }
     
     @objc private func dailyButtonPressed() {
-        print("DEBUG::dailyButtonPressed")
+        delegate?.daily()
     }
     
     @objc private func awardsButtonPressed() {
-        print("DEBUG::awardsButtonPressed")
+        delegate?.awards()
     }
     
     @objc private func statsButtonPressed() {
-        print("DEBUG::statsButtonPressed")
+        delegate?.stats()
     }
     
     @objc private func settingsButtonPressed() {
-        print("DEBUG::settingsButtonPressed")
+        delegate?.settings()
     }
 }

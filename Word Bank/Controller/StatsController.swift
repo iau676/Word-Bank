@@ -52,8 +52,6 @@ class StatsController: UIViewController, ChartViewDelegate {
         case line
     }
     
-    private let tabBar = TabBar(color4: Colors.blue ?? .systemBlue)
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -63,9 +61,7 @@ class StatsController: UIViewController, ChartViewDelegate {
         style()
         layout()
         
-        configureNavigationBar()
         assignDatesToDays()
-        
         getLastSevenDays()
         
         prepareData { (success) -> Void in if success { setCharts() } }
@@ -157,11 +153,6 @@ class StatsController: UIViewController, ChartViewDelegate {
         for i in stride(from: 6, to: -1, by: -1) {
             dayArray.append(Calendar.current.date(byAdding: .day, value: -i, to: Date())?.getFormattedDate(format: "EEE") ?? "")
         }
-    }
-    
-    private func configureNavigationBar(){
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem()
-        title = "Statistic"
     }
     
     private func getAttributedText(For: Chart) -> NSMutableAttributedString {
@@ -269,9 +260,8 @@ extension StatsController {
 extension StatsController {
     
     private func style() {
+        title = "Statistic"
         view.backgroundColor = Colors.cellLeft
-        
-        tabBar.delegate = self
         
         scrollView.backgroundColor = Colors.cellLeft
         
@@ -338,34 +328,5 @@ extension StatsController {
           pieView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
           pieView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
         ])
-        
-        view.addSubview(tabBar)
-        tabBar.setDimensions(width: view.bounds.width, height: 66)
-        tabBar.anchor(bottom: view.bottomAnchor)
-    }
-}
-
-//MARK: - TabBarDelegate
-
-extension StatsController: TabBarDelegate {
-    
-    func homePressed() {
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func dailyPressed() {
-        navigationController?.pushViewController(DailyController(), animated: true)
-    }
-    
-    func awardPressed() {
-        navigationController?.pushViewController(AwardsController(), animated: true)
-    }
-    
-    func statisticPressed() {
-        
-    }
-    
-    func settingPressed() {
-        navigationController?.pushViewController(SettingsController(), animated: true)
     }
 }
