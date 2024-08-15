@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MenuViewDelegate {
-    func cancel()
+    func close()
     func daily()
     func awards()
     func stats()
@@ -83,22 +83,26 @@ class MenuView: UIView {
     }
     
     @objc private func closeButtonPressed() {
-        delegate?.cancel()
+        delegate?.close()
     }
     
     @objc private func dailyButtonPressed() {
+        dailyButton.bounce()
         delegate?.daily()
     }
     
     @objc private func awardsButtonPressed() {
+        awardsButton.bounce()
         delegate?.awards()
     }
     
     @objc private func statsButtonPressed() {
+        statsButton.bounce()
         delegate?.stats()
     }
     
     @objc private func settingsButtonPressed() {
+        settingsButton.bounce()
         delegate?.settings()
     }
 }

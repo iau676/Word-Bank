@@ -46,6 +46,12 @@ extension UIViewController {
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: selector, userInfo: nil, repeats: false)
     }
     
+    func pushViewControllerWithDeadline(controller: UIViewController, deadline: CGFloat = 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + deadline) {
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(WordsController.dismissKeyboard))
         tap.cancelsTouchesInView = false

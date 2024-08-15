@@ -80,20 +80,20 @@ final class HomeController: UIViewController {
         viewDidLayoutSubviews()
         let controller = WordsController(exerciseType: ExerciseType.normal)
         controller.goAddPage = 1
-        pushViewController(controller: controller)
+        pushViewControllerWithDeadline(controller: controller)
     }
     
     @objc private func wordsButtonPressed() {
         wordsCP.bounce()
         goAddPage = 0
         let controller = WordsController(exerciseType: ExerciseType.normal)
-        pushViewController(controller: controller)
+        pushViewControllerWithDeadline(controller: controller)
     }
     
     @objc private func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
         hardCP.bounce()
         let controller = WordsController(exerciseType: ExerciseType.hard)
-        pushViewController(controller: controller)
+        pushViewControllerWithDeadline(controller: controller)
     }
     
     //MARK: - Helpers
@@ -115,12 +115,6 @@ final class HomeController: UIViewController {
             self.menuView.alpha = 0
             self.menuView.removeFromSuperview()
         }, completion: completion)
-    }
-    
-    private func pushViewController(controller: UIViewController) {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
     }
  
     private func setupButtonImages(){
@@ -173,21 +167,6 @@ final class HomeController: UIViewController {
         
         let goHardCP = UITapGestureRecognizer(target: self, action:  #selector(hardWordsButtonPressed))
         hardCP.addGestureRecognizer(goHardCP)
-    }
-
-    func checkWordCount(){
-        let wordCount = itemArray.count
-        
-        if wordCount < 2 {
-            showAlert(title: "Minimum two words required", message: "") { _ in
-                let controller = WordsController(exerciseType: ExerciseType.normal)
-                self.navigationController?.pushViewController(controller, animated: true)
-            }
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-                self.navigationController?.pushViewController(WheelController(), animated: true)
-            }
-        }
     }
 }
 
@@ -361,23 +340,23 @@ extension HomeController {
 //MARK: - MenuViewDelegate
 
 extension HomeController: MenuViewDelegate {
-    func cancel() {
+    func close() {
         dismissMenuView()
     }
     
     func daily() {
-        navigationController?.pushViewController(DailyController(), animated: true)
+        pushViewControllerWithDeadline(controller: DailyController())
     }
     
     func awards() {
-        navigationController?.pushViewController(AwardsController(), animated: true)
+        pushViewControllerWithDeadline(controller: AwardsController())
     }
     
     func stats() {
-        navigationController?.pushViewController(StatsController(), animated: true)
+        pushViewControllerWithDeadline(controller: StatsController())
     }
     
     func settings() {
-        navigationController?.pushViewController(SettingsController(), animated: true)
+        pushViewControllerWithDeadline(controller: SettingsController())
     }
 }
