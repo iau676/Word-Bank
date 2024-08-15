@@ -21,12 +21,10 @@ class OnboardingContainerViewController: UIViewController {
         let page1 = OnboardingViewController(imageName: "newV", titleText: "Add words and create your own dictionary.", backgroundColor: Colors.green)
         let page2 = OnboardingViewController(imageName: "bankV", titleText: "Make exercise with your words and track your progress.", backgroundColor: Colors.blue)
         let page3 = OnboardingViewController(imageName: "hardV", titleText: "When you answer a word incorrectly in the exercises, that word is added to Hard Words. In order to delete that word from here, you should answer correctly 5 times.", backgroundColor: Colors.yellow)
-        let page4 = OnboardingViewController(imageName: "x2V", titleText: "Earn 2x points for each correct answer between your selected hours.", backgroundColor: Colors.pink)
 
         pages.append(page1)
         pages.append(page2)
         pages.append(page3)
-        pages.append(page4)
         
         currentVC = pages.first!
         

@@ -26,15 +26,6 @@ class ExerciseTopView: UIView {
         return button
     }()
     
-    private lazy var xButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.tintColor = Colors.f6f6f6
-        button.setTitle("2x", for: .normal)
-        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 17)
-        button.changeBackgroundColor(to: Colors.pink)
-        return button
-    }()
-    
     let progressBar: UIProgressView = {
        let progress = UIProgressView()
         progress.tintColor = Colors.f6f6f6
@@ -70,11 +61,6 @@ class ExerciseTopView: UIView {
         userPointButton.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
                                paddingLeft: 32, paddingRight: 32)
         
-        addSubview(xButton)
-        xButton.setDimensions(width: 32, height: 32)
-        xButton.setButtonCornerRadius(32 / 2)
-        xButton.centerY(inView: userPointButton, leftAnchor: userPointButton.leftAnchor)
-        
         addSubview(progressBar)
         progressBar.anchor(top: userPointButton.bottomAnchor, left: leftAnchor, right: rightAnchor,
                            paddingTop: 8, paddingLeft: 40, paddingRight: 40)
@@ -85,8 +71,6 @@ class ExerciseTopView: UIView {
                                paddingTop: 16, paddingRight: 32)
         
         setHeight(24+16+40)
-
-        xButton.isHidden = !(UserDefault.currentHour.getInt() == UserDefault.userSelectedHour.getInt())
     }
 
     required init?(coder aDecoder: NSCoder) {

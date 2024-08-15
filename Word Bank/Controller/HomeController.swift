@@ -318,19 +318,11 @@ extension HomeController {
     
     func setupFirstLaunch() {
         //version 2.0.1
-        if UserDefault.x2Time.getValue() == nil {
-            let calendar = Calendar.current
-            let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date())!
-            UserDefault.x2Time.set(twoDaysAgo)
-            UserDefault.userSelectedHour.set(23)
-            UserDefault.lastEditLabel.set("empty")
+        if UserDefault.exercisePoint.getValue() == nil {
             UserDefault.exercisePoint.set("10")
             UserDefault.textSize.set(15)
-            askNotificationPermission()
             showOnboarding()
             getKeyboardHeight()
-            wordBrain.setNotification()
-            UserDefault.setNotificationFirstTime.set(1)
             
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5){
                 self.wordBrain.loadUser()
@@ -366,15 +358,6 @@ extension HomeController {
                     UserDefault.trueCount.set(self.wordBrain.user[0].trueCount)
                     UserDefault.falseCount.set(self.wordBrain.user[0].falseCount)
                 }
-            }
-        }
-    }
-    
-    func askNotificationPermission(){
-        wordBrain.notificationCenter.requestAuthorization(options: [.alert, .sound]) {
-            (permissionGranted, error) in
-            if(!permissionGranted){
-                print("Permission Denied")
             }
         }
     }

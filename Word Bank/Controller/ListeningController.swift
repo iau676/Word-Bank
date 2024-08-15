@@ -29,7 +29,7 @@ class ListeningController: UIViewController {
     private var userAnswerArrayBool = [Bool]()
     
     private var isAnswerSelected = false
-    private var exercisePoint: Int { return wordBrain.getExercisePoint() }
+    private let exercisePoint: Int = 10
     
     private lazy var exerciseTopView = ExerciseTopView(exerciseFormat: exerciseFormat)
     private var bubbleView = BubbleView()

@@ -11,7 +11,6 @@ import CoreData
 
 class SettingsController: UIViewController, UITextFieldDelegate {
         
-    private let xView = UIView()
     private let appSoundView = UIView()
     private let wordSoundView = UIView()
     private let soundSpeedView = UIView()
@@ -20,8 +19,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private let soundSpeedStackView = UIStackView()
     private let textSizeStackView = UIStackView()
     
-    private let x2Label = UILabel()
-    private let x2HoursLabel = UILabel()
     private let appSoundLabel = UILabel()
     private let wordSoundLabel = UILabel()
     private let soundSpeedLabel = UILabel()
@@ -33,7 +30,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private let soundSpeedSegmentedControl = UISegmentedControl()
     private let textSegmentedControl = UISegmentedControl()
     
-    private let xButton = UIButton()
     private let soundSpeedButton = UIButton()
     private let exerciseSettingsButton = UIButton()
     
@@ -59,14 +55,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - Selectors
-    
-    @objc private func xViewPressed(gesture: UISwipeGestureRecognizer) {
-        let vc = X2SettingController()
-        vc.modalPresentationStyle = .popover
-        vc.popoverPresentationController?.sourceView = UIView()
-        vc.delegate = self
-        present(vc, animated: true)
-    }
 
     @objc private func wordSoundChanged(_ sender: UISwitch) {
         if sender.isOn {
@@ -107,20 +95,16 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     
     private func configureColor() {
         view.backgroundColor = Colors.cellLeft
-        xView.backgroundColor = Colors.cellRight
         appSoundView.backgroundColor = Colors.cellRight
         wordSoundView.backgroundColor = Colors.cellRight
         soundSpeedView.backgroundColor = Colors.cellRight
         textSizeView.backgroundColor = Colors.cellRight
         exerciseSettingsButton.backgroundColor = Colors.cellRight
         
-        x2Label.textColor = Colors.black
-        x2HoursLabel.textColor = Colors.black
         appSoundLabel.textColor = Colors.black
         wordSoundLabel.textColor = Colors.black
         soundSpeedLabel.textColor = Colors.black
         textSizeLabel.textColor = Colors.black
-        x2HoursLabel.textColor = .darkGray
         exerciseSettingsButton.setTitleColor(Colors.black, for: .normal)
         
         soundSpeedButton.changeBackgroundColor(to: .clear)
@@ -157,8 +141,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         
         appSoundSwitch.isOn = (UserDefault.playAppSound.getInt() == 1) ? false : true
         
-        x2HoursLabel.text = wordBrain.hours[UserDefault.userSelectedHour.getInt()]
-        
         soundSpeed = UserDefault.soundSpeed.getDouble()
         guard let soundSpeedIndex = soundSpeedArray.firstIndex(where: {$0 == soundSpeed}) else {return}
         soundSpeedSegmentedControl.selectedSegmentIndex = soundSpeedIndex
@@ -170,8 +152,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private func updateTextSize(){
         updateLabelTextSize(wordSoundLabel)
         updateLabelTextSize(textSizeLabel)
-        updateLabelTextSize(x2Label)
-        updateLabelTextSize(x2HoursLabel)
         updateLabelTextSize(appSoundLabel)
         updateLabelTextSize(soundSpeedLabel)
   
@@ -203,24 +183,12 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     }
 }
 
-//MARK: - X2SettingControllerDelegate
-
-extension SettingsController: X2SettingControllerDelegate {
-    func x2HourChanged(_ userSelectedHour: Int) {
-        self.x2HoursLabel.text = self.wordBrain.hours[userSelectedHour]
-    }
-}
-
 //MARK: - Layout
 
 extension SettingsController {
     
     private func style() {
         title = "Settings"
-        
-        xView.setViewCornerRadius(8)
-        let xViewGesture = UITapGestureRecognizer(target: self, action:  #selector(self.xViewPressed))
-        xView.addGestureRecognizer(xViewGesture)
         
         appSoundView.setViewCornerRadius(8)
         wordSoundView.setViewCornerRadius(8)
@@ -234,12 +202,6 @@ extension SettingsController {
         textSizeStackView.axis = .vertical
         textSizeStackView.spacing = 8
         textSizeStackView.distribution = .fill
-        
-        x2Label.text = "2x Hour"
-        x2Label.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
-        
-        x2HoursLabel.textAlignment = .right
-        x2HoursLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
         
         appSoundLabel.text = "App Sound"
         appSoundLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
@@ -280,9 +242,6 @@ extension SettingsController {
     }
     
     private func layout() {
-        xView.addSubview(x2Label)
-        xView.addSubview(x2HoursLabel)
-        
         appSoundView.addSubview(appSoundLabel)
         appSoundView.addSubview(appSoundSwitch)
         
@@ -300,26 +259,14 @@ extension SettingsController {
         
         textSizeView.addSubview(textSizeStackView)
         
-        view.addSubview(xView)
         view.addSubview(appSoundView)
         view.addSubview(wordSoundView)
         view.addSubview(soundSpeedView)
         view.addSubview(textSizeView)
         view.addSubview(exerciseSettingsButton)
         
-        //2x Hour
-        xView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                     right: view.rightAnchor, paddingTop: 16,
-                     paddingLeft: 32, paddingRight: 32)
-        
-        x2Label.centerY(inView: xView)
-        x2Label.anchor(left: xView.leftAnchor, paddingLeft: 16)
-        
-        x2HoursLabel.centerY(inView: xView)
-        x2HoursLabel.anchor(right: xView.rightAnchor, paddingRight: 16)
-        
         //App Sound
-        appSoundView.anchor(top: xView.bottomAnchor, left: view.leftAnchor,
+        appSoundView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                             right: view.rightAnchor, paddingTop: 16,
                             paddingLeft: 32, paddingRight: 32)
         
@@ -367,7 +314,6 @@ extension SettingsController {
         exerciseSettingsButton.anchor(top: textSizeView.bottomAnchor, left: textSizeView.leftAnchor,
                                       right: textSizeView.rightAnchor, paddingTop: 16)
         
-        xView.setHeight(40)
         appSoundView.setHeight(40)
         wordSoundView.setHeight(40)
         soundSpeedView.setHeight(90)

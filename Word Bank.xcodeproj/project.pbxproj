@@ -40,7 +40,6 @@
 		702062C32889CFAC00C78BEA /* UISearchBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */; };
 		70209B2B2759613900D527D3 /* WordBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70209B2A2759613900D527D3 /* WordBrain.swift */; };
 		7027F691275B9B84001F6068 /* WordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* WordsController.swift */; };
-		702A978327EB378A00AEECF7 /* X2SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A978227EB378A00AEECF7 /* X2SettingController.swift */; };
 		702AF782292365D600CD0B86 /* silent.aac in Resources */ = {isa = PBXBuildFile; fileRef = 702AF781292365D600CD0B86 /* silent.aac */; };
 		7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7039B87927A6A04700519D39 /* CircularProgressView.swift */; };
 		704B055528364098006C7F96 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* Word.swift */; };
@@ -95,7 +94,6 @@
 		7094D8C6290D694D007E422F /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C5290D694D007E422F /* BadgeView.swift */; };
 		709ED6A72899312800A34007 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709ED6A62899312800A34007 /* Constants.swift */; };
 		70A70D9D29439D93007F3C25 /* ExerciseSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A70D9C29439D93007F3C25 /* ExerciseSettingsController.swift */; };
-		70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */; };
 		70C357E528882DFC00F3AD86 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E428882DFC00F3AD86 /* Player.swift */; };
 		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
 		70C7541D29523ACE00192DE6 /* false.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7541929523ACE00192DE6 /* false.mp3 */; };
@@ -144,7 +142,6 @@
 		702062C22889CFAC00C78BEA /* UISearchBar+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extensions.swift"; sourceTree = "<group>"; };
 		70209B2A2759613900D527D3 /* WordBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBrain.swift; sourceTree = "<group>"; };
 		7027F690275B9B84001F6068 /* WordsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsController.swift; sourceTree = "<group>"; };
-		702A978227EB378A00AEECF7 /* X2SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X2SettingController.swift; sourceTree = "<group>"; };
 		702AF781292365D600CD0B86 /* silent.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = silent.aac; sourceTree = "<group>"; };
 		7039B87927A6A04700519D39 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		704B055428364098006C7F96 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
@@ -200,7 +197,6 @@
 		7094D8C5290D694D007E422F /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		709ED6A62899312800A34007 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		70A70D9C29439D93007F3C25 /* ExerciseSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSettingsController.swift; sourceTree = "<group>"; };
-		70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+setNotification.swift"; sourceTree = "<group>"; };
 		70C357E428882DFC00F3AD86 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		70C357E72888638300F3AD86 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		70C7541929523ACE00192DE6 /* false.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = false.mp3; sourceTree = "<group>"; };
@@ -299,7 +295,6 @@
 				70803512290C3BA600F1F93A /* StatsController.swift */,
 				701581BC27DE80D800796ADE /* SettingsController.swift */,
 				70A70D9C29439D93007F3C25 /* ExerciseSettingsController.swift */,
-				702A978227EB378A00AEECF7 /* X2SettingController.swift */,
 				705D92D428F895BA001C4F38 /* WheelController.swift */,
 				705B3D0829BE108C005CFEC2 /* TestController.swift */,
 				70509AA929C9DAD000372655 /* WritingController.swift */,
@@ -336,7 +331,6 @@
 				700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */,
 				700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */,
 				700458522917EC8E0077A4D2 /* WordBrain+PrizePoints.swift */,
-				70BCBD512894438D00CEA4FC /* WordBrain+setNotification.swift */,
 				7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */,
 				70C357E428882DFC00F3AD86 /* Player.swift */,
 				706CBABB27592F8D008B4773 /* _3.xcdatamodeld */,
@@ -579,7 +573,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70BCBD522894438D00CEA4FC /* WordBrain+setNotification.swift in Sources */,
 				706CBAB727592F8D008B4773 /* HomeController.swift in Sources */,
 				70134186291D581F001967E1 /* SparkView.swift in Sources */,
 				708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */,
@@ -641,7 +634,6 @@
 				70134179291D57A1001967E1 /* CGPoint+Extensions.swift in Sources */,
 				7013417C291D57C1001967E1 /* Firework.swift in Sources */,
 				708C27D1275AC3F1005D2EC8 /* ResultController.swift in Sources */,
-				702A978327EB378A00AEECF7 /* X2SettingController.swift in Sources */,
 				70134188291D582E001967E1 /* SparkViewAnimator.swift in Sources */,
 				705D92E328F89625001C4F38 /* PushButton.swift in Sources */,
 				70C7C228295226E6006E65A2 /* AwardCell.swift in Sources */,

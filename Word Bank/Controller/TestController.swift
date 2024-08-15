@@ -20,7 +20,7 @@ class TestController: UIViewController {
     private var questionCounter = 0
     private var totalQuestionNumber = 10
     private var questionText = ""
-    private var exercisePoint: Int { return wordBrain.getExercisePoint() }
+    private let exercisePoint: Int = 10
     private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     private var wordSoundOpen: Bool { return UserDefault.playSound.getInt() == 0 }
     
