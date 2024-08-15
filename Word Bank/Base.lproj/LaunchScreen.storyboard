@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,39 +17,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="MIx-JT-BUc">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cbS-5J-7bN">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="426"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word Bank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1X-Wx-VON">
-                                                <rect key="frame" x="148" y="46" width="118" height="31.5"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="23"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="a1X-Wx-VON" firstAttribute="centerX" secondItem="cbS-5J-7bN" secondAttribute="centerX" id="bZy-3w-JoW"/>
-                                            <constraint firstItem="a1X-Wx-VON" firstAttribute="top" secondItem="cbS-5J-7bN" secondAttribute="top" constant="46" id="i3F-ZU-fro"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-5Y-W9U">
-                                        <rect key="frame" x="0.0" y="426" width="414" height="426"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="848"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTG-1k-Zkc">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="426"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" backgroundImage="launch"/>
-                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hard" translatesAutoresizingMaskIntoConstraints="NO" id="NR7-C6-Mff">
+                                                <rect key="frame" x="122" y="339" width="170.5" height="170.5"/>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="TTG-1k-Zkc" firstAttribute="leading" secondItem="hzN-5Y-W9U" secondAttribute="leading" id="5AV-pd-6sL"/>
-                                            <constraint firstAttribute="trailing" secondItem="TTG-1k-Zkc" secondAttribute="trailing" id="CFV-FQ-FhH"/>
-                                            <constraint firstItem="TTG-1k-Zkc" firstAttribute="top" secondItem="hzN-5Y-W9U" secondAttribute="top" id="CeY-Ue-Vzz"/>
-                                            <constraint firstAttribute="bottom" secondItem="TTG-1k-Zkc" secondAttribute="bottom" id="aBf-m2-A1h"/>
+                                            <constraint firstItem="NR7-C6-Mff" firstAttribute="centerX" secondItem="hzN-5Y-W9U" secondAttribute="centerX" id="6lg-c2-tJB"/>
+                                            <constraint firstItem="NR7-C6-Mff" firstAttribute="centerY" secondItem="hzN-5Y-W9U" secondAttribute="centerY" id="RXd-2u-VDT"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -58,7 +37,7 @@
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="ravenColor"/>
+                        <color key="backgroundColor" red="0.99607843137254903" green="0.75294117647058822" blue="0.28627450980392155" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="MIx-JT-BUc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Q0j-ab-fq0"/>
                             <constraint firstAttribute="bottom" secondItem="MIx-JT-BUc" secondAttribute="bottom" id="r9w-ch-WTw"/>
@@ -73,9 +52,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launch" width="1024" height="1024"/>
-        <namedColor name="ravenColor">
-            <color red="0.19599999487400055" green="0.23899999260902405" blue="0.3529999852180481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <image name="hard" width="170.5" height="170.5"/>
     </resources>
 </document>
