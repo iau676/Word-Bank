@@ -46,7 +46,6 @@ final class HomeController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         wordBrain.loadItemArray()
-        wordBrain.updateTabBarDailyImage()
         setupCircularProgress()
         setupButtonImages()
         setupNavigationBar()
@@ -65,10 +64,8 @@ final class HomeController: UIViewController {
         self.present(vc, animated: false)
     }
     
-    @objc private func exerciseButtonPressed() {
+    @objc private func menuButtonPressed() {
         menuCP.bounce()
-//        UserDefault.spinWheelCount.set(UserDefault.spinWheelCount.getInt()+1)
-//        checkWordCount()
         configureMenuView()
     }
     
@@ -171,8 +168,8 @@ final class HomeController: UIViewController {
         let goWordsCP = UITapGestureRecognizer(target: self, action:  #selector(wordsButtonPressed))
         wordsCP.addGestureRecognizer(goWordsCP)
         
-        let goExerciseCP = UITapGestureRecognizer(target: self, action:  #selector(exerciseButtonPressed))
-        menuCP.addGestureRecognizer(goExerciseCP)
+        let goMenuCP = UITapGestureRecognizer(target: self, action:  #selector(menuButtonPressed))
+        menuCP.addGestureRecognizer(goMenuCP)
         
         let goHardCP = UITapGestureRecognizer(target: self, action:  #selector(hardWordsButtonPressed))
         hardCP.addGestureRecognizer(goHardCP)
@@ -208,7 +205,7 @@ extension HomeController {
         
         levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
         levelButton.addTarget(self, action: #selector(levelButtonPressed), for: .primaryActionTriggered)
-        menuButton.addTarget(self, action: #selector(exerciseButtonPressed), for: .primaryActionTriggered)
+        menuButton.addTarget(self, action: #selector(menuButtonPressed), for: .primaryActionTriggered)
         newWordsButton.addTarget(self, action: #selector(newWordsButtonPressed), for: .primaryActionTriggered)
         wordsButton.addTarget(self, action: #selector(wordsButtonPressed), for: .primaryActionTriggered)
         hardWordsButton.addTarget(self, action: #selector(hardWordsButtonPressed), for: .primaryActionTriggered)
@@ -328,11 +325,6 @@ extension HomeController {
                 self.wordBrain.loadItemArray()
                 self.wordBrain.loadHardItemArray()
                 
-                let wordCount = self.wordBrain.itemArray.count
-                if wordCount == 0 {
-                    //scheduledTimer(timeInterval: 0.5, #selector(self.appendDefaultWords))
-                }
-                
                 if self.wordBrain.user.count < 1 {
                     self.wordBrain.createUser()
                     UserDefault.level.set(0)
@@ -364,15 +356,6 @@ extension HomeController {
     func showOnboarding(){
         navigationController?.pushViewController(OnboardingContainerViewController(), animated: true)
     }
-    
-    @objc func appendDefaultWords() {
-        let defaultWordsCount = wordBrain.defaultWords.count
-        
-        for index in 0..<defaultWordsCount {
-            wordBrain.addWord(english: "\(wordBrain.defaultWords[index].eng)",
-                              meaning: "\(wordBrain.defaultWords[index].tr)")
-        }
-     }
 }
 
 //MARK: - MenuViewDelegate

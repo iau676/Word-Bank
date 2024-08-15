@@ -41,7 +41,6 @@
 		7027F691275B9B84001F6068 /* WordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* WordsController.swift */; };
 		702AF782292365D600CD0B86 /* silent.aac in Resources */ = {isa = PBXBuildFile; fileRef = 702AF781292365D600CD0B86 /* silent.aac */; };
 		7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7039B87927A6A04700519D39 /* CircularProgressView.swift */; };
-		704B055528364098006C7F96 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704B055428364098006C7F96 /* Word.swift */; };
 		704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704F9377290711C50095BF0D /* UITextField+Extensions.swift */; };
 		70509AA829C9CCDE00372655 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA729C9CCDE00372655 /* BubbleView.swift */; };
 		70509AAA29C9DAD000372655 /* WritingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA929C9DAD000372655 /* WritingController.swift */; };
@@ -141,7 +140,6 @@
 		7027F690275B9B84001F6068 /* WordsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsController.swift; sourceTree = "<group>"; };
 		702AF781292365D600CD0B86 /* silent.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = silent.aac; sourceTree = "<group>"; };
 		7039B87927A6A04700519D39 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
-		704B055428364098006C7F96 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		704F9377290711C50095BF0D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70509AA729C9CCDE00372655 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 		70509AA929C9DAD000372655 /* WritingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingController.swift; sourceTree = "<group>"; };
@@ -320,7 +318,6 @@
 		70209B1F27595DF200D527D3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				704B055428364098006C7F96 /* Word.swift */,
 				70209B2A2759613900D527D3 /* WordBrain.swift */,
 				700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */,
 				700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */,
@@ -641,7 +638,6 @@
 				70134172291D573D001967E1 /* CircleColorSparkViewFactory.swift in Sources */,
 				709ED6A72899312800A34007 /* Constants.swift in Sources */,
 				70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */,
-				704B055528364098006C7F96 /* Word.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

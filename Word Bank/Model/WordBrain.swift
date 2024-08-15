@@ -33,20 +33,7 @@ struct WordBrain {
     var questionCounter = 0
     var answer = 0
     
-    var rightOnceBooll = [Bool]()
-    
-    let notificationCenter = UNUserNotificationCenter.current()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let defaultWords = [
-        Word(e: "hello", t: "merhaba"),
-        Word(e: "hello", t: "hola"),
-        Word(e: "hello", t: "bonjour"),
-        Word(e: "hello", t: "guten tag"),
-        Word(e: "hello", t: "salve"),
-        Word(e: "hello", t: "konnichiwa")
-    ]
-    
-    let dailyImages: [UIImage?] = [Images.daily1, Images.daily2, Images.daily3, Images.daily4, Images.daily5, Images.daily6, Images.daily7, Images.daily8]
     
     mutating func createUser(){
         let newUser = User(context: self.context)
@@ -425,33 +412,5 @@ extension WordBrain {
     
     func getExerciseCountToday(for exerciseFormat: String) -> Int {
         return exerciseDict[exerciseFormat] ?? 0
-    }
-        
-    mutating func updateTabBarDailyImage(){
-        findExercisesCompletedToday()
-        
-        let testExerciseCount = getExerciseCountToday(for: ExerciseFormat.test) >= 10 ? 1 : 0
-        let writingExerciseCount = getExerciseCountToday(for: ExerciseFormat.writing) >= 10 ? 10 : 0
-        let listeningExerciseCount = getExerciseCountToday(for: ExerciseFormat.listening) >= 10 ? 100 : 0
-        
-        switch testExerciseCount + writingExerciseCount + listeningExerciseCount {
-        case 0:
-            UserDefault.dailyImageIndex.set(0)
-        case 1:
-            UserDefault.dailyImageIndex.set(1)
-        case 10:
-            UserDefault.dailyImageIndex.set(2)
-        case 100:
-            UserDefault.dailyImageIndex.set(3)
-        case 11:
-            UserDefault.dailyImageIndex.set(4)
-        case 101:
-            UserDefault.dailyImageIndex.set(5)
-        case 110:
-            UserDefault.dailyImageIndex.set(6)
-        case 111:
-            UserDefault.dailyImageIndex.set(7)
-        default: break
-        }
     }
 }
