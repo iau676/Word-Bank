@@ -32,8 +32,6 @@ class AddEditController: UIViewController {
     private var wordBrain = WordBrain()
     
     var goEdit = 0
-    private var userWordCountInt = 0
-    private var userWordCountIntVariable = 0
     
     private var coinButtonImage: UIImage { return goEdit == 0 ? Images.coin! : Images.check!}
     private var coinButtonAnimation: UIView.AnimationOptions { return goEdit == 0 ?
@@ -57,7 +55,6 @@ class AddEditController: UIViewController {
         cofigureTextViewYAnchor()
         addGestureRecognizer()
         checkEditStatus()
-        userWordCountIntVariable = wordBrain.itemArray.count
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -75,9 +72,6 @@ class AddEditController: UIViewController {
                 player.playMP3(Sounds.mario)
                 if goEdit == 0 {
                     wordBrain.addWord(english: eng, meaning: meaning)
-                    UserDefault.userWordCount.set(userWordCountIntVariable+1)
-                    userWordCountIntVariable += 1
-                    scheduledTimer(timeInterval: 0.1, #selector(goNewPoint))
                 } else {
                     item?.eng = eng
                     item?.tr = meaning
@@ -108,20 +102,6 @@ class AddEditController: UIViewController {
     @objc private func dismissView(){
         view.backgroundColor = UIColor.clear
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func goNewPoint(){
-        let lastPoint = UserDefault.exercisePoint.getInt()
-        wordBrain.calculateExercisePoint(userWordCount: userWordCountIntVariable)
-        let newPoint = UserDefault.exercisePoint.getInt()
-        
-        if newPoint != lastPoint {
-            let vc = NewPointController()
-            vc.newWordsCount = wordBrain.itemArray.count
-            vc.newExercisePoint = newPoint
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }
     }
     
     //MARK: - Helpers

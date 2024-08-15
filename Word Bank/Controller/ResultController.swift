@@ -21,7 +21,6 @@ class ResultController: UIViewController {
     private var numberOfTrue = 0
     private var lastLevel:Int = 0
     private var newLevel:Int = 0
-    private var userWordCount = ""
     private var scoreLabelText = ""
     
     private let confettiButton = UIButton()

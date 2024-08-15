@@ -318,8 +318,7 @@ extension HomeController {
     
     func setupFirstLaunch() {
         //version 2.0.1
-        if UserDefault.exercisePoint.getValue() == nil {
-            UserDefault.exercisePoint.set("10")
+        if UserDefault.textSize.getValue() == nil {
             UserDefault.textSize.set(15)
             showOnboarding()
             getKeyboardHeight()
@@ -373,7 +372,6 @@ extension HomeController {
             wordBrain.addWord(english: "\(wordBrain.defaultWords[index].eng)",
                               meaning: "\(wordBrain.defaultWords[index].tr)")
         }
-        UserDefault.userWordCount.set(defaultWordsCount)
      }
 }
 

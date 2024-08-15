@@ -15,7 +15,6 @@
 		700C439927A856FD00D94497 /* LevelInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700C439827A856FD00D94497 /* LevelInfoController.swift */; };
 		7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */; };
 		7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FF289571A100A42314 /* UIColor+Extensions.swift */; };
-		7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */; };
 		70134170291D5723001967E1 /* CircleColorSparkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7013416F291D5723001967E1 /* CircleColorSparkView.swift */; };
 		70134172291D573D001967E1 /* CircleColorSparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134171291D573D001967E1 /* CircleColorSparkViewFactory.swift */; };
 		70134174291D5751001967E1 /* ImageSparkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70134173291D5751001967E1 /* ImageSparkView.swift */; };
@@ -81,7 +80,6 @@
 		70803511290C393E00F1F93A /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 70803510290C393E00F1F93A /* Charts */; };
 		70803513290C3BA600F1F93A /* StatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70803512290C3BA600F1F93A /* StatsController.swift */; };
 		7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */; };
-		7081AB0227CCD15700E2996A /* NewPointController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081AB0127CCD15700E2996A /* NewPointController.swift */; };
 		7081AB0527CCD3CB00E2996A /* alltrue.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0427CCD3CB00E2996A /* alltrue.mp4 */; };
 		7081AB0727CCFA4300E2996A /* newpoint.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7081AB0627CCFA4300E2996A /* newpoint.mp4 */; };
 		708AFD88288719D300E09AE1 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AFD87288719D300E09AE1 /* Date+Extensions.swift */; };
@@ -116,7 +114,6 @@
 		700C439827A856FD00D94497 /* LevelInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelInfoController.swift; sourceTree = "<group>"; };
 		7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContextualAction+Extensions.swift"; sourceTree = "<group>"; };
 		7011E3FF289571A100A42314 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
-		7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WordBrain+calculateExercisePoint.swift"; sourceTree = "<group>"; };
 		7013416F291D5723001967E1 /* CircleColorSparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleColorSparkView.swift; sourceTree = "<group>"; };
 		70134171291D573D001967E1 /* CircleColorSparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleColorSparkViewFactory.swift; sourceTree = "<group>"; };
 		70134173291D5751001967E1 /* ImageSparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkView.swift; sourceTree = "<group>"; };
@@ -184,7 +181,6 @@
 		707EC38A288DAA4A00832F35 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		70803512290C3BA600F1F93A /* StatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsController.swift; sourceTree = "<group>"; };
 		7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
-		7081AB0127CCD15700E2996A /* NewPointController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPointController.swift; sourceTree = "<group>"; };
 		7081AB0427CCD3CB00E2996A /* alltrue.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = alltrue.mp4; sourceTree = "<group>"; };
 		7081AB0627CCFA4300E2996A /* newpoint.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = newpoint.mp4; sourceTree = "<group>"; };
 		708AFD87288719D300E09AE1 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -289,7 +285,6 @@
 				708C27D0275AC3F0005D2EC8 /* ResultController.swift */,
 				700C439827A856FD00D94497 /* LevelInfoController.swift */,
 				7014743527AAB4EE005E1854 /* LevelUpController.swift */,
-				7081AB0127CCD15700E2996A /* NewPointController.swift */,
 				7009BDE629112BAA0068E2F6 /* DailyController.swift */,
 				7094D8C3290D25B5007E422F /* AwardsController.swift */,
 				70803512290C3BA600F1F93A /* StatsController.swift */,
@@ -315,9 +310,9 @@
 				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
 				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
 				70509AA729C9CCDE00372655 /* BubbleView.swift */,
+				70925E372C6E8B04007CB4E9 /* MenuView.swift */,
 				706CBAD527593993008B4773 /* WordCell.xib */,
 				706CBAB827592F8D008B4773 /* Main.storyboard */,
-				70925E372C6E8B04007CB4E9 /* MenuView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -327,7 +322,6 @@
 			children = (
 				704B055428364098006C7F96 /* Word.swift */,
 				70209B2A2759613900D527D3 /* WordBrain.swift */,
-				7011E4012895AA0600A42314 /* WordBrain+calculateExercisePoint.swift */,
 				700BC5822893069A00903C04 /* WordBrain+LevelPoints.swift */,
 				700BC57E2892FE9E00903C04 /* WordBrain+calculateLevel.swift */,
 				700458522917EC8E0077A4D2 /* WordBrain+PrizePoints.swift */,
@@ -600,7 +594,6 @@
 				70134184291D580F001967E1 /* SparkTrajectoryFactory.swift in Sources */,
 				7027F691275B9B84001F6068 /* WordsController.swift in Sources */,
 				707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */,
-				7011E4022895AA0600A42314 /* WordBrain+calculateExercisePoint.swift in Sources */,
 				7094D8C4290D25B5007E422F /* AwardsController.swift in Sources */,
 				70803513290C3BA600F1F93A /* StatsController.swift in Sources */,
 				707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */,
@@ -629,7 +622,6 @@
 				707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */,
 				705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */,
 				7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */,
-				7081AB0227CCD15700E2996A /* NewPointController.swift in Sources */,
 				70925E3A2C6E8EB6007CB4E9 /* Factories.swift in Sources */,
 				70134179291D57A1001967E1 /* CGPoint+Extensions.swift in Sources */,
 				7013417C291D57C1001967E1 /* Firework.swift in Sources */,

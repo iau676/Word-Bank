@@ -159,9 +159,7 @@ enum UserDefault {
     static var playAppSound              = UserDefaultsManager(key: "playAppSound")
     static var textSize                  = UserDefaultsManager(key: "textSize")
     static var currentHour               = UserDefaultsManager(key: "currentHour")
-    static var exercisePoint             = UserDefaultsManager(key: "pointForMyWords")
     static var userAnswers               = UserDefaultsManager(key: "userAnswers")
-    static var userWordCount             = UserDefaultsManager(key: "userWordCount")
     static var spinWheelCount            = UserDefaultsManager(key: "spinWheelCount")
 
     static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")

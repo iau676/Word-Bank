@@ -359,8 +359,6 @@ extension WordsController: UITableViewDelegate {
                 
                 self.wordBrain.deleteHardWord(item)
                 self.wordBrain.removeWord(at: indexPath.row)
-                self.wordBrain.calculateExercisePoint()
-                UserDefault.userWordCount.set(UserDefault.userWordCount.getInt()-1)
 
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                 tableView.reloadData()
