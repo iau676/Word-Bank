@@ -343,14 +343,6 @@ struct WordBrain {
 //MARK: - User Defaults
 
 extension WordBrain {
-    func isUserWillGetDailyPrize() -> Bool {
-        if UserDefault.userGotDailyPrize.getString() == "willGet" {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     func getTruePointImage() -> UIImage? {
         return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.greenBubble : Images.greenCircle
     }

@@ -324,9 +324,7 @@ class SpinWheel: SKSpriteNode {
         let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 1.0)
         backgroundBlocker.run(fadeIn)
         
-        if wordBrain.isUserWillGetDailyPrize() {
-            userWillGetDailyPrize(prizePoint: prizePoint, prizeImage: prizeImage, winnningIndex: winnningIndex)
-        }
+        userWillGetDailyPrize(prizePoint: prizePoint, prizeImage: prizeImage, winnningIndex: winnningIndex)
     }
     
     func userGotPrize(prizePoint: Int, prizeImage: String){

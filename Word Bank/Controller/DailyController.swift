@@ -11,7 +11,6 @@ class DailyController: UIViewController {
         
     private let secondView = UIView()
     
-    //Daily
     private let taskOneButton = UIButton()
     private let taskOneButtonBlueLayer = UIButton()
     private let taskOneButtonRavenLayer = UIButton()
@@ -26,7 +25,6 @@ class DailyController: UIViewController {
 
     private let prizeButton = UIButton()
 
-    
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
@@ -51,13 +49,8 @@ class DailyController: UIViewController {
         wordBrain.findExercisesCompletedToday()
 
         style()
+        layout()
         updateButtons()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let taskButtonWidth = taskOneButton.frame.width
-        layout(taskButtonWidth: taskButtonWidth)
     }
     
     //MARK: - Selectors
@@ -65,24 +58,23 @@ class DailyController: UIViewController {
     @objc private func taskOneButtonPressed(){
         let controller = TestController(exerciseType: ExerciseType.normal,
                                         exerciseFormat: ExerciseFormat.test)
-        checkWordCount(controller: controller)
+        checkWordCountAndNavigate(controller: controller)
     }
     
     @objc private func taskTwoButtonPressed(){
         let controller = WritingController(exerciseType: ExerciseType.normal,
                                            exerciseFormat: ExerciseFormat.writing)
-        checkWordCount(controller: controller)
+        checkWordCountAndNavigate(controller: controller)
     }
     
     @objc private func taskThreeButtonPressed(){
         let controller = ListeningController(exerciseType: ExerciseType.normal,
                                              exerciseFormat: ExerciseFormat.listening)
-        checkWordCount(controller: controller)
+        checkWordCountAndNavigate(controller: controller)
     }
     
     @objc private func prizeButtonPressed(){
         prizeButton.bounce()
-        UserDefault.userGotDailyPrize.set("willGet")
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
             self.navigationController?.pushViewController(WheelController(), animated: true)
         }
@@ -90,7 +82,7 @@ class DailyController: UIViewController {
     
     //MARK: - Helpers
     
-    private func checkWordCount(controller: UIViewController){
+    private func checkWordCountAndNavigate(controller: UIViewController){
         let wordCount = itemArray.count
         
         if wordCount < 2 {
@@ -128,10 +120,9 @@ class DailyController: UIViewController {
         button.backgroundColor = color
     }
     
-    private func configureButton(_ button: UIButton, _ text: String){
+    private func configureButton(_ button: UIButton, _ text: String) {
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
-        button.setButtonCornerRadius(8)
     }
 }
 
@@ -149,7 +140,6 @@ extension DailyController {
         configureButton(taskOneButton, "Complete 10 Test Exercise")
         configureButton(taskTwoButton, "Complete 10 Writing Exercise")
         configureButton(taskThreeButton, "Complete 10 Listening Exercise")
-        configureButton(prizeButton, "")
         
         taskOneButton.setImageWithRenderingMode(image: Images.whiteCircle, width: 25, height: 25, color: .white)
         taskTwoButton.setImageWithRenderingMode(image: Images.whiteCircle, width: 25, height: 25, color: .white)
@@ -178,18 +168,17 @@ extension DailyController {
         prizeButton.addTarget(self, action: #selector(prizeButtonPressed), for: .primaryActionTriggered)
     }
     
-    private func layout(taskButtonWidth: CGFloat){
+    private func layout(){
+        let taskButtonWidth = view.bounds.width-64-32
+        let taskOneBlueLayerWidth = (taskButtonWidth/10)*CGFloat(testExerciseCount)
+        let taskTwoBlueLayerWidth = (taskButtonWidth/10)*CGFloat(writingExerciseCount)
+        let taskThreeBlueLayerWidth = (taskButtonWidth/10)*CGFloat(listeningExerciseCount)
+        
         view.addSubview(secondView)
-        
-        let taskButtonW = view.bounds.width-64-32
-        let taskOneBlueLayerWidth = (taskButtonW/10)*CGFloat(testExerciseCount)
-        let taskTwoBlueLayerWidth = (taskButtonW/10)*CGFloat(writingExerciseCount)
-        let taskThreeBlueLayerWidth = (taskButtonW/10)*CGFloat(listeningExerciseCount)
-        
-        secondView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                          bottom: view.bottomAnchor, right: view.rightAnchor,
-                          paddingTop: 8, paddingLeft: 32,
-                          paddingBottom: 82, paddingRight: 32)
+        secondView.anchor(left: view.leftAnchor, right: view.rightAnchor,
+                          paddingLeft: 32,paddingRight: 32)
+        secondView.centerY(inView: view)
+        secondView.setHeight(388) //16*5 + 60*3 + 128
         
         //raven layer
         let stackViewRaven = UIStackView(arrangedSubviews: [taskOneButtonRavenLayer,
@@ -201,8 +190,8 @@ extension DailyController {
         
         secondView.addSubview(stackViewRaven)
         stackViewRaven.centerX(inView: view)
-        stackViewRaven.setWidth(taskButtonW)
-        stackViewRaven.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        stackViewRaven.anchor(top: secondView.topAnchor, left: secondView.leftAnchor, right: secondView.rightAnchor,
+                              paddingTop: 16, paddingLeft: 16, paddingRight: 16)
   
         //blue layer
         taskOneButtonRavenLayer.addSubview(taskOneButtonBlueLayer)
@@ -214,20 +203,20 @@ extension DailyController {
         taskThreeButtonRavenLayer.addSubview(taskThreeButtonBlueLayer)
         taskThreeButtonBlueLayer.setWidth(taskThreeBlueLayerWidth)
         
-        //button layer
+        //button
         taskOneButtonRavenLayer.addSubview(taskOneButton)
-        taskOneButton.setDimensions(width: taskButtonW, height: 60)
+        taskOneButton.fillSuperview()
         
         taskTwoButtonRavenLayer.addSubview(taskTwoButton)
-        taskTwoButton.setDimensions(width: taskButtonW, height: 60)
+        taskTwoButton.fillSuperview()
         
         taskThreeButtonRavenLayer.addSubview(taskThreeButton)
-        taskThreeButton.setDimensions(width: taskButtonW, height: 60)
+        taskThreeButton.fillSuperview()
 
         //prize button
         secondView.addSubview(prizeButton)
         prizeButton.centerX(inView: secondView)
         prizeButton.setDimensions(width: 128, height: 128)
-        prizeButton.anchor(top: stackViewRaven.bottomAnchor, paddingTop: 32)
+        prizeButton.anchor(top: stackViewRaven.bottomAnchor, paddingTop: 16)
     }
 }
