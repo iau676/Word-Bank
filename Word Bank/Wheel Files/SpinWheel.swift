@@ -61,43 +61,16 @@ class SpinWheel: SKSpriteNode {
         background.zPosition = -1
         addChild(background)
         
-        if wordBrain.isUserWillGetDailyPrize() {
-            slots = [
-                ["", "wheel_prize_present", "", "0", "44"],
-                ["", "wheel_prize_present", "", "45", "89"],
-                ["", "wheel_prize_present", "", "90", "134"],
-                ["", "wheel_prize_present", "", "135", "179"],
-                ["", "wheel_prize_present", "", "180", "224"],
-                ["", "wheel_prize_present", "", "225", "269"],
-                ["", "wheel_prize_present", "", "270", "314"],
-                ["", "wheel_prize_present", "", "315", "360"]
-            ]
-        } else {
-            if wordBrain.isUserGotWheelPrize() {
-                slots = [
-                    ["", "testExercise", "", "0", "44"],
-                    ["", "writingExercise", "", "45", "89"],
-                    ["", "listeningExercise", "", "90", "134"],
-                    ["", "cardExercise", "", "135", "179"],
-                    ["", "testExercise", "", "180", "224"],
-                    ["", "writingExercise", "", "225", "269"],
-                    ["", "listeningExercise", "", "270", "314"],
-                    ["", "cardExercise", "", "315", "360"]
-                ]
-            } else {
-                slots = [
-                    ["", "testExercise", "", "0", "44"],
-                    ["", "writingExercise", "", "45", "89"],
-                    ["", "listeningExercise", "", "90", "134"],
-                    ["", "cardExercise", "", "135", "179"],
-                    ["", "testExercise", "", "180", "224"],
-                    ["", "writingExercise", "", "225", "269"],
-                    ["", "listeningExercise", "", "270", "314"],
-                    ["", "wheel_prize_present", "", "315", "360"]
-                ]
-            }
-            
-        }
+        slots = [
+            ["", "wheel_prize_present", "", "0", "44"],
+            ["", "wheel_prize_present", "", "45", "89"],
+            ["", "wheel_prize_present", "", "90", "134"],
+            ["", "wheel_prize_present", "", "135", "179"],
+            ["", "wheel_prize_present", "", "180", "224"],
+            ["", "wheel_prize_present", "", "225", "269"],
+            ["", "wheel_prize_present", "", "270", "314"],
+            ["", "wheel_prize_present", "", "315", "360"]
+        ]
 
         createWheel()
         createFlapper()
@@ -353,17 +326,6 @@ class SpinWheel: SKSpriteNode {
         
         if wordBrain.isUserWillGetDailyPrize() {
             userWillGetDailyPrize(prizePoint: prizePoint, prizeImage: prizeImage, winnningIndex: winnningIndex)
-        } else {
-            if wordBrain.isUserGotWheelPrize() {
-                userWillGoExercise(winnningIndex)
-            } else {
-                if winnningIndex == 7 {
-                    UserDefault.userGotWheelPrize.set(wordBrain.getTodayDate())
-                    userGotPrize(prizePoint: prizePoint, prizeImage: prizeImage)
-                } else {
-                    userWillGoExercise(winnningIndex)
-                }
-            }
         }
     }
     

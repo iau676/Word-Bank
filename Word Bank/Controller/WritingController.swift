@@ -121,7 +121,6 @@ class WritingController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefault.addedHardWordsCount.set(0)
-        wordBrain.getHour()
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
         wordBrain.sortWordsForExercise()
@@ -168,7 +167,6 @@ class WritingController: UIViewController {
     }
     
     private func checkAnswer(_ userAnswer: String){
-        wordBrain.getHour()
         questionCounter += 1
         exerciseTopView.updateProgress()
         

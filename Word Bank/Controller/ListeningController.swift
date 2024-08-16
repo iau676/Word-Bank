@@ -44,15 +44,29 @@ class ListeningController: UIViewController {
         return label
     }()
     
-    private lazy var buttonOne = makeAnswerButton()
-    private lazy var buttonTwo = makeAnswerButton()
-    private lazy var buttonThree = makeAnswerButton()
+    private lazy var buttonOne: UIButton = {
+       let button = makeListeningAnswerButton()
+        button.addTarget(self, action: #selector(answerSelected), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var buttonTwo: UIButton = {
+       let button = makeListeningAnswerButton()
+        button.addTarget(self, action: #selector(answerSelected), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var buttonThree: UIButton = {
+       let button = makeListeningAnswerButton()
+        button.addTarget(self, action: #selector(answerSelected), for: .touchUpInside)
+        return button
+    }()
     
     lazy var actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
         button.backgroundColor = Colors.testAnswerLayer
-        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        button.setImage(Images.chevronRight, for: .normal)
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
         return button
     }()
@@ -72,7 +86,6 @@ class ListeningController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefault.addedHardWordsCount.set(0)
-        wordBrain.getHour()
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
         wordBrain.sortWordsForExercise()
@@ -212,19 +225,6 @@ class ListeningController: UIViewController {
         buttonThree.setTitle(answers.2, for: .normal)
         trueAnswer = answers.3
         answerArray.append(trueAnswer)
-    }
-    
-    private func makeAnswerButton() -> UIButton {
-        let button = UIButton()
-         button.setImage(Images.sound?.imageResized(to: CGSize(width: 50, height: 50)), for: .normal)
-         button.backgroundColor = .clear
-         button.layer.borderWidth = 5
-         button.layer.borderColor = Colors.testAnswerLayer?.cgColor
-         button.setDimensions(width: 90, height: 90)
-         button.setButtonCornerRadius(90 / 2)
-         button.titleLabel?.font = UIFont.systemFont(ofSize: 0)
-         button.addTarget(self, action: #selector(answerSelected), for: .touchUpInside)
-         return button
     }
     
     private func clearButtons() {

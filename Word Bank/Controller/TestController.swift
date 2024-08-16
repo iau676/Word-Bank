@@ -35,10 +35,6 @@ class TestController: UIViewController {
         return view
     }()
     
-    private var bubbleButton = BubbleView()
-    private lazy var answer1Button = makeAnswerButton()
-    private lazy var answer2Button = makeAnswerButton()
-    
     private let questionLabel: UILabel = {
        let label = UILabel()
         label.textColor = Colors.f6f6f6
@@ -48,7 +44,21 @@ class TestController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-
+    
+    private var bubbleButton = BubbleView()
+    
+    private lazy var answer1Button: UIButton = {
+       let button = makeTestAnswerButton()
+        button.addTarget(self, action: #selector(answerPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var answer2Button: UIButton = {
+       let button = makeTestAnswerButton()
+        button.addTarget(self, action: #selector(answerPressed), for: .touchUpInside)
+        return button
+    }()
+    
     private let timerView = UIView()
     private var timer = Timer()
     private var timerCounter: CGFloat = 0
@@ -69,7 +79,6 @@ class TestController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefault.addedHardWordsCount.set(0)
-        wordBrain.getHour()
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
         wordBrain.sortWordsForExercise()
@@ -198,20 +207,6 @@ class TestController: UIViewController {
         button.isEnabled = true
         button.backgroundColor = UIColor.clear
         button.setTitle(title, for: .normal)
-    }
-    
-    private func makeAnswerButton() -> UIButton {
-        let button = UIButton()
-         button.titleLabel?.font =  button.titleLabel?.font.withSize(UserDefault.textSize.getCGFloat())
-         button.addTarget(self, action: #selector(answerPressed), for: .touchUpInside)
-         button.titleLabel?.numberOfLines = 3
-         button.titleEdgeInsets = UIEdgeInsets(top: 30, left: 15, bottom: 30, right: 15)
-
-         button.backgroundColor = .clear
-         button.layer.cornerRadius = 18
-         button.layer.borderWidth = 5
-         button.layer.borderColor = Colors.testAnswerLayer?.cgColor
-         return button
     }
     
     private func configureNavigationBar() {

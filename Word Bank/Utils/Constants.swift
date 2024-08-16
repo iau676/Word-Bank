@@ -70,7 +70,7 @@ enum Images {
     static let house                     = UIImage(systemName: "house.fill")
     static let refresh                   = UIImage(systemName: "arrow.clockwise")
     static let xmark                     = UIImage(systemName: "xmark")
-    
+    static let chevronRight              = UIImage(systemName: "chevron.right")
     static let menu                      = UIImage(named: "menu")
     
     static let check                     = UIImage(named: "check")
@@ -124,7 +124,6 @@ enum UserDefault {
     static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
     static var dailyImageIndex           = UserDefaultsManager(key: "dailyImageIndex")
     static var userGotDailyPrize         = UserDefaultsManager(key: "userGotDailyPrize")
-    static var userGotWheelPrize         = UserDefaultsManager(key: "userGotWheelPrize")
     
     static var level                     = UserDefaultsManager(key: "level")
     static var lastPoint                 = UserDefaultsManager(key: "lastPoint")
@@ -151,7 +150,6 @@ enum UserDefault {
     static var playSound                 = UserDefaultsManager(key: "playSound")
     static var playAppSound              = UserDefaultsManager(key: "playAppSound")
     static var textSize                  = UserDefaultsManager(key: "textSize")
-    static var currentHour               = UserDefaultsManager(key: "currentHour")
     static var userAnswers               = UserDefaultsManager(key: "userAnswers")
 
     static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")

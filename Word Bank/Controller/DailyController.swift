@@ -46,7 +46,6 @@ class DailyController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wordBrain.getHour()
         wordBrain.loadItemArray()
         wordBrain.loadExerciseArray()
         wordBrain.findExercisesCompletedToday()
