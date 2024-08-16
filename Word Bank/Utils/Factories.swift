@@ -9,12 +9,17 @@ import UIKit
 
 //MARK: - Button
 
-func makeMenuButton(title: String, image: UIImage? = nil) -> UIButton {
+func makeMenuButton(title: String, image: UIImage? = nil, imageWidth: CGFloat = 30, imageHeight: CGFloat = 30) -> UIButton {
     let button = UIButton()
     button.setTitleColor(.darkGray, for: .normal)
-    button.setButtonCornerRadius(10)
-    button.configureForTabBar(image: image, title: title, titleColor: .black, imageWidth: 30, imageHeight: 30)
+    button.backgroundColor = .white
+    button.setTitle(title, for: .normal)
+    button.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
+    button.setTitleColor(.black, for: .normal)
+    button.setImageWithRenderingMode(image: image, width: imageWidth, height: imageHeight, color: .black)
+    button.alignTextBelow()
     button.setDimensions(width: 100, height: 100)
+    button.setButtonCornerRadius(10)
     return button
 }
 

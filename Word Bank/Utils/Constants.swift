@@ -81,7 +81,7 @@ enum Images {
     static let coin                      = UIImage(named: "coin")
     
     static let home                      = UIImage(named: "home")
-    static let daily1                    = UIImage(named: "daily1")
+    static let giftBox                   = UIImage(named: "gift-box")
     static let award                     = UIImage(named: "award")
     static let statistic                 = UIImage(named: "statistic")
     static let settings                  = UIImage(named: "settings")

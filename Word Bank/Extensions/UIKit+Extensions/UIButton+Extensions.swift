@@ -121,16 +121,6 @@ extension UIButton {
         }
     }
     
-    func configureForTabBar(image: UIImage?, title: String, titleColor: UIColor, imageWidth: CGFloat, imageHeight: CGFloat){
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .white
-        self.setTitle(title, for: .normal)
-        self.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
-        self.setTitleColor(titleColor, for: .normal)
-        self.setImageWithRenderingMode(image: image, width: imageWidth, height: imageHeight, color: titleColor)
-        self.alignTextBelow()
-    }
-    
     func moveImageTitleLeft() {
         let imageSize: CGSize = self.imageView?.image?.size ?? CGSize(width: 25, height: 25)
         self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)

@@ -32,7 +32,7 @@ class MenuView: UIView {
     }()
     
     private lazy var dailyButton: UIButton = {
-        let button = makeMenuButton(title: "Daily", image: Images.daily1)
+        let button = makeMenuButton(title: "Daily", image: Images.giftBox, imageWidth: 40, imageHeight: 40)
         button.addTarget(self, action: #selector(dailyButtonPressed), for: .touchUpInside)
         return button
     }()
