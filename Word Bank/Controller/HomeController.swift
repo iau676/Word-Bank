@@ -11,18 +11,24 @@ import CoreData
 
 final class HomeController: UIViewController {
     
-    private let leftLineView = UIView()
-    private let centerLineView = UIView()
-    private let rightLineView = UIView()
+    //MARK: - Properties
     
-    private let dropButton = UIButton()
+    private let leftLineView = makeLineView()
+    private let centerLineView = makeLineView()
+    private let rightLineView = makeLineView()
     
     private let levelCP = CircularProgressView(progressColor: Colors.pink, trackColor: UIColor.white, bgColor: Colors.pinkLight)
     
     private let newWordCP: CircularProgressView = {
        let view = CircularProgressView(progressColor: Colors.green, trackColor: Colors.green, bgColor: Colors.greenLight)
-        view.button.setImage(image: Images.new, width: 35, height: 35)
+        view.button.setImage(image: Images.onlyHand, width: 35, height: 35)
         return view
+    }()
+    
+    private let dropButton: UIButton = {
+        let button = UIButton()
+        button.setImage(image: Images.drop, width: 7, height: 7)
+        return button
     }()
     
     private let wordsCP: CircularProgressView = {
@@ -53,10 +59,9 @@ final class HomeController: UIViewController {
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
-        style()
-        layout()
-        setupFirstLaunch()
+        configureUI()
         setupNavigationBar()
+        setupFirstLaunch()
         setupActions()
     }
     
@@ -64,7 +69,6 @@ final class HomeController: UIViewController {
         super.viewWillAppear(animated)
         wordBrain.loadItemArray()
         configureLevelProgress()
-        configureHandImage()
     }
     
     //MARK: - Selectors
@@ -80,23 +84,15 @@ final class HomeController: UIViewController {
         self.present(vc, animated: false)
     }
     
-    @objc private func menuButtonPressed() {
-        menuCP.bounce()
-        configureMenuView()
-    }
-    
     @objc private func newWordsButtonPressed() {
         newWordCP.bounce()
-        
-        newWordCP.button.setImage(image: Images.onlyHand, width: 35, height: 35)
-        dropButton.setImage(image: Images.drop, width: 7, height: 7)
         dropButton.animateDropDown()
         
         goAddPage = 1
         viewDidLayoutSubviews()
         let controller = WordsController(exerciseType: ExerciseType.normal)
         controller.goAddPage = 1
-        pushViewControllerWithDeadline(controller: controller)
+        pushViewControllerWithDeadline(controller: controller, deadline: 0.25)
     }
     
     @objc private func wordsButtonPressed() {
@@ -112,7 +108,50 @@ final class HomeController: UIViewController {
         pushViewControllerWithDeadline(controller: controller)
     }
     
+    @objc private func menuButtonPressed() {
+        menuCP.bounce()
+        configureMenuView()
+    }
+    
     //MARK: - Helpers
+    
+    private func configureUI() {
+        title = "Word Bank"
+        view.backgroundColor = Colors.cellLeft
+        
+        view.addSubview(leftLineView)
+        view.addSubview(centerLineView)
+        view.addSubview(rightLineView)
+        
+        view.addSubview(levelCP)
+        view.addSubview(menuCP)
+        view.addSubview(newWordCP)
+        view.addSubview(wordsCP)
+        view.addSubview(hardCP)
+        
+        levelCP.center = CGPoint(x: view.center.x, y: view.center.y-121)
+        newWordCP.center = CGPoint(x: view.center.x, y: view.center.y)
+        wordsCP.center = CGPoint(x: view.center.x, y: view.center.y+121)
+        menuCP.center = CGPoint(x: view.center.x+121, y: view.center.y)
+        hardCP.center = CGPoint(x: view.center.x-121, y: view.center.y)
+        
+        leftLineView.anchor(top: view.topAnchor, left: hardCP.centerXAnchor, bottom: hardCP.topAnchor)
+        centerLineView.anchor(top: view.topAnchor, left: levelCP.centerXAnchor, bottom: wordsCP.topAnchor)
+        rightLineView.anchor(top: view.topAnchor, left: menuCP.centerXAnchor, bottom: menuCP.topAnchor)
+        
+        view.addSubview(dropButton)
+        dropButton.anchor(left: newWordCP.leftAnchor, paddingLeft: 48)
+        dropButton.centerY(inView: newWordCP, constant: 16)
+    }
+    
+    private func setupNavigationBar(){
+        navigationController?.navigationBar.tintColor = Colors.black
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.black!]
+    
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+    }
     
     private func setupActions() {
         levelCP.addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(levelButtonPressed)))
@@ -149,70 +188,11 @@ final class HomeController: UIViewController {
             self.menuView.removeFromSuperview()
         }, completion: completion)
     }
- 
-    private func configureHandImage(){
-        newWordCP.button.setImage(image: Images.new, width: 35, height: 35)
-        dropButton.setImage(image: UIImage(), width: 7, height: 7)
-    }
     
     private func configureLevelProgress(){
         progressValue = wordBrain.calculateLevel()
         levelCP.button.setTitle(UserDefault.level.getString(), for: .normal)
         levelCP.setProgressWithAnimation(duration: 1.0, value: progressValue)
-    }
-    
-    private func setupNavigationBar(){
-        navigationController?.navigationBar.tintColor = Colors.black
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.black!]
-    
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-    }
-}
-
-//MARK: - Layout
-
-extension HomeController {
-    
-    func style() {
-        title = "Word Bank"
-        view.backgroundColor = Colors.cellLeft
-        
-        leftLineView.backgroundColor = .darkGray
-        centerLineView.backgroundColor = .darkGray
-        rightLineView.backgroundColor = .darkGray
-    }
-    
-    func layout() {
-        view.addSubview(leftLineView)
-        view.addSubview(centerLineView)
-        view.addSubview(rightLineView)
-        
-        view.addSubview(levelCP)
-        view.addSubview(menuCP)
-        view.addSubview(newWordCP)
-        view.addSubview(wordsCP)
-        view.addSubview(hardCP)
-        
-        view.addSubview(dropButton)
-        
-        levelCP.center = CGPoint(x: view.center.x, y: view.center.y-121)
-        newWordCP.center = CGPoint(x: view.center.x, y: view.center.y)
-        wordsCP.center = CGPoint(x: view.center.x, y: view.center.y+121)
-        menuCP.center = CGPoint(x: view.center.x+121, y: view.center.y)
-        hardCP.center = CGPoint(x: view.center.x-121, y: view.center.y)
-        
-        leftLineView.anchor(top: view.topAnchor, left: hardCP.centerXAnchor)
-        centerLineView.anchor(top: view.topAnchor, left: levelCP.centerXAnchor)
-        rightLineView.anchor(top: view.topAnchor, left: menuCP.centerXAnchor)
-        
-        leftLineView.setDimensions(width: 1, height: hardCP.center.y-40)
-        centerLineView.setDimensions(width: 1, height: wordsCP.center.y-40)
-        rightLineView.setDimensions(width: 1, height: menuCP.center.y-40)
-        
-        dropButton.centerX(inView: newWordCP)
-        dropButton.centerY(inView: newWordCP, constant: 16)
     }
 }
 
@@ -235,30 +215,27 @@ extension HomeController: LevelInfoControllerDelegate {
     }
 }
 
-//MARK: - Keyboard Height
+//MARK: - MenuViewDelegate
 
-extension HomeController {
-    func getKeyboardHeight(){
-        let textField = UITextField()
-        view.addSubview(textField)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        textField.becomeFirstResponder()
-        textField.resignFirstResponder()
-        textField.removeFromSuperview()
+extension HomeController: MenuViewDelegate {
+    func close() {
+        dismissMenuView()
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if UserDefault.keyboardHeight.getCGFloat() == 0 {
-            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                let keyboardHeight = CGFloat(keyboardSize.height)
-                UserDefault.keyboardHeight.set(keyboardHeight)
-            }
-        }
+    func daily() {
+        pushViewControllerWithDeadline(controller: DailyController())
+    }
+    
+    func awards() {
+        pushViewControllerWithDeadline(controller: AwardsController())
+    }
+    
+    func stats() {
+        pushViewControllerWithDeadline(controller: StatsController())
+    }
+    
+    func settings() {
+        pushViewControllerWithDeadline(controller: SettingsController())
     }
 }
 
@@ -311,26 +288,29 @@ extension HomeController {
     }
 }
 
-//MARK: - MenuViewDelegate
+//MARK: - Keyboard Height
 
-extension HomeController: MenuViewDelegate {
-    func close() {
-        dismissMenuView()
+extension HomeController {
+    func getKeyboardHeight(){
+        let textField = UITextField()
+        view.addSubview(textField)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        textField.becomeFirstResponder()
+        textField.resignFirstResponder()
+        textField.removeFromSuperview()
     }
     
-    func daily() {
-        pushViewControllerWithDeadline(controller: DailyController())
-    }
-    
-    func awards() {
-        pushViewControllerWithDeadline(controller: AwardsController())
-    }
-    
-    func stats() {
-        pushViewControllerWithDeadline(controller: StatsController())
-    }
-    
-    func settings() {
-        pushViewControllerWithDeadline(controller: SettingsController())
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if UserDefault.keyboardHeight.getCGFloat() == 0 {
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                let keyboardHeight = CGFloat(keyboardSize.height)
+                UserDefault.keyboardHeight.set(keyboardHeight)
+            }
+        }
     }
 }

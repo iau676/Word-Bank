@@ -17,3 +17,12 @@ func makeMenuButton(title: String, image: UIImage? = nil) -> UIButton {
     button.setDimensions(width: 100, height: 100)
     return button
 }
+
+//MARK: - View
+
+func makeLineView() -> UIView {
+    let view = UIView()
+    view.backgroundColor = .darkGray
+    view.setWidth(1)
+    return view
+}

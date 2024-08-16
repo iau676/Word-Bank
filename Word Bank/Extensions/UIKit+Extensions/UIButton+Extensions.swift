@@ -77,10 +77,6 @@ extension UIButton {
         animation.duration = 0.7
         animation.fillMode = .forwards
         layer.add(animation, forKey: nil)
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.45){
-            self.setImage(image: UIImage(), width: 7, height: 7)
-        }
     }
     
     func setTitleWithAnimation(title: String) {
