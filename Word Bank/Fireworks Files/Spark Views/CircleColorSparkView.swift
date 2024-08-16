@@ -24,11 +24,11 @@ extension UIColor {
 
     public static var sparkColorSet1: [UIColor] = {
         return [
-            Colors.green ?? UIColor.green,
-            Colors.blue ?? UIColor.blue,
-            Colors.yellow ?? UIColor.yellow,
-            Colors.pink ?? UIColor.systemPink,
-            Colors.purple ?? UIColor.purple,
+            Colors.green,
+            Colors.blue,
+            Colors.yellow,
+            Colors.pink,
+            Colors.purple,
         ]
     }()
 }

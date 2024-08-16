@@ -15,18 +15,33 @@ final class HomeController: UIViewController {
     private let centerLineView = UIView()
     private let rightLineView = UIView()
     
-    private let levelButton = UIButton()
-    private let menuButton = UIButton()
-    private let newWordsButton = UIButton()
-    private let wordsButton = UIButton()
-    private let hardWordsButton = UIButton()
     private let dropButton = UIButton()
-            
-    private let levelCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    private let newWordCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    private let wordsCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    private let menuCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
-    private let hardCP = CircularProgressView(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
+    
+    private let levelCP = CircularProgressView(progressColor: Colors.pink, trackColor: UIColor.white, bgColor: Colors.pinkLight)
+    
+    private let newWordCP: CircularProgressView = {
+       let view = CircularProgressView(progressColor: Colors.green, trackColor: Colors.green, bgColor: Colors.greenLight)
+        view.button.setImage(image: Images.new, width: 35, height: 35)
+        return view
+    }()
+    
+    private let wordsCP: CircularProgressView = {
+       let view = CircularProgressView(progressColor: Colors.blue, trackColor: Colors.blue, bgColor: Colors.blueLight)
+        view.button.setImage(image: Images.bank, width: 40, height: 40)
+        return view
+    }()
+    
+    private let hardCP: CircularProgressView = {
+       let view = CircularProgressView(progressColor: Colors.yellow, trackColor: Colors.yellow, bgColor: Colors.yellowLight)
+        view.button.setImage(image: Images.hard, width: 35, height: 35)
+        return view
+    }()
+    
+    private let menuCP: CircularProgressView = {
+       let view = CircularProgressView(progressColor: Colors.purple, trackColor: Colors.purple, bgColor: Colors.purpleLight)
+        view.button.setImage(image: Images.menu, width: 32, height: 32)
+        return view
+    }()
     
     private let menuView = MenuView()
     
@@ -41,21 +56,22 @@ final class HomeController: UIViewController {
         style()
         layout()
         setupFirstLaunch()
+        setupNavigationBar()
+        setupActions()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         wordBrain.loadItemArray()
-        setupCircularProgress()
-        setupButtonImages()
-        setupNavigationBar()
+        configureLevelProgress()
+        configureHandImage()
     }
     
     //MARK: - Selectors
     
     @objc private func levelButtonPressed() {
         levelCP.bounce()
-        levelButton.flip()
+        levelCP.button.flip()
         
         let vc = LevelInfoController()
         vc.delegate = self
@@ -72,7 +88,7 @@ final class HomeController: UIViewController {
     @objc private func newWordsButtonPressed() {
         newWordCP.bounce()
         
-        newWordsButton.setImage(image: Images.onlyHand, width: 35, height: 35)
+        newWordCP.button.setImage(image: Images.onlyHand, width: 35, height: 35)
         dropButton.setImage(image: Images.drop, width: 7, height: 7)
         dropButton.animateDropDown()
         
@@ -90,13 +106,30 @@ final class HomeController: UIViewController {
         pushViewControllerWithDeadline(controller: controller)
     }
     
-    @objc private func hardWordsButtonPressed(gesture: UISwipeGestureRecognizer) {
+    @objc private func hardWordsButtonPressed() {
         hardCP.bounce()
         let controller = WordsController(exerciseType: ExerciseType.hard)
         pushViewControllerWithDeadline(controller: controller)
     }
     
     //MARK: - Helpers
+    
+    private func setupActions() {
+        levelCP.addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(levelButtonPressed)))
+        levelCP.button.addTarget(self, action: #selector(levelButtonPressed), for: .touchUpInside)
+        
+        newWordCP.addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(newWordsButtonPressed)))
+        newWordCP.button.addTarget(self, action: #selector(newWordsButtonPressed), for: .touchUpInside)
+        
+        wordsCP.addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(wordsButtonPressed)))
+        wordsCP.button.addTarget(self, action: #selector(wordsButtonPressed), for: .touchUpInside)
+        
+        hardCP.addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(hardWordsButtonPressed)))
+        hardCP.button.addTarget(self, action: #selector(hardWordsButtonPressed), for: .touchUpInside)
+        
+        menuCP.addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(menuButtonPressed)))
+        menuCP.button.addTarget(self, action: #selector(menuButtonPressed), for: .touchUpInside)
+    }
     
     private func configureMenuView() {
         menuView.delegate = self
@@ -117,12 +150,15 @@ final class HomeController: UIViewController {
         }, completion: completion)
     }
  
-    private func setupButtonImages(){
-        menuButton.setImage(image: Images.menu, width: 35, height: 35)
-        newWordsButton.setImage(image: Images.new, width: 35, height: 35)
-        wordsButton.setImage(image: Images.bank, width: 40, height: 40)
-        hardWordsButton.setImage(image: Images.hard, width: 35, height: 35)
+    private func configureHandImage(){
+        newWordCP.button.setImage(image: Images.new, width: 35, height: 35)
         dropButton.setImage(image: UIImage(), width: 7, height: 7)
+    }
+    
+    private func configureLevelProgress(){
+        progressValue = wordBrain.calculateLevel()
+        levelCP.button.setTitle(UserDefault.level.getString(), for: .normal)
+        levelCP.setProgressWithAnimation(duration: 1.0, value: progressValue)
     }
     
     private func setupNavigationBar(){
@@ -132,41 +168,6 @@ final class HomeController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
-    }
-    
-    private func setupCircularProgress(){
-        progressValue = wordBrain.calculateLevel()
-        levelButton.setTitle(UserDefault.level.getString(), for: .normal)
-        
-        levelCP.trackColor = UIColor.white
-        levelCP.setProgressWithAnimation(duration: 1.0, value: progressValue)
-        
-        levelCP.backgroundColor = Colors.pinkLight
-        newWordCP.backgroundColor = Colors.greenLight
-        wordsCP.backgroundColor = Colors.blueLight
-        hardCP.backgroundColor =  Colors.yellowLight
-        menuCP.backgroundColor = Colors.purpleLight
-        
-        levelCP.progressColor = Colors.pink ?? .systemPink
-        newWordCP.trackColor = Colors.green ?? .green
-        wordsCP.trackColor = Colors.blue ?? .blue
-        hardCP.trackColor = Colors.yellow ?? .yellow
-        menuCP.trackColor = Colors.purple ?? .purple
-        
-        let goLevelInfo = UITapGestureRecognizer(target: self, action:  #selector(levelButtonPressed))
-        levelCP.addGestureRecognizer(goLevelInfo)
-        
-        let goNewWord = UITapGestureRecognizer(target: self, action:  #selector(newWordsButtonPressed))
-        newWordCP.addGestureRecognizer(goNewWord)
-        
-        let goWordsCP = UITapGestureRecognizer(target: self, action:  #selector(wordsButtonPressed))
-        wordsCP.addGestureRecognizer(goWordsCP)
-        
-        let goMenuCP = UITapGestureRecognizer(target: self, action:  #selector(menuButtonPressed))
-        menuCP.addGestureRecognizer(goMenuCP)
-        
-        let goHardCP = UITapGestureRecognizer(target: self, action:  #selector(hardWordsButtonPressed))
-        hardCP.addGestureRecognizer(goHardCP)
     }
 }
 
@@ -181,13 +182,6 @@ extension HomeController {
         leftLineView.backgroundColor = .darkGray
         centerLineView.backgroundColor = .darkGray
         rightLineView.backgroundColor = .darkGray
-        
-        levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
-        levelButton.addTarget(self, action: #selector(levelButtonPressed), for: .primaryActionTriggered)
-        menuButton.addTarget(self, action: #selector(menuButtonPressed), for: .primaryActionTriggered)
-        newWordsButton.addTarget(self, action: #selector(newWordsButtonPressed), for: .primaryActionTriggered)
-        wordsButton.addTarget(self, action: #selector(wordsButtonPressed), for: .primaryActionTriggered)
-        hardWordsButton.addTarget(self, action: #selector(hardWordsButtonPressed), for: .primaryActionTriggered)
     }
     
     func layout() {
@@ -201,11 +195,6 @@ extension HomeController {
         view.addSubview(wordsCP)
         view.addSubview(hardCP)
         
-        view.addSubview(levelButton)
-        view.addSubview(menuButton)
-        view.addSubview(newWordsButton)
-        view.addSubview(wordsButton)
-        view.addSubview(hardWordsButton)
         view.addSubview(dropButton)
         
         levelCP.center = CGPoint(x: view.center.x, y: view.center.y-121)
@@ -222,21 +211,6 @@ extension HomeController {
         centerLineView.setDimensions(width: 1, height: wordsCP.center.y-40)
         rightLineView.setDimensions(width: 1, height: menuCP.center.y-40)
         
-        levelButton.centerX(inView: levelCP)
-        levelButton.centerY(inView: levelCP)
-        
-        menuButton.centerX(inView: menuCP)
-        menuButton.centerY(inView: menuCP)
-        
-        newWordsButton.centerX(inView: newWordCP)
-        newWordsButton.centerY(inView: newWordCP)
-        
-        wordsButton.centerX(inView: wordsCP)
-        wordsButton.centerY(inView: wordsCP)
-        
-        hardWordsButton.centerX(inView: hardCP)
-        hardWordsButton.centerY(inView: hardCP)
-        
         dropButton.centerX(inView: newWordCP)
         dropButton.centerY(inView: newWordCP, constant: 16)
     }
@@ -247,15 +221,15 @@ extension HomeController {
 extension HomeController: LevelInfoControllerDelegate {
     func updateLevelButtonTitleAfterPressed(isInt: Bool) {
         if isInt {
-            UIView.transition(with: self.levelButton, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
+            UIView.transition(with: self.levelCP.button, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
-                self.levelButton.setTitle(UserDefault.level.getString(), for: .normal)
-                self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
+                self.levelCP.button.setTitle(UserDefault.level.getString(), for: .normal)
+                self.levelCP.button.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
             }
         } else {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
-                self.levelButton.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
-                self.levelButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 20)
+                self.levelCP.button.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
+                self.levelCP.button.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 20)
             }
         }
     }

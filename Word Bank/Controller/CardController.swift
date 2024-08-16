@@ -195,7 +195,7 @@ extension CardController {
         if xFromCenter > 0 {
             imageView.image = Images.check
         } else {
-            imageView.image = Images.hard?.withTintColor(Colors.yellow ?? .yellow).withRenderingMode(.alwaysOriginal)
+            imageView.image = Images.hard?.withTintColor(Colors.yellow).withRenderingMode(.alwaysOriginal)
         }
         
         imageView.alpha = abs(xFromCenter) / view.center.x

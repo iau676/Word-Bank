@@ -13,17 +13,17 @@ enum Colors {
     static let cellRight                 = UIColor(hex: "#F5F5F5")
     static let cellLeft                  = UIColor(hex: "#DFDEDE")
     
-    static let pink                      = UIColor(hex: "#fc8da5")
-    static let green                     = UIColor(hex: "#17bf8c")
-    static let blue                      = UIColor(hex: "#1cbaeb")
-    static let yellow                    = UIColor(hex: "#ffbf47")
-    static let purple                    = UIColor(hex: "#af52de")
+    static let pink                      = UIColor(hex: "#fc8da5") ?? .systemPink
+    static let green                     = UIColor(hex: "#17bf8c") ?? .systemGreen
+    static let blue                      = UIColor(hex: "#1cbaeb") ?? .systemBlue
+    static let yellow                    = UIColor(hex: "#ffbf47") ?? .systemYellow
+    static let purple                    = UIColor(hex: "#af52de") ?? .systemPurple
     
-    static let pinkLight                 = UIColor(hex: "#f198ab")
-    static let greenLight                = UIColor(hex: "#27e5ab")
-    static let blueLight                 = UIColor(hex: "#58ccf0")
-    static let yellowLight               = UIColor(hex: "#ffdb99")
-    static let purpleLight               = UIColor(hex: "#cd92ea")
+    static let pinkLight                 = UIColor(hex: "#f198ab") ?? .systemPink
+    static let greenLight                = UIColor(hex: "#27e5ab") ?? .systemGreen
+    static let blueLight                 = UIColor(hex: "#58ccf0") ?? .systemBlue
+    static let yellowLight               = UIColor(hex: "#ffdb99") ?? .systemYellow
+    static let purpleLight               = UIColor(hex: "#cd92ea") ?? .systemPurple
     
     static let d6d6d6                    = UIColor(hex: "#d6d6d6")
     static let f6f6f6                    = UIColor(hex: "#f6f6f6")

@@ -13,6 +13,10 @@ class CircularProgressView: UIView {
     var progressLayer = CAShapeLayer()
     var trackLayer = CAShapeLayer()
     
+    var progressColor: UIColor
+    var trackColor: UIColor
+    var bgColor: UIColor
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -21,30 +25,22 @@ class CircularProgressView: UIView {
     }
     */
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var button = UIButton()
+    
+    init(progressColor: UIColor, trackColor: UIColor, bgColor: UIColor) {
+        self.progressColor = progressColor
+        self.trackColor = trackColor
+        self.bgColor = bgColor
+        super.init(frame: CGRect(x: 10.0, y: 10.0, width: 100.0, height: 100.0))
         createCircularPath()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        createCircularPath()
-    }
-    
-    var progressColor = UIColor.white {
-        didSet {
-            progressLayer.strokeColor = progressColor.cgColor
-        }
-    }
-    
-    var trackColor = UIColor.white {
-        didSet {
-            trackLayer.strokeColor = trackColor.cgColor
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     fileprivate func createCircularPath() {
-        self.backgroundColor = Colors.raven
+        self.backgroundColor = bgColor
         self.layer.cornerRadius = self.frame.size.width/2
         let circlePath = UIBezierPath(arcCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), radius: (frame.size.width - 1.5)/2, startAngle: CGFloat(-0.5 * .pi), endAngle: CGFloat(1.5 * .pi), clockwise: true)
         trackLayer.path = circlePath.cgPath
@@ -60,6 +56,11 @@ class CircularProgressView: UIView {
         progressLayer.lineWidth = 7.0
         progressLayer.strokeEnd = 0.0
         layer.addSublayer(progressLayer)
+        
+        button.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
+        addSubview(button)
+        button.centerX(inView: self)
+        button.centerY(inView: self)
     }
     
     func setProgressWithAnimation(duration: TimeInterval, value: Float) {

@@ -136,13 +136,13 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
             cell.awardLabel.text = "LEVEL"
             if levelTitleArray[indexPath.row] <= UserDefault.level.getInt() {
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
+                cell.titleLabel.textColor = Colors.blue
             } else if levelTitleArray[indexPath.row] - UserDefault.level.getInt() < 10 {
                 let value = Float(levelTitleArray[indexPath.row] - UserDefault.level.getInt()) * 0.1
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
+                cell.titleLabel.textColor = Colors.blue
             } else {
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
                 cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
@@ -153,13 +153,13 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
             cell.awardLabel.text = "WORDS"
             if wordsTitleArray[indexPath.row] <= itemArray.count {
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
+                cell.titleLabel.textColor = Colors.blue
             } else if wordsTitleArray[indexPath.row] - itemArray.count < 500 {
                 let value = Float(wordsTitleArray[indexPath.row] - itemArray.count) / 5 * 0.01
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
+                cell.titleLabel.textColor = Colors.blue
             } else {
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
                 cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
@@ -170,13 +170,13 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
             cell.awardLabel.text = "EXERCISES"
             if exercisesTitleArray[indexPath.row] <= exerciseArray.count {
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
+                cell.titleLabel.textColor = Colors.blue
             } else if exercisesTitleArray[indexPath.row] - exerciseArray.count < 1000 {
                 let value = Float(exercisesTitleArray[indexPath.row] - exerciseArray.count) / 10 * 0.01
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue ?? .blue)
-                cell.titleLabel.textColor = Colors.blue ?? .blue
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
+                cell.titleLabel.textColor = Colors.blue
             } else {
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
                 cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)

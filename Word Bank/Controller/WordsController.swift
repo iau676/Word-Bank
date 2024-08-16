@@ -188,9 +188,9 @@ class WordsController: UIViewController {
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
         if exerciseType == ExerciseType.normal {
-            gradient.colors = [Colors.blue!.cgColor, Colors.blueLight!.cgColor]
+            gradient.colors = [Colors.blue.cgColor, Colors.blueLight.cgColor]
         } else {
-            gradient.colors = [Colors.yellow!.cgColor, Colors.yellowLight!.cgColor]
+            gradient.colors = [Colors.yellow.cgColor, Colors.yellowLight.cgColor]
         }
         view.layer.insertSublayer(gradient, at: 0)
     }
