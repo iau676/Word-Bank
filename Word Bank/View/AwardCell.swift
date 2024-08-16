@@ -52,7 +52,7 @@ class AwardCell: UICollectionViewCell {
         super.init(frame: .zero)
         
         badgeCP.trackColor = Colors.d9d9d9 ?? .darkGray
-        badgeCP.progressColor = Colors.blue ?? .blue
+        badgeCP.progressColor = Colors.blue
         badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
         badgeCP.center = CGPoint(x: contentView.center.x+65, y: contentView.center.y+70)
         

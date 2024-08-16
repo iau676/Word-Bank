@@ -190,7 +190,7 @@ final class HomeController: UIViewController {
     }
     
     private func configureLevelProgress(){
-        progressValue = wordBrain.calculateLevel()
+        progressValue = Level.shared.calculateLevel()
         levelCP.button.setTitle(UserDefault.level.getString(), for: .normal)
         levelCP.setProgressWithAnimation(duration: 1.0, value: progressValue)
     }

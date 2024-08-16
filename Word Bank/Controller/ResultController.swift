@@ -202,7 +202,7 @@ class ResultController: UIViewController {
 
     private func checkLevelUp(){
         lastLevel = UserDefault.level.getInt()
-         _ = wordBrain.calculateLevel()
+        _ = Level.shared.calculateLevel()
         newLevel = UserDefault.level.getInt()
         
         UserDefault.goLevelUp.set(0)

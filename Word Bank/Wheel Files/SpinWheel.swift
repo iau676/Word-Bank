@@ -340,7 +340,7 @@ class SpinWheel: SKSpriteNode {
     }
     
     func createBackgroundBlocker(_ winnningIndex: Int) {
-        let prizePoint: Int = wordBrain.getPrizePoint()
+        let prizePoint: Int = Level.shared.getPrizePoint()
         let prizeImage: String = slots[winnningIndex][1]
         
         backgroundBlocker = SKSpriteNode(color: UIColor(white: 0.2, alpha: 0.9), size: self.size)
