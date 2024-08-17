@@ -371,7 +371,6 @@ extension WordsController: UITableViewDelegate {
             self.goEdit = 1
             self.editIndex = indexPath.row
             let controller = AddEditController()
-            controller.goEdit = 1
             controller.item = item
             controller.modalPresentationStyle = .overCurrentContext
             controller.delegate = self

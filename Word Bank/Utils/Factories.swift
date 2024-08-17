@@ -62,8 +62,9 @@ func makeLineView() -> UIView {
 func makeTextField(placeholder: String) -> UITextField {
     let tf = UITextField()
     tf.placeholder = placeholder
-    tf.keyboardType = .asciiCapable
+    tf.textColor = Colors.black
     tf.backgroundColor = Colors.cellRight
+    tf.keyboardType = .asciiCapable
     tf.layer.cornerRadius = 8
     tf.setLeftPaddingPoints(10)
     tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
