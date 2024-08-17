@@ -65,6 +65,17 @@ class AddEditController: UIViewController {
         delegate?.onViewWillDisappear()
     }
     
+    override func viewDidLayoutSubviews() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = saveButton.bounds
+        gradientLayer.colors = [Colors.green.cgColor, Colors.lightGreen.cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
+        gradientLayer.cornerRadius = 8
+        gradientLayer.locations = [0.0, 1.0]
+        saveButton.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
     //MARK: - Selectors
     
     @objc private func addButtonPressed(_ sender: Any) {
