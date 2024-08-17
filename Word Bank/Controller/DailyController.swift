@@ -39,25 +39,16 @@ class DailyController: UIViewController {
     
     private lazy var testTaskView: UIView = {
        let view = TaskView(title: "Complete 10 Test Exercise", exerciseCount: testExerciseCount)
-        view.isUserInteractionEnabled = true
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(testTaskPressed))
-        view.addGestureRecognizer(tapGestureRecognizer)
         return view
     }()
     
     private lazy var writingTaskView: UIView = {
        let view = TaskView(title: "Complete 10 Writing Exercise", exerciseCount: writingExerciseCount)
-        view.isUserInteractionEnabled = true
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(writingTaskPressed))
-        view.addGestureRecognizer(tapGestureRecognizer)
         return view
     }()
     
     private lazy var listeningTaskView: UIView = {
        let view = TaskView(title: "Complete 10 Listening Exercise", exerciseCount: listeningExerciseCount)
-        view.isUserInteractionEnabled = true
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(listeningTaskPressed))
-        view.addGestureRecognizer(tapGestureRecognizer)
         return view
     }()
     
@@ -80,6 +71,7 @@ class DailyController: UIViewController {
 
         configureUI()
         configurePrizeButton()
+        addGestures()
     }
     
     //MARK: - Selectors
@@ -147,6 +139,17 @@ class DailyController: UIViewController {
                 prizeButton.isEnabled = true
             }
         }
+    }
+    
+    private func addGestures() {
+        testTaskView.isUserInteractionEnabled = true
+        testTaskView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(testTaskPressed)))
+        
+        writingTaskView.isUserInteractionEnabled = true
+        writingTaskView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(writingTaskPressed)))
+        
+        listeningTaskView.isUserInteractionEnabled = true
+        listeningTaskView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(listeningTaskPressed)))
     }
     
     private func checkWordCountAndNavigate(controller: UIViewController) {

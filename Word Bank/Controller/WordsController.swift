@@ -184,25 +184,18 @@ class WordsController: UIViewController {
         label.numberOfLines = 1
     }
     
-    private func setupBackgroundColor(){
+    private func setupBackgroundColor() {
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
-        if exerciseType == ExerciseType.normal {
-            gradient.colors = [Colors.blue.cgColor, Colors.blueLight.cgColor]
-        } else {
-            gradient.colors = [Colors.yellow.cgColor, Colors.yellowLight.cgColor]
-        }
+        let topColor = exerciseType == ExerciseType.normal ? Colors.blue : Colors.yellow
+        let bottomColor = exerciseType == ExerciseType.normal ? Colors.blueLight : Colors.yellowLight
+        gradient.colors = [topColor.cgColor, bottomColor.cgColor]
         view.layer.insertSublayer(gradient, at: 0)
     }
     
-    private func setupNavigationBar(){
+    private func setupNavigationBar() {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
-        
-        if exerciseType == ExerciseType.normal {
-            title = "Words"
-        } else {
-            title = "Hard Words"
-        }
+        title = exerciseType == ExerciseType.normal ? "Words" : "Hard Words"
     }
     
     private func setupButtons(){

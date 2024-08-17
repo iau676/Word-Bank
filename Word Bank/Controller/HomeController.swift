@@ -62,7 +62,7 @@ final class HomeController: UIViewController {
         configureUI()
         setupNavigationBar()
         setupFirstLaunch()
-        setupActions()
+        addGestures()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -153,7 +153,7 @@ final class HomeController: UIViewController {
         navigationController?.navigationBar.isTranslucent = true
     }
     
-    private func setupActions() {
+    private func addGestures() {
         levelCP.addGestureRecognizer(UITapGestureRecognizer(target: self, action:  #selector(levelButtonPressed)))
         levelCP.button.addTarget(self, action: #selector(levelButtonPressed), for: .touchUpInside)
         
@@ -172,6 +172,12 @@ final class HomeController: UIViewController {
     
     private func configureMenuView() {
         menuView.delegate = self
+        
+        let gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors = [Colors.purple.cgColor, Colors.purpleLight.cgColor]
+        menuView.layer.insertSublayer(gradient, at: 0)
+        
         view.addSubview(menuView)
         menuView.anchor(top: view.topAnchor, left: view.leftAnchor,
                           right: view.rightAnchor, height: view.frame.height)
