@@ -117,7 +117,7 @@ final class HomeController: UIViewController {
     
     private func configureUI() {
         title = "Word Bank"
-        view.backgroundColor = Colors.cellLeft
+        view.backgroundColor = Colors.cellRight
         
         view.addSubview(leftLineView)
         view.addSubview(centerLineView)
@@ -146,7 +146,7 @@ final class HomeController: UIViewController {
     
     private func setupNavigationBar(){
         navigationController?.navigationBar.tintColor = Colors.black
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.black!]
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.black]
     
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()

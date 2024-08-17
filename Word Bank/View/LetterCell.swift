@@ -15,7 +15,7 @@ class LetterCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
-        label.textColor = Colors.black ?? .darkGray
+        label.textColor = Colors.black
         return label
     }()
     

@@ -25,7 +25,7 @@ class AwardCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 19)
-        label.textColor = Colors.b9b9b9 ?? .darkGray
+        label.textColor = Colors.b9b9b9
         return label
     }()
     
@@ -44,14 +44,14 @@ class AwardCell: UICollectionViewCell {
         button.setTitle("", for: .normal)
         button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
         button.backgroundColor = .clear
-        button.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
+        button.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9)
         return button
     }()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
-        badgeCP.trackColor = Colors.d9d9d9 ?? .darkGray
+        badgeCP.trackColor = Colors.d9d9d9
         badgeCP.progressColor = Colors.blue
         badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
         badgeCP.center = CGPoint(x: contentView.center.x+65, y: contentView.center.y+70)

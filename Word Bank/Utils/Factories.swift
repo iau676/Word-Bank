@@ -32,7 +32,7 @@ func makeTestAnswerButton() -> UIButton {
      button.backgroundColor = .clear
      button.layer.cornerRadius = 18
      button.layer.borderWidth = 5
-     button.layer.borderColor = Colors.testAnswerLayer?.cgColor
+     button.layer.borderColor = Colors.testAnswerLayer.cgColor
      return button
 }
 
@@ -41,7 +41,7 @@ func makeListeningAnswerButton() -> UIButton {
      button.setImage(Images.sound?.imageResized(to: CGSize(width: 50, height: 50)), for: .normal)
      button.backgroundColor = .clear
      button.layer.borderWidth = 5
-     button.layer.borderColor = Colors.testAnswerLayer?.cgColor
+     button.layer.borderColor = Colors.testAnswerLayer.cgColor
      button.setDimensions(width: 90, height: 90)
      button.setButtonCornerRadius(90 / 2)
      button.titleLabel?.font = UIFont.systemFont(ofSize: 0)

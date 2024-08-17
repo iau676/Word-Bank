@@ -99,8 +99,7 @@ class WritingController: UIViewController {
     private lazy var backspaceButton: UIButton = {
        let button = UIButton()
         button.isHidden = !(selectedTyping == 0)
-        button.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20,
-                                                  color: Colors.black ?? .black)
+        button.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20, color: Colors.black)
         button.addTarget(self, action: #selector(backspaceButtonPressed),
                                   for: .primaryActionTriggered)
         return button

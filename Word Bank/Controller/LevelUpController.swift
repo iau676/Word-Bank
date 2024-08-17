@@ -73,7 +73,7 @@ class LevelUpController: UIViewController {
         
         continueButton.setTitle("Continue", for: .normal)
         continueButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 23)
-        continueButton.layer.shadowColor = Colors.darkGrayShadow?.cgColor
+        continueButton.layer.shadowColor = Colors.darkGrayShadow.cgColor
         continueButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
         continueButton.layer.shadowOpacity = 1.0
         continueButton.layer.shadowRadius = 0.0

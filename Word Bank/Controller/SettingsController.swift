@@ -162,7 +162,7 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     }
     
     private func updateSegmentedControlTextSize(_ segmentedControl: UISegmentedControl){
-        segmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black!, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
+        segmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
     }
     
     private func updateLabelTextSize(_ label: UILabel){
@@ -236,7 +236,7 @@ extension SettingsController {
         exerciseSettingsButton.layer.cornerRadius = 10
         exerciseSettingsButton.setImageWithRenderingMode(image: Images.next,
                                                          width: 18, height: 18,
-                                                         color: Colors.black ?? .black)
+                                                         color: Colors.black)
         exerciseSettingsButton.addTarget(self, action: #selector(exerciseSettingsButtonPressed),
                                          for: .primaryActionTriggered)
     }

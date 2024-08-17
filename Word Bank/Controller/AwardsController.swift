@@ -145,7 +145,7 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
                 cell.titleLabel.textColor = Colors.blue
             } else {
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9)
                 cell.titleLabel.textColor = Colors.b9b9b9
             }
         case wordsCV:
@@ -162,7 +162,7 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
                 cell.titleLabel.textColor = Colors.blue
             } else {
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9)
                 cell.titleLabel.textColor = Colors.b9b9b9
             }
         case exercisesCV:
@@ -179,7 +179,7 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
                 cell.titleLabel.textColor = Colors.blue
             } else {
                 cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9 ?? .darkGray)
+                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9)
                 cell.titleLabel.textColor = Colors.b9b9b9
             }
         default: break

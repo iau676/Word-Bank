@@ -70,7 +70,7 @@ class ExerciseSettingsController: UIViewController {
         
         testTypeSegmentedControl.tintColor = .black
         testTypeSegmentedControl.replaceSegments(segments: ["English - Meaning", "Meaning - English"])
-        testTypeSegmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black ?? .black,
+        testTypeSegmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black,
                                                          .font: UIFont.systemFont(ofSize: textSize-3),], for: .normal)
         testTypeSegmentedControl.selectedSegmentIndex = UserDefault.selectedTestType.getInt()
         testTypeSegmentedControl.addTarget(self, action: #selector(testTypeChanged(_:)),
@@ -171,12 +171,12 @@ extension ExerciseSettingsController: UICollectionViewDataSource {
         switch collectionView {
         case pointCV:
             cell.imageView.image = (indexPath.row == 0) ? Images.greenBubble : Images.greenCircle
-            cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedPointEffect.getInt()) ? Colors.blue.cgColor : Colors.d6d6d6?.cgColor
+            cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedPointEffect.getInt()) ? Colors.blue.cgColor : Colors.d6d6d6.cgColor
         case typingCV:
             cell.imageView.image = (indexPath.row == 0) ? Images.customKeyboard : Images.defaultKeyboard
             cell.imageView.layer.cornerRadius = 8
             cell.imageView.clipsToBounds = true
-            cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedTyping.getInt()) ? Colors.blue.cgColor : Colors.d6d6d6?.cgColor
+            cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedTyping.getInt()) ? Colors.blue.cgColor : Colors.d6d6d6.cgColor
         default: break
         }
         return cell

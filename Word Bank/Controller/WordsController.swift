@@ -222,7 +222,7 @@ class WordsController: UIViewController {
     }
     
     private  func setupButtonShadow(_ button: UIButton) {
-        button.layer.shadowColor = Colors.ravenShadow?.cgColor
+        button.layer.shadowColor = Colors.ravenShadow.cgColor
         button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         button.layer.shadowOpacity = 1.0
         button.layer.shadowRadius = 0.0
