@@ -37,6 +37,7 @@
 		70209B2B2759613900D527D3 /* WordBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70209B2A2759613900D527D3 /* WordBrain.swift */; };
 		7027F691275B9B84001F6068 /* WordsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F690275B9B84001F6068 /* WordsController.swift */; };
 		702AF782292365D600CD0B86 /* silent.aac in Resources */ = {isa = PBXBuildFile; fileRef = 702AF781292365D600CD0B86 /* silent.aac */; };
+		703747832C70155A002AC4A3 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703747822C70155A002AC4A3 /* TaskView.swift */; };
 		7039B87A27A6A04700519D39 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7039B87927A6A04700519D39 /* CircularProgressView.swift */; };
 		704F9378290711C50095BF0D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704F9377290711C50095BF0D /* UITextField+Extensions.swift */; };
 		70509AA829C9CCDE00372655 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA729C9CCDE00372655 /* BubbleView.swift */; };
@@ -134,6 +135,7 @@
 		70209B2A2759613900D527D3 /* WordBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBrain.swift; sourceTree = "<group>"; };
 		7027F690275B9B84001F6068 /* WordsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsController.swift; sourceTree = "<group>"; };
 		702AF781292365D600CD0B86 /* silent.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = silent.aac; sourceTree = "<group>"; };
+		703747822C70155A002AC4A3 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		7039B87927A6A04700519D39 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		704F9377290711C50095BF0D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		70509AA729C9CCDE00372655 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
 				70509AA729C9CCDE00372655 /* BubbleView.swift */,
 				70925E372C6E8B04007CB4E9 /* MenuView.swift */,
+				703747822C70155A002AC4A3 /* TaskView.swift */,
 				706CBAD527593993008B4773 /* WordCell.xib */,
 				706CBAB827592F8D008B4773 /* Main.storyboard */,
 			);
@@ -584,6 +587,7 @@
 				700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */,
 				70134170291D5723001967E1 /* CircleColorSparkView.swift in Sources */,
 				7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */,
+				703747832C70155A002AC4A3 /* TaskView.swift in Sources */,
 				70175BC427E71F170053CBDB /* CardController.swift in Sources */,
 				70509AAA29C9DAD000372655 /* WritingController.swift in Sources */,
 				706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */,
