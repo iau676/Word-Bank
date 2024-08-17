@@ -59,7 +59,6 @@ enum Videos {
 }
 
 enum Sounds {
-    static let mario                     = "mario"
     static let falsee                    = "false"
     static let truee                     = "true"
     static let beep                      = "beep"
@@ -77,7 +76,7 @@ enum Images {
     static let wheel_prize_present       = UIImage(named: "wheel_prize_present")
     static let confetti                  = UIImage(named: "confetti")
     static let arrow_back                = UIImage(named: "arrow_back")
-    static let coin                      = UIImage(named: "coin")
+    static let dropBlue                  = UIImage(named: "dropBlue")
     
     static let home                      = UIImage(named: "home")
     static let giftBox                   = UIImage(named: "gift-box")

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AVFoundation
 import CoreData
 
 protocol AddEditControllerDelegate : AnyObject {
@@ -17,28 +16,19 @@ protocol AddEditControllerDelegate : AnyObject {
 class AddEditController: UIViewController {
     
     var item: Item?
+    var goEdit = 0
     weak var delegate: AddEditControllerDelegate?
+    private var wordBrain = WordBrain()
     
-    private let coinButtonView = UIButton()
-    private let coinButton = UIButton()
+    private var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
+    private let textViewHeight: CGFloat = 214
     
+    private let flipButton = UIButton()
     private let textView = UIView()
     private let stackView = UIStackView()
     private let engTxtField = UITextField()
     private let trTxtField = UITextField()
     private let addButton = UIButton()
-    
-    private var player = Player()
-    private var wordBrain = WordBrain()
-    
-    var goEdit = 0
-    
-    private var coinButtonImage: UIImage { return goEdit == 0 ? Images.coin! : Images.check!}
-    private var coinButtonAnimation: UIView.AnimationOptions { return goEdit == 0 ?
-        .transitionFlipFromTop : .transitionFlipFromLeft }
-    
-    private var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
-    private let textViewHeight: CGFloat = 214
     
     //MARK: - Life Cycle
     
@@ -53,7 +43,7 @@ class AddEditController: UIViewController {
         configureColor()
         configureTextFields()
         cofigureTextViewYAnchor()
-        addGestureRecognizer()
+        addSwipeGesture()
         checkEditStatus()
     }
     
@@ -69,7 +59,6 @@ class AddEditController: UIViewController {
             let eng = engTxtField.text!
             let meaning = trTxtField.text!
            if engTxtField.text!.count <= 20 {
-                player.playMP3(Sounds.mario)
                 if goEdit == 0 {
                     wordBrain.addWord(english: eng, meaning: meaning)
                 } else {
@@ -83,20 +72,12 @@ class AddEditController: UIViewController {
                 engTxtField.text = ""
                 engTxtField.becomeFirstResponder()
 
-                flipCoinButton()
+                animateFlipButton()
                 delegate?.updateTableView()
             } else {
                 showAlert(title: "Max character is 20", message: "")
             }
         }
-    }
-    
-    @objc private func coinButtonViewPressed(_ sender: UIButton) {
-        checkAction()
-    }
-    
-    @objc private func coinButtonPressed(_ sender: UIButton) {
-        checkAction()
     }
         
     @objc private func dismissView(){
@@ -106,7 +87,7 @@ class AddEditController: UIViewController {
     
     //MARK: - Helpers
     
-    private func configureColor(){
+    private func configureColor() {
         engTxtField.textColor = Colors.black
         trTxtField.textColor = Colors.black
         engTxtField.backgroundColor = Colors.cellRight
@@ -115,12 +96,12 @@ class AddEditController: UIViewController {
         addButton.setTitleColor(Colors.cellRight, for: .normal)
     }
 
-    private func setupButtons(){
+    private func setupButtons() {
         setupButton(button: addButton, buttonTitle: "", image: Images.plus, imageSize: 23, cornerRadius: 6)
-        coinButton.deleteBackgroundImage()
+        flipButton.deleteBackgroundImage()
     }
     
-    private func configureTextFields(){
+    private func configureTextFields() {
         setupTxtField(txtFld: engTxtField, placeholder: "English")
         setupTxtField(txtFld: trTxtField, placeholder: "Meaning")
         
@@ -140,7 +121,7 @@ class AddEditController: UIViewController {
         }
     }
     
-    private func cofigureTextViewYAnchor(){
+    private func cofigureTextViewYAnchor() {
         if keyboardHeight+(textViewHeight/2) > view.frame.height/2 {
             textView.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-120).isActive = true
             stackView.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-120).isActive = true
@@ -218,25 +199,19 @@ extension AddEditController: UITextFieldDelegate {
 //MARK: - Flip Button
 
 extension AddEditController {
-    
-    private func flipCoinButton(){
-        coinButton.setBackgroundImage(coinButtonImage, for: .normal)
-        UIView.transition(with: coinButton, duration: 0.2, options: coinButtonAnimation, animations: nil, completion: nil)
-        scheduledTimer(timeInterval: 0.3, #selector(flipSecond))
-        scheduledTimer(timeInterval: 0.7, #selector(animateDown))
+    private func animateFlipButton() {
+        let flipButtonImage = goEdit == 0 ? Images.dropBlue! : Images.check!
+        flipButton.setBackgroundImage(flipButtonImage, for: .normal)
+        UIView.transition(with: flipButton, duration: 0.2, options: .transitionFlipFromLeft, animations: nil) { _ in
+            UIView.transition(with: self.flipButton, duration: 0.5, options: .transitionFlipFromLeft, animations: nil) { _ in
+                self.flipButton.animateCoinDown(y: self.view.frame.height-UserDefault.keyboardHeight.getCGFloat()-66)
+            }
+        }
         scheduledTimer(timeInterval: 1.5, #selector(deleteButtonBackgroundImage))
     }
-    
-    @objc private func flipSecond(){
-        UIView.transition(with: coinButton, duration: 0.5, options: coinButtonAnimation, animations: nil, completion: nil)
-    }
-    
-    @objc private func animateDown(){
-        coinButton.animateCoinDown(y: self.view.frame.height-UserDefault.keyboardHeight.getCGFloat()-66)
-    }
 
-    @objc private func deleteButtonBackgroundImage(){
-        coinButton.deleteBackgroundImage()
+    @objc private func deleteButtonBackgroundImage() {
+        flipButton.deleteBackgroundImage()
     }
 }
 
@@ -246,8 +221,6 @@ extension AddEditController {
     
     private func style(){
         view.backgroundColor = Colors.darkBackground
-        
-        coinButton.addTarget(self, action: #selector(coinButtonPressed), for: .touchUpInside)
         
         textView.backgroundColor = Colors.cellLeft
         textView.setViewCornerRadius(10)
@@ -275,8 +248,10 @@ extension AddEditController {
     }
     
     private func layout(){
-        coinButtonView.addSubview(coinButton)
-        view.addSubview(coinButtonView)
+        view.addSubview(flipButton)
+        flipButton.centerX(inView: view)
+        flipButton.setDimensions(width: 120, height: 120)
+        flipButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
         
         stackView.addArrangedSubview(engTxtField)
         stackView.addArrangedSubview(trTxtField)
@@ -284,13 +259,6 @@ extension AddEditController {
         
         textView.addSubview(stackView)
         view.addSubview(textView)
-        
-        coinButtonView.setDimensions(width: view.bounds.width,
-                                     height: view.frame.size.height-(view.center.y+130))
-        coinButtonView.anchor(top: view.topAnchor, paddingTop: 32)
-        
-        coinButton.setDimensions(width: 120, height: 120)
-        coinButton.centerX(inView: view)
         
         textView.setDimensions(width: view.frame.size.width-32, height: 214)
         textView.centerX(inView: view)
@@ -305,11 +273,7 @@ extension AddEditController {
 //MARK: - Swipe Gesture
 
 extension AddEditController {
-    
-    private func addGestureRecognizer(){
-        let dismissView = UITapGestureRecognizer(target: self, action:  #selector(coinButtonViewPressed))
-        self.coinButtonView.addGestureRecognizer(dismissView)
-        
+    private func addSwipeGesture() {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownGesture))
         swipeDown.direction = .down
         view.addGestureRecognizer(swipeDown)
