@@ -24,11 +24,32 @@ class AddEditController: UIViewController {
     private let textViewHeight: CGFloat = 214
     
     private let flipButton = UIButton()
-    private let textView = UIView()
-    private let stackView = UIStackView()
-    private let engTxtField = UITextField()
-    private let trTxtField = UITextField()
-    private let addButton = UIButton()
+    private let engTxtField = makeTextField(placeholder: "English")
+    private let meaningTxtField = makeTextField(placeholder: "Meaning")
+    
+    private let secondView: UIView = {
+        let view = UIView()
+        view.backgroundColor = Colors.cellLeft
+        view.setViewCornerRadius(10)
+        return view
+    }()
+    
+    private let stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.distribution = .fillEqually
+        return stack
+    }()
+    
+    private lazy var addButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .darkGray
+        button.layer.cornerRadius = 8
+        button.setTitle("+", for: .normal)
+        button.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
+        return button
+    }()
     
     //MARK: - Life Cycle
     
@@ -36,15 +57,8 @@ class AddEditController: UIViewController {
         wordBrain.loadItemArray()
         wordBrain.loadHardItemArray()
         
-        style()
-        layout()
-        
-        setupButtons()
-        configureColor()
-        configureTextFields()
-        cofigureTextViewYAnchor()
+        configureUI()
         addSwipeGesture()
-        checkEditStatus()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,9 +69,9 @@ class AddEditController: UIViewController {
     
     @objc private func addButtonPressed(_ sender: Any) {
         addButton.bounce()
-        if engTxtField.text!.count > 0 && trTxtField.text!.count > 0 {
+        if engTxtField.text!.count > 0 && meaningTxtField.text!.count > 0 {
             let eng = engTxtField.text!
-            let meaning = trTxtField.text!
+            let meaning = meaningTxtField.text!
            if engTxtField.text!.count <= 20 {
                 if goEdit == 0 {
                     wordBrain.addWord(english: eng, meaning: meaning)
@@ -68,7 +82,7 @@ class AddEditController: UIViewController {
                     scheduledTimer(timeInterval: 0.8, #selector(dismissView))
                 }
                 
-                trTxtField.text = ""
+                meaningTxtField.text = ""
                 engTxtField.text = ""
                 engTxtField.becomeFirstResponder()
 
@@ -87,11 +101,40 @@ class AddEditController: UIViewController {
     
     //MARK: - Helpers
     
+    private func configureUI() {
+        view.backgroundColor = Colors.darkBackground
+        
+        setupButtons()
+        configureColor()
+        configureTextFields()
+        cofigureTextViewYAnchor()
+        
+        view.addSubview(flipButton)
+        flipButton.centerX(inView: view)
+        flipButton.setDimensions(width: 120, height: 120)
+        flipButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        
+        stackView.addArrangedSubview(engTxtField)
+        stackView.addArrangedSubview(meaningTxtField)
+        stackView.addArrangedSubview(addButton)
+        
+        secondView.addSubview(stackView)
+        view.addSubview(secondView)
+        
+        secondView.setDimensions(width: view.frame.size.width-32, height: 214)
+        secondView.centerX(inView: view)
+        secondView.centerY(inView: view)
+        
+        stackView.setDimensions(width: view.bounds.width-64, height: 182)
+        stackView.centerY(inView: view)
+        stackView.centerX(inView: view)
+    }
+    
     private func configureColor() {
         engTxtField.textColor = Colors.black
-        trTxtField.textColor = Colors.black
+        meaningTxtField.textColor = Colors.black
         engTxtField.backgroundColor = Colors.cellRight
-        trTxtField.backgroundColor = Colors.cellRight
+        meaningTxtField.backgroundColor = Colors.cellRight
         addButton.changeBackgroundColor(to: .darkGray)
         addButton.setTitleColor(Colors.cellRight, for: .normal)
     }
@@ -102,28 +145,29 @@ class AddEditController: UIViewController {
     }
     
     private func configureTextFields() {
-        setupTxtField(txtFld: engTxtField, placeholder: "English")
-        setupTxtField(txtFld: trTxtField, placeholder: "Meaning")
-        
+        engTxtField.delegate = self
+        meaningTxtField.delegate = self
         engTxtField.becomeFirstResponder()
-        
-        engTxtField.keyboardType = .asciiCapable
-        trTxtField.keyboardType = .asciiCapable
         
         switch UserDefault.userInterfaceStyle {
         case "dark":
             engTxtField.keyboardAppearance = .dark
-            trTxtField.keyboardAppearance = .dark
+            meaningTxtField.keyboardAppearance = .dark
             break
         default:
             engTxtField.keyboardAppearance = .default
-            trTxtField.keyboardAppearance = .default
+            meaningTxtField.keyboardAppearance = .default
         }
+        
+        guard let item = item else { return }
+        engTxtField.text = item.eng
+        meaningTxtField.text = item.tr
+//        setupButton(button: addButton, buttonTitle: "Save", image: UIImage(), imageSize: 0, cornerRadius: 6)
     }
     
     private func cofigureTextViewYAnchor() {
         if keyboardHeight+(textViewHeight/2) > view.frame.height/2 {
-            textView.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-120).isActive = true
+            secondView.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-120).isActive = true
             stackView.centerYAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardHeight-120).isActive = true
         }
     }
@@ -134,48 +178,21 @@ class AddEditController: UIViewController {
         button.layer.cornerRadius = CGFloat(cornerRadius)
     }
     
-    private func setupTxtField(txtFld: UITextField, placeholder: String){
-        txtFld.delegate = self
-        txtFld.attributedPlaceholder = NSAttributedString(
-            string: placeholder,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray]
-        )
-    }
-    
-    private func checkEditStatus() {
-        if goEdit == 1 {
-            guard let item = item else { return }
-            engTxtField.text = item.eng
-            trTxtField.text = item.tr
-            setupButton(button: addButton, buttonTitle: "Save", image: UIImage(), imageSize: 0, cornerRadius: 6)
-        }
-    }
-    
     private func checkAction(){
-        if engTxtField.text!.count > 0 || trTxtField.text!.count > 0 {
-            let alert = UIAlertController(title: "Your changes could not be saved", message: "", preferredStyle: .alert)
-
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
-                alert.dismiss(animated: true, completion: nil)
-            }
-            
-            alert.addAction(action)
-            alert.addAction(actionCancel)
-            
+        if engTxtField.text!.count > 0 || meaningTxtField.text!.count > 0 {
             if goEdit == 1 {
                 guard let item = item else { return }
-                if engTxtField.text != item.eng ||
-                    trTxtField.text != item.tr {
-                    present(alert, animated: true, completion: nil)
+                if engTxtField.text != item.eng || meaningTxtField.text != item.tr {
+                    showAlertWithCancel(title: "Your changes could not be saved", message: "") { _ in
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 } else {
                     self.dismiss(animated: true, completion: nil)
                 }
             } else {
-                present(alert, animated: true, completion: nil)
+                showAlertWithCancel(title: "Your changes could not be saved", message: "") { _ in
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
         } else {
             dismiss(animated: true, completion: nil)
@@ -188,7 +205,7 @@ class AddEditController: UIViewController {
 extension AddEditController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == engTxtField {
-            trTxtField.becomeFirstResponder()
+            meaningTxtField.becomeFirstResponder()
         } else {
             engTxtField.becomeFirstResponder()
         }
@@ -212,61 +229,6 @@ extension AddEditController {
 
     @objc private func deleteButtonBackgroundImage() {
         flipButton.deleteBackgroundImage()
-    }
-}
-
-//MARK: - Layout
-
-extension AddEditController {
-    
-    private func style(){
-        view.backgroundColor = Colors.darkBackground
-        
-        textView.backgroundColor = Colors.cellLeft
-        textView.setViewCornerRadius(10)
-        
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        stackView.distribution = .fillEqually
-        
-        engTxtField.placeholder = "English"
-        engTxtField.keyboardType = .asciiCapable
-        engTxtField.backgroundColor = Colors.cellRight
-        engTxtField.layer.cornerRadius = 8
-        engTxtField.setLeftPaddingPoints(10)
-        
-        trTxtField.placeholder = "Meaning"
-        trTxtField.keyboardType = .asciiCapable
-        trTxtField.backgroundColor = Colors.cellRight
-        trTxtField.layer.cornerRadius = 8
-        trTxtField.setLeftPaddingPoints(10)
-        
-        addButton.backgroundColor = .darkGray
-        addButton.layer.cornerRadius = 8
-        addButton.setTitle("+", for: .normal)
-        addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
-    }
-    
-    private func layout(){
-        view.addSubview(flipButton)
-        flipButton.centerX(inView: view)
-        flipButton.setDimensions(width: 120, height: 120)
-        flipButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
-        
-        stackView.addArrangedSubview(engTxtField)
-        stackView.addArrangedSubview(trTxtField)
-        stackView.addArrangedSubview(addButton)
-        
-        textView.addSubview(stackView)
-        view.addSubview(textView)
-        
-        textView.setDimensions(width: view.frame.size.width-32, height: 214)
-        textView.centerX(inView: view)
-        textView.centerY(inView: view)
-        
-        stackView.setDimensions(width: view.bounds.width-64, height: 182)
-        stackView.centerY(inView: view)
-        stackView.centerX(inView: view)
     }
 }
 

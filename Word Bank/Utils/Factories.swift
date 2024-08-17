@@ -56,3 +56,16 @@ func makeLineView() -> UIView {
     view.setWidth(1)
     return view
 }
+
+//MARK: - TextField
+
+func makeTextField(placeholder: String) -> UITextField {
+    let tf = UITextField()
+    tf.placeholder = placeholder
+    tf.keyboardType = .asciiCapable
+    tf.backgroundColor = Colors.cellRight
+    tf.layer.cornerRadius = 8
+    tf.setLeftPaddingPoints(10)
+    tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+    return tf
+}

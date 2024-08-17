@@ -38,7 +38,7 @@ extension UIViewController {
             alert.dismiss(animated: true, completion: nil)
         }
         alert.addAction(action)
-        if message.count > 0 { alert.addAction(actionCancel) }
+        alert.addAction(actionCancel)
         present(alert, animated: true, completion: nil)
     }
     
