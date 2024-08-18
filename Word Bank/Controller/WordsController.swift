@@ -185,10 +185,11 @@ class WordsController: UIViewController {
         view.layer.insertSublayer(gradient, at: 0)
     }
 
-    private func presentAddController() {
+    private func presentAddController(item: Item? = nil) {
         let controller = AddController()
-        controller.modalPresentationStyle = .overCurrentContext
+        controller.item = item
         controller.delegate = self
+        controller.modalPresentationStyle = .overCurrentContext
         self.present(controller, animated: true)
     }
     
@@ -298,11 +299,7 @@ extension WordsController: UITableViewDelegate {
         deleteAction.setBackgroundColor(UIColor.systemRed)
         
         let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            let controller = AddController()
-            controller.item = item
-            controller.modalPresentationStyle = .overCurrentContext
-            controller.delegate = self
-            self.present(controller, animated: true)
+            self.presentAddController(item: item)
             success(true)
         })
         editAction.setImage(image: Images.edit, width: 25, height: 25)
