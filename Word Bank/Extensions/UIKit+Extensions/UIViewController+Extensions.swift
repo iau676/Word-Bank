@@ -9,6 +9,15 @@ import UIKit
 
 extension UIViewController {
     
+    func size(forText text: String?, minusWidth: CGFloat = 0) -> CGSize {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.text = text
+        label.lineBreakMode = .byWordWrapping
+        label.setWidth((self.view.frame.width/2)-minusWidth)
+        return label.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+    }
+    
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in

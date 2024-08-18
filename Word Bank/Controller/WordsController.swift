@@ -305,6 +305,12 @@ extension WordsController: UITableViewDataSource {
         cell.meaningLabel.text = exerciseType == ExerciseType.normal ? itemArray[indexPath.row].tr : hardItemArray[indexPath.row].tr
         return cell
     }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let text = exerciseType == ExerciseType.normal ? itemArray[indexPath.row].tr : hardItemArray[indexPath.row].tr
+        let height = size(forText: text, minusWidth: 26+32).height
+        return height+24
+    }
     
     private func showAlertIfHardWordsEmpty(){
         if hardItemArray.count <= 0 {

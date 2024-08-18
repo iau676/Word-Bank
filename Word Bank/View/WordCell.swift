@@ -9,23 +9,44 @@ import UIKit
 
 class WordCell: UITableViewCell {
     
-    let engView = UIView()
-    let meaningView = UIView()
+    let engView: UIView = {
+        let view = UIView()
+        view.backgroundColor = Colors.cellLeft
+        return view
+    }()
     
-    let engLabel = UILabel()
-    let meaningLabel = UILabel()
-    let numberLabel = UILabel()
+    let meaningView: UIView = {
+        let view = UIView()
+        view.backgroundColor = Colors.cellRight
+        return view
+    }()
     
-    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
+    let engLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: Fonts.AvenirNextRegular, size: UserDefault.textSize.getCGFloat())
+        label.textColor = Colors.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let meaningLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: Fonts.AvenirNextRegular, size: UserDefault.textSize.getCGFloat())
+        label.textColor = Colors.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let numberLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 11)
+        label.textColor = UIColor.white
+        return label
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        engView.backgroundColor = Colors.cellLeft
-        meaningView.backgroundColor = Colors.cellRight
-        
-        engView.setHeight(50)
-        meaningView.setHeight(50)
         let stack = UIStackView(arrangedSubviews: [engView, meaningView])
         stack.axis = .horizontal
         stack.spacing = 0
@@ -33,14 +54,6 @@ class WordCell: UITableViewCell {
         
         addSubview(stack)
         stack.fillSuperview()
-        
-        engLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
-        meaningLabel.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
-        numberLabel.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 11)
-        
-        engLabel.textColor = Colors.black
-        meaningLabel.textColor = Colors.black
-        numberLabel.textColor = .white
         
         engView.addSubview(engLabel)
         engLabel.anchor(top: engView.topAnchor, left: engView.leftAnchor,
@@ -53,7 +66,8 @@ class WordCell: UITableViewCell {
                             paddingTop: 10, paddingLeft: 16, paddingBottom: 10, paddingRight: 10)
         
         addSubview(numberLabel)
-        numberLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: 2, paddingLeft: 16)
+        numberLabel.anchor(top: topAnchor, left: leftAnchor,
+                           paddingTop: 2, paddingLeft: 16)
     }
     
     required init?(coder: NSCoder) {

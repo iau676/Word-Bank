@@ -242,6 +242,13 @@ extension ResultController: UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let answer = answerArray[indexPath.row]
+        let text = userAnswerArrayBool[indexPath.row] ? answer : writeAnswerCell(userAnswerArray[indexPath.row].strikeThrough(), answer).string
+        let height = size(forText: text, minusWidth: 26+32).height
+        return height+24
+    }
+    
     private func updateCellLabelText(_ cell: WordCell, _ index: Int) {
         cell.engLabel.text = questionArray[index]
         cell.meaningLabel.text = answerArray[index]
@@ -382,7 +389,7 @@ extension ResultController {
         
         tableView.anchor(top: scoreLabel.bottomAnchor, left: view.leftAnchor,
                          bottom: buttonStackView.topAnchor, right: view.rightAnchor,
-                         paddingTop: 16, paddingLeft: 32,
+                         paddingTop: 16, paddingLeft: 16,
                          paddingBottom: 32, paddingRight: 16)
         
         addedHardWordsButton.anchor(left: view.leftAnchor, bottom: buttonStackView.topAnchor,
