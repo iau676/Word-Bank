@@ -294,17 +294,16 @@
 		70209B1D27595DDE00D527D3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				706CBAD427593993008B4773 /* WordCell.swift */,
+				70C7C22929522704006E65A2 /* LetterCell.swift */,
 				70C7C227295226E6006E65A2 /* AwardCell.swift */,
 				7094D8C5290D694D007E422F /* BadgeView.swift */,
-				70C7C22929522704006E65A2 /* LetterCell.swift */,
-				706CBAD427593993008B4773 /* WordCell.swift */,
-				70509AAD29CDCF3300372655 /* ExerciseSettingsCell.swift */,
-				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
-				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
 				70509AA729C9CCDE00372655 /* BubbleView.swift */,
 				70925E372C6E8B04007CB4E9 /* MenuView.swift */,
 				703747822C70155A002AC4A3 /* TaskView.swift */,
-				706CBAB827592F8D008B4773 /* Main.storyboard */,
+				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
+				70509AAD29CDCF3300372655 /* ExerciseSettingsCell.swift */,
+				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -448,6 +447,7 @@
 				706CBAB227592F8D008B4773 /* AppDelegate.swift */,
 				706CBAB427592F8D008B4773 /* SceneDelegate.swift */,
 				706CBABE27592F8E008B4773 /* Assets.xcassets */,
+				706CBAB827592F8D008B4773 /* Main.storyboard */,
 				706CBAC027592F8E008B4773 /* LaunchScreen.storyboard */,
 				706CBAC327592F8E008B4773 /* Info.plist */,
 			);
