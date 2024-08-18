@@ -18,13 +18,11 @@ class WordsController: UIViewController {
     
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
-    private let tableViewStackView = UIStackView()
     
     private let testExerciseButton = UIButton()
     private let writingExerciseButton = UIButton()
     private let listeningExerciseButton = UIButton()
     private let cardExerciseButton = UIButton()
-    private let buttonStackView = UIStackView()
     
     private let testExerciseLabel = UILabel()
     private let writingExerciseLabel = UILabel()
@@ -32,8 +30,6 @@ class WordsController: UIViewController {
     private let cardExerciseLabel = UILabel()
     
     var goAddPage = 0
-    private var goEdit = 0
-    private var editIndex = 0
     
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
@@ -182,6 +178,7 @@ class WordsController: UIViewController {
     private func configureLabel(_ label: UILabel, _ text: String){
         label.textColor = Colors.black
         label.text = text
+        label.textAlignment = .center
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
         label.numberOfLines = 1
     }
@@ -354,8 +351,6 @@ extension WordsController: UITableViewDelegate {
         deleteAction.setBackgroundColor(UIColor.systemRed)
         
         let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            self.goEdit = 1
-            self.editIndex = indexPath.row
             let controller = AddEditController()
             controller.item = item
             controller.modalPresentationStyle = .overCurrentContext
@@ -412,10 +407,6 @@ extension WordsController {
                                                             style: .plain, target: self,
                                                             action: #selector(addBarButtonPressed))
         
-        tableViewStackView.axis = .vertical
-        tableViewStackView.spacing = 0
-        tableViewStackView.distribution = .fill
-        
         searchBar.barTintColor = Colors.cellLeft
         
         tableView.register(WordCell.self, forCellReuseIdentifier: reuseIdentifier)
@@ -426,10 +417,6 @@ extension WordsController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.isScrollEnabled = true
         tableView.backgroundColor = Colors.cellLeft
-        
-        buttonStackView.axis = .horizontal
-        buttonStackView.spacing = 16
-        buttonStackView.distribution = .fillEqually
         
         testExerciseButton.addTarget(self, action: #selector(testExerciseButtonPressed),
                                      for: .primaryActionTriggered)
@@ -449,43 +436,32 @@ extension WordsController {
         configureLabel(cardExerciseLabel, "Card")
     }
     
-    private func layout(){
-        tableViewStackView.addArrangedSubview(searchBar)
-        tableViewStackView.addArrangedSubview(tableView)
+    private func layout() {
+        let tableStack = UIStackView(arrangedSubviews: [searchBar, tableView])
+        tableStack.axis = .vertical
+        tableStack.spacing = 0
+        tableStack.distribution = .fill
         
-        buttonStackView.addArrangedSubview(testExerciseButton)
-        buttonStackView.addArrangedSubview(writingExerciseButton)
-        buttonStackView.addArrangedSubview(listeningExerciseButton)
-        buttonStackView.addArrangedSubview(cardExerciseButton)
+        let buttonStack = UIStackView(arrangedSubviews: [testExerciseButton, writingExerciseButton, listeningExerciseButton, cardExerciseButton])
+        buttonStack.axis = .horizontal
+        buttonStack.spacing = 16
+        buttonStack.distribution = .fillEqually
+        buttonStack.setHeight(55)
         
-        view.addSubview(testExerciseLabel)
-        view.addSubview(writingExerciseLabel)
-        view.addSubview(listeningExerciseLabel)
-        view.addSubview(cardExerciseLabel)
+        let labelStack = UIStackView(arrangedSubviews: [testExerciseLabel, writingExerciseLabel, listeningExerciseLabel, cardExerciseLabel])
+        labelStack.axis = .horizontal
+        labelStack.spacing = 16
+        labelStack.distribution = .fillEqually
         
-        view.addSubview(tableViewStackView)
-        view.addSubview(buttonStackView)
+        let stack = UIStackView(arrangedSubviews: [tableStack, buttonStack, labelStack])
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.distribution = .fill
         
-        tableViewStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                                  bottom: buttonStackView.topAnchor, right: view.rightAnchor,
-                                  paddingTop: 8, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
-        
-        buttonStackView.setHeight(55)
-        buttonStackView.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                               right: view.rightAnchor, paddingLeft: 16,
-                               paddingBottom: 40, paddingRight: 16)
-        
-        testExerciseLabel.centerX(inView: testExerciseButton)
-        testExerciseLabel.anchor(top: testExerciseButton.bottomAnchor, paddingTop: 8)
-        
-        writingExerciseLabel.centerX(inView: writingExerciseButton)
-        writingExerciseLabel.anchor(top: writingExerciseButton.bottomAnchor, paddingTop: 8)
-        
-        listeningExerciseLabel.centerX(inView: listeningExerciseButton)
-        listeningExerciseLabel.anchor(top: listeningExerciseButton.bottomAnchor, paddingTop: 8)
-        
-        cardExerciseLabel.centerX(inView: cardExerciseButton)
-        cardExerciseLabel.anchor(top: cardExerciseButton.bottomAnchor, paddingTop: 8)
+        view.addSubview(stack)
+        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                     bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
+                     paddingTop: 8, paddingLeft: 16, paddingBottom: 32, paddingRight: 16)
     }
 }
 
@@ -523,7 +499,6 @@ extension WordsController: AddEditControllerDelegate {
     }
     
     func onViewWillDisappear() {
-        goEdit = 0
         goAddPage = 0
         setupButtons()
     }
