@@ -13,23 +13,21 @@ private let reuseIdentifier = "ReusableCell"
 class WordsController: UIViewController {
     
     //MARK: - Properties
-    
+    var goAddPage = 0
     private let exerciseType: String
     
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
     
-    private let testExerciseButton = UIButton()
-    private let writingExerciseButton = UIButton()
-    private let listeningExerciseButton = UIButton()
-    private let cardExerciseButton = UIButton()
+    private let testExerciseButton = makeExerciseButton(image: Images.testExercise)
+    private let writingExerciseButton = makeExerciseButton(image: Images.writingExercise)
+    private let listeningExerciseButton = makeExerciseButton(image: Images.listeningExercise)
+    private let cardExerciseButton = makeExerciseButton(image: Images.cardExercise)
     
-    private let testExerciseLabel = UILabel()
-    private let writingExerciseLabel = UILabel()
-    private let listeningExerciseLabel = UILabel()
-    private let cardExerciseLabel = UILabel()
-    
-    var goAddPage = 0
+    private let testExerciseLabel = makeExerciseLabel(text: "Test")
+    private let writingExerciseLabel = makeExerciseLabel(text: "Writing")
+    private let listeningExerciseLabel = makeExerciseLabel(text: "Listening")
+    private let cardExerciseLabel = makeExerciseLabel(text: "Card")
     
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
@@ -52,20 +50,13 @@ class WordsController: UIViewController {
         wordBrain.loadItemArray()
         wordBrain.loadHardItemArray()
         
-        style()
-        layout()
-        
-        configureButton()
-        setupNavigationBar()
-        setupSearchBar()
-        setupView()
+        configureUI()
         addGestureRecognizer()
-        hideKeyboardWhenTappedAround()
         updateSearchBarPlaceholder()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setupButtons()
         checkGoAddPage()
     }
     
@@ -114,111 +105,98 @@ class WordsController: UIViewController {
 
     //MARK: - Helpers
     
-    private func setupView(){
-        updateView()
-        setupBackgroundColor()
-        setupCornerRadius()
+    private func configureUI() {
+        configureNavigationBar()
+        configureSearchBar()
+        configureTableView()
+        configureButtons()
+        addGradientLayer()
+        
+        cardExerciseButton.isHidden = exerciseType == ExerciseType.hard
+        cardExerciseLabel.isHidden = exerciseType == ExerciseType.hard
+        
+        let tableStack = UIStackView(arrangedSubviews: [searchBar, tableView])
+        tableStack.axis = .vertical
+        tableStack.spacing = 0
+        tableStack.distribution = .fill
+        
+        let buttonStack = UIStackView(arrangedSubviews: [testExerciseButton, writingExerciseButton, listeningExerciseButton, cardExerciseButton])
+        buttonStack.axis = .horizontal
+        buttonStack.spacing = 16
+        buttonStack.distribution = .fillEqually
+        buttonStack.setHeight(55)
+        
+        let labelStack = UIStackView(arrangedSubviews: [testExerciseLabel, writingExerciseLabel, listeningExerciseLabel, cardExerciseLabel])
+        labelStack.axis = .horizontal
+        labelStack.spacing = 16
+        labelStack.distribution = .fillEqually
+        
+        let stack = UIStackView(arrangedSubviews: [tableStack, buttonStack, labelStack])
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.distribution = .fill
+        
+        view.addSubview(stack)
+        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                     bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
+                     paddingTop: 8, paddingLeft: 16, paddingBottom: 32, paddingRight: 16)
     }
     
-    private func updateView(){
-        if exerciseType == ExerciseType.normal {
-            searchBar.updateSearchBarVisibility(false)
-            tableView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        } else {
-            searchBar.updateSearchBarVisibility(true)
-            tableView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-            cardExerciseButton.isHidden = true
-            cardExerciseLabel.isHidden = true
-            navigationItem.rightBarButtonItem = nil
-        }
-        tableView.reloadData()
+    private func configureNavigationBar() {
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
+        
+        title = exerciseType == ExerciseType.normal ? "Words" : "Hard Words"
+        
+        let barButtonItem = UIBarButtonItem(image: Images.add, style: .plain, target: self, action: #selector(addBarButtonPressed))
+        navigationItem.rightBarButtonItem = exerciseType == ExerciseType.normal ? barButtonItem :  nil
     }
     
-    private func configureButton(){
-        testExerciseButton.changeBackgroundColor(to: Colors.raven)
-        writingExerciseButton.changeBackgroundColor(to: Colors.raven)
-        listeningExerciseButton.changeBackgroundColor(to: Colors.raven)
-        cardExerciseButton.changeBackgroundColor(to: Colors.raven)
-    }
-   
-    private func setupSearchBar() {
+    private func configureSearchBar() {
         searchBar.delegate = self
         searchBar.isHidden = true
-        
-        // SearchBar text
-        let textFieldInsideUISearchBar = searchBar.value(forKey: "searchField") as? UITextField
-        textFieldInsideUISearchBar?.textColor = UIColor.black
-        textFieldInsideUISearchBar?.font = textFieldInsideUISearchBar?.font?.withSize(textSize)
-
-        // SearchBar placeholder
-        let labelInsideUISearchBar = textFieldInsideUISearchBar!.value(forKey: "placeholderLabel") as? UILabel
-        labelInsideUISearchBar?.textColor = UIColor.darkGray
-        
+        searchBar.barTintColor = Colors.cellLeft
         searchBar.clipsToBounds = true
         searchBar.layer.cornerRadius = 10
         searchBar.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        searchBar.searchTextField.textColor = Colors.black
+        searchBar.updateSearchBarVisibility(exerciseType == ExerciseType.hard)
         
         switch UserDefault.userInterfaceStyle {
-        case "dark":
-            searchBar.keyboardAppearance = .dark
-            break
-        default:
-            searchBar.keyboardAppearance = .default
+        case "dark": searchBar.keyboardAppearance = .dark
+        default: searchBar.keyboardAppearance = .default
         }
     }
     
-    private func setupCornerRadius() {
-        testExerciseButton.setButtonCornerRadius(10)
-        writingExerciseButton.setButtonCornerRadius(10)
-        listeningExerciseButton.setButtonCornerRadius(10)
-        cardExerciseButton.setButtonCornerRadius(10)
+    private func configureTableView() {
+        tableView.register(WordCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .singleLine
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.isScrollEnabled = true
+        tableView.backgroundColor = Colors.cellLeft
         tableView.setViewCornerRadius(10)
+        
+        let maskBottom: CACornerMask = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        let maskAll: CACornerMask = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        tableView.layer.maskedCorners =  exerciseType == ExerciseType.normal ? maskBottom : maskAll
     }
     
-    private func configureLabel(_ label: UILabel, _ text: String){
-        label.textColor = Colors.black
-        label.text = text
-        label.textAlignment = .center
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
-        label.numberOfLines = 1
+    private func configureButtons() {
+        testExerciseButton.addTarget(self, action: #selector(testExerciseButtonPressed), for: .touchUpInside)
+        writingExerciseButton.addTarget(self, action: #selector(writingExerciseButtonPressed), for: .touchUpInside)
+        listeningExerciseButton.addTarget(self, action: #selector(listeningExerciseButtonPressed), for: .touchUpInside)
+        cardExerciseButton.addTarget(self, action: #selector(cardExerciseButtonPressed), for: .touchUpInside)
     }
-    
-    private func setupBackgroundColor() {
+        
+    private func addGradientLayer() {
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
         let topColor = exerciseType == ExerciseType.normal ? Colors.blue : Colors.yellow
         let bottomColor = exerciseType == ExerciseType.normal ? Colors.blueLight : Colors.yellowLight
         gradient.colors = [topColor.cgColor, bottomColor.cgColor]
         view.layer.insertSublayer(gradient, at: 0)
-    }
-    
-    private func setupNavigationBar() {
-        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
-        title = exerciseType == ExerciseType.normal ? "Words" : "Hard Words"
-    }
-    
-    private func setupButtons(){
-        setupButtonImage(testExerciseButton, image: Images.testExercise, width: 30, height: 15)
-        setupButtonImage(writingExerciseButton, image: Images.writingExercise, width: 30, height: 15)
-        setupButtonImage(listeningExerciseButton, image: Images.listeningExercise, width: 30, height: 15)
-        setupButtonImage(cardExerciseButton, image: Images.cardExercise, width: 30, height: 15)
-        
-        setupButtonShadow(testExerciseButton)
-        setupButtonShadow(writingExerciseButton)
-        setupButtonShadow(listeningExerciseButton)
-        setupButtonShadow(cardExerciseButton)
-    }
-    
-    private func setupButtonImage(_ button: UIButton, image: UIImage?, width: CGFloat, height: CGFloat){
-        button.setImage(image: image, width: width+textSize, height: height+textSize)
-    }
-    
-    private  func setupButtonShadow(_ button: UIButton) {
-        button.layer.shadowColor = Colors.ravenShadow.cgColor
-        button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
-        button.layer.shadowOpacity = 1.0
-        button.layer.shadowRadius = 0.0
-        button.layer.masksToBounds = false
     }
 
     private func checkGoAddPage(){
@@ -264,8 +242,7 @@ extension WordsController: UISearchBarDelegate {
             let request : NSFetchRequest<Item> = Item.fetchRequest()
             let firstPredicate = NSPredicate(format: "eng CONTAINS[cd] %@", text)
             let secondPredicate = NSPredicate(format: "tr CONTAINS[cd] %@", text)
-            request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [firstPredicate,
-                                                                                    secondPredicate])
+            request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [firstPredicate,secondPredicate])
             request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: true)]
             wordBrain.loadItemArray(with: request)
         } else {
@@ -274,12 +251,8 @@ extension WordsController: UISearchBarDelegate {
         tableView.reloadData()
     }
     
-    private func updateSearchBarPlaceholder(){
-        if itemArray.count > 0 {
-            searchBar.placeholder = "Search in \(itemArray.count) words"
-        } else {
-            searchBar.placeholder = "Nothing to see here"
-        }
+    private func updateSearchBarPlaceholder() {
+        searchBar.placeholder = itemArray.count > 0 ? "Search in \(itemArray.count) words" : "Nothing to see here"
     }
 }
 
@@ -399,72 +372,6 @@ extension WordsController {
     }
 }
 
-//MARK: - Layout
-
-extension WordsController {
-    private func style(){
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"),
-                                                            style: .plain, target: self,
-                                                            action: #selector(addBarButtonPressed))
-        
-        searchBar.barTintColor = Colors.cellLeft
-        
-        tableView.register(WordCell.self, forCellReuseIdentifier: reuseIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.tableFooterView = UIView()
-        tableView.separatorStyle = .singleLine
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.isScrollEnabled = true
-        tableView.backgroundColor = Colors.cellLeft
-        
-        testExerciseButton.addTarget(self, action: #selector(testExerciseButtonPressed),
-                                     for: .primaryActionTriggered)
-        
-        writingExerciseButton.addTarget(self, action: #selector(writingExerciseButtonPressed),
-                                        for: .primaryActionTriggered)
-        
-        listeningExerciseButton.addTarget(self, action: #selector(listeningExerciseButtonPressed),
-                                          for: .primaryActionTriggered)
-        
-        cardExerciseButton.addTarget(self, action: #selector(cardExerciseButtonPressed),
-                                     for: .primaryActionTriggered)
-        
-        configureLabel(testExerciseLabel, "Test")
-        configureLabel(writingExerciseLabel, "Writing")
-        configureLabel(listeningExerciseLabel, "Listening")
-        configureLabel(cardExerciseLabel, "Card")
-    }
-    
-    private func layout() {
-        let tableStack = UIStackView(arrangedSubviews: [searchBar, tableView])
-        tableStack.axis = .vertical
-        tableStack.spacing = 0
-        tableStack.distribution = .fill
-        
-        let buttonStack = UIStackView(arrangedSubviews: [testExerciseButton, writingExerciseButton, listeningExerciseButton, cardExerciseButton])
-        buttonStack.axis = .horizontal
-        buttonStack.spacing = 16
-        buttonStack.distribution = .fillEqually
-        buttonStack.setHeight(55)
-        
-        let labelStack = UIStackView(arrangedSubviews: [testExerciseLabel, writingExerciseLabel, listeningExerciseLabel, cardExerciseLabel])
-        labelStack.axis = .horizontal
-        labelStack.spacing = 16
-        labelStack.distribution = .fillEqually
-        
-        let stack = UIStackView(arrangedSubviews: [tableStack, buttonStack, labelStack])
-        stack.axis = .vertical
-        stack.spacing = 16
-        stack.distribution = .fill
-        
-        view.addSubview(stack)
-        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                     bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
-                     paddingTop: 8, paddingLeft: 16, paddingBottom: 32, paddingRight: 16)
-    }
-}
-
 //MARK: - Swipe Gesture
 
 extension WordsController {
@@ -500,6 +407,5 @@ extension WordsController: AddEditControllerDelegate {
     
     func onViewWillDisappear() {
         goAddPage = 0
-        setupButtons()
     }
 }

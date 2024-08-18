@@ -69,8 +69,9 @@ enum Images {
     static let refresh                   = UIImage(systemName: "arrow.clockwise")
     static let xmark                     = UIImage(systemName: "xmark")
     static let chevronRight              = UIImage(systemName: "chevron.right")
-    static let menu                      = UIImage(named: "menu")
+    static let add                       = UIImage(systemName: "plus")
     
+    static let menu                      = UIImage(named: "menu")
     static let check                     = UIImage(named: "check")
     static let whiteCircle               = UIImage(named: "whiteCircle")
     static let wheel_prize_present       = UIImage(named: "wheel_prize_present")

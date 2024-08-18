@@ -48,6 +48,19 @@ func makeListeningAnswerButton() -> UIButton {
      return button
 }
 
+func makeExerciseButton(image: UIImage?, imageWidth: CGFloat = 45, imageHeight: CGFloat = 30) -> UIButton {
+    let button = UIButton()
+    button.backgroundColor = Colors.raven
+    button.setButtonCornerRadius(10)
+    button.setImage(image: image, width: imageWidth, height: imageHeight)
+    button.layer.shadowColor = Colors.ravenShadow.cgColor
+    button.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+    button.layer.shadowOpacity = 1.0
+    button.layer.shadowRadius = 0.0
+    button.layer.masksToBounds = false
+    return button
+}
+
 //MARK: - View
 
 func makeLineView() -> UIView {
@@ -69,4 +82,16 @@ func makeTextField(placeholder: String) -> UITextField {
     tf.setLeftPaddingPoints(10)
     tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray])
     return tf
+}
+
+//MARK: - Label
+
+func makeExerciseLabel(text: String) -> UILabel {
+    let label = UILabel()
+    label.textColor = Colors.black
+    label.text = text
+    label.textAlignment = .center
+    label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
+    label.numberOfLines = 1
+    return label
 }
