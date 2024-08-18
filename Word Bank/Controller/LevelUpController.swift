@@ -50,7 +50,6 @@ class LevelUpController: UIViewController {
     
     @objc private func continueButtonPressed(_ sender: UIButton) {
         continueButton.bounce()
-        continueButton.updateShadowHeight(withDuration: 0.15, height: 0.3)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
             self.dismiss(animated: true, completion: nil)
         }

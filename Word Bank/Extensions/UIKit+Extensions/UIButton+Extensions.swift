@@ -105,12 +105,6 @@ extension UIButton {
         self.setImage(image, for: .normal)
     }
     
-    func updateShadowHeight(withDuration: CGFloat, height: CGFloat){
-        UIView.animate(withDuration: withDuration) {
-            self.layer.shadowOffset = CGSize(width: 0.0, height: height)
-        }
-    }
-    
     func alignTextBelow(spacing: CGFloat = 2.0){
         if let image = self.imageView?.image{
             let imageSize: CGSize = image.size

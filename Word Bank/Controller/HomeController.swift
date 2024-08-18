@@ -53,7 +53,6 @@ final class HomeController: UIViewController {
     
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
-    private var goAddPage = 0
     private var progressValue:Float = 0.0
     
     //MARK: - Life Cycle
@@ -88,16 +87,14 @@ final class HomeController: UIViewController {
         newWordCP.bounce()
         dropButton.animateDropDown()
         
-        goAddPage = 1
         viewDidLayoutSubviews()
         let controller = WordsController(exerciseType: ExerciseType.normal)
-        controller.goAddPage = 1
+        controller.presentAdd = true
         pushViewControllerWithDeadline(controller: controller, deadline: 0.25)
     }
     
     @objc private func wordsButtonPressed() {
         wordsCP.bounce()
-        goAddPage = 0
         let controller = WordsController(exerciseType: ExerciseType.normal)
         pushViewControllerWithDeadline(controller: controller)
     }
