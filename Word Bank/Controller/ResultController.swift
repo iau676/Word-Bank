@@ -10,6 +10,8 @@ import CoreData
 import AVFoundation
 import Combine
 
+private let reuseIdentifier = "ReusableCell"
+
 class ResultController: UIViewController {
 
     private let exerciseType: String
@@ -226,12 +228,10 @@ extension ResultController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! WordCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WordCell
         
         updateCellLabelText(cell, indexPath.row)
         updateCellCornerRadius(cell, indexPath.row)
-        updateCellLabelTextSize(cell)
-        updateCellLabelTextColor(cell)
        
         if userAnswerArrayBool[indexPath.row] == false {
             updateCellViewBackgroundForWrong(cell)
@@ -244,39 +244,28 @@ extension ResultController: UITableViewDataSource {
     
     private func updateCellLabelText(_ cell: WordCell, _ index: Int) {
         cell.engLabel.text = questionArray[index]
-        cell.trLabel.text = answerArray[index]
+        cell.meaningLabel.text = answerArray[index]
         cell.numberLabel.text = String(index+1)
-    }
-    
-    private func updateCellLabelTextSize(_ cell: WordCell) {
-        cell.updateLabelTextSize(cell.engLabel, textSize)
-        cell.updateLabelTextSize(cell.trLabel, textSize)
-        cell.updateLabelTextSize(cell.numberLabel, textSize-4)
-    }
-    
-    private func updateCellLabelTextColor(_ cell: WordCell) {
-        cell.engLabel.textColor = Colors.black
-        cell.trLabel.textColor = Colors.black
     }
     
     private func updateCellViewBackgroundForRight(_ cell: WordCell){
         cell.engView.backgroundColor = Colors.green
-        cell.trView.backgroundColor = Colors.lightGreen
+        cell.meaningView.backgroundColor = Colors.lightGreen
     }
     
     private func updateCellViewBackgroundForWrong(_ cell: WordCell){
         if exerciseFormat == ExerciseFormat.card {
             cell.engView.backgroundColor = Colors.yellow
-            cell.trView.backgroundColor = Colors.lightYellow
+            cell.meaningView.backgroundColor = Colors.lightYellow
         } else {
             cell.engView.backgroundColor = Colors.red
-            cell.trView.backgroundColor = Colors.lightRed
+            cell.meaningView.backgroundColor = Colors.lightRed
         }
     }
     
     private func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
         if exerciseFormat != ExerciseFormat.card {
-            cell.trLabel.attributedText = writeAnswerCell(userAnswerArray[i].strikeThrough(),
+            cell.meaningLabel.attributedText = writeAnswerCell(userAnswerArray[i].strikeThrough(),
                                                           answerArray[i])
         }
     }
@@ -347,7 +336,7 @@ extension ResultController {
         scoreLabel.textAlignment = .center
         scoreLabel.numberOfLines = 1
         
-        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
+        tableView.register(WordCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.tableFooterView = UIView()
         tableView.layer.cornerRadius = 16
         tableView.dataSource = self

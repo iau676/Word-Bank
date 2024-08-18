@@ -8,6 +8,8 @@
 import UIKit
 import CoreData
 
+private let reuseIdentifier = "ReusableCell"
+
 class WordsController: UIViewController {
     
     //MARK: - Properties
@@ -298,31 +300,9 @@ extension WordsController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! WordCell
-        
-        cell.engView.backgroundColor = Colors.cellLeft
-        cell.trView.backgroundColor = Colors.cellRight
-        
-        cell.engView.isHidden = false
-        cell.trView.isHidden = false
-        
-        if itemArray.count > 0 {
-            if exerciseType == ExerciseType.normal {
-                cell.engLabel.text = itemArray[indexPath.row].eng
-                cell.trLabel.text = itemArray[indexPath.row].tr
-            } else {
-                cell.engLabel.text = hardItemArray[indexPath.row].eng
-                cell.trLabel.text = hardItemArray[indexPath.row].tr
-            }
-            
-        } else {
-            cell.trView.isHidden = true
-            cell.engLabel.text = ""
-            tableView.separatorStyle = .none
-        }
-
-        cell.updateLabelTextSize(cell.engLabel, textSize)
-        cell.updateLabelTextSize(cell.trLabel, textSize)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WordCell
+        cell.engLabel.text = exerciseType == ExerciseType.normal ? itemArray[indexPath.row].eng : hardItemArray[indexPath.row].eng
+        cell.meaningLabel.text = exerciseType == ExerciseType.normal ? itemArray[indexPath.row].tr : hardItemArray[indexPath.row].tr
         return cell
     }
     
@@ -432,7 +412,7 @@ extension WordsController {
         
         searchBar.barTintColor = Colors.cellLeft
         
-        tableView.register(UINib(nibName: "WordCell", bundle: nil), forCellReuseIdentifier:"ReusableCell")
+        tableView.register(WordCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()

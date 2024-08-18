@@ -67,7 +67,6 @@
 		706CBABF27592F8E008B4773 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 706CBABE27592F8E008B4773 /* Assets.xcassets */; };
 		706CBAC227592F8E008B4773 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 706CBAC027592F8E008B4773 /* LaunchScreen.storyboard */; };
 		706CBAD627593993008B4773 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAD427593993008B4773 /* WordCell.swift */; };
-		706CBAD727593993008B4773 /* WordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706CBAD527593993008B4773 /* WordCell.xib */; };
 		706D707D28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */; };
 		7075B371291679B40007EDF7 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7075B370291679B40007EDF7 /* UIViewController+Extensions.swift */; };
 		707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC384288DA9DA00832F35 /* String+Extensions.swift */; };
@@ -166,7 +165,6 @@
 		706CBAC127592F8E008B4773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		706CBAC327592F8E008B4773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		706CBAD427593993008B4773 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
-		706CBAD527593993008B4773 /* WordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordCell.xib; sourceTree = "<group>"; };
 		706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
 		7075B370291679B40007EDF7 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		707EC384288DA9DA00832F35 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -306,7 +304,6 @@
 				70509AA729C9CCDE00372655 /* BubbleView.swift */,
 				70925E372C6E8B04007CB4E9 /* MenuView.swift */,
 				703747822C70155A002AC4A3 /* TaskView.swift */,
-				706CBAD527593993008B4773 /* WordCell.xib */,
 				706CBAB827592F8D008B4773 /* Main.storyboard */,
 			);
 			path = View;
@@ -550,7 +547,6 @@
 				705D92E728F89625001C4F38 /* sparkle.png in Resources */,
 				7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */,
 				705D92EC28F89625001C4F38 /* victory.aac in Resources */,
-				706CBAD727593993008B4773 /* WordCell.xib in Resources */,
 				705D92E828F89625001C4F38 /* SparkleBlast.sks in Resources */,
 				706CBABF27592F8E008B4773 /* Assets.xcassets in Resources */,
 				70C7542029523ACE00192DE6 /* true.mp3 in Resources */,
