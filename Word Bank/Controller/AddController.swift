@@ -8,15 +8,16 @@
 import UIKit
 import CoreData
 
-protocol AddEditControllerDelegate : AnyObject {
+protocol AddControllerDelegate : AnyObject {
     func updateTableView()
-    func onViewWillDisappear()
 }
 
-class AddEditController: UIViewController {
+class AddController: UIViewController {
+    
+    //MARK: - Properties
     
     var item: Item?
-    weak var delegate: AddEditControllerDelegate?
+    weak var delegate: AddControllerDelegate?
     private var wordBrain = WordBrain()
     
     private var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
@@ -47,7 +48,7 @@ class AddEditController: UIViewController {
         button.layer.cornerRadius = 8
         button.setTitle("Save", for: .normal)
         button.setTitleColor(Colors.cellRight, for: .normal)
-        button.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -59,10 +60,6 @@ class AddEditController: UIViewController {
         
         configureUI()
         addSwipeGesture()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        delegate?.onViewWillDisappear()
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,7 +75,7 @@ class AddEditController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc private func addButtonPressed(_ sender: Any) {
+    @objc private func saveButtonPressed(_ sender: Any) {
         saveButton.bounce()
         guard let eng = engTxtField.text else { return }
         guard let meaning = meaningTxtField.text else { return }
@@ -166,10 +163,12 @@ class AddEditController: UIViewController {
         engTxtField.becomeFirstResponder()
     }
     
-    private func checkAction(){
-        if engTxtField.text!.count > 0 || meaningTxtField.text!.count > 0 {
+    private func checkAction() {
+        guard let eng = engTxtField.text else { return }
+        guard let meaning = meaningTxtField.text else { return }
+        if eng.count > 0 || meaning.count > 0 {
             if let item = item {
-                if engTxtField.text != item.eng || meaningTxtField.text != item.tr {
+                if eng != item.eng || meaning != item.tr {
                     showAlertWithCancel(title: "Your changes could not be saved", message: "") { _ in
                         self.dismiss(animated: true, completion: nil)
                     }
@@ -189,7 +188,7 @@ class AddEditController: UIViewController {
 
 //MARK: - UITextFieldDelegate
 
-extension AddEditController: UITextFieldDelegate {
+extension AddController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == engTxtField {
             meaningTxtField.becomeFirstResponder()
@@ -202,7 +201,7 @@ extension AddEditController: UITextFieldDelegate {
 
 //MARK: - Flip Button
 
-extension AddEditController {
+extension AddController {
     private func animateFlipButton() {
         let flipButtonImage = item == nil ? Images.dropBlue! : Images.check!
         flipButton.setBackgroundImage(flipButtonImage, for: .normal)
@@ -221,7 +220,7 @@ extension AddEditController {
 
 //MARK: - Swipe Gesture
 
-extension AddEditController {
+extension AddController {
     private func addSwipeGesture() {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownGesture))
         swipeDown.direction = .down

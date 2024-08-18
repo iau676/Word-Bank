@@ -33,7 +33,6 @@ class WordsController: UIViewController {
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
-    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
     //MARK: - Life Cycle
     
@@ -142,7 +141,7 @@ class WordsController: UIViewController {
         searchBar.layer.cornerRadius = 10
         searchBar.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         searchBar.searchTextField.textColor = Colors.black
-        searchBar.updateSearchBarVisibility(exerciseType == ExerciseType.hard)
+        searchBar.isHidden = exerciseType == ExerciseType.hard
         
         switch UserDefault.userInterfaceStyle {
         case "dark": searchBar.keyboardAppearance = .dark
@@ -160,10 +159,10 @@ class WordsController: UIViewController {
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .singleLine
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.isScrollEnabled = true
+        tableView.allowsSelection = false
         tableView.backgroundColor = Colors.cellLeft
-        tableView.setViewCornerRadius(10)
+        tableView.layer.cornerRadius = 10
         
         let maskBottom: CACornerMask = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         let maskAll: CACornerMask = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
@@ -187,7 +186,7 @@ class WordsController: UIViewController {
     }
 
     private func presentAddController() {
-        let controller = AddEditController()
+        let controller = AddController()
         controller.modalPresentationStyle = .overCurrentContext
         controller.delegate = self
         self.present(controller, animated: true)
@@ -198,7 +197,7 @@ class WordsController: UIViewController {
     }
     
     private func checkAndNavigate(controller: UIViewController) {
-        let wordCount = (exerciseType == ExerciseType.normal) ? itemArray.count : hardItemArray.count
+        let wordCount = exerciseType == ExerciseType.normal ? itemArray.count : hardItemArray.count
         
         if wordCount < 2 {
             showAlert(title: "Minimum two words required", message: "") { _ in
@@ -273,10 +272,7 @@ extension WordsController: UITableViewDataSource {
     //MARK: - UITableViewDelegate
 
 extension WordsController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView,
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let item = self.itemArray[indexPath.row]
         
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
@@ -302,7 +298,7 @@ extension WordsController: UITableViewDelegate {
         deleteAction.setBackgroundColor(UIColor.systemRed)
         
         let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            let controller = AddEditController()
+            let controller = AddController()
             controller.item = item
             controller.modalPresentationStyle = .overCurrentContext
             controller.delegate = self
@@ -328,24 +324,12 @@ extension WordsController: UITableViewDelegate {
         addAction.setImage(image: Images.plus, width: 25, height: 25)
         addAction.setBackgroundColor(Colors.yellow)
         
-        if exerciseType == ExerciseType.normal {
-            if self.itemArray[indexPath.row].addedHardWords == true {
-                return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
-            }
-            return UISwipeActionsConfiguration(actions: [deleteAction, editAction, addAction])
-        } else {
-            return UISwipeActionsConfiguration()
-        }
-    }
-}
-
-extension WordsController {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        let standartConf: UISwipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+        let hardConf: UISwipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction, editAction, addAction])
+        let emptyConf: UISwipeActionsConfiguration = UISwipeActionsConfiguration()
+        let itemAlreadyHard = self.itemArray[indexPath.row].addedHardWords == true
+        
+        return exerciseType == ExerciseType.normal ? itemAlreadyHard ? standartConf : hardConf : emptyConf
     }
 }
 
@@ -372,16 +356,13 @@ extension WordsController {
     }
 }
 
-//MARK: - AddEditControllerDelegate
+//MARK: - AddControllerDelegate
 
-extension WordsController: AddEditControllerDelegate {
+extension WordsController: AddControllerDelegate {
     func updateTableView() {
         wordBrain.saveContext()
         wordBrain.loadItemArray()
         updateSearchBarPlaceholder()
         tableView.reloadData()
-    }
-    
-    func onViewWillDisappear() {
     }
 }
