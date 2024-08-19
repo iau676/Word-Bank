@@ -277,22 +277,14 @@ extension WordsController: UITableViewDelegate {
         let item = self.itemArray[indexPath.row]
         
         let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            let alert = UIAlertController(title: "'\(item.eng ?? "Word")' will be deleted",
-                                          message: "This action cannot be undone", preferredStyle: .alert)
-            let actionDelete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
-                
+            self.showAlertWithCancel(title: "'\(item.eng ?? "Word")' will be deleted",
+                                     message: "This action cannot be undone",
+                                     actionTitle: "Delete", style: .destructive) { _ in
                 self.wordBrain.deleteHardWord(item)
                 self.wordBrain.removeWord(at: indexPath.row)
-
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                 tableView.reloadData()
             }
-            let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) in
-                alert.dismiss(animated: true, completion: nil)
-            }
-            alert.addAction(actionDelete)
-            alert.addAction(actionCancel)
-            self.present(alert, animated: true, completion: nil)
             success(true)
         })
         deleteAction.setImage(image: Images.bin, width: 25, height: 25)

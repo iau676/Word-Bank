@@ -37,9 +37,9 @@ extension UIViewController {
         present(alert, animated: true)
     }
     
-    func showAlertWithCancel(title: String, message: String, completion: @escaping(Bool)-> Void) {
+    func showAlertWithCancel(title: String, message: String, actionTitle: String = "OK", style: UIAlertAction.Style = .default, completion: @escaping(Bool)-> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+        let action = UIAlertAction(title: actionTitle, style: style) { (action) in
             alert.dismiss(animated: false, completion: nil)
             completion(true)
         }
