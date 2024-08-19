@@ -95,3 +95,12 @@ func makeExerciseLabel(text: String) -> UILabel {
     label.numberOfLines = 1
     return label
 }
+
+//MARK: - UIContextualAction
+
+func makeContextualAction(image: UIImage?, bgColor: UIColor, handler: @escaping UIContextualAction.Handler) -> UIContextualAction {
+    let cAction = UIContextualAction(style: .normal, title: "", handler: handler)
+    cAction.setImage(image: image, width: 25, height: 25)
+    cAction.backgroundColor = bgColor
+    return cAction
+}

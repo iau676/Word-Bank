@@ -276,7 +276,7 @@ extension WordsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let item = self.itemArray[indexPath.row]
         
-        let deleteAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let deleteAction = makeContextualAction(image: Images.bin, bgColor: UIColor.systemRed) { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             self.showAlertWithCancel(title: "'\(item.eng ?? "Word")' will be deleted",
                                      message: "This action cannot be undone",
                                      actionTitle: "Delete", style: .destructive) { _ in
@@ -286,18 +286,14 @@ extension WordsController: UITableViewDelegate {
                 tableView.reloadData()
             }
             success(true)
-        })
-        deleteAction.setImage(image: Images.bin, width: 25, height: 25)
-        deleteAction.setBackgroundColor(UIColor.systemRed)
+        }
         
-        let editAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let editAction = makeContextualAction(image: Images.edit, bgColor: Colors.lightBlue) { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             self.presentAddController(item: item)
             success(true)
-        })
-        editAction.setImage(image: Images.edit, width: 25, height: 25)
-        editAction.setBackgroundColor(Colors.lightBlue)
+        }
         
-        let addAction = UIContextualAction(style: .normal, title:  "", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let hardAction = makeContextualAction(image: Images.plus, bgColor: Colors.yellow) { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             if self.itemArray[indexPath.row].addedHardWords == false {
                 self.wordBrain.addWordToHardWords(indexPath.row)
                 
@@ -309,12 +305,10 @@ extension WordsController: UITableViewDelegate {
                 self.present(alert, animated: true, completion: nil)
             }
             success(true)
-        })
-        addAction.setImage(image: Images.plus, width: 25, height: 25)
-        addAction.setBackgroundColor(Colors.yellow)
+        }
         
         let standartConf: UISwipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
-        let hardConf: UISwipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction, editAction, addAction])
+        let hardConf: UISwipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction, editAction, hardAction])
         let emptyConf: UISwipeActionsConfiguration = UISwipeActionsConfiguration()
         let itemAlreadyHard = self.itemArray[indexPath.row].addedHardWords == true
         
