@@ -11,7 +11,13 @@ import UIKit
 
 class LetterCell: UICollectionViewCell {
     
-    lazy var titleLabel: UILabel = {
+    var letter: String? {
+        didSet {
+            configure()
+        }
+    }
+    
+    private let letterLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
@@ -24,15 +30,20 @@ class LetterCell: UICollectionViewCell {
         contentView.backgroundColor = Colors.f6f6f6
         contentView.setViewCornerRadius(8)
      
-        contentView.addSubview(titleLabel)
+        contentView.addSubview(letterLabel)
         
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            letterLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            letterLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
         ])
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configure() {
+        guard let letter = letter else { return }
+        letterLabel.text = letter
     }
 }

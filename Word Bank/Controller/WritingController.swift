@@ -7,6 +7,8 @@
 
 import UIKit
 
+private let reuseIdentifier = "LetterCell"
+
 class WritingController: UIViewController {
     
     //MARK: - Properties
@@ -74,14 +76,13 @@ class WritingController: UIViewController {
         return label
     }()
     
-    // collection view
-    fileprivate lazy var letterCV: UICollectionView = {
+    private lazy var letterCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.backgroundColor = .clear
-        cv.register(LetterCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(LetterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         cv.showsHorizontalScrollIndicator = false
         cv.delegate = self
         cv.dataSource = self
@@ -120,30 +121,20 @@ class WritingController: UIViewController {
         wordBrain.loadItemArray()
         wordBrain.sortWordsForExercise()
         configureUI()
-        updateUI()
+        configureNextQuestion()
     }
     
     //MARK: - Selectors
     
-    @objc private func updateUI() {
+    @objc private func configureNextQuestion() {
         bubbleView.isHidden = true
-        letterCounter = 0
-        hint = ""
-        hintLabel.text = ""
-        currentAnswerIndex = []
         
         if questionCounter < totalQuestionNumber {
             getNewQuestion()
             setHint()
             updateCV()
         } else {
-            questionCounter = 0
-            let controller = ResultController(exerciseType: exerciseType, exerciseFormat: exerciseFormat)
-            controller.questionArray = questionArray
-            controller.answerArray = answerArray
-            controller.userAnswerArray = userAnswerArray
-            controller.userAnswerArrayBool = userAnswerArrayBool
-            self.navigationController?.pushViewController(controller, animated: true)
+            goToResult()
         }
     }
     
@@ -226,6 +217,11 @@ class WritingController: UIViewController {
             questionLabel.text = ""
             textField.text = ""
             
+            letterCounter = 0
+            hint = ""
+            hintLabel.text = ""
+            currentAnswerIndex = []
+            
             bubbleView.isHidden = false
             backspaceButton.isHidden = true
             player.playMP3(Sounds.truee)
@@ -245,7 +241,7 @@ class WritingController: UIViewController {
             
             bubbleView.update(answer: userGotItRight, point: exercisePoint)
             bubbleView.rotate()
-            scheduledTimer(timeInterval: 0.7, #selector(updateUI))
+            scheduledTimer(timeInterval: 0.7, #selector(configureNextQuestion))
         }
     }
     
@@ -257,6 +253,14 @@ class WritingController: UIViewController {
         answerArray.append(answerText)
     }
    
+    private func goToResult() {
+        let controller = ResultController(exerciseType: exerciseType, exerciseFormat: exerciseFormat)
+        controller.questionArray = questionArray
+        controller.answerArray = answerArray
+        controller.userAnswerArray = userAnswerArray
+        controller.userAnswerArrayBool = userAnswerArrayBool
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 //MARK: - Hint
@@ -322,9 +326,9 @@ extension WritingController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! LetterCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LetterCell
         cell.isHidden = false
-        cell.titleLabel.text = "\(shuffledAnswer[indexPath.row])"
+        cell.letter = "\(shuffledAnswer[indexPath.row])"
         return cell
     }
 }
@@ -334,10 +338,11 @@ extension WritingController: UICollectionViewDataSource {
 extension WritingController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! LetterCell
-        guard let title = cell.titleLabel.text else {return}
-        currentAnswerIndex.append(indexPath.row)
+        guard let letter = cell.letter else { return }
+        guard let text = textField.text else { return }
         cell.isHidden = true
-        textField.text! += "\(title)"
+        currentAnswerIndex.append(indexPath.row)
+        textField.text = text + letter
         textChanged(textField)
     }
 }

@@ -129,7 +129,7 @@ class TestController: UIViewController {
     
     //MARK: - Helpers
     
-    private func configureUI(){
+    private func configureUI() {
         configureNavigationBar()
         view.backgroundColor = Colors.raven
         
