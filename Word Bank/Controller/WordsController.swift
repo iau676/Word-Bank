@@ -294,16 +294,8 @@ extension WordsController: UITableViewDelegate {
         }
         
         let hardAction = makeContextualAction(image: Images.plus, bgColor: Colors.yellow) { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            if self.itemArray[indexPath.row].addedHardWords == false {
-                self.wordBrain.addWordToHardWords(indexPath.row)
-                
-                let alert = UIAlertController(title: "Added to Hard Words", message: "", preferredStyle: .alert)
-                let when = DispatchTime.now() + 1
-                DispatchQueue.main.asyncAfter(deadline: when){
-                  alert.dismiss(animated: true, completion: nil)
-                }
-                self.present(alert, animated: true, completion: nil)
-            }
+            self.wordBrain.addWordToHardWords(indexPath.row)
+            self.showAlertPopup(title: "Added to Hard Words")
             success(true)
         }
         

@@ -37,6 +37,15 @@ extension UIViewController {
         present(alert, animated: true)
     }
     
+    func showAlertPopup(title: String, message: String = "") {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let when = DispatchTime.now() + 1
+        DispatchQueue.main.asyncAfter(deadline: when){
+          alert.dismiss(animated: true, completion: nil)
+        }
+        present(alert, animated: true, completion: nil)
+    }
+    
     func showAlertWithCancel(title: String, message: String, actionTitle: String = "OK", style: UIAlertAction.Style = .default, completion: @escaping(Bool)-> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: actionTitle, style: style) { (action) in
