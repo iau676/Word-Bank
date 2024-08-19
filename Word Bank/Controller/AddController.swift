@@ -107,9 +107,8 @@ class AddController: UIViewController {
     //MARK: - Helpers
     
     private func configureUI() {
-        view.backgroundColor = Colors.darkBackground
-        
         configureTextFields()
+        view.backgroundColor = Colors.darkBackground
         
         view.addSubview(flipButton)
         flipButton.centerX(inView: view)
@@ -142,15 +141,8 @@ class AddController: UIViewController {
         meaningTxtField.delegate = self
         engTxtField.becomeFirstResponder()
         
-        switch UserDefault.userInterfaceStyle {
-        case "dark":
-            engTxtField.keyboardAppearance = .dark
-            meaningTxtField.keyboardAppearance = .dark
-            break
-        default:
-            engTxtField.keyboardAppearance = .default
-            meaningTxtField.keyboardAppearance = .default
-        }
+        engTxtField.setKeyboardAppearance()
+        meaningTxtField.setKeyboardAppearance()
         
         guard let item = item else { return }
         engTxtField.text = item.eng

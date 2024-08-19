@@ -141,12 +141,8 @@ class WordsController: UIViewController {
         searchBar.layer.cornerRadius = 10
         searchBar.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         searchBar.searchTextField.textColor = Colors.black
+        searchBar.searchTextField.setKeyboardAppearance()
         searchBar.isHidden = exerciseType == ExerciseType.hard
-        
-        switch UserDefault.userInterfaceStyle {
-        case "dark": searchBar.keyboardAppearance = .dark
-        default: searchBar.keyboardAppearance = .default
-        }
     }
     
     private func updateSearchBarPlaceholder() {

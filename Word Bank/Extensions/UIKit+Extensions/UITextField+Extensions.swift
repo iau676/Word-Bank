@@ -18,4 +18,11 @@ extension UITextField {
         self.rightView = paddingView
         self.rightViewMode = .always
     }
+    
+    func setKeyboardAppearance() {
+        switch UserDefault.userInterfaceStyle {
+        case "dark": self.keyboardAppearance = .dark
+        default: self.keyboardAppearance = .default
+        }
+    }
 }
