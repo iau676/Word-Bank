@@ -8,8 +8,10 @@
 import UIKit
 
 public class ClassicFireworkController {
+    
+    static var shared = ClassicFireworkController()
 
-    public init() {}
+    private init() {}
 
     public var sparkAnimator: SparkViewAnimator {
         return ClassicFireworkAnimator()

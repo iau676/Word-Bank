@@ -48,9 +48,17 @@ class WritingController: UIViewController {
         label.textAlignment = .center
         return label
     }()
+        
+    private lazy var textField: UITextField = {
+        let tf = UITextField()
+        tf.setViewCornerRadius(6)
+        tf.setLeftPaddingPoints(10)
+        tf.backgroundColor = .white
+        tf.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
+        return tf
+    }()
     
     //hint
-    
     private var hint = ""
     private var hintCount = 0
     private var letterCounter = 0
@@ -67,17 +75,8 @@ class WritingController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
-    private lazy var textField: UITextField = {
-        let tf = UITextField()
-        tf.setViewCornerRadius(6)
-        tf.setLeftPaddingPoints(10)
-        tf.backgroundColor = .white
-        tf.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
-        return tf
-    }()
     
     // collection view
-    
     fileprivate lazy var letterCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -98,10 +97,9 @@ class WritingController: UIViewController {
     
     private lazy var backspaceButton: UIButton = {
        let button = UIButton()
-        button.isHidden = !(selectedTyping == 0)
+        button.isHidden = true
         button.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20, color: Colors.black)
-        button.addTarget(self, action: #selector(backspaceButtonPressed),
-                                  for: .primaryActionTriggered)
+        button.addTarget(self, action: #selector(backspaceButtonPressed), for: .primaryActionTriggered)
         return button
     }()
     
@@ -132,6 +130,7 @@ class WritingController: UIViewController {
     
     @objc private func updateUI() {
         bubbleButton.isHidden = true
+        backspaceButton.isHidden = true
         letterCounter = 0
         hint = ""
         hintLabel.text = ""
@@ -159,6 +158,7 @@ class WritingController: UIViewController {
     
     @objc private func textChanged(_ sender: UITextField) {
         guard let userAnswer = sender.text else { return }
+        backspaceButton.isHidden = !(selectedTyping == 0 && userAnswer.count > 0)
         if answerText.lowercased() == userAnswer.lowercased() {
             checkAnswer(userAnswer)
             textField.text = ""
@@ -209,6 +209,7 @@ class WritingController: UIViewController {
         guard let text = textField.text else {return}
         if text.count > 0 {
             textField.text = "\(text.dropLast())"
+            textChanged(textField)
             unhideLetterCell()
         }
     }
@@ -267,7 +268,6 @@ class WritingController: UIViewController {
     }
     
     private func configureTextField() {
-        textField.delegate = self
         textField.isEnabled = !(selectedTyping == 0)
         textField.tintColor = (selectedTyping == 0) ? .clear : Colors.raven
         if selectedTyping == 1 { textField.becomeFirstResponder() }
@@ -327,15 +327,6 @@ extension WritingController {
     }
 }
 
-//MARK: - UITextFieldDelegate
-
-extension WritingController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textFieldd: UITextField) -> Bool {
-        soundHintButtonPressed()
-        return false
-    }
-}
-
 //MARK: - Collection View
 
 extension WritingController: UICollectionViewDataSource {
@@ -377,6 +368,6 @@ extension WritingController: UICollectionViewDelegateFlowLayout {
 extension WritingController: ExerciseTopDelegate {
     func soundHintButtonPressed() {
         getLetter()
-        ClassicFireworkController().addFireworks(count: 33, sparks: 5, around: exerciseTopView.userPointButton, maxVectorChange: view.frame.width)
+        ClassicFireworkController.shared.addFireworks(count: 33, sparks: 5, around: exerciseTopView.userPointButton, maxVectorChange: view.frame.width)
     }
 }
