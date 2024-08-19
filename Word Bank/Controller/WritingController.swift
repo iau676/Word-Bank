@@ -16,8 +16,11 @@ class WritingController: UIViewController {
     
     private var wordBrain = WordBrain()
     private var player = Player()
-    private var timer = Timer()
     
+    private var questionCounter = 0
+    private var questionText = ""
+    private var answerText = ""
+    private var totalQuestionNumber = 10
     private let exercisePoint: Int = 10
     private var selectedTyping: Int { return UserDefault.selectedTyping.getInt() }
     
@@ -26,18 +29,13 @@ class WritingController: UIViewController {
     private var userAnswerArray = [String]()
     private var userAnswerArrayBool = [Bool]()
     
-    private var questionCounter = 0
-    private var totalQuestionNumber = 10
-    private var questionText = ""
-    private var answerText = ""
-    
     private lazy var exerciseTopView: ExerciseTopView = {
         let view = ExerciseTopView(exerciseFormat: exerciseFormat)
         view.delegate = self
         return view
     }()
     
-    private var bubbleButton = BubbleView()
+    private var bubbleView = BubbleView()
     
     private let questionLabel: UILabel = {
        let label = UILabel()
@@ -60,9 +58,9 @@ class WritingController: UIViewController {
     
     //hint
     private var hint = ""
+    private var skeleton = ""
     private var hintCount = 0
     private var letterCounter = 0
-    private var skeleton = ""
     private var underscoreArr = [String]()
     private var skeletonArr = [Int]()
     private var randomArr = [Int]()
@@ -121,7 +119,6 @@ class WritingController: UIViewController {
         wordBrain.loadHardItemArray()
         wordBrain.loadItemArray()
         wordBrain.sortWordsForExercise()
-        configureTextField()
         configureUI()
         updateUI()
     }
@@ -129,25 +126,19 @@ class WritingController: UIViewController {
     //MARK: - Selectors
     
     @objc private func updateUI() {
-        bubbleButton.isHidden = true
-        backspaceButton.isHidden = true
+        bubbleView.isHidden = true
         letterCounter = 0
         hint = ""
         hintLabel.text = ""
         currentAnswerIndex = []
         
         if questionCounter < totalQuestionNumber {
-            questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseType)
-            answerText = wordBrain.getEnglish(exerciseType: exerciseType)
-            questionLabel.text = questionText
-            questionArray.append(questionText)
-            answerArray.append(answerText)
+            getNewQuestion()
             setHint()
             updateCV()
         } else {
             questionCounter = 0
-            let controller = ResultController(exerciseType: exerciseType,
-                                                  exerciseFormat: exerciseFormat)
+            let controller = ResultController(exerciseType: exerciseType, exerciseFormat: exerciseFormat)
             controller.questionArray = questionArray
             controller.answerArray = answerArray
             controller.userAnswerArray = userAnswerArray
@@ -159,50 +150,7 @@ class WritingController: UIViewController {
     @objc private func textChanged(_ sender: UITextField) {
         guard let userAnswer = sender.text else { return }
         backspaceButton.isHidden = !(selectedTyping == 0 && userAnswer.count > 0)
-        if answerText.lowercased() == userAnswer.lowercased() {
-            checkAnswer(userAnswer)
-            textField.text = ""
-        }
-    }
-    
-    private func checkAnswer(_ userAnswer: String){
-        questionCounter += 1
-        exerciseTopView.updateProgress()
-        
-        let userGotItRight = answerText.lowercased() == userAnswer.lowercased()
-        let lastPoint = UserDefault.lastPoint.getInt()
-        
-        bubbleButton.isHidden = false
-        questionLabel.text = ""
-        
-        if userGotItRight {
-            player.playMP3(Sounds.truee)
-            wordBrain.userGotItCorrect()
-            
-            if exerciseType == ExerciseType.normal {
-                wordBrain.userGotItCorrect()
-            } else {
-                if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
-            }
-        } else {
-            player.playMP3(Sounds.falsee)
-            wordBrain.userGotItWrong()
-            
-            if exerciseType == ExerciseType.normal {
-                wordBrain.userGotItWrong()
-            } else {
-                wordBrain.updateWrongCountHardWords()
-            }
-        }
-        
-        exerciseTopView.updatePoint(lastPoint: lastPoint,
-                                    exercisePoint: exercisePoint,
-                                    isIncrease: userGotItRight)
-        userAnswerArray.append(userAnswer)
-        userAnswerArrayBool.append(userGotItRight)
-        bubbleButton.update(answer: userGotItRight, point: exercisePoint)
-        bubbleButton.rotate()
-        scheduledTimer(timeInterval: 0.7, #selector(updateUI))
+        checkAnswer(userAnswer)
     }
     
     @objc private func backspaceButtonPressed(_ sender: UIButton) {
@@ -214,18 +162,11 @@ class WritingController: UIViewController {
         }
     }
     
-    private func unhideLetterCell() {
-        guard let last = currentAnswerIndex.last else {return}
-        if let cell = letterCV.cellForItem(at: IndexPath(row: last, section: 0)) as? LetterCell {
-            cell.isHidden = false
-            currentAnswerIndex.removeLast()
-        }
-    }
-    
     //MARK: - Helpers
     
     private func configureUI() {
         configureNavigationBar()
+        configureTextField()
         view.backgroundColor = Colors.raven
         
         view.addSubview(exerciseTopView)
@@ -250,9 +191,9 @@ class WritingController: UIViewController {
                              bottom: textField.topAnchor, right: view.rightAnchor,
                              paddingLeft: 32, paddingRight: 32)
         
-        view.addSubview(bubbleButton)
-        bubbleButton.centerX(inView: questionLabel)
-        bubbleButton.centerY(inView: questionLabel)
+        view.addSubview(bubbleView)
+        bubbleView.centerX(inView: questionLabel)
+        bubbleView.centerY(inView: questionLabel)
         
         view.addSubview(letterCV)
         letterCV.anchor(top: stack.bottomAnchor, left: view.leftAnchor,
@@ -277,9 +218,43 @@ class WritingController: UIViewController {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
     
-    private func updateCV(){
-        shuffledAnswer = answerText.shuffled()
-        letterCV.reloadData()
+    private func checkAnswer(_ userAnswer: String){
+        let userGotItRight = answerText.lowercased() == userAnswer.lowercased()
+        
+        if userGotItRight {
+            questionCounter += 1
+            questionLabel.text = ""
+            textField.text = ""
+            
+            bubbleView.isHidden = false
+            backspaceButton.isHidden = true
+            player.playMP3(Sounds.truee)
+            
+            if exerciseType == ExerciseType.normal {
+                wordBrain.userGotItCorrect()
+            } else {
+                if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
+            }
+            
+            let lastPoint = UserDefault.lastPoint.getInt()
+            exerciseTopView.updatePoint(lastPoint: lastPoint, exercisePoint: exercisePoint, isIncrease: userGotItRight)
+            exerciseTopView.updateProgress(questionCounter: questionCounter)
+            
+            userAnswerArray.append(userAnswer)
+            userAnswerArrayBool.append(userGotItRight)
+            
+            bubbleView.update(answer: userGotItRight, point: exercisePoint)
+            bubbleView.rotate()
+            scheduledTimer(timeInterval: 0.7, #selector(updateUI))
+        }
+    }
+    
+    private func getNewQuestion() {
+        questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseType)
+        answerText = wordBrain.getEnglish(exerciseType: exerciseType)
+        questionLabel.text = questionText
+        questionArray.append(questionText)
+        answerArray.append(answerText)
     }
    
 }
@@ -304,7 +279,11 @@ extension WritingController {
             }
         }
         skeleton = underscoreArr.joined(separator: " ")
-      
+    }
+    
+    private func updateCV() {
+        shuffledAnswer = answerText.shuffled()
+        letterCV.reloadData()
     }
     
     private func getLetter() {
@@ -323,6 +302,14 @@ extension WritingController {
             hintLabel.text = hint
         } else {
             hintLabel.flash(withColor: Colors.green, originalColor: Colors.f6f6f6)
+        }
+    }
+    
+    private func unhideLetterCell() {
+        guard let last = currentAnswerIndex.last else {return}
+        if let cell = letterCV.cellForItem(at: IndexPath(row: last, section: 0)) as? LetterCell {
+            cell.isHidden = false
+            currentAnswerIndex.removeLast()
         }
     }
 }
@@ -346,10 +333,10 @@ extension WritingController: UICollectionViewDataSource {
 
 extension WritingController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = collectionView.cellForItem(at: indexPath) as! LetterCell
-        guard let title = item.titleLabel.text else {return}
+        let cell = collectionView.cellForItem(at: indexPath) as! LetterCell
+        guard let title = cell.titleLabel.text else {return}
         currentAnswerIndex.append(indexPath.row)
-        item.isHidden = true
+        cell.isHidden = true
         textField.text! += "\(title)"
         textChanged(textField)
     }

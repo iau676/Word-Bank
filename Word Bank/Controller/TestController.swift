@@ -170,7 +170,7 @@ class TestController: UIViewController {
         let lastPoint = UserDefault.lastPoint.getInt()
         
         questionCounter += 1
-        exerciseTopView.updateProgress()
+        exerciseTopView.updateProgress(questionCounter: questionCounter)
         bubbleButton.isHidden = false
         answer1Button.isEnabled = false
         answer2Button.isEnabled = false

@@ -86,8 +86,8 @@ class ExerciseTopView: UIView {
     
     //MARK: - Helpers
     
-    func updateProgress() {
-        progressBar.progress = WordBrain.shared.getProgress()
+    func updateProgress(questionCounter: Int, totalQuestionNumber: Int = 10) {
+        progressBar.progress = Float(questionCounter) / Float(totalQuestionNumber)
     }
     
     func updatePoint(lastPoint: Int, exercisePoint: Int, isIncrease: Bool) {

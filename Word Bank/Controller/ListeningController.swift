@@ -119,7 +119,7 @@ class ListeningController: UIViewController {
         actionButton.bounce()
         if isAnswerSelected {
             questionCounter += 1
-            exerciseTopView.updateProgress()
+            exerciseTopView.updateProgress(questionCounter: questionCounter)
             
             let lastPoint = UserDefault.lastPoint.getInt()
             
