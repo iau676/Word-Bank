@@ -11,18 +11,6 @@ private let reuseIdentifier = "AwardCell"
 
 class AwardsController: UIViewController {
     
-    private let levelLabel = UILabel()
-    private let wordsLabel = UILabel()
-    private let exercisesLabel = UILabel()
-    
-    private let levelButton = UIButton()
-    private let wordsButton = UIButton()
-    private let exercisesButton = UIButton()
-
-    private let levelScoreLabel = UILabel()
-    private let wordsScoreLabel = UILabel()
-    private let exerciseScoreLabel = UILabel()
-    
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
@@ -31,13 +19,38 @@ class AwardsController: UIViewController {
     private let wordsTitleArray: [Int] = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
     private let exercisesTitleArray: [Int] = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
     
-    private var levelBadgeCount = 0
-    private var wordBadgeCount = 0
-    private var exerciseBadgeCount = 0
+    private let levelLabel = makeAwardLabel(text: "LEVEL")
+    private let wordsLabel = makeAwardLabel(text: "WORDS")
+    private let exercisesLabel = makeAwardLabel(text: "EXERCISES")
+    
+    private lazy var levelInfoLabel = makePaddingLabel(text: "\(UserDefault.level.getInt())")
+    private lazy var wordsInfoLabel = makePaddingLabel(text: "\(itemArray.count)")
+    private lazy var exercisesInfoLabel = makePaddingLabel(text: "\(exerciseArray.count)")
 
-    private let levelCV = makeAwardCollectionView(withIdentifier: reuseIdentifier)
-    private let wordsCV = makeAwardCollectionView(withIdentifier: reuseIdentifier)
-    private let exercisesCV = makeAwardCollectionView(withIdentifier: reuseIdentifier)
+    private let levelScoreLabel = makeAwardLabel(text: "0/10")
+    private let wordsScoreLabel = makeAwardLabel(text: "0/10")
+    private let exerciseScoreLabel = makeAwardLabel(text: "0/10")
+
+    private lazy var levelCV: UICollectionView = {
+        let cv = makeAwardCollectionView(withIdentifier: reuseIdentifier)
+        cv.delegate = self
+        cv.dataSource = self
+        return cv
+    }()
+    
+    private lazy var wordsCV: UICollectionView = {
+        let cv = makeAwardCollectionView(withIdentifier: reuseIdentifier)
+        cv.delegate = self
+        cv.dataSource = self
+        return cv
+    }()
+    
+    private lazy var exercisesCV: UICollectionView = {
+        let cv = makeAwardCollectionView(withIdentifier: reuseIdentifier)
+        cv.delegate = self
+        cv.dataSource = self
+        return cv
+    }()
     
     //MARK: - Life Cycle
     
@@ -45,44 +58,101 @@ class AwardsController: UIViewController {
         super.viewDidLoad()
         wordBrain.loadItemArray()
         wordBrain.loadExerciseArray()
-        style()
-        layout()
+        configureUI()
         updateScoreLabels()
     }
     
     //MARK: - Helpers
     
-    private func configureLabel(_ label: UILabel, _ text: String){
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = text
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
-        label.textColor = Colors.black
+    private func configureUI() {
+        title = "Awards"
+        view.backgroundColor = Colors.cellLeft
+        
+        view.addSubview(levelLabel)
+        view.addSubview(wordsLabel)
+        view.addSubview(exercisesLabel)
+        
+        view.addSubview(levelCV)
+        view.addSubview(wordsCV)
+        view.addSubview(exercisesCV)
+        
+        view.addSubview(levelInfoLabel)
+        view.addSubview(wordsInfoLabel)
+        view.addSubview(exercisesInfoLabel)
+        
+        view.addSubview(levelScoreLabel)
+        view.addSubview(wordsScoreLabel)
+        view.addSubview(exerciseScoreLabel)
+        
+        //level
+        levelCV.setHeight(140)
+        levelCV.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
+        
+        
+        levelLabel.anchor(left: view.leftAnchor, bottom: levelCV.topAnchor,
+                          paddingLeft: 32, paddingBottom: 1)
+        
+        levelInfoLabel.setHeight(29)
+        levelInfoLabel.centerY(inView: levelLabel)
+        levelInfoLabel.anchor(left: levelLabel.rightAnchor, paddingLeft: 8)
+        
+        levelScoreLabel.centerY(inView: levelLabel)
+        levelScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
+        
+        
+        //words
+        wordsCV.setHeight(140)
+        wordsCV.anchor(top: levelCV.bottomAnchor, left: view.leftAnchor,
+                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
+        
+        
+        wordsLabel.anchor(left: view.leftAnchor, bottom: wordsCV.topAnchor,
+                          paddingLeft: 32, paddingBottom: 1)
+        
+        wordsInfoLabel.setHeight(29)
+        wordsInfoLabel.centerY(inView: wordsLabel)
+        wordsInfoLabel.anchor(left: wordsLabel.rightAnchor, paddingLeft: 8)
+        
+        wordsScoreLabel.centerY(inView: wordsLabel)
+        wordsScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
+        
+        //exercises
+        exercisesCV.setHeight(140)
+        exercisesCV.anchor(top: wordsCV.bottomAnchor, left: view.leftAnchor,
+                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
+        
+        
+        exercisesLabel.anchor(left: view.leftAnchor, bottom: exercisesCV.topAnchor,
+                          paddingLeft: 32, paddingBottom: 1)
+        
+        exercisesInfoLabel.setHeight(29)
+        exercisesInfoLabel.centerY(inView: exercisesLabel)
+        exercisesInfoLabel.anchor(left: exercisesLabel.rightAnchor, paddingLeft: 8)
+        
+        exerciseScoreLabel.centerY(inView: exercisesLabel)
+        exerciseScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
     }
     
-    private func configureButton(_ button: UIButton, _ text: String){
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(text, for: .normal)
-        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
-        button.setButtonCornerRadius(8)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        button.backgroundColor = Colors.blue
-    }
-    
-    private func updateScoreLabels(){
+    private func updateScoreLabels() {
+        var levelScoreCount = 0
+        var wordScoreCount = 0
+        var exerciseScoreCount = 0
+        
         for i in 0..<10 {
             if levelTitleArray[i] <= UserDefault.level.getInt() {
-                levelBadgeCount += 1
-                levelScoreLabel.text = "\(levelBadgeCount)/10"
+                levelScoreCount += 1
+                levelScoreLabel.text = "\(levelScoreCount)/10"
             }
             
             if wordsTitleArray[i] <= itemArray.count {
-                wordBadgeCount += 1
-                wordsScoreLabel.text = "\(wordBadgeCount)/10"
+                wordScoreCount += 1
+                wordsScoreLabel.text = "\(wordScoreCount)/10"
             }
             
             if exercisesTitleArray[i] <= exerciseArray.count {
-                exerciseBadgeCount += 1
-                exerciseScoreLabel.text = "\(exerciseBadgeCount)/10"
+                exerciseScoreCount += 1
+                exerciseScoreLabel.text = "\(exerciseScoreCount)/10"
             }
         }
     }
@@ -141,103 +211,5 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
         
         cell.configure(bannerText: bannerText, titleText: titleText, cpValue: cpValue, color: color)
         return cell
-    }
-}
-
-//MARK: - Layout
-
-extension AwardsController {
-    private func style(){
-        title = "Awards"
-        view.backgroundColor = Colors.cellLeft
-        
-        configureLabel(levelLabel, "LEVEL")
-        configureLabel(wordsLabel, "WORDS")
-        configureLabel(exercisesLabel, "EXERCISES")
-        
-        configureButton(levelButton, "\(UserDefault.level.getInt())")
-        configureButton(wordsButton, "\(itemArray.count)")
-        configureButton(exercisesButton, "\(exerciseArray.count)")
-        
-        configureLabel(levelScoreLabel, "0/10")
-        configureLabel(wordsScoreLabel, "0/10")
-        configureLabel(exerciseScoreLabel, "0/10")
-      
-        levelCV.delegate = self
-        levelCV.dataSource = self
-        
-        wordsCV.delegate = self
-        wordsCV.dataSource = self
-        
-        exercisesCV.delegate = self
-        exercisesCV.dataSource = self
-    }
-    
-    private func layout(){
-                
-        view.addSubview(levelLabel)
-        view.addSubview(wordsLabel)
-        view.addSubview(exercisesLabel)
-        
-        view.addSubview(levelCV)
-        view.addSubview(wordsCV)
-        view.addSubview(exercisesCV)
-        
-        view.addSubview(levelButton)
-        view.addSubview(wordsButton)
-        view.addSubview(exercisesButton)
-        
-        view.addSubview(levelScoreLabel)
-        view.addSubview(wordsScoreLabel)
-        view.addSubview(exerciseScoreLabel)
-        
-        //level
-        levelCV.setHeight(140)
-        levelCV.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
-        
-        
-        levelLabel.anchor(left: view.leftAnchor, bottom: levelCV.topAnchor,
-                          paddingLeft: 32, paddingBottom: 1)
-        
-        levelButton.setHeight(29)
-        levelButton.centerY(inView: levelLabel)
-        levelButton.anchor(left: levelLabel.rightAnchor, paddingLeft: 8)
-        
-        levelScoreLabel.centerY(inView: levelLabel)
-        levelScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
-        
-        
-        //words
-        wordsCV.setHeight(140)
-        wordsCV.anchor(top: levelCV.bottomAnchor, left: view.leftAnchor,
-                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
-        
-        
-        wordsLabel.anchor(left: view.leftAnchor, bottom: wordsCV.topAnchor,
-                          paddingLeft: 32, paddingBottom: 1)
-        
-        wordsButton.setHeight(29)
-        wordsButton.centerY(inView: wordsLabel)
-        wordsButton.anchor(left: wordsLabel.rightAnchor, paddingLeft: 8)
-        
-        wordsScoreLabel.centerY(inView: wordsLabel)
-        wordsScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
-        
-        //exercises
-        exercisesCV.setHeight(140)
-        exercisesCV.anchor(top: wordsCV.bottomAnchor, left: view.leftAnchor,
-                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
-        
-        
-        exercisesLabel.anchor(left: view.leftAnchor, bottom: exercisesCV.topAnchor,
-                          paddingLeft: 32, paddingBottom: 1)
-        
-        exercisesButton.setHeight(29)
-        exercisesButton.centerY(inView: exercisesLabel)
-        exercisesButton.anchor(left: exercisesLabel.rightAnchor, paddingLeft: 8)
-        
-        exerciseScoreLabel.centerY(inView: exercisesLabel)
-        exerciseScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
     }
 }

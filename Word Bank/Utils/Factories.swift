@@ -96,6 +96,40 @@ func makeExerciseLabel(text: String) -> UILabel {
     return label
 }
 
+func makeAwardLabel(text: String) -> UILabel {
+    let label = UILabel()
+    label.text = text
+    label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
+    label.textColor = Colors.black
+    return label
+}
+
+func makePaddingLabel(text: String) -> UILabel {
+    let label = UILabelPadding()
+    label.numberOfLines = 0
+    label.text = text
+    label.textColor = UIColor.white
+    label.backgroundColor = Colors.blue
+    label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
+    label.layer.cornerRadius = 8
+    label.layer.masksToBounds = true 
+    return label
+}
+
+private class UILabelPadding: UILabel {
+    let padding = UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8)
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: padding))
+    }
+
+    override var intrinsicContentSize : CGSize {
+        let superContentSize = super.intrinsicContentSize
+        let width = superContentSize.width + padding.left + padding.right
+        let heigth = superContentSize.height + padding.top + padding.bottom
+        return CGSize(width: width, height: heigth)
+    }
+}
+
 //MARK: - UIContextualAction
 
 func makeContextualAction(image: UIImage?, bgColor: UIColor, handler: @escaping UIContextualAction.Handler) -> UIContextualAction {
