@@ -26,6 +26,9 @@ class WritingController: UIViewController {
     private let exercisePoint: Int = 10
     private var selectedTyping: Int { return UserDefault.selectedTyping.getInt() }
     
+    private var shuffledAnswer: Array<Character> = Array("")
+    private var currentAnswerIndex: [Int] = []
+    
     private var questionArray = [String]()
     private var answerArray = [String]()
     private var userAnswerArray = [String]()
@@ -49,13 +52,34 @@ class WritingController: UIViewController {
         return label
     }()
         
-    private lazy var textField: UITextField = {
+    private let textField: UITextField = {
         let tf = UITextField()
         tf.setViewCornerRadius(6)
         tf.setLeftPaddingPoints(10)
         tf.backgroundColor = .white
-        tf.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
         return tf
+    }()
+    
+    private lazy var backspaceButton: UIButton = {
+       let button = UIButton()
+        button.isHidden = true
+        button.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20, color: Colors.black)
+        button.addTarget(self, action: #selector(backspaceButtonPressed), for: .primaryActionTriggered)
+        return button
+    }()
+    
+    private lazy var letterCV: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .clear
+        cv.register(LetterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        cv.showsHorizontalScrollIndicator = false
+        cv.delegate = self
+        cv.dataSource = self
+        cv.bounces = false
+        cv.isHidden = !(selectedTyping == 0)
+        return cv
     }()
     
     //hint
@@ -74,32 +98,6 @@ class WritingController: UIViewController {
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
-    }()
-    
-    private lazy var letterCV: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .clear
-        cv.register(LetterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        cv.showsHorizontalScrollIndicator = false
-        cv.delegate = self
-        cv.dataSource = self
-        cv.bounces = false
-        cv.isHidden = !(selectedTyping == 0)
-        return cv
-    }()
-    
-    private var shuffledAnswer: Array<Character> = Array("")
-    private var currentAnswerIndex: [Int] = []
-    
-    private lazy var backspaceButton: UIButton = {
-       let button = UIButton()
-        button.isHidden = true
-        button.setImageWithRenderingMode(image: Images.backspace, width: 20, height: 20, color: Colors.black)
-        button.addTarget(self, action: #selector(backspaceButtonPressed), for: .primaryActionTriggered)
-        return button
     }()
     
     //MARK: - Lifecycle
@@ -121,7 +119,6 @@ class WritingController: UIViewController {
         wordBrain.loadItemArray()
         wordBrain.sortWordsForExercise()
         configureUI()
-        configureNextQuestion()
     }
     
     //MARK: - Selectors
@@ -131,8 +128,8 @@ class WritingController: UIViewController {
         
         if questionCounter < totalQuestionNumber {
             getNewQuestion()
+            updateLetterCV()
             setHint()
-            updateCV()
         } else {
             goToResult()
         }
@@ -149,7 +146,7 @@ class WritingController: UIViewController {
         if text.count > 0 {
             textField.text = "\(text.dropLast())"
             textChanged(textField)
-            unhideLetterCell()
+            unhideLastSelectedLetterCell()
         }
     }
     
@@ -158,6 +155,7 @@ class WritingController: UIViewController {
     private func configureUI() {
         configureNavigationBar()
         configureTextField()
+        configureNextQuestion()
         view.backgroundColor = Colors.raven
         
         view.addSubview(exerciseTopView)
@@ -196,10 +194,10 @@ class WritingController: UIViewController {
         backspaceButton.setDimensions(width: 50, height: 50)
         backspaceButton.centerY(inView: textField)
         backspaceButton.anchor(right: textField.rightAnchor)
-        
     }
     
     private func configureTextField() {
+        textField.addTarget(self, action: #selector(textChanged), for: .allEditingEvents)
         textField.isEnabled = !(selectedTyping == 0)
         textField.tintColor = (selectedTyping == 0) ? .clear : Colors.raven
         if selectedTyping == 1 { textField.becomeFirstResponder() }
@@ -207,6 +205,19 @@ class WritingController: UIViewController {
     
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
+    }
+    
+    private func updateLetterCV() {
+        shuffledAnswer = answerText.shuffled()
+        letterCV.reloadData()
+    }
+    
+    private func unhideLastSelectedLetterCell() {
+        guard let last = currentAnswerIndex.last else {return}
+        if let cell = letterCV.cellForItem(at: IndexPath(row: last, section: 0)) as? LetterCell {
+            cell.isHidden = false
+            currentAnswerIndex.removeLast()
+        }
     }
     
     private func checkAnswer(_ userAnswer: String){
@@ -285,13 +296,9 @@ extension WritingController {
         skeleton = underscoreArr.joined(separator: " ")
     }
     
-    private func updateCV() {
-        shuffledAnswer = answerText.shuffled()
-        letterCV.reloadData()
-    }
-    
     private func getLetter() {
         if letterCounter <= skeletonArr.count {
+            ClassicFireworkController.shared.addFireworks(count: 33, sparks: 5, around: exerciseTopView.userPointButton, maxVectorChange: view.frame.width)
             if letterCounter == 0 {
                 hint = skeleton
             } else {
@@ -306,14 +313,6 @@ extension WritingController {
             hintLabel.text = hint
         } else {
             hintLabel.flash(withColor: Colors.green, originalColor: Colors.f6f6f6)
-        }
-    }
-    
-    private func unhideLetterCell() {
-        guard let last = currentAnswerIndex.last else {return}
-        if let cell = letterCV.cellForItem(at: IndexPath(row: last, section: 0)) as? LetterCell {
-            cell.isHidden = false
-            currentAnswerIndex.removeLast()
         }
     }
 }
@@ -360,6 +359,5 @@ extension WritingController: UICollectionViewDelegateFlowLayout {
 extension WritingController: ExerciseTopDelegate {
     func soundHintButtonPressed() {
         getLetter()
-        ClassicFireworkController.shared.addFireworks(count: 33, sparks: 5, around: exerciseTopView.userPointButton, maxVectorChange: view.frame.width)
     }
 }
