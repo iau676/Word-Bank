@@ -68,91 +68,55 @@ class AwardsController: UIViewController {
         title = "Awards"
         view.backgroundColor = Colors.cellLeft
         
-        view.addSubview(levelLabel)
-        view.addSubview(wordsLabel)
-        view.addSubview(exercisesLabel)
+        let cvStack = UIStackView(arrangedSubviews: [levelCV, wordsCV, exercisesCV])
+        cvStack.axis = .vertical
+        cvStack.spacing = 32
+        cvStack.distribution = .fillEqually
         
-        view.addSubview(levelCV)
-        view.addSubview(wordsCV)
-        view.addSubview(exercisesCV)
-        
-        view.addSubview(levelInfoLabel)
-        view.addSubview(wordsInfoLabel)
-        view.addSubview(exercisesInfoLabel)
-        
-        view.addSubview(levelScoreLabel)
-        view.addSubview(wordsScoreLabel)
-        view.addSubview(exerciseScoreLabel)
-        
-        //level
+        view.addSubview(cvStack)
         levelCV.setHeight(140)
-        levelCV.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
+        cvStack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
         
+        let levelStack = UIStackView(arrangedSubviews: [levelLabel, levelInfoLabel, levelScoreLabel])
+        levelStack.axis = .horizontal
+        levelStack.spacing = 8
+        levelStack.distribution = .fill
+        levelScoreLabel.textAlignment = .right
         
-        levelLabel.anchor(left: view.leftAnchor, bottom: levelCV.topAnchor,
-                          paddingLeft: 32, paddingBottom: 1)
+        view.addSubview(levelStack)
+        levelStack.anchor(left: view.leftAnchor, bottom: levelCV.topAnchor, right: view.rightAnchor, paddingLeft: 32, paddingBottom: 2, paddingRight: 16)
+
+        let wordsStack = UIStackView(arrangedSubviews: [wordsLabel, wordsInfoLabel, wordsScoreLabel])
+        wordsStack.axis = .horizontal
+        wordsStack.spacing = 8
+        wordsStack.distribution = .fill
+        wordsScoreLabel.textAlignment = .right
         
-        levelInfoLabel.setHeight(29)
-        levelInfoLabel.centerY(inView: levelLabel)
-        levelInfoLabel.anchor(left: levelLabel.rightAnchor, paddingLeft: 8)
+        view.addSubview(wordsStack)
+        wordsStack.anchor(left: view.leftAnchor, bottom: wordsCV.topAnchor, right: view.rightAnchor, paddingLeft: 32, paddingBottom: 2, paddingRight: 16)
         
-        levelScoreLabel.centerY(inView: levelLabel)
-        levelScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
+        let exercisesStack = UIStackView(arrangedSubviews: [exercisesLabel, exercisesInfoLabel, exerciseScoreLabel])
+        exercisesStack.axis = .horizontal
+        exercisesStack.spacing = 8
+        exercisesStack.distribution = .fill
+        exerciseScoreLabel.textAlignment = .right
         
-        
-        //words
-        wordsCV.setHeight(140)
-        wordsCV.anchor(top: levelCV.bottomAnchor, left: view.leftAnchor,
-                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
-        
-        
-        wordsLabel.anchor(left: view.leftAnchor, bottom: wordsCV.topAnchor,
-                          paddingLeft: 32, paddingBottom: 1)
-        
-        wordsInfoLabel.setHeight(29)
-        wordsInfoLabel.centerY(inView: wordsLabel)
-        wordsInfoLabel.anchor(left: wordsLabel.rightAnchor, paddingLeft: 8)
-        
-        wordsScoreLabel.centerY(inView: wordsLabel)
-        wordsScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
-        
-        //exercises
-        exercisesCV.setHeight(140)
-        exercisesCV.anchor(top: wordsCV.bottomAnchor, left: view.leftAnchor,
-                       right: view.rightAnchor, paddingTop: 32, paddingLeft: 32)
-        
-        
-        exercisesLabel.anchor(left: view.leftAnchor, bottom: exercisesCV.topAnchor,
-                          paddingLeft: 32, paddingBottom: 1)
-        
-        exercisesInfoLabel.setHeight(29)
-        exercisesInfoLabel.centerY(inView: exercisesLabel)
-        exercisesInfoLabel.anchor(left: exercisesLabel.rightAnchor, paddingLeft: 8)
-        
-        exerciseScoreLabel.centerY(inView: exercisesLabel)
-        exerciseScoreLabel.anchor(right: view.rightAnchor, paddingRight: 16)
+        view.addSubview(exercisesStack)
+        exercisesStack.anchor(left: view.leftAnchor, bottom: exercisesCV.topAnchor, right: view.rightAnchor, paddingLeft: 32, paddingBottom: 2, paddingRight: 16)
     }
     
     private func updateScoreLabels() {
-        var levelScoreCount = 0
-        var wordScoreCount = 0
-        var exerciseScoreCount = 0
-        
         for i in 0..<10 {
             if levelTitleArray[i] <= UserDefault.level.getInt() {
-                levelScoreCount += 1
-                levelScoreLabel.text = "\(levelScoreCount)/10"
+                levelScoreLabel.text = "\(i+1)/10"
             }
             
             if wordsTitleArray[i] <= itemArray.count {
-                wordScoreCount += 1
-                wordsScoreLabel.text = "\(wordScoreCount)/10"
+                wordsScoreLabel.text = "\(i+1)/10"
             }
             
             if exercisesTitleArray[i] <= exerciseArray.count {
-                exerciseScoreCount += 1
-                exerciseScoreLabel.text = "\(exerciseScoreCount)/10"
+                exerciseScoreLabel.text = "\(i+1)/10"
             }
         }
     }
