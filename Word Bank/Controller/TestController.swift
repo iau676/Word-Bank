@@ -15,7 +15,6 @@ class TestController: UIViewController {
     private let exerciseFormat: String
     
     private var wordBrain = WordBrain()
-    private var player = Player()
     
     private var questionCounter = 0
     private var totalQuestionNumber = 10
@@ -176,7 +175,7 @@ class TestController: UIViewController {
         answer2Button.isEnabled = false
         
         if userGotItRight {
-            player.playMP3(Sounds.truee)
+            Player.shared.playMP3(Sounds.truee)
             
             if exerciseType == ExerciseType.normal {
                 wordBrain.userGotItCorrect()
@@ -184,7 +183,7 @@ class TestController: UIViewController {
                 if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
             }
         } else {
-            player.playMP3(Sounds.falsee)
+            Player.shared.playMP3(Sounds.falsee)
             
             if exerciseType == ExerciseType.normal {
                 wordBrain.userGotItWrong()
@@ -215,7 +214,7 @@ class TestController: UIViewController {
     
     private func playSound() {
         let soundSpeed = UserDefault.soundSpeed.getDouble()
-        player.playSound(soundSpeed, questionText)
+        Player.shared.playSound(soundSpeed, questionText)
     }
     
     private func handleTimer() {

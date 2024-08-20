@@ -33,7 +33,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private let soundSpeedButton = UIButton()
     private let exerciseSettingsButton = UIButton()
     
-    private var player = Player()
     private var wordBrain = WordBrain()
     private var soundSpeed = 0.0
     private var soundImageName = ""
@@ -74,12 +73,12 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         UserDefault.soundSpeed.set(soundSpeedArray[sender.selectedSegmentIndex])
         soundSpeed = soundSpeedArray[sender.selectedSegmentIndex]
         soundSpeedButton.flash()
-        player.playSound(soundSpeed, "how are you?")
+        Player.shared.playSound(soundSpeed, "how are you?")
     }
     
     @objc private func soundSpeedButtonPressed(_ sender: UIButton) {
         soundSpeedButton.flash()
-        player.playSound(soundSpeed, "how are you?")
+        Player.shared.playSound(soundSpeed, "how are you?")
     }
     
     @objc private func exerciseSettingsButtonPressed(gesture: UISwipeGestureRecognizer) {

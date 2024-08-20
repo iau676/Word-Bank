@@ -10,7 +10,8 @@ import AVFoundation
 import Combine
 
 class Player {
-    
+     static var shared = Player()
+     private init() {}
      private var player: AVPlayer?
      var playerLayer: AVPlayerLayer?
      private let notificationCenter = NotificationCenter.default

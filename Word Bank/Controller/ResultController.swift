@@ -18,7 +18,6 @@ class ResultController: UIViewController {
     private let exerciseFormat: String
     
     private var wordBrain = WordBrain()
-    private let player = Player()
     
     private var numberOfTrue = 0
     private var lastLevel:Int = 0
@@ -80,13 +79,13 @@ class ResultController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        player.removeAppEventsSubscribers()
-        player.removePlayer()
+        Player.shared.removeAppEventsSubscribers()
+        Player.shared.removePlayer()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        player.playerLayer?.frame = view.bounds
+        Player.shared.playerLayer?.frame = view.bounds
     }
     
     //MARK: - Selectors
@@ -187,9 +186,9 @@ class ResultController: UIViewController {
     private func checkAllTrue(){
         if numberOfTrue == userAnswerArray.count {
             tableView.backgroundColor = .clear
-            player.observeAppEvents()
-            player.setupPlayerIfNeeded(view: view, videoName: Videos.alltrue)
-            player.restartVideo()
+            Player.shared.observeAppEvents()
+            Player.shared.setupPlayerIfNeeded(view: view, videoName: Videos.alltrue)
+            Player.shared.restartVideo()
             confettiButton.isHidden = true
             scoreLabel.text = scoreLabelText
             updateScoreLabelConstraint()
@@ -320,7 +319,7 @@ extension ResultController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if exerciseFormat == ExerciseFormat.listening {
-            player.playSound(soundSpeed, answerArray[indexPath.row])
+            Player.shared.playSound(soundSpeed, answerArray[indexPath.row])
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

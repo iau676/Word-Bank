@@ -15,7 +15,6 @@ class ListeningController: UIViewController {
     private let exerciseFormat: String
     
     private var wordBrain = WordBrain()
-    private var player = Player()
     
     private var questionCounter = 0
     private var totalQuestionNumber = 10
@@ -130,7 +129,7 @@ class ListeningController: UIViewController {
             let userGotItRight = userAnswer == trueAnswer
             
             if userGotItRight {
-                player.playMP3(Sounds.truee)
+                Player.shared.playMP3(Sounds.truee)
                 wordBrain.userGotItCorrect()
                 
                 if exerciseType == ExerciseType.normal {
@@ -139,7 +138,7 @@ class ListeningController: UIViewController {
                     if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
                 }
             } else {
-                player.playMP3(Sounds.falsee)
+                Player.shared.playMP3(Sounds.falsee)
                 wordBrain.userGotItWrong()
                 
                 if exerciseType == ExerciseType.normal {
@@ -170,7 +169,7 @@ class ListeningController: UIViewController {
         
         guard let senderTitle = sender.currentTitle else { return }
         let soundSpeed = UserDefault.soundSpeed.getDouble()
-        player.playSound(soundSpeed, senderTitle)
+        Player.shared.playSound(soundSpeed, senderTitle)
         
         userAnswer = senderTitle
     }

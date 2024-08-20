@@ -17,7 +17,6 @@ class WritingController: UIViewController {
     private let exerciseFormat: String
     
     private var wordBrain = WordBrain()
-    private var player = Player()
     
     private var questionCounter = 0
     private var questionText = ""
@@ -235,7 +234,7 @@ class WritingController: UIViewController {
             
             bubbleView.isHidden = false
             backspaceButton.isHidden = true
-            player.playMP3(Sounds.truee)
+            Player.shared.playMP3(Sounds.truee)
             
             if exerciseType == ExerciseType.normal {
                 wordBrain.userGotItCorrect()

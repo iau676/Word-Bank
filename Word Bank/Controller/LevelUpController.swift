@@ -15,9 +15,6 @@ class LevelUpController: UIViewController {
     private let levelLabel = UILabel()
     private let continueButton = UIButton()
     
-    private var wordBrain = WordBrain()
-    private let player = Player()
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -29,21 +26,21 @@ class LevelUpController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        player.observeAppEvents()
-        player.setupPlayerIfNeeded(view: view, videoName: Videos.levelup)
-        player.restartVideo()
+        Player.shared.observeAppEvents()
+        Player.shared.setupPlayerIfNeeded(view: view, videoName: Videos.levelup)
+        Player.shared.restartVideo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        player.removeAppEventsSubscribers()
-        player.removePlayer()
+        Player.shared.removeAppEventsSubscribers()
+        Player.shared.removePlayer()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        player.playerLayer?.frame = view.bounds
+        Player.shared.playerLayer?.frame = view.bounds
     }
     
     //MARK: - Selectors
@@ -98,6 +95,5 @@ class LevelUpController: UIViewController {
         continueButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
                               right: view.rightAnchor, paddingLeft: 32,
                               paddingBottom: 66, paddingRight: 32)
-        
     }
 }
