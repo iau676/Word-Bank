@@ -103,60 +103,43 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AwardCell
         
+        var titleText = ""
+        var bannerText = ""
+        var cpValue: Float = 0.0
+        var color = UIColor.brown
+        
         switch collectionView {
         case levelCV:
-            cell.titleLabel.text = "\(levelTitleArray[indexPath.row])"
-            cell.awardLabel.text = "LEVEL"
-            if levelTitleArray[indexPath.row] <= UserDefault.level.getInt() {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
-                cell.titleLabel.textColor = Colors.blue
-            } else if levelTitleArray[indexPath.row] - UserDefault.level.getInt() < 10 {
-                let value = Float(levelTitleArray[indexPath.row] - UserDefault.level.getInt()) * 0.1
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
-                cell.titleLabel.textColor = Colors.blue
-            } else {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9)
-                cell.titleLabel.textColor = Colors.b9b9b9
-            }
+            let levelNumber = levelTitleArray[indexPath.row]
+            let userLevel = UserDefault.level.getInt()
+            let value = Float(levelNumber - userLevel) * 0.1
+            
+            bannerText = "LEVEL"
+            titleText = "\(levelNumber)"
+            cpValue = levelNumber <= userLevel ? 1.0 : levelNumber - userLevel < 10 ? 1-value : 0.0
+            color = levelNumber <= userLevel ? Colors.blue : levelNumber - userLevel < 10 ? Colors.blue : Colors.b9b9b9
         case wordsCV:
-            cell.titleLabel.text = "\(wordsTitleArray[indexPath.row])"
-            cell.awardLabel.text = "WORDS"
-            if wordsTitleArray[indexPath.row] <= itemArray.count {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
-                cell.titleLabel.textColor = Colors.blue
-            } else if wordsTitleArray[indexPath.row] - itemArray.count < 500 {
-                let value = Float(wordsTitleArray[indexPath.row] - itemArray.count) / 5 * 0.01
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
-                cell.titleLabel.textColor = Colors.blue
-            } else {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9)
-                cell.titleLabel.textColor = Colors.b9b9b9
-            }
+            let wordsNumber = wordsTitleArray[indexPath.row]
+            let userWordsCount = itemArray.count
+            let value = Float(wordsNumber - userWordsCount) / 5 * 0.01
+            
+            bannerText = "WORDS"
+            titleText = "\(wordsNumber)"
+            cpValue = wordsNumber <= userWordsCount ? 1.0 : wordsNumber - userWordsCount < 500 ? 1-value : 0.0
+            color = wordsNumber <= userWordsCount ? Colors.blue : wordsNumber - userWordsCount < 500 ? Colors.blue : Colors.b9b9b9
         case exercisesCV:
-            cell.titleLabel.text = "\(exercisesTitleArray[indexPath.row])"
-            cell.awardLabel.text = "EXERCISES"
-            if exercisesTitleArray[indexPath.row] <= exerciseArray.count {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
-                cell.titleLabel.textColor = Colors.blue
-            } else if exercisesTitleArray[indexPath.row] - exerciseArray.count < 1000 {
-                let value = Float(exercisesTitleArray[indexPath.row] - exerciseArray.count) / 10 * 0.01
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 1-value)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.blue)
-                cell.titleLabel.textColor = Colors.blue
-            } else {
-                cell.badgeCP.setProgressWithAnimation(duration: 1.0, value: 0.0)
-                cell.bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9)
-                cell.titleLabel.textColor = Colors.b9b9b9
-            }
+            let exerciseNumber = exercisesTitleArray[indexPath.row]
+            let userExerciseCount = exerciseArray.count
+            let value = Float(exerciseNumber - userExerciseCount) / 10 * 0.01
+            
+            bannerText = "EXERCISES"
+            titleText = "\(exerciseNumber)"
+            cpValue = exerciseNumber <= userExerciseCount ? 1.0 : exerciseNumber - userExerciseCount < 1000 ? 1-value : 0.0
+            color = exerciseNumber <= userExerciseCount ? Colors.blue : exerciseNumber - userExerciseCount < 1000 ? Colors.blue : Colors.b9b9b9
         default: break
         }
+        
+        cell.configure(bannerText: bannerText, titleText: titleText, cpValue: cpValue, color: color)
         return cell
     }
 }

@@ -11,9 +11,9 @@ import UIKit
 
 class AwardCell: UICollectionViewCell {
     
-    let badgeCP = BadgeView(frame: CGRect(x: 10.0, y: 10.0, width: 60.0, height: 60.0))
+    private let badgeCP = BadgeView(frame: CGRect(x: 10.0, y: 10.0, width: 60.0, height: 60.0))
     
-    let badgeView: UIView = {
+    private let badgeView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -21,7 +21,7 @@ class AwardCell: UICollectionViewCell {
         return view
     }()
     
-    lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 19)
@@ -29,7 +29,7 @@ class AwardCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var awardLabel: UILabel = {
+    private let bannerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "LEVEL"
@@ -38,7 +38,7 @@ class AwardCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var bannerButton: UIButton = {
+    private let bannerButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("", for: .normal)
@@ -61,7 +61,7 @@ class AwardCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         
         contentView.addSubview(bannerButton)
-        contentView.addSubview(awardLabel)
+        contentView.addSubview(bannerLabel)
         
         NSLayoutConstraint.activate([
             badgeView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -81,12 +81,20 @@ class AwardCell: UICollectionViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            awardLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            awardLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 14.5),
+            bannerLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            bannerLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 14.5),
         ])
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(bannerText: String, titleText: String, cpValue: Float, color: UIColor) {
+        bannerLabel.text = bannerText
+        titleLabel.text = titleText
+        badgeCP.setProgressWithAnimation(duration: 1.0, value: cpValue)
+        bannerButton.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: color)
+        titleLabel.textColor = color
     }
 }
