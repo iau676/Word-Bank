@@ -7,6 +7,8 @@
 
 import UIKit
 
+private let reuseIdentifier = "AwardCell"
+
 class AwardsController: UIViewController {
     
     private let levelLabel = UILabel()
@@ -33,38 +35,9 @@ class AwardsController: UIViewController {
     private var wordBadgeCount = 0
     private var exerciseBadgeCount = 0
 
-    fileprivate let levelCV:UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = Colors.cellLeft
-        cv.register(AwardCell.self, forCellWithReuseIdentifier: "cell")
-        cv.showsHorizontalScrollIndicator = false
-        return cv
-    }()
-    
-    fileprivate let wordsCV:UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = Colors.cellLeft
-        cv.register(AwardCell.self, forCellWithReuseIdentifier: "cell")
-        cv.showsHorizontalScrollIndicator = false
-        return cv
-    }()
-    
-    fileprivate let exercisesCV:UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = Colors.cellLeft
-        cv.register(AwardCell.self, forCellWithReuseIdentifier: "cell")
-        cv.showsHorizontalScrollIndicator = false
-        return cv
-    }()
+    private let levelCV = makeAwardCollectionView(withIdentifier: reuseIdentifier)
+    private let wordsCV = makeAwardCollectionView(withIdentifier: reuseIdentifier)
+    private let exercisesCV = makeAwardCollectionView(withIdentifier: reuseIdentifier)
     
     //MARK: - Life Cycle
     
@@ -128,7 +101,7 @@ extension AwardsController: UICollectionViewDelegateFlowLayout, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AwardCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AwardCell
         
         switch collectionView {
         case levelCV:

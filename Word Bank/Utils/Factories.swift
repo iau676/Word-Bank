@@ -104,3 +104,15 @@ func makeContextualAction(image: UIImage?, bgColor: UIColor, handler: @escaping 
     cAction.backgroundColor = bgColor
     return cAction
 }
+
+//MARK: - UICollectionView
+
+func makeAwardCollectionView(withIdentifier: String) -> UICollectionView {
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .horizontal
+    let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    cv.backgroundColor = Colors.cellLeft
+    cv.register(AwardCell.self, forCellWithReuseIdentifier: withIdentifier)
+    cv.showsHorizontalScrollIndicator = false
+    return cv
+}
