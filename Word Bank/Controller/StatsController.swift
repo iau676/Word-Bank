@@ -11,46 +11,74 @@ import Charts
 class StatsController: UIViewController, ChartViewDelegate {
     
     private let scrollView = UIScrollView()
-    private let stackView = UIStackView()
-    private let barView = UIView()
-    private let lineView = UIView()
-    private let pieView = UIView()
     
-    private var scrollViewWidth = 0
+    private lazy var barChart: BarChartView = {
+        let chart = BarChartView()
+        chart.backgroundColor = Colors.cellRight
+        chart.layer.cornerRadius = 16
+        chart.layer.masksToBounds = true
+        chart.isUserInteractionEnabled = false
+        chart.legend.enabled = false
+        chart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayArray)
+        chart.xAxis.granularity = 1
+        chart.leftAxis.granularity = 1
+        chart.rightAxis.granularity = 1
+        chart.delegate = self
+        return chart
+    }()
     
-    private var barChart = BarChartView()
-    private var lineChart = LineChartView()
-    private var pieChart = PieChartView()
+    private lazy var lineChart: LineChartView = {
+       let chart = LineChartView()
+        chart.backgroundColor = Colors.cellRight
+        chart.layer.cornerRadius = 16
+        chart.layer.masksToBounds = true
+        chart.isUserInteractionEnabled = false
+        chart.legend.enabled = false
+        chart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayArray)
+        chart.xAxis.granularity = 1
+        chart.leftAxis.granularity = 1
+        chart.rightAxis.granularity = 1
+        chart.delegate = self
+        return chart
+    }()
     
-    private let barChartLabel = UILabel()
-    private let lineChartLabel = UILabel()
-    private let pieChartLabel = UILabel()
-    private var dayArray: [String] = []
+    private lazy var pieChart: PieChartView = {
+       let chart = PieChartView()
+        chart.backgroundColor = Colors.cellRight
+        chart.layer.cornerRadius = 16
+        chart.layer.masksToBounds = true
+        chart.legend.enabled = false
+        chart.centerText = "Completed \nExercises"
+        chart.holeColor = Colors.cellRight
+        chart.delegate = self
+        return chart
+    }()
+    
+    private lazy var barChartLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = Colors.black
+        label.setAttributedText(verb: "Learned", count: wordsWeekCount, noun: "word")
+        return label
+    }()
+    
+    private lazy var lineChartLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = Colors.black
+        label.setAttributedText(verb: "Completed", count: exercisesWeekCount, noun: "exercise")
+        return label
+    }()
     
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
-    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
+    private var dayArray: [String] = []
     private var dateArray: [String] = []
-    private var today = ""
-    private var yesterday = ""
-    private var twoDaysAgo = ""
-    private var threeDaysAgo = ""
-    private var fourDaysAgo = ""
-    private var fiveDaysAgo = ""
-    private var sixDaysAgo = ""
-    
     private var wordsDict = [String: Int]()
     private var exercisesDict = [String: Int]()
     
     private var wordsWeekCount = 0
     private var exercisesWeekCount = 0
-    
-    private enum Chart {
-        case bar
-        case line
-    }
     
     //MARK: - Life Cycle
     
@@ -58,53 +86,77 @@ class StatsController: UIViewController, ChartViewDelegate {
         super.viewDidLoad()
         wordBrain.loadItemArray()
         wordBrain.loadExerciseArray()
-        style()
-        layout()
-        
-        assignDatesToDays()
-        getLastSevenDays()
-        
-        prepareData { (success) -> Void in if success { setCharts() } }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        scrollViewWidth = Int(self.scrollView.bounds.size.width)
-        barChart.frame = CGRect(x: 4, y: 8, width: scrollViewWidth-72, height: scrollViewWidth-64)
-        lineChart.frame = CGRect(x: 4, y: 8, width: scrollViewWidth-72, height: scrollViewWidth-64)
-        pieChart.frame = CGRect(x: 0, y: 0, width: scrollViewWidth-64, height: scrollViewWidth-64)
+        configureUI()
     }
     
     //MARK: - Helpers
     
-    private func prepareData(completion: (_ success: Bool) -> Void) {
-        findWordsCount()
-        findExercisesCount()
-        completion(true)
+    private func configureUI() {
+        configureCharts()
+        
+        title = "Statistic"
+        view.backgroundColor = Colors.cellLeft
+        scrollView.backgroundColor = Colors.cellLeft
+        
+        view.addSubview(scrollView)
+        scrollView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
+                          paddingTop: 8, paddingBottom: 8)
+        
+        let stack = UIStackView(arrangedSubviews: [barChart, lineChart, pieChart])
+        stack.axis = .vertical
+        stack.spacing = 48
+        stack.distribution = .fillEqually
+
+        let viewWidth = view.frame.width-64
+        barChart.setDimensions(width: viewWidth, height: viewWidth)
+        lineChart.setDimensions(width: viewWidth, height: viewWidth)
+        pieChart.setDimensions(width: viewWidth, height: viewWidth)
+
+        scrollView.addSubview(stack)
+        stack.anchor(top: scrollView.topAnchor, left: view.leftAnchor,
+                         bottom: scrollView.bottomAnchor, right: view.rightAnchor,
+                         paddingTop: 32, paddingLeft: 32,
+                         paddingBottom: 48, paddingRight: 32)
+        
+        view.addSubview(barChartLabel)
+        barChartLabel.anchor(left: view.leftAnchor, bottom: barChart.topAnchor,
+                             paddingLeft: 32, paddingBottom: 8)
+        
+        view.addSubview(lineChartLabel)
+        lineChartLabel.anchor(left: view.leftAnchor, bottom: lineChart.topAnchor,
+                             paddingLeft: 32, paddingBottom: 8)
     }
     
-    private func setCharts(){        
-        barChart.delegate = self
-        lineChart.delegate = self
-        pieChart.delegate = self
-        
-        barChart.isUserInteractionEnabled = false
-        lineChart.isUserInteractionEnabled = false
+    private func configureCharts() {
+        assignDatesToDays()
+        getLastSevenDays()
+        findWordsCount()
+        findExercisesCount()
         
         configureBarChart()
         configureLineChart()
         configurePieChart()
-        
-        updateChartsValueFormatter()
     }
-
-    private func updateChartsValueFormatter() {
-        let format = NumberFormatter()
-        format.numberStyle = .decimal
-        let formatter = DefaultValueFormatter(formatter: format)
-        barChart.data?.setValueFormatter(formatter)
-        lineChart.data?.setValueFormatter(formatter)
-        pieChart.data?.setValueFormatter(formatter)
+    
+    private func assignDatesToDays() {
+        dateArray.append(getDate(daysAgo: 6))
+        dateArray.append(getDate(daysAgo: 5))
+        dateArray.append(getDate(daysAgo: 4))
+        dateArray.append(getDate(daysAgo: 3))
+        dateArray.append(getDate(daysAgo: 2))
+        dateArray.append(getDate(daysAgo: 1))
+        dateArray.append(getDate(daysAgo: 0))
+    }
+    
+    private func getDate(daysAgo: Int) -> String {
+        return Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+    }
+    
+    private func getLastSevenDays() {
+        for i in stride(from: 6, to: -1, by: -1) {
+            dayArray.append(Calendar.current.date(byAdding: .day, value: -i, to: Date())?.getFormattedDate(format: "EEE") ?? "")
+        }
     }
     
     private func findWordsCount() {
@@ -127,68 +179,7 @@ class StatsController: UIViewController, ChartViewDelegate {
         }
     }
     
-    private func assignDatesToDays(){
-        today = getDate(daysAgo: 0)
-        yesterday = getDate(daysAgo: 1)
-        twoDaysAgo = getDate(daysAgo: 2)
-        threeDaysAgo = getDate(daysAgo: 3)
-        fourDaysAgo = getDate(daysAgo: 4)
-        fiveDaysAgo = getDate(daysAgo: 5)
-        sixDaysAgo = getDate(daysAgo: 6)
-        
-        dateArray.append(sixDaysAgo)
-        dateArray.append(fiveDaysAgo)
-        dateArray.append(fourDaysAgo)
-        dateArray.append(threeDaysAgo)
-        dateArray.append(twoDaysAgo)
-        dateArray.append(yesterday)
-        dateArray.append(today)
-    }
-    
-    private func getDate(daysAgo: Int) -> String {
-        return Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
-    }
-    
-    private func getLastSevenDays(){
-        for i in stride(from: 6, to: -1, by: -1) {
-            dayArray.append(Calendar.current.date(byAdding: .day, value: -i, to: Date())?.getFormattedDate(format: "EEE") ?? "")
-        }
-    }
-    
-    private func getAttributedText(For: Chart) -> NSMutableAttributedString {
-        if let avenirRegular = UIFont(name: Fonts.AvenirNextRegular, size: 15),
-           let avenirDemiBold = UIFont(name: Fonts.AvenirNextDemiBold, size: 15) {
-            
-            let verb  = For == Chart.bar ? "learned" : "completed"
-            let count = For == Chart.bar ? wordsWeekCount : exercisesWeekCount
-            let noun  = For == Chart.bar ? "words" : "exercises"
-            
-            let avenirRegularAttrs = [NSAttributedString.Key.font : avenirRegular]
-            let avenirDemiBoldAttrs = [NSAttributedString.Key.font : avenirDemiBold]
-            
-            let text = "You have \(verb)"
-            let string = NSMutableAttributedString(string:text, attributes: avenirRegularAttrs)
-            
-            let secondText = " \(count) \(noun) "
-            let secondString = NSMutableAttributedString(string:secondText, attributes: avenirDemiBoldAttrs)
-            
-            let thirdText = "this week"
-            let thirdString = NSMutableAttributedString(string:thirdText, attributes: avenirRegularAttrs)
-            
-            string.append(secondString)
-            string.append(thirdString)
-            
-            return string
-        }
-        return NSMutableAttributedString()
-    }
-}
-
-//MARK: - Charts
-
-extension StatsController {
-    
-    private func configureBarChart(){
+    private func configureBarChart() {
         var entries = [BarChartDataEntry()]
         
         for i in 0..<dateArray.count {
@@ -196,45 +187,35 @@ extension StatsController {
             wordsWeekCount += wordsDict[dateArray[i]] ?? 0
         }
         
-        barChartLabel.attributedText = getAttributedText(For: Chart.bar)
-        
         let set = BarChartDataSet(entries: entries)
         set.colors = ChartColorTemplates.joyful()
         set.label = ""
-        barChart.legend.enabled = false
-        
-        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayArray)
-        barChart.xAxis.granularity = 1
         
         let data = BarChartData(dataSet: set)
         barChart.data = data
         barChart.data?.setValueFont(UIFont.systemFont(ofSize: 10))
+        barChart.data?.setValueFormatter(DefaultValueFormatter(decimals: 0))
     }
     
-    private func configureLineChart(){
+    private func configureLineChart() {
         var entries = [ChartDataEntry()]
         
         for i in 0..<dateArray.count {
             entries.append(ChartDataEntry(x: Double(i), y: Double(exercisesDict[dateArray[i]] ?? 0)))
             exercisesWeekCount += exercisesDict[dateArray[i]] ?? 0
         }
-         
-        lineChartLabel.attributedText = getAttributedText(For: Chart.line)
         
         let set = LineChartDataSet(entries: entries)
         set.colors = ChartColorTemplates.colorful()
         set.label = ""
-        lineChart.legend.enabled = false
-        
-        lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayArray)
-        lineChart.xAxis.granularity = 1
         
         let data = LineChartData(dataSet: set)
         lineChart.data = data
         lineChart.data?.setValueFont(UIFont.systemFont(ofSize: 10))
+        lineChart.data?.setValueFormatter(DefaultValueFormatter(decimals: 0))
     }
     
-    private func configurePieChart(){
+    private func configurePieChart() {
         var entries = [ChartDataEntry()]
         
         entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseFormat.card] ?? 0), label: "Card"))
@@ -245,88 +226,9 @@ extension StatsController {
         let set = PieChartDataSet(entries: entries)
         set.colors = ChartColorTemplates.liberty()
         set.label = ""
-        pieChart.legend.enabled = false
-        
-        pieChart.centerText = "Completed \nExercises"
-        pieChart.holeColor = Colors.cellRight
         
         let data = PieChartData(dataSet: set)
         pieChart.data = data
-    }
-}
-
-//MARK: - Layout
-
-extension StatsController {
-    
-    private func style() {
-        title = "Statistic"
-        view.backgroundColor = Colors.cellLeft
-        
-        scrollView.backgroundColor = Colors.cellLeft
-        
-        stackView.axis = .vertical
-        stackView.spacing = 48
-        stackView.distribution = .fill
-        
-        barChartLabel.textColor = Colors.black
-        barChartLabel.numberOfLines = 1
-        
-        lineChartLabel.textColor = Colors.black
-        lineChartLabel.numberOfLines = 1
-        
-        barView.backgroundColor = Colors.cellRight
-        barView.layer.cornerRadius = 16
-        
-        lineView.backgroundColor = Colors.cellRight
-        lineView.layer.cornerRadius = 16
-        
-        pieView.backgroundColor = Colors.cellRight
-        pieView.layer.cornerRadius = 16
-        
-        barChart.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-    }
-    
-    private func layout() {
-        
-        barView.addSubview(barChart)
-        lineView.addSubview(lineChart)
-        pieView.addSubview(pieChart)
-        
-        stackView.addArrangedSubview(barView)
-        stackView.addArrangedSubview(lineView)
-        stackView.addArrangedSubview(pieView)
-
-        scrollView.addSubview(stackView)
-        
-        view.addSubview(scrollView)
-        view.addSubview(barChartLabel)
-        view.addSubview(lineChartLabel)
-        
-        scrollView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                          bottom: view.bottomAnchor, right: view.rightAnchor,
-                          paddingTop: 8, paddingBottom: 66)
-        
-        stackView.anchor(top: scrollView.topAnchor, left: view.leftAnchor,
-                         bottom: scrollView.bottomAnchor, right: view.rightAnchor,
-                         paddingTop: 32, paddingLeft: 32,
-                         paddingBottom: 48, paddingRight: 32)
-        
-        lineChartLabel.anchor(left: view.leftAnchor, bottom: lineView.topAnchor,
-                             paddingLeft: 32, paddingBottom: 8)
-        
-        barChartLabel.anchor(left: view.leftAnchor, bottom: barView.topAnchor,
-                             paddingLeft: 32, paddingBottom: 8)
-        
-        NSLayoutConstraint.activate([
-          barView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
-          barView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-          
-          lineView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
-          lineView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-          
-          pieView.heightAnchor.constraint(equalTo: stackView.widthAnchor),
-          pieView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-        ])
+        pieChart.data?.setValueFormatter(DefaultValueFormatter(decimals: 0))
     }
 }
