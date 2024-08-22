@@ -248,8 +248,8 @@ extension HomeController {
     
     func setupFirstLaunch() {
         //version 2.0.1
-        if UserDefault.textSize.getValue() == nil {
-            UserDefault.textSize.set(15)
+        if UserDefault.lastPoint.getValue() == nil {
+            UserDefault.soundSpeed.set(0.3)
             showOnboarding()
             getKeyboardHeight()
             

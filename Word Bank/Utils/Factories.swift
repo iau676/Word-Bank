@@ -70,6 +70,12 @@ func makeLineView() -> UIView {
     return view
 }
 
+func makeBackgroundView(bgColor: UIColor) -> UIView {
+    let view = UIView()
+    view.backgroundColor = bgColor
+    return view
+}
+
 //MARK: - TextField
 
 func makeTextField(placeholder: String) -> UITextField {

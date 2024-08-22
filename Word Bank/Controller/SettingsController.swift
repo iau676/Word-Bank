@@ -14,13 +14,14 @@ private let reuseIdentifier = "SettingsCell"
 class SettingsController: UIViewController, UITextFieldDelegate {
     
     private let scrollView = UIScrollView()
-    private let appSoundView = UIView()
-    private let wordSoundView = UIView()
-    private let soundSpeedView = UIView()
+    private let appSoundView = makeBackgroundView(bgColor: Colors.cellRight)
+    private let wordSoundView = makeBackgroundView(bgColor: Colors.cellRight)
+    private let soundSpeedView = makeBackgroundView(bgColor: Colors.cellRight)
     
     private let appSoundLabel: UILabel = {
         let label = UILabel()
         label.text = "App Sound"
+        label.textColor = Colors.black
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
         return label
     }()
@@ -28,6 +29,7 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private let wordSoundLabel: UILabel = {
         let label = UILabel()
         label.text = "Word Sound"
+        label.textColor = Colors.black
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
         return label
     }()
@@ -35,6 +37,7 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private let soundSpeedLabel: UILabel = {
         let label = UILabel()
         label.text = "Sound Speed"
+        label.textColor = Colors.black
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
         return label
     }()
@@ -62,6 +65,7 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private lazy var soundSpeedSegmentedControl: UISegmentedControl = {
         let sg = UISegmentedControl()
         sg.replaceSegments(segments: ["0.5", "1", "2"])
+        sg.tintColor = .black
         sg.addTarget(self, action: #selector(soundSpeedChanged(_:)), for: UIControl.Event.valueChanged)
         return sg
     }()
@@ -147,14 +151,11 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private var soundImageName = ""
     private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     
-    private let textSizeArray = [9, 11, 13, 15, 17, 19, 21]
     private let soundSpeedArray = [0.3, 0.5, 0.7]
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
-        configureColor()
-        updateTextSize()
         setupDefaults()
         configureUI()
     }
@@ -195,6 +196,7 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     
     private func configureUI() {
         title = "Settings"
+        view.backgroundColor = Colors.cellLeft
         
         view.addSubview(scrollView)
         scrollView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
@@ -292,25 +294,7 @@ class SettingsController: UIViewController, UITextFieldDelegate {
                         paddingBottom: 16, paddingRight: 16)
     }
     
-    private func configureColor() {
-        view.backgroundColor = Colors.cellLeft
-        appSoundView.backgroundColor = Colors.cellRight
-        wordSoundView.backgroundColor = Colors.cellRight
-        soundSpeedView.backgroundColor = Colors.cellRight
-        
-        appSoundLabel.textColor = Colors.black
-        wordSoundLabel.textColor = Colors.black
-        soundSpeedLabel.textColor = Colors.black
-        
-        soundSpeedSegmentedControl.tintColor = .black
-    }
-    
-    private func setupDefaults(){
-        if UserDefault.textSize.getInt() == 0 {
-            UserDefault.textSize.set(15)
-            UserDefault.soundSpeed.set(0.3)
-        }
-        
+    private func setupDefaults() {
         if UserDefault.playSound.getInt() == 1 {
             wordSoundSwitch.isOn = false
             changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
@@ -324,26 +308,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         soundSpeed = UserDefault.soundSpeed.getDouble()
         guard let soundSpeedIndex = soundSpeedArray.firstIndex(where: {$0 == soundSpeed}) else {return}
         soundSpeedSegmentedControl.selectedSegmentIndex = soundSpeedIndex
-    }
-
-    private func updateTextSize(){
-        updateLabelTextSize(wordSoundLabel)
-        updateLabelTextSize(appSoundLabel)
-        updateLabelTextSize(soundSpeedLabel)
-  
-        updateSegmentedControlTextSize(soundSpeedSegmentedControl)
-    }
-    
-    private func updateSegmentedControlTextSize(_ segmentedControl: UISegmentedControl){
-        segmentedControl.setTitleTextAttributes([.foregroundColor: Colors.black, .font: UIFont.systemFont(ofSize: textSize),], for: .normal)
-    }
-    
-    private func updateLabelTextSize(_ label: UILabel){
-        label.font = label.font.withSize(textSize)
-    }
-    
-    private func updateButtonTextSize(_ button: UIButton){
-        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
     }
 
     private func changeViewState(_ uiview: UIView, alpha a: CGFloat, isUserInteraction bool: Bool){
