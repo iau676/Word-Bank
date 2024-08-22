@@ -16,7 +16,14 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     private let scrollView = UIScrollView()
     private let appSoundView = makeBackgroundView(bgColor: Colors.cellRight)
     private let wordSoundView = makeBackgroundView(bgColor: Colors.cellRight)
-    private let soundSpeedView = makeBackgroundView(bgColor: Colors.cellRight)
+    
+    private let soundSpeedView: UIView = {
+       let view = makeBackgroundView(bgColor: Colors.cellRight)
+        let playSound = UserDefault.playSound.getInt() == 0
+        let alpha = playSound ? 1 : 0.6
+        view.changeViewState(alpha: alpha, isUserInteraction: playSound)
+        return view
+    }()
     
     private let appSoundLabel: UILabel = {
         let label = UILabel()
@@ -44,21 +51,21 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     
     private lazy var appSoundSwitch: UISwitch = {
         let sw = UISwitch()
+        sw.isOn = (UserDefault.playAppSound.getInt() == 0)
         sw.addTarget(self, action: #selector(appSoundChanged(_:)), for: UIControl.Event.valueChanged)
         return sw
     }()
     
     private lazy var wordSoundSwitch: UISwitch = {
         let sw = UISwitch()
+        sw.isOn = (UserDefault.playSound.getInt() == 0)
         sw.addTarget(self, action: #selector(wordSoundChanged(_:)), for: UIControl.Event.valueChanged)
         return sw
     }()
     
-    private lazy var soundSpeedButton: UIButton = {
+    private let soundSpeedButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .clear
         button.setImage(image: Images.soundBlack, width: 30, height: 30)
-        button.addTarget(self, action: #selector(soundSpeedButtonPressed), for: .primaryActionTriggered)
         return button
     }()
     
@@ -67,6 +74,11 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         sg.replaceSegments(segments: ["0.5", "1", "2"])
         sg.tintColor = .black
         sg.addTarget(self, action: #selector(soundSpeedChanged(_:)), for: UIControl.Event.valueChanged)
+        
+        if let soundSpeedIndex = soundSpeedArray.firstIndex(where: {$0 == UserDefault.soundSpeed.getDouble()}) {
+            sg.selectedSegmentIndex = soundSpeedIndex
+        }
+        
         return sg
     }()
     
@@ -148,15 +160,11 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     
     private var wordBrain = WordBrain()
     private var soundSpeed = 0.0
-    private var soundImageName = ""
-    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
-    
     private let soundSpeedArray = [0.3, 0.5, 0.7]
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
-        setupDefaults()
         configureUI()
     }
     
@@ -165,10 +173,10 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     @objc private func wordSoundChanged(_ sender: UISwitch) {
         if sender.isOn {
             UserDefault.playSound.set(0)
-            changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
+            soundSpeedView.changeViewState(alpha: 1, isUserInteraction: true)
         } else {
             UserDefault.playSound.set(1)
-            changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
+            soundSpeedView.changeViewState(alpha: 0.6, isUserInteraction: false)
         }
     }
     
@@ -180,12 +188,7 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         UserDefault.soundSpeed.set(soundSpeedArray[sender.selectedSegmentIndex])
         soundSpeed = soundSpeedArray[sender.selectedSegmentIndex]
         soundSpeedButton.flash()
-        Player.shared.playSound(soundSpeed, "how are you?")
-    }
-    
-    @objc private func soundSpeedButtonPressed(_ sender: UIButton) {
-        soundSpeedButton.flash()
-        Player.shared.playSound(soundSpeed, "how are you?")
+        Player.shared.playSound(soundSpeed, "Word Bank")
     }
     
     @objc private func testTypeChanged(_ sender: UISegmentedControl) {
@@ -292,31 +295,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
                         bottom: typingView.bottomAnchor, right: typingView.rightAnchor,
                         paddingTop: 8, paddingLeft: 16,
                         paddingBottom: 16, paddingRight: 16)
-    }
-    
-    private func setupDefaults() {
-        if UserDefault.playSound.getInt() == 1 {
-            wordSoundSwitch.isOn = false
-            changeViewState(soundSpeedView, alpha: 0.6, isUserInteraction: false)
-        } else {
-            wordSoundSwitch.isOn = true
-            changeViewState(soundSpeedView, alpha: 1, isUserInteraction: true)
-        }
-        
-        appSoundSwitch.isOn = (UserDefault.playAppSound.getInt() == 1) ? false : true
-        
-        soundSpeed = UserDefault.soundSpeed.getDouble()
-        guard let soundSpeedIndex = soundSpeedArray.firstIndex(where: {$0 == soundSpeed}) else {return}
-        soundSpeedSegmentedControl.selectedSegmentIndex = soundSpeedIndex
-    }
-
-    private func changeViewState(_ uiview: UIView, alpha a: CGFloat, isUserInteraction bool: Bool){
-        UIView.transition(with: uiview, duration: 0.4,
-                          options: (a < 1 ? .transitionFlipFromTop : .transitionFlipFromBottom),
-                          animations: {
-            uiview.isUserInteractionEnabled = bool
-            uiview.alpha = a
-        })
     }
 }
 

@@ -49,6 +49,15 @@ extension UIView {
         }
     }
     
+    func changeViewState(alpha: CGFloat, isUserInteraction: Bool){
+        UIView.transition(with: self, duration: 0.4,
+                          options: (alpha < 1 ? .transitionFlipFromTop : .transitionFlipFromBottom),
+                          animations: {
+            self.isUserInteractionEnabled = isUserInteraction
+            self.alpha = alpha
+        })
+    }
+    
     //MARK: - Layout
     
     func anchor(top: NSLayoutYAxisAnchor? = nil,
