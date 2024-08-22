@@ -162,3 +162,8 @@ enum Fonts {
     static var AvenirNextBold            = "AvenirNext-Bold"
     static var ArialRoundedMTBold        = "ArialRoundedMTBold"
 }
+
+enum DateFormats {
+    static var yyyyMMdd                  = "yyyy-MM-dd"
+    static var EEE                       = "EEE"
+}

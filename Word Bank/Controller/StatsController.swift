@@ -8,7 +8,7 @@
 import UIKit
 import Charts
 
-class StatsController: UIViewController, ChartViewDelegate {
+class StatsController: UIViewController {
     
     private let scrollView = UIScrollView()
     
@@ -19,11 +19,9 @@ class StatsController: UIViewController, ChartViewDelegate {
         chart.layer.masksToBounds = true
         chart.isUserInteractionEnabled = false
         chart.legend.enabled = false
-        chart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayArray)
-        chart.xAxis.granularity = 1
+        chart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayNames)
         chart.leftAxis.granularity = 1
         chart.rightAxis.granularity = 1
-        chart.delegate = self
         return chart
     }()
     
@@ -34,11 +32,9 @@ class StatsController: UIViewController, ChartViewDelegate {
         chart.layer.masksToBounds = true
         chart.isUserInteractionEnabled = false
         chart.legend.enabled = false
-        chart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayArray)
-        chart.xAxis.granularity = 1
+        chart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dayNames)
         chart.leftAxis.granularity = 1
         chart.rightAxis.granularity = 1
-        chart.delegate = self
         return chart
     }()
     
@@ -50,7 +46,6 @@ class StatsController: UIViewController, ChartViewDelegate {
         chart.legend.enabled = false
         chart.centerText = "Completed \nExercises"
         chart.holeColor = Colors.cellRight
-        chart.delegate = self
         return chart
     }()
     
@@ -72,7 +67,7 @@ class StatsController: UIViewController, ChartViewDelegate {
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
     
-    private var dayArray: [String] = []
+    private var dayNames: [String] = []
     private var dateArray: [String] = []
     private var wordsDict = [String: Int]()
     private var exercisesDict = [String: Int]()
@@ -129,8 +124,8 @@ class StatsController: UIViewController, ChartViewDelegate {
     }
     
     private func configureCharts() {
-        assignDatesToDays()
-        getLastSevenDays()
+        getLastSevenDayDates()
+        getLastSevenDayNames()
         findWordsCount()
         findExercisesCount()
         
@@ -139,7 +134,7 @@ class StatsController: UIViewController, ChartViewDelegate {
         configurePieChart()
     }
     
-    private func assignDatesToDays() {
+    private func getLastSevenDayDates() {
         dateArray.append(getDate(daysAgo: 6))
         dateArray.append(getDate(daysAgo: 5))
         dateArray.append(getDate(daysAgo: 4))
@@ -150,27 +145,29 @@ class StatsController: UIViewController, ChartViewDelegate {
     }
     
     private func getDate(daysAgo: Int) -> String {
-        return Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+        return Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date())?.getFormattedDate(format: DateFormats.yyyyMMdd) ?? ""
     }
     
-    private func getLastSevenDays() {
+    private func getLastSevenDayNames() {
         for i in stride(from: 6, to: -1, by: -1) {
-            dayArray.append(Calendar.current.date(byAdding: .day, value: -i, to: Date())?.getFormattedDate(format: "EEE") ?? "")
+            dayNames.append(Calendar.current.date(byAdding: .day, value: -i, to: Date())?.getFormattedDate(format: DateFormats.EEE) ?? "")
         }
     }
     
     private func findWordsCount() {
         for i in 0..<itemArray.count {
-            let wordDate = itemArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+            let wordDate = itemArray[i].date?.getFormattedDate(format: DateFormats.yyyyMMdd) ?? ""
             if dateArray.contains(wordDate) {
                 wordsDict.updateValue((wordsDict[wordDate] ?? 0)+1, forKey: wordDate)
+            } else {
+                break
             }
         }
     }
     
     private func findExercisesCount() {
         for i in 0..<exerciseArray.count {
-            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: DateFormats.yyyyMMdd) ?? ""
             let exerciseName = exerciseArray[i].name ?? ""
             if dateArray.contains(exerciseDate) {
                 exercisesDict.updateValue((exercisesDict[exerciseDate] ?? 0)+1, forKey: exerciseDate)
