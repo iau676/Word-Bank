@@ -87,7 +87,6 @@
 		7094D8C4290D25B5007E422F /* AwardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C3290D25B5007E422F /* AwardsController.swift */; };
 		7094D8C6290D694D007E422F /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C5290D694D007E422F /* BadgeView.swift */; };
 		709ED6A72899312800A34007 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709ED6A62899312800A34007 /* Constants.swift */; };
-		70A70D9D29439D93007F3C25 /* ExerciseSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A70D9C29439D93007F3C25 /* ExerciseSettingsController.swift */; };
 		70C357E528882DFC00F3AD86 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E428882DFC00F3AD86 /* Player.swift */; };
 		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
 		70C7541D29523ACE00192DE6 /* false.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7541929523ACE00192DE6 /* false.mp3 */; };
@@ -183,7 +182,6 @@
 		7094D8C3290D25B5007E422F /* AwardsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardsController.swift; sourceTree = "<group>"; };
 		7094D8C5290D694D007E422F /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		709ED6A62899312800A34007 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		70A70D9C29439D93007F3C25 /* ExerciseSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSettingsController.swift; sourceTree = "<group>"; };
 		70C357E428882DFC00F3AD86 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		70C357E72888638300F3AD86 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		70C7541929523ACE00192DE6 /* false.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = false.mp3; sourceTree = "<group>"; };
@@ -279,7 +277,6 @@
 				7094D8C3290D25B5007E422F /* AwardsController.swift */,
 				70803512290C3BA600F1F93A /* StatsController.swift */,
 				701581BC27DE80D800796ADE /* SettingsController.swift */,
-				70A70D9C29439D93007F3C25 /* ExerciseSettingsController.swift */,
 				705D92D428F895BA001C4F38 /* WheelController.swift */,
 				705B3D0829BE108C005CFEC2 /* TestController.swift */,
 				70509AA929C9DAD000372655 /* WritingController.swift */,
@@ -595,7 +592,6 @@
 				708C0E1427A8894F00E9105F /* AddController.swift in Sources */,
 				70134195291D58AA001967E1 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
 				706CBAB527592F8D008B4773 /* SceneDelegate.swift in Sources */,
-				70A70D9D29439D93007F3C25 /* ExerciseSettingsController.swift in Sources */,
 				70134174291D5751001967E1 /* ImageSparkView.swift in Sources */,
 				7013417E291D57D5001967E1 /* FireworkSpark.swift in Sources */,
 				707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */,
