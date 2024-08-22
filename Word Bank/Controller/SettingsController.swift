@@ -10,6 +10,8 @@ import AVFoundation
 import CoreData
 
 class SettingsController: UIViewController, UITextFieldDelegate {
+    
+    private let scrollView = UIScrollView()
         
     private let appSoundView = UIView()
     private let wordSoundView = UIView()
@@ -72,7 +74,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         configureColor()
         updateTextSize()
-        setupButton(soundSpeedButton)
         style()
         setupDefaults()
         layout()
@@ -125,10 +126,6 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         soundSpeedButton.changeBackgroundColor(to: .clear)
         
         soundSpeedSegmentedControl.tintColor = .black
-    }
-
-    private func setupButton(_ button: UIButton){
-        button.setImage(image: Images.soundBlack, width: 30, height: 30)
     }
     
     private func setupDefaults(){
@@ -188,6 +185,8 @@ extension SettingsController {
     
     private func style() {
         title = "Settings"
+        
+        soundSpeedButton.setImage(image: Images.soundBlack, width: 30, height: 30)
         
         soundSpeedStackView.axis = .vertical
         soundSpeedStackView.spacing = 8
@@ -251,97 +250,92 @@ extension SettingsController {
     }
     
     private func layout() {
-        appSoundView.addSubview(appSoundLabel)
-        appSoundView.addSubview(appSoundSwitch)
+        view.addSubview(scrollView)
+        scrollView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
+                          paddingTop: 8, paddingBottom: 8)
         
-        wordSoundView.addSubview(wordSoundLabel)
-        wordSoundView.addSubview(wordSoundSwitch)
+        let firstStack = UIStackView(arrangedSubviews: [appSoundView, wordSoundView, soundSpeedView])
+        firstStack.axis = .vertical
+        firstStack.spacing = 1
+        firstStack.layer.cornerRadius = 10
+        firstStack.layer.masksToBounds = true
         
-        soundSpeedStackView.addArrangedSubview(soundSpeedLabel)
-        soundSpeedStackView.addArrangedSubview(soundSpeedSegmentedControl)
+        let secondStack = UIStackView(arrangedSubviews: [testTypeView, pointView, typingView])
+        secondStack.axis = .vertical
+        secondStack.spacing = 1
+        secondStack.layer.cornerRadius = 10
+        secondStack.layer.masksToBounds = true
         
-        soundSpeedView.addSubview(soundSpeedStackView)
-        soundSpeedView.addSubview(soundSpeedButton)
-                
-        let stack = UIStackView(arrangedSubviews: [appSoundView, wordSoundView, soundSpeedView])
+        let stack = UIStackView(arrangedSubviews: [firstStack, secondStack])
         stack.axis = .vertical
-        stack.spacing = 1
-        stack.distribution = .fill
-        stack.backgroundColor = .clear
-        stack.layer.cornerRadius = 10
-        stack.layer.masksToBounds = true
+        stack.spacing = 16
+        stack.alignment = .fill
         
-        view.addSubview(stack)
-        stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                     paddingTop: 16, paddingLeft: 32, paddingRight: 32)
-        
-        appSoundLabel.centerY(inView: appSoundView)
-        appSoundLabel.anchor(left: appSoundView.leftAnchor, paddingLeft: 16)
-        
-        appSoundSwitch.centerY(inView: appSoundView)
-        appSoundSwitch.anchor(right: appSoundView.rightAnchor, paddingRight: 16)
-        
-        wordSoundLabel.centerY(inView: wordSoundView)
-        wordSoundLabel.anchor(left: wordSoundView.leftAnchor, paddingLeft: 16)
-        
-        wordSoundSwitch.centerY(inView: wordSoundView)
-        wordSoundSwitch.anchor(right: wordSoundView.rightAnchor, paddingRight: 16)
-        
-        soundSpeedButton.anchor(top: soundSpeedView.topAnchor, right: soundSpeedView.rightAnchor,
-                                paddingTop: 9, paddingRight: 16)
-        
-        soundSpeedStackView.anchor(top: soundSpeedView.topAnchor, left: soundSpeedView.leftAnchor,
-                                   bottom: soundSpeedView.bottomAnchor, right: soundSpeedView.rightAnchor,
-                                   paddingTop: 16, paddingLeft: 16,
-                                   paddingBottom: 16, paddingRight: 16)
+        scrollView.addSubview(stack)
+        stack.anchor(top: scrollView.topAnchor, left: view.leftAnchor,
+                     bottom: scrollView.bottomAnchor, right: view.rightAnchor,
+                     paddingTop: 16, paddingLeft: 32, paddingBottom: 16, paddingRight: 32)
         
         appSoundView.setHeight(50)
         wordSoundView.setHeight(50)
         soundSpeedView.setHeight(90)
         
-        let secondStack = UIStackView(arrangedSubviews: [testTypeView, pointView, typingView])
-        secondStack.axis = .vertical
-        secondStack.spacing = 1
-        secondStack.distribution = .fill
-        secondStack.backgroundColor = .clear
-        secondStack.layer.cornerRadius = 10
-        secondStack.layer.masksToBounds = true
+        testTypeView.setHeight(90)
+        pointView.setHeight(160)
+        typingView.setHeight(160)
         
-        view.addSubview(secondStack)
-        secondStack.anchor(top: stack.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 16, paddingLeft: 32, paddingRight: 32)
+        appSoundView.addSubview(appSoundLabel)
+        appSoundLabel.centerY(inView: appSoundView)
+        appSoundLabel.anchor(left: appSoundView.leftAnchor, paddingLeft: 16)
+        
+        appSoundView.addSubview(appSoundSwitch)
+        appSoundSwitch.centerY(inView: appSoundView)
+        appSoundSwitch.anchor(right: appSoundView.rightAnchor, paddingRight: 16)
+        
+        wordSoundView.addSubview(wordSoundLabel)
+        wordSoundLabel.centerY(inView: wordSoundView)
+        wordSoundLabel.anchor(left: wordSoundView.leftAnchor, paddingLeft: 16)
+        
+        wordSoundView.addSubview(wordSoundSwitch)
+        wordSoundSwitch.centerY(inView: wordSoundView)
+        wordSoundSwitch.anchor(right: wordSoundView.rightAnchor, paddingRight: 16)
+        
+        soundSpeedView.addSubview(soundSpeedButton)
+        soundSpeedButton.anchor(top: soundSpeedView.topAnchor, right: soundSpeedView.rightAnchor,
+                                paddingTop: 9, paddingRight: 16)
+        
+        soundSpeedStackView.addArrangedSubview(soundSpeedLabel)
+        soundSpeedStackView.addArrangedSubview(soundSpeedSegmentedControl)
+        soundSpeedView.addSubview(soundSpeedStackView)
+        soundSpeedStackView.anchor(top: soundSpeedView.topAnchor, left: soundSpeedView.leftAnchor,
+                                   bottom: soundSpeedView.bottomAnchor, right: soundSpeedView.rightAnchor,
+                                   paddingTop: 16, paddingLeft: 16,
+                                   paddingBottom: 16, paddingRight: 16)
         
         testTypeView.addSubview(testTypeStackView)
         testTypeStackView.addArrangedSubview(testTypeLabel)
         testTypeStackView.addArrangedSubview(testTypeSegmentedControl)
-        
-        testTypeView.setHeight(90)
-        
         testTypeStackView.anchor(top: testTypeView.topAnchor, left: testTypeView.leftAnchor,
                                  bottom: testTypeView.bottomAnchor, right: testTypeView.rightAnchor,
                                  paddingTop: 16, paddingLeft: 16,
                                  paddingBottom: 16, paddingRight: 16)
         
         pointView.addSubview(pointLabel)
-        pointView.addSubview(pointCV)
-        
-        pointView.setHeight(160)
-        
         pointLabel.anchor(top: pointView.topAnchor, left: pointView.leftAnchor,
                           paddingTop: 16, paddingLeft: 16)
         
+        pointView.addSubview(pointCV)
         pointCV.anchor(top: pointLabel.bottomAnchor, left: pointView.leftAnchor,
                        bottom: pointView.bottomAnchor, right: pointView.rightAnchor,
                        paddingTop: 8, paddingLeft: 16,
                        paddingBottom: 16, paddingRight: 16)
         
         typingView.addSubview(typingLabel)
-        typingView.addSubview(typingCV)
-        
-        typingView.setHeight(160)
-        
         typingLabel.anchor(top: typingView.topAnchor, left: typingView.leftAnchor,
                            paddingTop: 16, paddingLeft: 16)
         
+        typingView.addSubview(typingCV)
         typingCV.anchor(top: typingLabel.bottomAnchor, left: typingView.leftAnchor,
                         bottom: typingView.bottomAnchor, right: typingView.rightAnchor,
                         paddingTop: 8, paddingLeft: 16,
@@ -352,7 +346,6 @@ extension SettingsController {
 //MARK: - UICollectionViewDataSource
 
 extension SettingsController: UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
     }
@@ -377,7 +370,6 @@ extension SettingsController: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegateFlowLayout
 
 extension SettingsController: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 99, height: 99)
     }
