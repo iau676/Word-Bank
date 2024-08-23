@@ -19,7 +19,7 @@ class LevelInfoController: UIViewController {
     lazy var levelLabel: UILabel = {
         let label = UILabel()
         label.text = "Required points for next level: \n\(UserDefault.needPoint.getInt().withCommas())"
-        label.font = UIFont(name: Fonts.AvenirNextMedium, size: 19)
+        label.font = Fonts.AvenirNextDemiBold19
         label.textColor = Colors.red
         label.textAlignment = .center
         label.numberOfLines = 0

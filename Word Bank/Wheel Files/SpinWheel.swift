@@ -329,7 +329,7 @@ class SpinWheel: SKSpriteNode {
     
     func userGotPrize(prizePoint: Int, prizeImage: String){
         let youWonLabel = SKLabelNode()
-        youWonLabel.fontName = Fonts.AvenirNextBold
+        youWonLabel.fontName = "AvenirNext-Bold"
         youWonLabel.text = "YOU WON \(prizePoint.withCommas()) POINTS"
         youWonLabel.fontSize = 84.0
         youWonLabel.fontColor = SKColor(white: 0.9, alpha: 1.0)

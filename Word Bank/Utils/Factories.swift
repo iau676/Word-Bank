@@ -14,7 +14,7 @@ func makeMenuButton(title: String, image: UIImage? = nil, imageWidth: CGFloat = 
     button.setTitleColor(.darkGray, for: .normal)
     button.backgroundColor = .white
     button.setTitle(title, for: .normal)
-    button.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
+    button.titleLabel?.font = Fonts.AvenirNextRegular15
     button.setTitleColor(.black, for: .normal)
     button.setImageWithRenderingMode(image: image, width: imageWidth, height: imageHeight, color: .black)
     button.alignTextBelow()
@@ -25,7 +25,7 @@ func makeMenuButton(title: String, image: UIImage? = nil, imageWidth: CGFloat = 
 
 func makeTestAnswerButton() -> UIButton {
     let button = UIButton()
-     button.titleLabel?.font =  button.titleLabel?.font.withSize(UserDefault.textSize.getCGFloat())
+     button.titleLabel?.font =  Fonts.AvenirNextRegular15
      button.titleLabel?.numberOfLines = 3
      button.titleEdgeInsets = UIEdgeInsets(top: 30, left: 15, bottom: 30, right: 15)
 
@@ -97,7 +97,7 @@ func makeExerciseLabel(text: String) -> UILabel {
     label.textColor = Colors.black
     label.text = text
     label.textAlignment = .center
-    label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
+    label.font = Fonts.AvenirNextRegular13
     label.numberOfLines = 1
     return label
 }
@@ -106,14 +106,14 @@ func makeSettingLabel(text: String) -> UILabel {
     let label = UILabel()
     label.text = text
     label.textColor = Colors.black
-    label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
+    label.font = Fonts.AvenirNextRegular15
     return label
 }
 
 func makeAwardLabel(text: String) -> UILabel {
     let label = UILabel()
     label.text = text
-    label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
+    label.font = Fonts.AvenirNextRegular19
     label.textColor = Colors.black
     return label
 }
@@ -124,7 +124,7 @@ func makePaddingLabel(text: String) -> UILabel {
     label.text = text
     label.textColor = UIColor.white
     label.backgroundColor = Colors.blue
-    label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
+    label.font = Fonts.AvenirNextDemiBold15
     label.layer.cornerRadius = 8
     label.layer.masksToBounds = true 
     return label

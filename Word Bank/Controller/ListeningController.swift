@@ -38,7 +38,7 @@ class ListeningController: UIViewController {
         label.textColor = Colors.f6f6f6
         label.numberOfLines = 6
         label.adjustsFontSizeToFitWidth = true
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: UserDefault.textSize.getCGFloat())
+        label.font = Fonts.AvenirNextRegular15
         label.textAlignment = .center
         return label
     }()

@@ -56,19 +56,19 @@ class LevelUpController: UIViewController {
     
     private func style() {
         levelUpLabel.text = "LEVEL UP"
-        levelUpLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 17)
+        levelUpLabel.font = Fonts.ArialRoundedMTBold17
         levelUpLabel.textAlignment = .center
         levelUpLabel.numberOfLines = 1
         levelUpLabel.textColor = Colors.f6f6f6
         
-        levelLabel.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 70)
+        levelLabel.font = Fonts.ArialRoundedMTBold70
         levelLabel.textAlignment = .center
         levelLabel.numberOfLines = 1
         levelLabel.textColor = Colors.f6f6f6
         levelLabel.text = UserDefault.level.getString()
         
         continueButton.setTitle("Continue", for: .normal)
-        continueButton.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 23)
+        continueButton.titleLabel?.font =  Fonts.ArialRoundedMTBold23
         continueButton.layer.shadowColor = Colors.darkGrayShadow.cgColor
         continueButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
         continueButton.layer.shadowOpacity = 1.0

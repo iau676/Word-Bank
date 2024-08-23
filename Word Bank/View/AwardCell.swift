@@ -24,7 +24,7 @@ class AwardCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 19)
+        label.font = Fonts.AvenirNextDemiBold19
         label.textColor = Colors.b9b9b9
         return label
     }()
@@ -33,7 +33,7 @@ class AwardCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "LEVEL"
-        label.font = UIFont(name: Fonts.AvenirNextMedium, size: 9)
+        label.font = Fonts.AvenirNextDemiBold9
         label.textColor = .white
         return label
     }()
@@ -42,7 +42,7 @@ class AwardCell: UICollectionViewCell {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("", for: .normal)
-        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
+        button.titleLabel?.font = Fonts.AvenirNextDemiBold15
         button.backgroundColor = .clear
         button.setImageWithRenderingMode(image: Images.banner, width: 100, height: 70, color: Colors.b9b9b9)
         return button

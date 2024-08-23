@@ -19,7 +19,7 @@ class BubbleView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        label.font = UIFont(name: Fonts.ArialRoundedMTBold, size: 29)
+        label.font = Fonts.ArialRoundedMTBold29
         
         addSubview(button)
         button.centerX(inView: self)

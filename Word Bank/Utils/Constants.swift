@@ -148,22 +148,35 @@ enum UserDefault {
     static var soundSpeed                = UserDefaultsManager(key: "soundSpeed")
     static var playSound                 = UserDefaultsManager(key: "playSound")
     static var playAppSound              = UserDefaultsManager(key: "playAppSound")
-    static var textSize                  = UserDefaultsManager(key: "textSize")
     static var userAnswers               = UserDefaultsManager(key: "userAnswers")
 
     static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")
     static var hintCount                 = UserDefaultsManager(key: "hintCount")
 }
 
-enum Fonts {
-    static var AvenirNextRegular         = "AvenirNext-Regular"
-    static var AvenirNextDemiBold        = "AvenirNext-DemiBold"
-    static var AvenirNextMedium          = "AvenirNext-Medium"
-    static var AvenirNextBold            = "AvenirNext-Bold"
-    static var ArialRoundedMTBold        = "ArialRoundedMTBold"
-}
-
 enum DateFormats {
     static var yyyyMMdd                  = "yyyy-MM-dd"
     static var EEE                       = "EEE"
+}
+
+enum Fonts {
+    static var AvenirNextRegular13 = UIFont(name: "AvenirNext-Regular", size: 13)
+    static var AvenirNextRegular15 = UIFont(name: "AvenirNext-Regular", size: 15)
+    static var AvenirNextRegular19 = UIFont(name: "AvenirNext-Regular", size: 19)
+    
+    static var AvenirNextDemiBold9 = UIFont(name: "AvenirNext-DemiBold", size: 9)
+    static var AvenirNextDemiBold11 = UIFont(name: "AvenirNext-DemiBold", size: 11)
+    static var AvenirNextDemiBold15 = UIFont(name: "AvenirNext-DemiBold", size: 15)
+    static var AvenirNextDemiBold19 = UIFont(name: "AvenirNext-DemiBold", size: 19)
+    static var AvenirNextDemiBold25 = UIFont(name: "AvenirNext-DemiBold", size: 25)
+    
+    static var AvenirNextMedium15 = UIFont(name: "AvenirNext-Medium", size: 15)
+    static var AvenirNextMedium19 = UIFont(name: "AvenirNext-Medium", size: 19)
+    
+    static var ArialRoundedMTBold17 = UIFont(name: "ArialRoundedMTBold", size: 17)
+    static var ArialRoundedMTBold20 = UIFont(name: "ArialRoundedMTBold", size: 20)
+    static var ArialRoundedMTBold23 = UIFont(name: "ArialRoundedMTBold", size: 23)
+    static var ArialRoundedMTBold29 = UIFont(name: "ArialRoundedMTBold", size: 29)
+    static var ArialRoundedMTBold30 = UIFont(name: "ArialRoundedMTBold", size: 30)
+    static var ArialRoundedMTBold70 = UIFont(name: "ArialRoundedMTBold", size: 70)
 }

@@ -46,7 +46,7 @@ class WritingController: UIViewController {
         label.textColor = Colors.f6f6f6
         label.numberOfLines = 6
         label.adjustsFontSizeToFitWidth = true
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: UserDefault.textSize.getCGFloat())
+        label.font = Fonts.AvenirNextRegular15
         label.textAlignment = .center
         return label
     }()
@@ -93,7 +93,7 @@ class WritingController: UIViewController {
     private let hintLabel:  UILabel = {
        let label = UILabel()
         label.textColor = Colors.f6f6f6
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
+        label.font = Fonts.AvenirNextRegular15
         label.textAlignment = .center
         label.numberOfLines = 0
         return label

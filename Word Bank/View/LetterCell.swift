@@ -20,7 +20,7 @@ class LetterCell: UICollectionViewCell {
     private let letterLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 19)
+        label.font = Fonts.AvenirNextRegular19
         label.textColor = Colors.black
         return label
     }()

@@ -23,7 +23,7 @@ class WordCell: UITableViewCell {
     
     let engLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: UserDefault.textSize.getCGFloat())
+        label.font = Fonts.AvenirNextRegular15
         label.textColor = Colors.black
         label.numberOfLines = 0
         return label
@@ -31,7 +31,7 @@ class WordCell: UITableViewCell {
     
     let meaningLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: UserDefault.textSize.getCGFloat())
+        label.font = Fonts.AvenirNextRegular15
         label.textColor = Colors.black
         label.numberOfLines = 0
         return label
@@ -39,7 +39,7 @@ class WordCell: UITableViewCell {
     
     let numberLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 11)
+        label.font = Fonts.AvenirNextDemiBold11
         label.textColor = UIColor.white
         return label
     }()

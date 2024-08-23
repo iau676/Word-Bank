@@ -57,7 +57,7 @@ class CircularProgressView: UIView {
         progressLayer.strokeEnd = 0.0
         layer.addSublayer(progressLayer)
         
-        button.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
+        button.titleLabel?.font =  Fonts.ArialRoundedMTBold30
         addSubview(button)
         button.centerX(inView: self)
         button.centerY(inView: self)

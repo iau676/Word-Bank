@@ -29,8 +29,8 @@ extension UILabel {
     }
     
     func setAttributedText(verb: String, count: Int, noun: String) {
-        if let avenirRegular = UIFont(name: Fonts.AvenirNextRegular, size: 15),
-           let avenirDemiBold = UIFont(name: Fonts.AvenirNextDemiBold, size: 15) {
+        if let avenirRegular = Fonts.AvenirNextRegular15,
+           let avenirDemiBold = Fonts.AvenirNextDemiBold15 {
             
             let avenirRegularAttrs = [NSAttributedString.Key.font : avenirRegular]
             let avenirDemiBoldAttrs = [NSAttributedString.Key.font : avenirDemiBold]

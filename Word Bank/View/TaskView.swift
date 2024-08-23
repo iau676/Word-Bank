@@ -13,7 +13,7 @@ class TaskView: UIView {
     
     private lazy var taskButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
+        button.titleLabel?.font = Fonts.AvenirNextDemiBold15
         button.moveImageTitleLeft()
         button.isUserInteractionEnabled = false
         return button

@@ -132,7 +132,7 @@ extension CardController {
         backgroundCardView.layer.cornerRadius = 16
         
         cardLabel.textColor = .white
-        cardLabel.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 25)
+        cardLabel.font = Fonts.AvenirNextDemiBold25
         cardLabel.textAlignment = .center
         cardLabel.lineBreakMode = .byWordWrapping
         cardLabel.numberOfLines = 0

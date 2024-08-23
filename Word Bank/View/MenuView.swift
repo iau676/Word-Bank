@@ -26,7 +26,7 @@ class MenuView: UIView {
         button.backgroundColor = .white
         button.setButtonCornerRadius(10)
         button.setHeight(50)
-        button.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
+        button.titleLabel?.font = Fonts.AvenirNextRegular15
         button.addTarget(self, action: #selector(closeButtonPressed), for: .touchUpInside)
         return button
     }()

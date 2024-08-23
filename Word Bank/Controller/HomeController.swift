@@ -207,12 +207,12 @@ extension HomeController: LevelInfoControllerDelegate {
             UIView.transition(with: self.levelCP.button, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
                 self.levelCP.button.setTitle(UserDefault.level.getString(), for: .normal)
-                self.levelCP.button.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 30)
+                self.levelCP.button.titleLabel?.font =  Fonts.ArialRoundedMTBold30
             }
         } else {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25){
                 self.levelCP.button.setTitle("\(String(format: "%.2f", self.progressValue*100))%", for: .normal)
-                self.levelCP.button.titleLabel?.font =  UIFont(name: Fonts.ArialRoundedMTBold, size: 20)
+                self.levelCP.button.titleLabel?.font =  Fonts.ArialRoundedMTBold20
             }
         }
     }

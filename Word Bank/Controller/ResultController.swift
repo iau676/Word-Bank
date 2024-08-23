@@ -34,7 +34,6 @@ class ResultController: UIViewController {
     
     private var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
     private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
-    private var textSize: CGFloat { return UserDefault.textSize.getCGFloat() }
     private var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
     
     var questionArray = [String]()
@@ -277,9 +276,9 @@ extension ResultController: UITableViewDataSource {
     }
     
     private func writeAnswerCell(_ userAnswer: NSAttributedString, _ trueAnswer: String) -> NSMutableAttributedString {
-        let boldFontAttributes = [NSAttributedString.Key.font: UIFont(name: Fonts.AvenirNextMedium, size: textSize+2)]
+        let boldFontAttributes = [NSAttributedString.Key.font: Fonts.AvenirNextMedium15]
         
-        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize)]
+        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
         
         let partOne = NSMutableAttributedString(string: "Your answer:\n", attributes: normalFontAttributes)
         
@@ -338,7 +337,7 @@ extension ResultController {
         
         confettiButton.setImage(image: Images.confetti, width: 66, height: 66)
         
-        scoreLabel.font = UIFont(name: Fonts.AvenirNextMedium, size: textSize+5)
+        scoreLabel.font = Fonts.AvenirNextMedium19
         scoreLabel.textAlignment = .center
         scoreLabel.numberOfLines = 1
         
@@ -349,7 +348,7 @@ extension ResultController {
         tableView.delegate = self
         
         addedHardWordsButton.backgroundColor = .clear
-        addedHardWordsButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextRegular, size: textSize)
+        addedHardWordsButton.titleLabel?.font = Fonts.AvenirNextRegular15
         addedHardWordsButton.layer.cornerRadius = 10
         addedHardWordsButton.addTarget(self, action: #selector(addedHardWordsButtonPressed(_:)),
                                        for: .primaryActionTriggered)
