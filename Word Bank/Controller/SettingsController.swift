@@ -231,7 +231,7 @@ extension SettingsController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ExerciseSettingsCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SettingsCell
         switch collectionView {
         case pointCV:
             cell.imageView.image = (indexPath.row == 0) ? Images.greenBubble : Images.greenCircle

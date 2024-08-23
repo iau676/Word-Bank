@@ -1,5 +1,5 @@
 //
-//  ExerciseSettingsCell.swift
+//  SettingsCell.swift
 //  Word Bank
 //
 //  Created by ibrahim uysal on 24.03.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ExerciseSettingsCell: UICollectionViewCell {
+class SettingsCell: UICollectionViewCell {
     
     lazy var imageView: UIImageView = {
         var imageView = UIImageView()

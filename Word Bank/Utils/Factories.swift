@@ -171,7 +171,7 @@ func makeSettingCollectionView(withIdentifier: String) -> UICollectionView {
     let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
     cv.translatesAutoresizingMaskIntoConstraints = false
     cv.backgroundColor = Colors.cellRight
-    cv.register(ExerciseSettingsCell.self, forCellWithReuseIdentifier: withIdentifier)
+    cv.register(SettingsCell.self, forCellWithReuseIdentifier: withIdentifier)
     cv.showsHorizontalScrollIndicator = false
     return cv
 }

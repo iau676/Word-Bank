@@ -42,7 +42,7 @@
 		70509AA829C9CCDE00372655 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA729C9CCDE00372655 /* BubbleView.swift */; };
 		70509AAA29C9DAD000372655 /* WritingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AA929C9DAD000372655 /* WritingController.swift */; };
 		70509AAC29CA14D700372655 /* ListeningController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AAB29CA14D700372655 /* ListeningController.swift */; };
-		70509AAE29CDCF3300372655 /* ExerciseSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AAD29CDCF3300372655 /* ExerciseSettingsCell.swift */; };
+		70509AAE29CDCF3300372655 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70509AAD29CDCF3300372655 /* SettingsCell.swift */; };
 		7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7056C49D27AACA3100D0CA24 /* levelup.mp4 */; };
 		705B3D0929BE108C005CFEC2 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0829BE108C005CFEC2 /* TestController.swift */; };
 		705B3D0B29BE12C8005CFEC2 /* ExerciseTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */; };
@@ -136,7 +136,7 @@
 		70509AA729C9CCDE00372655 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 		70509AA929C9DAD000372655 /* WritingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingController.swift; sourceTree = "<group>"; };
 		70509AAB29CA14D700372655 /* ListeningController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningController.swift; sourceTree = "<group>"; };
-		70509AAD29CDCF3300372655 /* ExerciseSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSettingsCell.swift; sourceTree = "<group>"; };
+		70509AAD29CDCF3300372655 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		7056C49D27AACA3100D0CA24 /* levelup.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = levelup.mp4; sourceTree = "<group>"; };
 		705B3D0829BE108C005CFEC2 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTopView.swift; sourceTree = "<group>"; };
@@ -292,12 +292,12 @@
 				706CBAD427593993008B4773 /* WordCell.swift */,
 				70C7C22929522704006E65A2 /* LetterCell.swift */,
 				70C7C227295226E6006E65A2 /* AwardCell.swift */,
+				70509AAD29CDCF3300372655 /* SettingsCell.swift */,
 				7094D8C5290D694D007E422F /* BadgeView.swift */,
 				70509AA729C9CCDE00372655 /* BubbleView.swift */,
 				70925E372C6E8B04007CB4E9 /* MenuView.swift */,
 				703747822C70155A002AC4A3 /* TaskView.swift */,
 				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
-				70509AAD29CDCF3300372655 /* ExerciseSettingsCell.swift */,
 				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
 			);
 			path = View;
@@ -567,7 +567,7 @@
 				7009BDE729112BAA0068E2F6 /* DailyController.swift in Sources */,
 				706CBABD27592F8D008B4773 /* _3.xcdatamodeld in Sources */,
 				70C357E528882DFC00F3AD86 /* Player.swift in Sources */,
-				70509AAE29CDCF3300372655 /* ExerciseSettingsCell.swift in Sources */,
+				70509AAE29CDCF3300372655 /* SettingsCell.swift in Sources */,
 				70509AA829C9CCDE00372655 /* BubbleView.swift in Sources */,
 				70134176291D577A001967E1 /* ImageSparkViewFactory.swift in Sources */,
 				700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */,
