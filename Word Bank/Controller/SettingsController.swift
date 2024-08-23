@@ -6,16 +6,23 @@
 //
 
 import UIKit
-import AVFoundation
-import CoreData
 
 private let reuseIdentifier = "SettingsCell"
 
-class SettingsController: UIViewController, UITextFieldDelegate {
+class SettingsController: UIViewController {
+    
+    //MARK: - Properties
+    
+    private var wordBrain = WordBrain()
+    private var soundSpeed = 0.0
+    private let soundSpeedArray = [0.3, 0.5, 0.7]
     
     private let scrollView = UIScrollView()
     private let appSoundView = makeBackgroundView(bgColor: Colors.cellRight)
     private let wordSoundView = makeBackgroundView(bgColor: Colors.cellRight)
+    private let testTypeView = makeBackgroundView(bgColor: Colors.cellRight)
+    private let pointView = makeBackgroundView(bgColor: Colors.cellRight)
+    private let typingView = makeBackgroundView(bgColor: Colors.cellRight)
     
     private let soundSpeedView: UIView = {
        let view = makeBackgroundView(bgColor: Colors.cellRight)
@@ -25,40 +32,21 @@ class SettingsController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
-    private let appSoundLabel: UILabel = {
-        let label = UILabel()
-        label.text = "App Sound"
-        label.textColor = Colors.black
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
-        return label
-    }()
-    
-    private let wordSoundLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Word Sound"
-        label.textColor = Colors.black
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
-        return label
-    }()
-    
-    private let soundSpeedLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Sound Speed"
-        label.textColor = Colors.black
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
-        return label
-    }()
+    private let appSoundLabel = makeSettingLabel(text: "App Sound")
+    private let wordSoundLabel = makeSettingLabel(text: "Word Sound")
+    private let soundSpeedLabel = makeSettingLabel(text: "Sound Speed")
+    private let testTypeLabel = makeSettingLabel(text: "Test Type")
+    private let pointLabel = makeSettingLabel(text: "Point Effect")
+    private let typingLabel = makeSettingLabel(text: "Typing")
     
     private lazy var appSoundSwitch: UISwitch = {
-        let sw = UISwitch()
-        sw.isOn = (UserDefault.playAppSound.getInt() == 0)
+        let sw = makeSwitch(isOn: UserDefault.playAppSound.getInt() == 0)
         sw.addTarget(self, action: #selector(appSoundChanged(_:)), for: UIControl.Event.valueChanged)
         return sw
     }()
     
     private lazy var wordSoundSwitch: UISwitch = {
-        let sw = UISwitch()
-        sw.isOn = (UserDefault.playSound.getInt() == 0)
+        let sw = makeSwitch(isOn: UserDefault.playSound.getInt() == 0)
         sw.addTarget(self, action: #selector(wordSoundChanged(_:)), for: UIControl.Event.valueChanged)
         return sw
     }()
@@ -70,97 +58,34 @@ class SettingsController: UIViewController, UITextFieldDelegate {
     }()
     
     private lazy var soundSpeedSegmentedControl: UISegmentedControl = {
-        let sg = UISegmentedControl()
-        sg.replaceSegments(segments: ["0.5", "1", "2"])
-        sg.tintColor = .black
+        let sg = makeSegmentedControl(tintColor: UIColor.black, segments: ["0.5", "1", "2"])
         sg.addTarget(self, action: #selector(soundSpeedChanged(_:)), for: UIControl.Event.valueChanged)
-        
         if let soundSpeedIndex = soundSpeedArray.firstIndex(where: {$0 == UserDefault.soundSpeed.getDouble()}) {
             sg.selectedSegmentIndex = soundSpeedIndex
         }
-        
         return sg
     }()
     
-    private let testTypeView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Colors.cellRight
-        return view
-    }()
-    
-    private let testTypeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Test Type"
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
-        label.textColor = Colors.black
-        return label
-    }()
-    
     private lazy var testTypeSegmentedControl: UISegmentedControl = {
-        let sg = UISegmentedControl()
-        sg.tintColor = .black
-        sg.replaceSegments(segments: ["English - Meaning", "Meaning - English"])
-        sg.setTitleTextAttributes([.foregroundColor: Colors.black, .font: UIFont.systemFont(ofSize: 13),], for: .normal)
+        let sg = makeSegmentedControl(tintColor: UIColor.black, segments: ["English - Meaning", "Meaning - English"])
         sg.selectedSegmentIndex = UserDefault.selectedTestType.getInt()
         sg.addTarget(self, action: #selector(testTypeChanged(_:)), for: UIControl.Event.valueChanged)
         return sg
     }()
     
-    private let pointView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Colors.cellRight
-        return view
-    }()
-    
-    private let pointLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Point Effect"
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
-        return label
-    }()
-    
-    private lazy var pointCV:UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = Colors.cellRight
-        cv.register(ExerciseSettingsCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        cv.showsHorizontalScrollIndicator = false
+    private lazy var pointCV: UICollectionView = {
+        let cv = makeSettingCollectionView(withIdentifier: reuseIdentifier)
         cv.delegate = self
         cv.dataSource = self
         return cv
-    }()
-    
-    private let typingView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Colors.cellRight
-        return view
-    }()
-    
-    private let typingLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Typing"
-        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
-        return label
     }()
     
     private lazy var typingCV:UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = Colors.cellRight
-        cv.register(ExerciseSettingsCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        cv.showsHorizontalScrollIndicator = false
+        let cv = makeSettingCollectionView(withIdentifier: reuseIdentifier)
         cv.delegate = self
         cv.dataSource = self
         return cv
     }()
-    
-    private var wordBrain = WordBrain()
-    private var soundSpeed = 0.0
-    private let soundSpeedArray = [0.3, 0.5, 0.7]
     
     //MARK: - Life Cycle
     

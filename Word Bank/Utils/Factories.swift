@@ -102,6 +102,14 @@ func makeExerciseLabel(text: String) -> UILabel {
     return label
 }
 
+func makeSettingLabel(text: String) -> UILabel {
+    let label = UILabel()
+    label.text = text
+    label.textColor = Colors.black
+    label.font = UIFont(name: Fonts.AvenirNextRegular, size: 15)
+    return label
+}
+
 func makeAwardLabel(text: String) -> UILabel {
     let label = UILabel()
     label.text = text
@@ -155,4 +163,33 @@ func makeAwardCollectionView(withIdentifier: String) -> UICollectionView {
     cv.register(AwardCell.self, forCellWithReuseIdentifier: withIdentifier)
     cv.showsHorizontalScrollIndicator = false
     return cv
+}
+
+func makeSettingCollectionView(withIdentifier: String) -> UICollectionView {
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .vertical
+    let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    cv.translatesAutoresizingMaskIntoConstraints = false
+    cv.backgroundColor = Colors.cellRight
+    cv.register(ExerciseSettingsCell.self, forCellWithReuseIdentifier: withIdentifier)
+    cv.showsHorizontalScrollIndicator = false
+    return cv
+}
+
+//MARK: - UISwitch
+
+func makeSwitch(isOn bool: Bool) -> UISwitch {
+    let sw = UISwitch()
+    sw.isOn = bool
+    return sw
+}
+
+//MARK: - UISegmentedControl
+
+func makeSegmentedControl(tintColor: UIColor, segments: [String]) -> UISegmentedControl {
+    let sg = UISegmentedControl()
+    sg.tintColor = tintColor
+    sg.replaceSegments(segments: segments)
+    sg.setTitleTextAttributes([.foregroundColor: Colors.black, .font: UIFont.systemFont(ofSize: 13),], for: .normal)
+    return sg
 }
