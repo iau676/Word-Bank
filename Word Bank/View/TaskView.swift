@@ -13,9 +13,13 @@ class TaskView: UIView {
     
     private lazy var taskButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = Fonts.AvenirNextDemiBold15
-        button.moveImageTitleLeft()
+        var config = UIButton.Configuration.plain()
+        config.imagePadding = 8
+        config.imagePlacement = .leading
+        config.baseBackgroundColor = .clear
+        button.configuration = config
         button.isUserInteractionEnabled = false
+        button.tintColor = UIColor.white
         return button
     }()
     
@@ -40,7 +44,9 @@ class TaskView: UIView {
         self.exerciseCount = exerciseCount
         super.init(frame: .zero)
         
-        taskButton.setTitle(title, for: .normal)
+        taskButton.configurationUpdateHandler = { button in
+            button.configuration?.attributedTitle = AttributedString(title, attributes: AttributeContainer([NSAttributedString.Key.font : Fonts.AvenirNextDemiBold15!]))
+        }
         
         addSubview(ravenLayerButton)
         ravenLayerButton.fillSuperview()
@@ -48,7 +54,8 @@ class TaskView: UIView {
         addSubview(blueLayerButton)
         
         addSubview(taskButton)
-        taskButton.fillSuperview()
+        taskButton.anchor(left: ravenLayerButton.leftAnchor)
+        taskButton.centerY(inView: ravenLayerButton)
         
         let image = exerciseCount >= 10 ? Images.check : Images.whiteCircle
         taskButton.setImageWithRenderingMode(image: image, width: 25, height: 25, color: .white)

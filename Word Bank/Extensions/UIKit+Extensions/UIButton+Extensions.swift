@@ -85,16 +85,6 @@ extension UIButton {
         }, completion: nil)
     }
     
-    func alignVertical(spacing: CGFloat = 6.0) {
-        if let image = self.imageView?.image {
-                    let imageSize: CGSize = image.size
-            self.titleEdgeInsets = UIEdgeInsets(top: 60, left: -imageSize.width, bottom: -(imageSize.height), right: 0.0)
-                    let labelString = NSString(string: self.titleLabel!.text!)
-            let titleSize = labelString.size(withAttributes: [NSAttributedString.Key.font: self.titleLabel!.font!])
-            self.imageEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -titleSize.width)
-                }
-    }
-    
     func setImage(image: UIImage?, width: CGFloat, height: CGFloat){
         self.setImage(UIGraphicsImageRenderer(size: CGSize(width: width, height: height)).image { _ in
             image?.draw(in: CGRect(x: 0, y: 0, width: width, height: height)) }, for: .normal)
@@ -103,32 +93,6 @@ extension UIButton {
     func setImageWithRenderingMode(image: UIImage?, width: CGFloat, height: CGFloat, color: UIColor){
         let image = image?.withRenderingMode(.alwaysTemplate).imageResized(to: CGSize(width: width, height: height)).withTintColor(color)
         self.setImage(image, for: .normal)
-    }
-    
-    func alignTextBelow(spacing: CGFloat = 2.0){
-        if let image = self.imageView?.image{
-            let imageSize: CGSize = image.size
-            self.titleEdgeInsets = UIEdgeInsets(top: spacing, left: -imageSize.width, bottom: -(imageSize.height), right: 0.0)
-            let labelString = NSString(string: self.titleLabel!.text!)
-            let titleSize = labelString.size(withAttributes: [NSAttributedString.Key.font: self.titleLabel!.font ?? 15])
-            self.imageEdgeInsets = UIEdgeInsets(top: -(titleSize.height + spacing), left: 0.0, bottom: 0.0, right: -titleSize.width)
-        }
-    }
-    
-    func moveImageTitleLeft() {
-        let imageSize: CGSize = self.imageView?.image?.size ?? CGSize(width: 25, height: 25)
-        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
-        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: imageSize.width, bottom: 0, right: 0)
-        self.contentHorizontalAlignment = .left
-        self.imageView?.contentMode = .scaleAspectFit
-    }
-    
-    func moveImageRight(){
-        let _: CGSize = self.imageView?.image?.size ?? CGSize(width: 25, height: 25)
-        let buttonWidth = self.bounds.width
-        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonWidth-32, bottom: 0, right: 0)
-        self.contentHorizontalAlignment = .left
-        self.imageView?.contentMode = .scaleAspectFit
     }
     
     func rotate() {
