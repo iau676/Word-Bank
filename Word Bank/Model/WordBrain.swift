@@ -53,10 +53,10 @@ struct WordBrain {
         saveContext()
     }
     
-    mutating func addExercise(type: String, kind: String, trueCount: Int16, falseCount: Int16, hintCount: Int16){
+    mutating func addExercise(type: ExerciseType, kind: ExerciseKind, trueCount: Int16, falseCount: Int16, hintCount: Int16){
         let newExercise = Exercise(context: self.context)
-        newExercise.name = type //test writing...
-        newExercise.type = kind //normal hard
+        newExercise.name = type.description //test writing...
+        newExercise.type = kind.description //normal hard
         newExercise.trueCount = trueCount
         newExercise.falseCount = falseCount
         newExercise.hintCount = hintCount
@@ -127,14 +127,14 @@ struct WordBrain {
        }
     }
     
-    mutating func getQuestionText(_ whichQuestion: Int, _ startPressed:Int, _ exerciseKind: String) -> String{
+    mutating func getQuestionText(_ whichQuestion: Int, _ startPressed:Int, _ exerciseKind: ExerciseKind) -> String{
         
         questionNumbers.removeAll()
         loadHardItemArray()
         loadItemArray()
 
         // these will be return a function
-        if exerciseKind == ExerciseKind.normal {
+        if exerciseKind == .normal {
             if itemArray.count > 20 {
                 switch whichQuestion {
                 case 0...4:
@@ -178,7 +178,7 @@ struct WordBrain {
         questionNumbersCopy = questionNumbers
         questionNumbersCopy.remove(at: questionNumber)
   
-        if exerciseKind == ExerciseKind.normal {
+        if exerciseKind == .normal {
             if startPressed == 1 {
                 return selectedTestType == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr!
             } else {
@@ -193,16 +193,16 @@ struct WordBrain {
         }
     } //getQuestionText
 
-    func getMeaning(exerciseKind: String) -> String {
-        if exerciseKind == ExerciseKind.normal {
+    func getMeaning(exerciseKind: ExerciseKind) -> String {
+        if exerciseKind == .normal {
             return itemArray[questionNumber].tr!
         } else {
             return hardItemArray[questionNumber].tr!
         }
     }
     
-    func getEnglish(exerciseKind: String) -> String {
-        if exerciseKind == ExerciseKind.normal {
+    func getEnglish(exerciseKind: ExerciseKind) -> String {
+        if exerciseKind == .normal {
             return itemArray[questionNumber].eng!
         } else {
             return hardItemArray[questionNumber].eng!
@@ -214,9 +214,9 @@ struct WordBrain {
         return Float(questionCounter) / Float(10.0)
     }
 
-    mutating func getAnswer(_ sender: Int, _ exerciseKind: String) -> String {
+    mutating func getAnswer(_ sender: Int, _ exerciseKind: ExerciseKind) -> String {
         if changedQuestionNumber % 2 == sender {
-            if exerciseKind == ExerciseKind.normal {
+            if exerciseKind == .normal {
                 return selectedTestType == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
             } else {
                 return selectedTestType == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
@@ -226,7 +226,7 @@ struct WordBrain {
                 answer = Int.random(in: 0..<questionNumbersCopy.count)
                 let temp = questionNumbersCopy[answer]
                      
-                if exerciseKind == ExerciseKind.normal {
+                if exerciseKind == .normal {
                     return selectedTestType == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
                 } else {
                     return selectedTestType == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
@@ -237,7 +237,7 @@ struct WordBrain {
         }
     }
     
-    mutating func getListeningAnswers(_ exerciseKind: String) -> (String, String, String, String) {
+    mutating func getListeningAnswers(_ exerciseKind: ExerciseKind) -> (String, String, String, String) {
         let answer1 = getListeningAnswer(for: questionNumber, exerciseKind)
         let answer2 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count), exerciseKind)
         let answer3 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count), exerciseKind)
@@ -246,8 +246,8 @@ struct WordBrain {
         return (array[0], array[1], array[2], answer1)
     }
     
-    private func getListeningAnswer(for number: Int, _ exerciseKind: String) -> String {
-        return exerciseKind == ExerciseKind.normal ?
+    private func getListeningAnswer(for number: Int, _ exerciseKind: ExerciseKind) -> String {
+        return exerciseKind == .normal ?
         itemArray[number].eng! :
         hardItemArray[number].eng!
     }
@@ -386,7 +386,7 @@ extension WordBrain {
         }
     }
     
-    func getExerciseCountToday(for exerciseType: String) -> Int {
-        return exerciseDict[exerciseType] ?? 0
+    func getExerciseCountToday(exerciseType: ExerciseType) -> Int {
+        return exerciseDict[exerciseType.description] ?? 0
     }
 }

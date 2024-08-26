@@ -43,15 +43,31 @@ enum Colors {
 }
 
 enum ExerciseType {
-    static let test                      = "test"
-    static let writing                   = "writing"
-    static let listening                 = "listening"
-    static let card                      = "card"
+    case test
+    case writing
+    case listening
+    case card
+    
+    var description: String {
+        switch self {
+        case .test: return "test"
+        case .writing: return "writing"
+        case .listening: return "listening"
+        case .card: return "card"
+        }
+    }
 }
 
 enum ExerciseKind {
-    static let normal                    = "normal"
-    static let hard                      = "hard"
+    case normal
+    case hard
+    
+    var description: String {
+        switch self {
+        case .normal: return "normal"
+        case .hard: return "hard"
+        }
+    }
 }
 
 enum Videos {

@@ -16,17 +16,17 @@ class DailyController: UIViewController {
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
     
     private lazy var testExerciseCount: Int = {
-        let int = wordBrain.getExerciseCountToday(for: ExerciseType.test)
+        let int = wordBrain.getExerciseCountToday(exerciseType: .test)
         return int > 10 ? 10 : int
     }()
     
     private lazy var writingExerciseCount: Int = {
-        let int = wordBrain.getExerciseCountToday(for: ExerciseType.writing)
+        let int = wordBrain.getExerciseCountToday(exerciseType: .writing)
         return int > 10 ? 10 : int
     }()
     
     private lazy var listeningExerciseCount: Int = {
-        let int = wordBrain.getExerciseCountToday(for: ExerciseType.listening)
+        let int = wordBrain.getExerciseCountToday(exerciseType: .listening)
         return int > 10 ? 10 : int
     }()
     
@@ -78,19 +78,19 @@ class DailyController: UIViewController {
     
     @objc private func testTaskPressed() {
         testTaskView.bounce()
-        let controller = TestController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.test)
+        let controller = TestController(exerciseKind: .normal)
         checkWordCountAndNavigate(controller: controller)
     }
     
     @objc private func writingTaskPressed() {
         writingTaskView.bounce()
-        let controller = WritingController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.writing)
+        let controller = WritingController(exerciseKind: .normal)
         checkWordCountAndNavigate(controller: controller)
     }
     
     @objc private func listeningTaskPressed() {
         listeningTaskView.bounce()
-        let controller = ListeningController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.listening)
+        let controller = ListeningController(exerciseKind: .normal)
         checkWordCountAndNavigate(controller: controller)
     }
     

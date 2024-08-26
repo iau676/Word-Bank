@@ -11,8 +11,8 @@ class ListeningController: UIViewController {
     
     //MARK: - Properties
     
-    private let exerciseKind: String
-    private let exerciseType: String
+    private let exerciseKind: ExerciseKind
+    private let exerciseType: ExerciseType = .listening
     
     private var wordBrain = WordBrain()
     
@@ -71,9 +71,8 @@ class ListeningController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(exerciseKind: String, exerciseType: String) {
+    init(exerciseKind: ExerciseKind) {
         self.exerciseKind = exerciseKind
-        self.exerciseType = exerciseType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -130,7 +129,7 @@ class ListeningController: UIViewController {
                 Player.shared.playMP3(Sounds.truee)
                 wordBrain.userGotItCorrect()
                 
-                if exerciseKind == ExerciseKind.normal {
+                if exerciseKind == .normal {
                     wordBrain.userGotItCorrect()
                 } else {
                     if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
@@ -139,7 +138,7 @@ class ListeningController: UIViewController {
                 Player.shared.playMP3(Sounds.falsee)
                 wordBrain.userGotItWrong()
                 
-                if exerciseKind == ExerciseKind.normal {
+                if exerciseKind == .normal {
                     wordBrain.userGotItWrong()
                 } else {
                     wordBrain.updateWrongCountHardWords()

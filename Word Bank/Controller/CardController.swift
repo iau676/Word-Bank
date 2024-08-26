@@ -12,8 +12,8 @@ class CardController: UIViewController {
     
     //MARK: - Variables
     
-    private let exerciseKind: String
-    private let exerciseType: String
+    private let exerciseKind: ExerciseKind = .normal
+    private let exerciseType: ExerciseType = .card
     
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
@@ -34,16 +34,6 @@ class CardController: UIViewController {
     private var userAnswerArrayBool = [Bool]()
     
     //MARK: - Life Cycle
-    
-    init(exerciseKind: String, exerciseType: String) {
-        self.exerciseKind = exerciseKind
-        self.exerciseType = exerciseType
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

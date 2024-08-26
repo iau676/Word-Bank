@@ -41,13 +41,13 @@ final class WheelController: UIViewController {
         var controller = UIViewController()
         switch index {
         case 1:
-            controller = TestController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.test)
+            controller = TestController(exerciseKind: .normal)
         case 2:
-            controller = WritingController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.writing)
+            controller = WritingController(exerciseKind: .normal)
         case 3:
-            controller = ListeningController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.listening)
+            controller = ListeningController(exerciseKind: .normal)
         case 4:
-            controller = CardController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.card)
+            controller = CardController()
         default: break
         }
         self.navigationController?.pushViewController(controller, animated: true)

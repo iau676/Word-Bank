@@ -11,8 +11,8 @@ class TestController: UIViewController {
     
     //MARK: - Properties
     
-    private let exerciseKind: String
-    private let exerciseType: String
+    private let exerciseKind: ExerciseKind
+    private let exerciseType: ExerciseType = .test
     
     private var wordBrain = WordBrain()
     
@@ -64,9 +64,8 @@ class TestController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(exerciseKind: String, exerciseType: String) {
+    init(exerciseKind: ExerciseKind) {
         self.exerciseKind = exerciseKind
-        self.exerciseType = exerciseType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -175,7 +174,7 @@ class TestController: UIViewController {
         if userGotItRight {
             Player.shared.playMP3(Sounds.truee)
             
-            if exerciseKind == ExerciseKind.normal {
+            if exerciseKind == .normal {
                 wordBrain.userGotItCorrect()
             } else {
                 if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
@@ -183,7 +182,7 @@ class TestController: UIViewController {
         } else {
             Player.shared.playMP3(Sounds.falsee)
             
-            if exerciseKind == ExerciseKind.normal {
+            if exerciseKind == .normal {
                 wordBrain.userGotItWrong()
             } else {
                 wordBrain.updateWrongCountHardWords()

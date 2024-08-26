@@ -215,10 +215,10 @@ class StatsController: UIViewController {
     private func configurePieChart() {
         var entries = [ChartDataEntry()]
         
-        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseType.card] ?? 0), label: "Card"))
-        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseType.listening] ?? 0), label: "Listening"))
-        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseType.writing] ?? 0), label: "Writing"))
-        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseType.test] ?? 0), label: "Test"))
+        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseType.card.description] ?? 0), label: "Card"))
+        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseType.listening.description] ?? 0), label: "Listening"))
+        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseType.writing.description] ?? 0), label: "Writing"))
+        entries.append(PieChartDataEntry(value: Double(exercisesDict[ExerciseType.test.description] ?? 0), label: "Test"))
         
         let set = PieChartDataSet(entries: entries)
         set.colors = ChartColorTemplates.liberty()

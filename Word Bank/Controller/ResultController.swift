@@ -14,8 +14,8 @@ private let reuseIdentifier = "ReusableCell"
 
 class ResultController: UIViewController {
 
-    private let exerciseKind: String
-    private let exerciseType: String
+    private let exerciseKind: ExerciseKind
+    private let exerciseType: ExerciseType
     
     private var wordBrain = WordBrain()
     
@@ -43,7 +43,7 @@ class ResultController: UIViewController {
     
     //MARK: - Life Cycle
     
-    init(exerciseKind: String, exerciseType: String) {
+    init(exerciseKind: ExerciseKind, exerciseType: ExerciseType) {
         self.exerciseKind = exerciseKind
         self.exerciseType = exerciseType
         super.init(nibName: nil, bundle: nil)
@@ -101,15 +101,14 @@ class ResultController: UIViewController {
     @objc private func refreshButtonPressed(_ sender: Any) {
         var controller = UIViewController()
         switch exerciseType {
-        case ExerciseType.test:
-            controller = TestController(exerciseKind: exerciseKind, exerciseType: exerciseType)
-        case ExerciseType.writing:
-            controller = WritingController(exerciseKind: exerciseKind, exerciseType: exerciseType)
-        case ExerciseType.listening:
-            controller = ListeningController(exerciseKind: exerciseKind, exerciseType: exerciseType)
-        case ExerciseType.card:
-            controller = CardController(exerciseKind: exerciseKind, exerciseType: exerciseType)
-        default: break
+        case .test:
+            controller = TestController(exerciseKind: exerciseKind)
+        case .writing:
+            controller = WritingController(exerciseKind: exerciseKind)
+        case .listening:
+            controller = ListeningController(exerciseKind: exerciseKind)
+        case .card:
+            controller = CardController()
         }
         
         self.navigationController?.pushViewController(controller, animated: true)
@@ -125,7 +124,7 @@ class ResultController: UIViewController {
     }
     
     private func updateRefreshButtonVisibility() {
-        refreshButton.isHidden = exerciseKind == ExerciseKind.hard && wordBrain.hardItemArray.count < 2
+        refreshButton.isHidden = exerciseKind == .hard && wordBrain.hardItemArray.count < 2
     }
     
     private func updateHardWordText() {

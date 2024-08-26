@@ -13,8 +13,8 @@ class WritingController: UIViewController {
     
     //MARK: - Properties
     
-    private let exerciseKind: String
-    private let exerciseType: String
+    private let exerciseKind: ExerciseKind
+    private let exerciseType: ExerciseType = .writing
     
     private var wordBrain = WordBrain()
     
@@ -100,9 +100,8 @@ class WritingController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(exerciseKind: String, exerciseType: String) {
+    init(exerciseKind: ExerciseKind) {
         self.exerciseKind = exerciseKind
-        self.exerciseType = exerciseType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -235,7 +234,7 @@ class WritingController: UIViewController {
             backspaceButton.isHidden = true
             Player.shared.playMP3(Sounds.truee)
             
-            if exerciseKind == ExerciseKind.normal {
+            if exerciseKind == .normal {
                 wordBrain.userGotItCorrect()
             } else {
                 if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
