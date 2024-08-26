@@ -232,8 +232,10 @@ extension ResultController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let answer = answerArray[indexPath.row]
-        let text = userAnswerArrayBool[indexPath.row] ? answer : writeAnswerCell(userAnswerArray[indexPath.row].strikeThrough(), answer).string
-        let height = size(forText: text, minusWidth: 26+32).height
+        let questionText = questionArray[indexPath.row]
+        let answerText = userAnswerArrayBool[indexPath.row] ? answer : writeAnswerCell(userAnswerArray[indexPath.row].strikeThrough(), answer).string
+        let longestText = questionText.count > answerText.count ? questionText : answerText
+        let height = size(forText: longestText, minusWidth: 26+32).height
         return height+24
     }
     
