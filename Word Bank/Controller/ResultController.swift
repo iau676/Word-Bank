@@ -17,29 +17,75 @@ class ResultController: UIViewController {
     private let exerciseKind: ExerciseKind
     private let exerciseType: ExerciseType
     
-    private var wordBrain = WordBrain()
-    
-    private var numberOfTrue = 0
-    private var lastLevel:Int = 0
-    private var newLevel:Int = 0
-    private var scoreLabelText = ""
-    
-    private let confettiButton = UIButton()
-    private let scoreLabel = UILabel()
-    private let tableView = UITableView()
-    private let addedHardWordsButton =  UIButton()
-    private let buttonStackView = UIStackView()
-    private let homeButton = UIButton()
-    private let refreshButton = UIButton()
-    
-    private var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
-    private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
-    private var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
-    
     var questionArray = [String]()
     var answerArray = [String]()
     var userAnswerArray = [String]()
     var userAnswerArrayBool = [Bool]()
+    private var trueAnswerCount = 0
+    
+    private var wordBrain = WordBrain()
+    private var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
+    private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
+    private var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
+    
+    private let confettiButton: UIButton = {
+        let button = UIButton()
+        button.setImage(image: Images.confetti, width: 66, height: 66)
+        return button
+    }()
+    
+    private let scoreLabel: UILabel = {
+        let label = UILabel()
+        label.font = Fonts.AvenirNextMedium19
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.textColor = Colors.cellRight
+        return label
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let view = UITableView()
+        view.backgroundColor = Colors.raven
+        view.register(WordCell.self, forCellReuseIdentifier: reuseIdentifier)
+        view.tableFooterView = UIView()
+        view.layer.cornerRadius = 16
+        view.clipsToBounds = true
+        view.dataSource = self
+        view.delegate = self
+        return view
+    }()
+    
+    private lazy var addedHardWordsButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.titleLabel?.font = Fonts.AvenirNextRegular15
+        button.setTitleColor(Colors.yellow, for: .normal)
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(addedHardWordsButtonPressed(_:)), for: .touchUpInside)
+        
+        let text = "\(addedHardWordsCount) \((addedHardWordsCount == 1) ? "Word" : "Words") Added to Hard Words"
+        button.setTitle(addedHardWordsCount > 0 ? text : "", for: .normal)
+        button.isHidden = addedHardWordsCount < 1
+        
+        return button
+    }()
+    
+    private lazy var homeButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(Images.house, for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(homeButtonPressed(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var refreshButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(Images.refresh, for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(refreshButtonPressed(_:)), for: .touchUpInside)
+        button.isHidden = exerciseKind == .hard && wordBrain.hardItemArray.count < 2
+        return button
+    }()
     
     //MARK: - Life Cycle
     
@@ -59,21 +105,12 @@ class ResultController: UIViewController {
         wordBrain.loadItemArray()
         wordBrain.loadUser()
         
-        style()
-        layout()
+        configureUI()
         
-        configureColor()
-        calculateNumberOfTrue()
-        checkLevelUp()
-        updateStats()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateRefreshButtonVisibility()
-        checkWhichExercise()
-        updateHardWordText()
+        findTrueAnswerCount()
         checkAllTrue()
+        checkLevelUp()
+        updateUserData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -114,49 +151,51 @@ class ResultController: UIViewController {
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
-    //MARK: - Helpers    
+    //MARK: - Helpers
     
-    private func configureColor() {
+    private func configureUI() {
         view.backgroundColor = Colors.raven
-        tableView.backgroundColor = Colors.raven
-        scoreLabel.textColor = Colors.cellRight
-        addedHardWordsButton.setTitleColor(Colors.yellow, for: .normal)
+        navigationItem.leftBarButtonItem = UIBarButtonItem()
+        
+        view.addSubview(confettiButton)
+        confettiButton.centerX(inView: view)
+        confettiButton.anchor(top: view.safeAreaLayoutGuide.topAnchor)
+        
+        view.addSubview(scoreLabel)
+        scoreLabel.centerX(inView: view)
+        let allTrue: Bool = trueAnswerCount == questionArray.count
+        scoreLabel.anchor(top: allTrue ? view.safeAreaLayoutGuide.topAnchor : confettiButton.bottomAnchor, paddingTop: allTrue ? 45 : 16)
+        
+        let buttonStack = UIStackView(arrangedSubviews: [homeButton, refreshButton])
+        buttonStack.axis = .horizontal
+        buttonStack.distribution = .fill
+        buttonStack.spacing = 130
+        
+        homeButton.setDimensions(width: 48, height: 40)
+        refreshButton.setDimensions(width: 35, height: 40)
+        
+        view.addSubview(buttonStack)
+        buttonStack.centerX(inView: view)
+        buttonStack.anchor(bottom: view.bottomAnchor, paddingBottom: 32)
+        
+        view.addSubview(tableView)
+        tableView.anchor(top: scoreLabel.bottomAnchor, left: view.leftAnchor,
+                         bottom: buttonStack.topAnchor, right: view.rightAnchor,
+                         paddingTop: 16, paddingLeft: 16,
+                         paddingBottom: addedHardWordsCount > 0 ? 48 : 32, paddingRight: 16)
+        
+        view.addSubview(addedHardWordsButton)
+        addedHardWordsButton.anchor(left: view.leftAnchor, bottom: buttonStack.topAnchor,
+                                    right: view.rightAnchor, paddingLeft: 32,
+                                    paddingBottom: 8, paddingRight: 32)
     }
     
-    private func updateRefreshButtonVisibility() {
-        refreshButton.isHidden = exerciseKind == .hard && wordBrain.hardItemArray.count < 2
-    }
-    
-    private func updateHardWordText() {
-        //print how many words added to hard words
-        if addedHardWordsCount > 0 {
-            addedHardWordsButton.isHidden = false
-            let WordOrWords = (addedHardWordsCount == 1) ? "Word" : "Words"
-            addedHardWordsButton.setTitle("\(addedHardWordsCount) \(WordOrWords) Added to Hard Words", for: .normal)
-        } else {
-            addedHardWordsButton.isHidden = true
-            addedHardWordsButton.setTitle("", for: .normal)
-        }
-    }
-    
-    private func checkWhichExercise() {
-        if exerciseType == ExerciseType.card {
-            numberOfTrue = userAnswerArray.count
-        } else {
-            scoreLabel.text = "\(numberOfTrue)/\(userAnswerArray.count)"
-            scoreLabelText = "All Correct!"
-        }
-    }
-    
-    private func updateStats() {
-        updateExerciseCount()
+    private func updateUserData() {
         wordBrain.user[0].level      = Int16(UserDefault.level.getInt())
         wordBrain.user[0].lastPoint  = Int32(UserDefault.lastPoint.getInt())
-    }
-    
-    private func updateExerciseCount() {
-        let trueCount = Int16(numberOfTrue)
-        let falseCount = Int16(userAnswerArray.count-numberOfTrue)
+        
+        let trueCount = Int16(trueAnswerCount)
+        let falseCount = Int16(userAnswerArray.count-trueAnswerCount)
         let hintCount = Int16(UserDefault.hintCount.getInt())
         
         wordBrain.addExercise(type: exerciseType, kind: exerciseKind,
@@ -164,38 +203,30 @@ class ResultController: UIViewController {
                               hintCount: hintCount)
     }
     
-    private func calculateNumberOfTrue() {
+    private func findTrueAnswerCount() {
         for i in 0..<userAnswerArray.count {
-            if userAnswerArrayBool[i] == true {
-                numberOfTrue += 1
+            if userAnswerArray[i] == answerArray[i] {
+                trueAnswerCount += 1
             }
         }
+        scoreLabel.text = "\(trueAnswerCount)/\(questionArray.count)"
     }
     
-    private func checkAllTrue(){
-        if numberOfTrue == userAnswerArray.count {
-            tableView.backgroundColor = .clear
+    private func checkAllTrue() {
+        if trueAnswerCount == questionArray.count {
             Player.shared.observeAppEvents()
             Player.shared.setupPlayerIfNeeded(view: view, videoName: Videos.alltrue)
             Player.shared.restartVideo()
+            tableView.backgroundColor = .clear
             confettiButton.isHidden = true
-            scoreLabel.text = scoreLabelText
-            updateScoreLabelConstraint()
+            scoreLabel.text = exerciseType == .card ? "" : "All Correct!"
         }
     }
-    
-    private func updateScoreLabelConstraint(){
-        NSLayoutConstraint.activate([
-            scoreLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 45)
-        ])
-    }
 
-    private func checkLevelUp(){
-        lastLevel = UserDefault.level.getInt()
+    private func checkLevelUp() {
+        let lastLevel = UserDefault.level.getInt()
         _ = Level.shared.calculateLevel()
-        newLevel = UserDefault.level.getInt()
-        
-        UserDefault.goLevelUp.set(0)
+        let newLevel = UserDefault.level.getInt()
         
         if newLevel - lastLevel > 0 {
             DispatchQueue.main.async(){
@@ -218,22 +249,27 @@ extension ResultController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WordCell
         
+        let answer = answerArray[indexPath.row]
+        let userAnswer = userAnswerArray[indexPath.row]
+        
         updateCellLabelText(cell, indexPath.row)
         cell.configureCornerRadius(index: indexPath.row)
-       
-        if userAnswerArrayBool[indexPath.row] == false {
+        
+        if userAnswer == answer {
+            updateCellViewBackgroundForRight(cell)
+        } else {
             updateCellViewBackgroundForWrong(cell)
             updateCellLabelTextForWrong(cell, indexPath.row)
-        } else {
-            updateCellViewBackgroundForRight(cell)
         }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let answer = answerArray[indexPath.row]
+        let userAnswer = userAnswerArray[indexPath.row]
         let questionText = questionArray[indexPath.row]
-        let answerText = userAnswerArrayBool[indexPath.row] ? answer : writeAnswerCell(userAnswerArray[indexPath.row].strikeThrough(), answer).string
+        let answerText = userAnswer == answer ? answer : writeAnswerCell(userAnswerArray[indexPath.row].strikeThrough(), answer).string
         let longestText = questionText.count > answerText.count ? questionText : answerText
         let height = size(forText: longestText, minusWidth: 26+32).height
         return height+24
@@ -307,84 +343,5 @@ extension ResultController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
-    }
-}
-
-//MARK: - Layout
-
-extension ResultController {
-    
-    private func style(){
-        navigationItem.leftBarButtonItem = UIBarButtonItem()
-        
-        confettiButton.setImage(image: Images.confetti, width: 66, height: 66)
-        
-        scoreLabel.font = Fonts.AvenirNextMedium19
-        scoreLabel.textAlignment = .center
-        scoreLabel.numberOfLines = 1
-        
-        tableView.register(WordCell.self, forCellReuseIdentifier: reuseIdentifier)
-        tableView.tableFooterView = UIView()
-        tableView.layer.cornerRadius = 16
-        tableView.clipsToBounds = true
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        addedHardWordsButton.backgroundColor = .clear
-        addedHardWordsButton.titleLabel?.font = Fonts.AvenirNextRegular15
-        addedHardWordsButton.layer.cornerRadius = 10
-        addedHardWordsButton.addTarget(self, action: #selector(addedHardWordsButtonPressed(_:)),
-                                       for: .primaryActionTriggered)
-        
-        buttonStackView.axis = .horizontal
-        buttonStackView.distribution = .fill
-        buttonStackView.spacing = 130
-        
-        homeButton.setBackgroundImage(Images.house, for: .normal)
-        homeButton.tintColor = .white
-        homeButton.addTarget(self, action: #selector(homeButtonPressed(_:)),
-                             for: .primaryActionTriggered)
-        
-        refreshButton.setBackgroundImage(Images.refresh, for: .normal)
-        refreshButton.tintColor = .white
-        refreshButton.addTarget(self, action: #selector(refreshButtonPressed(_:)),
-                                for: .primaryActionTriggered)
-    }
-    
-    private func layout(){
-        view.addSubview(confettiButton)
-        view.addSubview(scoreLabel)
-        view.addSubview(tableView)
-        view.addSubview(addedHardWordsButton)
-        
-        buttonStackView.addArrangedSubview(homeButton)
-        buttonStackView.addArrangedSubview(refreshButton)
-        
-        view.addSubview(buttonStackView)
-        
-        confettiButton.centerX(inView: view)
-        confettiButton.anchor(top: view.safeAreaLayoutGuide.topAnchor)
-        
-        scoreLabel.centerX(inView: view)
-        scoreLabel.anchor(top: confettiButton.bottomAnchor, paddingTop: 16)
-        
-        tableView.anchor(top: scoreLabel.bottomAnchor, left: view.leftAnchor,
-                         bottom: buttonStackView.topAnchor, right: view.rightAnchor,
-                         paddingTop: 16, paddingLeft: 16,
-                         paddingBottom: 32, paddingRight: 16)
-        
-        addedHardWordsButton.anchor(left: view.leftAnchor, bottom: buttonStackView.topAnchor,
-                                    right: view.rightAnchor, paddingLeft: 32,
-                                    paddingBottom: 8, paddingRight: 32)
-        
-        buttonStackView.centerX(inView: view)
-        buttonStackView.anchor(bottom: view.bottomAnchor, paddingBottom: 32)
-        
-        homeButton.setDimensions(width: 48, height: 40)
-        refreshButton.setDimensions(width: 35, height: 40)
-        
-        if addedHardWordsCount > 0 {
-            tableView.anchor(bottom: buttonStackView.topAnchor, paddingBottom: 48)
-        }
     }
 }

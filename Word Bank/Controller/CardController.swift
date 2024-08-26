@@ -73,7 +73,7 @@ class CardController: UIViewController {
     }
     
     private func updateWord() {
-        if cardCounter == 10 {
+        if cardCounter == totalQuestionNumber {
             let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
             controller.questionArray = questionArray
             controller.answerArray = answerArray

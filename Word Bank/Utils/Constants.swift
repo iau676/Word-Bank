@@ -7,7 +7,7 @@
 
 import UIKit
 
-let totalQuestionNumber = 10
+let totalQuestionNumber = 2
 
 enum Colors {
     static let darkBackground            = UIColor(white: 0.1, alpha: 0.4)
@@ -159,7 +159,6 @@ enum UserDefault {
     static var whichButton               = UserDefaultsManager(key: "whichButton")
     
     static var needPoint                 = UserDefaultsManager(key: "needPoint")
-    static var goLevelUp                 = UserDefaultsManager(key: "goLevelUp")
     static var selectedTestType          = UserDefaultsManager(key: "selectedTestType")
     static var selectedPointEffect       = UserDefaultsManager(key: "selectedPointEffect")
     static var selectedTyping            = UserDefaultsManager(key: "selectedTyping")
