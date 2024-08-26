@@ -25,8 +25,6 @@ class ResultController: UIViewController {
     
     private var wordBrain = WordBrain()
     private var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
-    private var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
-    private var soundSpeed: Double { return UserDefault.soundSpeed.getDouble() }
     
     private let confettiButton: UIButton = {
         let button = UIButton()
@@ -335,9 +333,12 @@ extension ResultController: UITableViewDataSource {
 extension ResultController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if exerciseType == ExerciseType.listening {
-            Player.shared.playSound(soundSpeed, answerArray[indexPath.row])
-        }
+        let isDefaultTest: Bool = (exerciseType == .test &&  UserDefault.selectedTestType.getInt() == 0)
+        let isCard: Bool = exerciseType == .card
+        var text = (isDefaultTest || isCard) ? questionArray[indexPath.row] : answerArray[indexPath.row]
+        let soundSpeed = UserDefault.soundSpeed.getDouble()
+      
+        Player.shared.playSound(soundSpeed, text)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
