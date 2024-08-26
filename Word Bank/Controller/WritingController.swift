@@ -21,7 +21,6 @@ class WritingController: UIViewController {
     private var questionCounter = 0
     private var questionText = ""
     private var answerText = ""
-    private var totalQuestionNumber = 10
     private let exercisePoint: Int = 10
     private var selectedTyping: Int { return UserDefault.selectedTyping.getInt() }
     

@@ -229,7 +229,7 @@ extension ResultController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WordCell
         
         updateCellLabelText(cell, indexPath.row)
-        updateCellCornerRadius(cell, indexPath.row)
+        cell.configureCornerRadius(index: indexPath.row)
        
         if userAnswerArrayBool[indexPath.row] == false {
             updateCellViewBackgroundForWrong(cell)
@@ -300,16 +300,6 @@ extension ResultController: UITableViewDataSource {
         
         return combination
     }
-    
-    private func updateCellCornerRadius(_ cell: WordCell, _ index: Int){
-        if index == 0 {
-            cell.updateTopCornerRadius(16)
-        }
-
-        if index == userAnswerArray.count - 1 {
-            cell.updateBottomCornerRadius(16)
-        }
-    }
 }
 
 //MARK: - UITableViewDelegate
@@ -344,6 +334,7 @@ extension ResultController {
         tableView.register(WordCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.tableFooterView = UIView()
         tableView.layer.cornerRadius = 16
+        tableView.clipsToBounds = true
         tableView.dataSource = self
         tableView.delegate = self
         

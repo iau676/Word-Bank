@@ -74,7 +74,23 @@ class WordCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateTopCornerRadius(_ number: CGFloat){
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.engView.layer.cornerRadius = 0
+        self.meaningView.layer.cornerRadius = 0
+    }
+    
+    func configureCornerRadius(index: Int) {
+        if index == 0 {
+            updateTopCornerRadius(16)
+        }
+
+        if index == totalQuestionNumber-1 {
+            updateBottomCornerRadius(16)
+        }
+    }
+    
+    private func updateTopCornerRadius(_ number: CGFloat){
         self.engView.layer.cornerRadius = number
         self.engView.layer.maskedCorners = [.layerMinXMinYCorner]
         self.meaningView.layer.cornerRadius = number
@@ -82,7 +98,7 @@ class WordCell: UITableViewCell {
         self.backgroundColor = .clear
     }
     
-    func updateBottomCornerRadius(_ number: CGFloat){
+    private func updateBottomCornerRadius(_ number: CGFloat){
         self.engView.layer.cornerRadius = number
         self.engView.layer.maskedCorners = [.layerMinXMaxYCorner]
         self.meaningView.layer.cornerRadius = number

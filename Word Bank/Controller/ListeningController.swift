@@ -17,7 +17,6 @@ class ListeningController: UIViewController {
     private var wordBrain = WordBrain()
     
     private var questionCounter = 0
-    private var totalQuestionNumber = 10
     private var questionText = ""
     private var userAnswer = ""
     private var trueAnswer = ""

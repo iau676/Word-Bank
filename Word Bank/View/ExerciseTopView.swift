@@ -86,7 +86,7 @@ class ExerciseTopView: UIView {
     
     //MARK: - Helpers
     
-    func updateProgress(questionCounter: Int, totalQuestionNumber: Int = 10) {
+    func updateProgress(questionCounter: Int) {
         progressBar.progress = Float(questionCounter) / Float(totalQuestionNumber)
     }
     
