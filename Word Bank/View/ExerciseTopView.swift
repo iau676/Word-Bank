@@ -41,17 +41,17 @@ class ExerciseTopView: UIView {
     
     //MARK: - Lifecycle
         
-    init(exerciseFormat: String) {
+    init(exerciseType: String) {
         super.init(frame: CGRect(x: 0, y: 0, width: 11, height: 11))
         
         WordBrain.shared.questionCounter = 0
         
-        switch exerciseFormat {
-        case ExerciseFormat.test:
+        switch exerciseType {
+        case ExerciseType.test:
             if UserDefault.selectedTestType.getInt() == 0 {
                 soundHintButton.setImage(image: Images.soundLeft, width: 40, height: 40)
             }
-        case ExerciseFormat.writing: soundHintButton.setImage(image: Images.magic, width: 32, height: 32)
+        case ExerciseType.writing: soundHintButton.setImage(image: Images.magic, width: 32, height: 32)
         default: break
         }
         

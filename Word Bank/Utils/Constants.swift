@@ -42,14 +42,14 @@ enum Colors {
     static let darkGrayShadow            = UIColor(hex: "#444444")
 }
 
-enum ExerciseFormat {
+enum ExerciseType {
     static let test                      = "test"
     static let writing                   = "writing"
     static let listening                 = "listening"
     static let card                      = "card"
 }
 
-enum ExerciseType {
+enum ExerciseKind {
     static let normal                    = "normal"
     static let hard                      = "hard"
 }

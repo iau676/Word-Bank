@@ -16,17 +16,17 @@ class DailyController: UIViewController {
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
     
     private lazy var testExerciseCount: Int = {
-        let int = wordBrain.getExerciseCountToday(for: ExerciseFormat.test)
+        let int = wordBrain.getExerciseCountToday(for: ExerciseType.test)
         return int > 10 ? 10 : int
     }()
     
     private lazy var writingExerciseCount: Int = {
-        let int = wordBrain.getExerciseCountToday(for: ExerciseFormat.writing)
+        let int = wordBrain.getExerciseCountToday(for: ExerciseType.writing)
         return int > 10 ? 10 : int
     }()
     
     private lazy var listeningExerciseCount: Int = {
-        let int = wordBrain.getExerciseCountToday(for: ExerciseFormat.listening)
+        let int = wordBrain.getExerciseCountToday(for: ExerciseType.listening)
         return int > 10 ? 10 : int
     }()
     
@@ -78,22 +78,19 @@ class DailyController: UIViewController {
     
     @objc private func testTaskPressed() {
         testTaskView.bounce()
-        let controller = TestController(exerciseType: ExerciseType.normal,
-                                        exerciseFormat: ExerciseFormat.test)
+        let controller = TestController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.test)
         checkWordCountAndNavigate(controller: controller)
     }
     
     @objc private func writingTaskPressed() {
         writingTaskView.bounce()
-        let controller = WritingController(exerciseType: ExerciseType.normal,
-                                           exerciseFormat: ExerciseFormat.writing)
+        let controller = WritingController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.writing)
         checkWordCountAndNavigate(controller: controller)
     }
     
     @objc private func listeningTaskPressed() {
         listeningTaskView.bounce()
-        let controller = ListeningController(exerciseType: ExerciseType.normal,
-                                             exerciseFormat: ExerciseFormat.listening)
+        let controller = ListeningController(exerciseKind: ExerciseKind.normal, exerciseType: ExerciseType.listening)
         checkWordCountAndNavigate(controller: controller)
     }
     

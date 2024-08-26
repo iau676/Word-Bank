@@ -14,8 +14,8 @@ private let reuseIdentifier = "ReusableCell"
 
 class ResultController: UIViewController {
 
+    private let exerciseKind: String
     private let exerciseType: String
-    private let exerciseFormat: String
     
     private var wordBrain = WordBrain()
     
@@ -43,9 +43,9 @@ class ResultController: UIViewController {
     
     //MARK: - Life Cycle
     
-    init(exerciseType: String, exerciseFormat: String) {
+    init(exerciseKind: String, exerciseType: String) {
+        self.exerciseKind = exerciseKind
         self.exerciseType = exerciseType
-        self.exerciseFormat = exerciseFormat
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -90,7 +90,7 @@ class ResultController: UIViewController {
     //MARK: - Selectors
     
     @objc private func addedHardWordsButtonPressed(_ sender: UIButton) {
-        let controller = WordsController(exerciseType: ExerciseType.hard)
+        let controller = WordsController(exerciseKind: ExerciseKind.hard)
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -100,19 +100,15 @@ class ResultController: UIViewController {
     
     @objc private func refreshButtonPressed(_ sender: Any) {
         var controller = UIViewController()
-        switch exerciseFormat {
-        case ExerciseFormat.test:
-            controller = TestController(exerciseType: exerciseType,
-                                        exerciseFormat: exerciseFormat)
-        case ExerciseFormat.writing:
-            controller = WritingController(exerciseType: exerciseType,
-                                           exerciseFormat: exerciseFormat)
-        case ExerciseFormat.listening:
-            controller = ListeningController(exerciseType: exerciseType,
-                                             exerciseFormat: exerciseFormat)
-        case ExerciseFormat.card:
-            controller = CardController(exerciseType: exerciseType,
-                                        exerciseFormat: exerciseFormat)
+        switch exerciseType {
+        case ExerciseType.test:
+            controller = TestController(exerciseKind: exerciseKind, exerciseType: exerciseType)
+        case ExerciseType.writing:
+            controller = WritingController(exerciseKind: exerciseKind, exerciseType: exerciseType)
+        case ExerciseType.listening:
+            controller = ListeningController(exerciseKind: exerciseKind, exerciseType: exerciseType)
+        case ExerciseType.card:
+            controller = CardController(exerciseKind: exerciseKind, exerciseType: exerciseType)
         default: break
         }
         
@@ -129,7 +125,7 @@ class ResultController: UIViewController {
     }
     
     private func updateRefreshButtonVisibility() {
-        refreshButton.isHidden = exerciseType == ExerciseType.hard && wordBrain.hardItemArray.count < 2
+        refreshButton.isHidden = exerciseKind == ExerciseKind.hard && wordBrain.hardItemArray.count < 2
     }
     
     private func updateHardWordText() {
@@ -145,7 +141,7 @@ class ResultController: UIViewController {
     }
     
     private func checkWhichExercise() {
-        if exerciseFormat == ExerciseFormat.card {
+        if exerciseType == ExerciseType.card {
             numberOfTrue = userAnswerArray.count
         } else {
             scoreLabel.text = "\(numberOfTrue)/\(userAnswerArray.count)"
@@ -154,22 +150,17 @@ class ResultController: UIViewController {
     }
     
     private func updateStats() {
-        if exerciseType == ExerciseType.normal {
-            updateExerciseCount(exerciseType: ExerciseType.normal)
-        } else {
-            updateExerciseCount(exerciseType: ExerciseType.hard)
-        }
+        updateExerciseCount()
         wordBrain.user[0].level      = Int16(UserDefault.level.getInt())
         wordBrain.user[0].lastPoint  = Int32(UserDefault.lastPoint.getInt())
     }
     
-    private func updateExerciseCount(exerciseType: String) {
-        
+    private func updateExerciseCount() {
         let trueCount = Int16(numberOfTrue)
         let falseCount = Int16(userAnswerArray.count-numberOfTrue)
         let hintCount = Int16(UserDefault.hintCount.getInt())
         
-        wordBrain.addExercise(name: exerciseFormat, type: exerciseType,
+        wordBrain.addExercise(type: exerciseType, kind: exerciseKind,
                               trueCount: trueCount, falseCount: falseCount,
                               hintCount: hintCount)
     }
@@ -259,7 +250,7 @@ extension ResultController: UITableViewDataSource {
     }
     
     private func updateCellViewBackgroundForWrong(_ cell: WordCell){
-        if exerciseFormat == ExerciseFormat.card {
+        if exerciseType == ExerciseType.card {
             cell.engView.backgroundColor = Colors.yellow
             cell.meaningView.backgroundColor = Colors.lightYellow
         } else {
@@ -269,7 +260,7 @@ extension ResultController: UITableViewDataSource {
     }
     
     private func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
-        if exerciseFormat != ExerciseFormat.card {
+        if exerciseType != ExerciseType.card {
             cell.meaningLabel.attributedText = writeAnswerCell(userAnswerArray[i].strikeThrough(),
                                                           answerArray[i])
         }
@@ -307,7 +298,7 @@ extension ResultController: UITableViewDataSource {
 extension ResultController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if exerciseFormat == ExerciseFormat.listening {
+        if exerciseType == ExerciseType.listening {
             Player.shared.playSound(soundSpeed, answerArray[indexPath.row])
         }
         tableView.deselectRow(at: indexPath, animated: true)

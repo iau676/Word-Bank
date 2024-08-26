@@ -13,8 +13,8 @@ class WritingController: UIViewController {
     
     //MARK: - Properties
     
+    private let exerciseKind: String
     private let exerciseType: String
-    private let exerciseFormat: String
     
     private var wordBrain = WordBrain()
     
@@ -33,7 +33,7 @@ class WritingController: UIViewController {
     private var userAnswerArrayBool = [Bool]()
     
     private lazy var exerciseTopView: ExerciseTopView = {
-        let view = ExerciseTopView(exerciseFormat: exerciseFormat)
+        let view = ExerciseTopView(exerciseType: exerciseType)
         view.delegate = self
         return view
     }()
@@ -100,9 +100,9 @@ class WritingController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(exerciseType: String, exerciseFormat: String) {
+    init(exerciseKind: String, exerciseType: String) {
+        self.exerciseKind = exerciseKind
         self.exerciseType = exerciseType
-        self.exerciseFormat = exerciseFormat
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -235,7 +235,7 @@ class WritingController: UIViewController {
             backspaceButton.isHidden = true
             Player.shared.playMP3(Sounds.truee)
             
-            if exerciseType == ExerciseType.normal {
+            if exerciseKind == ExerciseKind.normal {
                 wordBrain.userGotItCorrect()
             } else {
                 if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
@@ -255,15 +255,15 @@ class WritingController: UIViewController {
     }
     
     private func getNewQuestion() {
-        questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseType)
-        answerText = wordBrain.getEnglish(exerciseType: exerciseType)
+        questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseKind)
+        answerText = wordBrain.getEnglish(exerciseKind: exerciseKind)
         questionLabel.text = questionText
         questionArray.append(questionText)
         answerArray.append(answerText)
     }
    
     private func goToResult() {
-        let controller = ResultController(exerciseType: exerciseType, exerciseFormat: exerciseFormat)
+        let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
         controller.questionArray = questionArray
         controller.answerArray = answerArray
         controller.userAnswerArray = userAnswerArray

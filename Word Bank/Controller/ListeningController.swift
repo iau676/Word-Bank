@@ -11,8 +11,8 @@ class ListeningController: UIViewController {
     
     //MARK: - Properties
     
+    private let exerciseKind: String
     private let exerciseType: String
-    private let exerciseFormat: String
     
     private var wordBrain = WordBrain()
     
@@ -29,7 +29,7 @@ class ListeningController: UIViewController {
     private var isAnswerSelected = false
     private let exercisePoint: Int = 10
     
-    private lazy var exerciseTopView = ExerciseTopView(exerciseFormat: exerciseFormat)
+    private lazy var exerciseTopView = ExerciseTopView(exerciseType: exerciseType)
     private var bubbleView = BubbleView()
     
     private let questionLabel: UILabel = {
@@ -71,9 +71,9 @@ class ListeningController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(exerciseType: String, exerciseFormat: String) {
+    init(exerciseKind: String, exerciseType: String) {
+        self.exerciseKind = exerciseKind
         self.exerciseType = exerciseType
-        self.exerciseFormat = exerciseFormat
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -96,14 +96,13 @@ class ListeningController: UIViewController {
     @objc private func updateUI() {
         bubbleView.isHidden = true
         if questionCounter < totalQuestionNumber {
-            questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseType)
+            questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseKind)
             questionLabel.text = questionText
             questionArray.append(questionText)
             configureAnswers()
         } else {
             questionCounter = 0
-            let controller = ResultController(exerciseType: exerciseType,
-                                                  exerciseFormat: exerciseFormat)
+            let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
             controller.questionArray = questionArray
             controller.answerArray = answerArray
             controller.userAnswerArray = userAnswerArray
@@ -131,7 +130,7 @@ class ListeningController: UIViewController {
                 Player.shared.playMP3(Sounds.truee)
                 wordBrain.userGotItCorrect()
                 
-                if exerciseType == ExerciseType.normal {
+                if exerciseKind == ExerciseKind.normal {
                     wordBrain.userGotItCorrect()
                 } else {
                     if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
@@ -140,7 +139,7 @@ class ListeningController: UIViewController {
                 Player.shared.playMP3(Sounds.falsee)
                 wordBrain.userGotItWrong()
                 
-                if exerciseType == ExerciseType.normal {
+                if exerciseKind == ExerciseKind.normal {
                     wordBrain.userGotItWrong()
                 } else {
                     wordBrain.updateWrongCountHardWords()
@@ -217,7 +216,7 @@ class ListeningController: UIViewController {
     }
     
     private func configureAnswers() {
-        let answers = wordBrain.getListeningAnswers(exerciseType)
+        let answers = wordBrain.getListeningAnswers(exerciseKind)
         buttonOne.setTitle(answers.0, for: .normal)
         buttonTwo.setTitle(answers.1, for: .normal)
         buttonThree.setTitle(answers.2, for: .normal)

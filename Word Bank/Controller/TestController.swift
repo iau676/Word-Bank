@@ -11,8 +11,8 @@ class TestController: UIViewController {
     
     //MARK: - Properties
     
+    private let exerciseKind: String
     private let exerciseType: String
-    private let exerciseFormat: String
     
     private var wordBrain = WordBrain()
     
@@ -28,7 +28,7 @@ class TestController: UIViewController {
     private var userAnswerArrayBool = [Bool]()
     
     private lazy var exerciseTopView: ExerciseTopView = {
-        let view = ExerciseTopView(exerciseFormat: exerciseFormat)
+        let view = ExerciseTopView(exerciseType: exerciseType)
         view.delegate = self
         return view
     }()
@@ -64,9 +64,9 @@ class TestController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(exerciseType: String, exerciseFormat: String) {
+    init(exerciseKind: String, exerciseType: String) {
+        self.exerciseKind = exerciseKind
         self.exerciseType = exerciseType
-        self.exerciseFormat = exerciseFormat
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -95,22 +95,21 @@ class TestController: UIViewController {
         bubbleButton.isHidden = true
         if questionCounter < totalQuestionNumber {
             startTimer()
-            questionText = wordBrain.getQuestionText(questionCounter, 1, exerciseType)
+            questionText = wordBrain.getQuestionText(questionCounter, 1, exerciseKind)
             questionLabel.text = questionText
             questionArray.append(questionText)
-            refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0, exerciseType))
-            refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1, exerciseType))
+            refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0, exerciseKind))
+            refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1, exerciseKind))
 
             if selectedTestType == 0 {
                 if wordSoundOpen { playSound() }
-                answerArray.append(wordBrain.getMeaning(exerciseType: exerciseType))
+                answerArray.append(wordBrain.getMeaning(exerciseKind: exerciseKind))
             } else {
-                answerArray.append(wordBrain.getEnglish(exerciseType: exerciseType))
+                answerArray.append(wordBrain.getEnglish(exerciseKind: exerciseKind))
             }
         } else {
             questionCounter = 0
-            let controller = ResultController(exerciseType: exerciseType,
-                                                  exerciseFormat: exerciseFormat)
+            let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
             controller.questionArray = questionArray
             controller.answerArray = answerArray
             controller.userAnswerArray = userAnswerArray
@@ -176,7 +175,7 @@ class TestController: UIViewController {
         if userGotItRight {
             Player.shared.playMP3(Sounds.truee)
             
-            if exerciseType == ExerciseType.normal {
+            if exerciseKind == ExerciseKind.normal {
                 wordBrain.userGotItCorrect()
             } else {
                 if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
@@ -184,7 +183,7 @@ class TestController: UIViewController {
         } else {
             Player.shared.playMP3(Sounds.falsee)
             
-            if exerciseType == ExerciseType.normal {
+            if exerciseKind == ExerciseKind.normal {
                 wordBrain.userGotItWrong()
             } else {
                 wordBrain.updateWrongCountHardWords()

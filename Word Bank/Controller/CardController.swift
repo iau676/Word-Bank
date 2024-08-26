@@ -12,8 +12,8 @@ class CardController: UIViewController {
     
     //MARK: - Variables
     
+    private let exerciseKind: String
     private let exerciseType: String
-    private let exerciseFormat: String
     
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
@@ -35,9 +35,9 @@ class CardController: UIViewController {
     
     //MARK: - Life Cycle
     
-    init(exerciseType: String, exerciseFormat: String) {
+    init(exerciseKind: String, exerciseType: String) {
+        self.exerciseKind = exerciseKind
         self.exerciseType = exerciseType
-        self.exerciseFormat = exerciseFormat
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -84,8 +84,7 @@ class CardController: UIViewController {
     
     private func updateWord() {
         if cardCounter == 10 {
-            let controller = ResultController(exerciseType: exerciseType,
-                                                  exerciseFormat: exerciseFormat)
+            let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
             controller.questionArray = questionArray
             controller.answerArray = answerArray
             controller.userAnswerArray = userAnswerArray

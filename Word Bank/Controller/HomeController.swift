@@ -88,20 +88,20 @@ final class HomeController: UIViewController {
         dropButton.animateDropDown()
         
         viewDidLayoutSubviews()
-        let controller = WordsController(exerciseType: ExerciseType.normal)
+        let controller = WordsController(exerciseKind: ExerciseKind.normal)
         controller.presentAdd = true
         pushViewControllerWithDeadline(controller: controller, deadline: 0.25)
     }
     
     @objc private func wordsButtonPressed() {
         wordsCP.bounce()
-        let controller = WordsController(exerciseType: ExerciseType.normal)
+        let controller = WordsController(exerciseKind: ExerciseKind.normal)
         pushViewControllerWithDeadline(controller: controller)
     }
     
     @objc private func hardWordsButtonPressed() {
         hardCP.bounce()
-        let controller = WordsController(exerciseType: ExerciseType.hard)
+        let controller = WordsController(exerciseKind: ExerciseKind.hard)
         pushViewControllerWithDeadline(controller: controller)
     }
     
