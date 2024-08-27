@@ -20,7 +20,6 @@ class ResultController: UIViewController {
     var questionArray = [String]()
     var answerArray = [String]()
     var userAnswerArray = [String]()
-    var userAnswerArrayBool = [Bool]()
     private var trueAnswerCount = 0
     
     private var wordBrain = WordBrain()

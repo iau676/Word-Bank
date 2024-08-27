@@ -31,7 +31,6 @@ class CardController: UIViewController {
     private var questionArray = [String]()
     private var answerArray = [String]()
     private var userAnswerArray = [String]()
-    private var userAnswerArrayBool = [Bool]()
     
     //MARK: - Life Cycle
     
@@ -78,7 +77,6 @@ class CardController: UIViewController {
             controller.questionArray = questionArray
             controller.answerArray = answerArray
             controller.userAnswerArray = userAnswerArray
-            controller.userAnswerArrayBool = userAnswerArrayBool
             self.navigationController?.pushViewController(controller, animated: true)
         } else {
             wordEnglish = wordBrain.getWordEnglish()

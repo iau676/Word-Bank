@@ -30,7 +30,6 @@ class WritingController: UIViewController {
     private var questionArray = [String]()
     private var answerArray = [String]()
     private var userAnswerArray = [String]()
-    private var userAnswerArrayBool = [Bool]()
     
     private lazy var exerciseTopView: ExerciseTopView = {
         let view = ExerciseTopView(exerciseType: exerciseType)
@@ -232,6 +231,7 @@ class WritingController: UIViewController {
             bubbleView.isHidden = false
             backspaceButton.isHidden = true
             Player.shared.playMP3(Sounds.truee)
+            userAnswerArray.append(userAnswer)
             
             if exerciseKind == .normal {
                 wordBrain.userGotItCorrect()
@@ -242,9 +242,6 @@ class WritingController: UIViewController {
             let lastPoint = UserDefault.lastPoint.getInt()
             exerciseTopView.updatePoint(lastPoint: lastPoint, exercisePoint: exercisePoint, isIncrease: userGotItRight)
             exerciseTopView.updateProgress(questionCounter: questionCounter)
-            
-            userAnswerArray.append(userAnswer)
-            userAnswerArrayBool.append(userGotItRight)
             
             bubbleView.update(answer: userGotItRight, point: exercisePoint)
             bubbleView.rotate()
@@ -265,7 +262,6 @@ class WritingController: UIViewController {
         controller.questionArray = questionArray
         controller.answerArray = answerArray
         controller.userAnswerArray = userAnswerArray
-        controller.userAnswerArrayBool = userAnswerArrayBool
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }

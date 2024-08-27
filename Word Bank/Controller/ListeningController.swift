@@ -24,7 +24,6 @@ class ListeningController: UIViewController {
     private var questionArray = [String]()
     private var answerArray = [String]()
     private var userAnswerArray = [String]()
-    private var userAnswerArrayBool = [Bool]()
     
     private var isAnswerSelected = false
     private let exercisePoint: Int = 10
@@ -87,13 +86,14 @@ class ListeningController: UIViewController {
         wordBrain.loadItemArray()
         wordBrain.sortWordsForExercise()
         configureUI()
-        updateUI()
+        configureNextQuestion()
     }
     
     //MARK: - Selectors
     
-    @objc private func updateUI() {
+    @objc private func configureNextQuestion() {
         bubbleView.isHidden = true
+        
         if questionCounter < totalQuestionNumber {
             prepareNextQuestion()
         } else {
@@ -108,6 +108,7 @@ class ListeningController: UIViewController {
             isAnswerSelected = false
             questionLabel.text = ""
             questionCounter += 1
+            userAnswerArray.append(userAnswer)
             
             let userGotItRight = userAnswer == trueAnswer
             
@@ -135,14 +136,11 @@ class ListeningController: UIViewController {
                                         exercisePoint: exercisePoint,
                                         isIncrease: userGotItRight)
             
-            userAnswerArray.append(userAnswer)
-            userAnswerArrayBool.append(userGotItRight)
-            
             bubbleView.isHidden = false
             bubbleView.update(answer: userGotItRight, point: exercisePoint)
             bubbleView.rotate()
             
-            scheduledTimer(timeInterval: 0.7, #selector(updateUI))
+            scheduledTimer(timeInterval: 0.7, #selector(configureNextQuestion))
         } else {
             showAlertPopup(title: "Not Selected")
         }
@@ -227,7 +225,6 @@ class ListeningController: UIViewController {
         controller.questionArray = questionArray
         controller.answerArray = answerArray
         controller.userAnswerArray = userAnswerArray
-        controller.userAnswerArrayBool = userAnswerArrayBool
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }

@@ -25,13 +25,14 @@ class TestController: UIViewController {
     private var questionArray = [String]()
     private var answerArray = [String]()
     private var userAnswerArray = [String]()
-    private var userAnswerArrayBool = [Bool]()
     
     private lazy var exerciseTopView: ExerciseTopView = {
         let view = ExerciseTopView(exerciseType: exerciseType)
         view.delegate = self
         return view
     }()
+    
+    private var bubbleView = BubbleView()
     
     private let questionLabel: UILabel = {
        let label = UILabel()
@@ -42,8 +43,6 @@ class TestController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    
-    private var bubbleButton = BubbleView()
     
     private lazy var answer1Button: UIButton = {
        let button = makeTestAnswerButton()
@@ -80,7 +79,7 @@ class TestController: UIViewController {
         wordBrain.loadItemArray()
         wordBrain.sortWordsForExercise()
         configureUI()
-        updateUI()
+        configureNextQuestion()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -90,30 +89,14 @@ class TestController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc private func updateUI() {
-        bubbleButton.isHidden = true
+    @objc private func configureNextQuestion() {
+        bubbleView.isHidden = true
+        
         if questionCounter < totalQuestionNumber {
             startTimer()
-            questionText = wordBrain.getQuestionText(questionCounter, 1, exerciseKind)
-            questionLabel.text = questionText
-            questionArray.append(questionText)
-            refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0, exerciseKind))
-            refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1, exerciseKind))
-
-            if selectedTestType == 0 {
-                if wordSoundOpen { playSound() }
-                answerArray.append(wordBrain.getMeaning(exerciseKind: exerciseKind))
-            } else {
-                answerArray.append(wordBrain.getEnglish(exerciseKind: exerciseKind))
-            }
+            prepareNextQuestion()
         } else {
-            questionCounter = 0
-            let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
-            controller.questionArray = questionArray
-            controller.answerArray = answerArray
-            controller.userAnswerArray = userAnswerArray
-            controller.userAnswerArrayBool = userAnswerArrayBool
-            self.navigationController?.pushViewController(controller, animated: true)
+            goToResult()
         }
     }
     
@@ -156,20 +139,36 @@ class TestController: UIViewController {
                              bottom: answerStackView.topAnchor, right: view.rightAnchor,
                              paddingLeft: 32, paddingRight: 32)
         
-        view.addSubview(bubbleButton)
-        bubbleButton.centerX(inView: questionLabel)
-        bubbleButton.centerY(inView: questionLabel)
+        view.addSubview(bubbleView)
+        bubbleView.centerX(inView: questionLabel)
+        bubbleView.centerY(inView: questionLabel)
+    }
+    
+    private func configureNavigationBar() {
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
+    }
+    
+    private func prepareNextQuestion() {
+        questionText = wordBrain.getQuestionText(questionCounter, 1, exerciseKind)
+        questionLabel.text = questionText
+        questionArray.append(questionText)
+        refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0, exerciseKind))
+        refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1, exerciseKind))
+
+        if selectedTestType == 0 {
+            if wordSoundOpen { Player.shared.playSound(questionText) }
+            answerArray.append(wordBrain.getMeaning(exerciseKind: exerciseKind))
+        } else {
+            answerArray.append(wordBrain.getEnglish(exerciseKind: exerciseKind))
+        }
     }
     
     private func checkAnswer(userAnswer: String, sender: UIButton? = nil) {
         let userGotItRight = answerArray[questionCounter] == userAnswer
-        let lastPoint = UserDefault.lastPoint.getInt()
         
         questionCounter += 1
-        exerciseTopView.updateProgress(questionCounter: questionCounter)
-        bubbleButton.isHidden = false
-        answer1Button.isEnabled = false
-        answer2Button.isEnabled = false
+        userAnswerArray.append(userAnswer)
+        sender?.backgroundColor = userGotItRight ? Colors.green : Colors.red
         
         if userGotItRight {
             Player.shared.playMP3(Sounds.truee)
@@ -188,15 +187,19 @@ class TestController: UIViewController {
                 wordBrain.updateWrongCountHardWords()
             }
         }
-        sender?.backgroundColor = userGotItRight ? Colors.green : Colors.red
-        exerciseTopView.updatePoint(lastPoint: lastPoint,
-                                    exercisePoint: exercisePoint,
-                                    isIncrease: userGotItRight)
-        userAnswerArray.append(userAnswer)
-        userAnswerArrayBool.append(userGotItRight)
-        bubbleButton.update(answer: userGotItRight, point: exercisePoint)
-        bubbleButton.rotate()
-        scheduledTimer(timeInterval: 0.7, #selector(updateUI))
+        
+        let lastPoint = UserDefault.lastPoint.getInt()
+        exerciseTopView.updateProgress(questionCounter: questionCounter)
+        exerciseTopView.updatePoint(lastPoint: lastPoint, exercisePoint: exercisePoint, isIncrease: userGotItRight)
+        
+        answer1Button.isEnabled = false
+        answer2Button.isEnabled = false
+        
+        bubbleView.isHidden = false
+        bubbleView.update(answer: userGotItRight, point: exercisePoint)
+        bubbleView.rotate()
+        
+        scheduledTimer(timeInterval: 0.7, #selector(configureNextQuestion))
     }
     
     private func refreshAnswerButton(_ button: UIButton, title: String) {
@@ -205,14 +208,18 @@ class TestController: UIViewController {
         button.setTitle(title, for: .normal)
     }
     
-    private func configureNavigationBar() {
-        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
+    private func goToResult() {
+        let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
+        controller.questionArray = questionArray
+        controller.answerArray = answerArray
+        controller.userAnswerArray = userAnswerArray
+        self.navigationController?.pushViewController(controller, animated: true)
     }
-    
-    private func playSound() {
-        Player.shared.playSound(questionText)
-    }
-    
+}
+
+//MARK: - Timer Funcs
+
+extension TestController {
     private func handleTimer() {
         timerCounter += 1
         if timerCounter == second+1 {
@@ -240,6 +247,6 @@ class TestController: UIViewController {
 
 extension TestController: ExerciseTopDelegate {
     func soundHintButtonPressed() {
-        playSound()
+        Player.shared.playSound(questionText)
     }
 }
