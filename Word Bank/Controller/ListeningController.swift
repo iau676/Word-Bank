@@ -155,8 +155,7 @@ class ListeningController: UIViewController {
         sender.bounce()
         
         guard let senderTitle = sender.currentTitle else { return }
-        let soundSpeed = UserDefault.soundSpeed.getDouble()
-        Player.shared.playSound(soundSpeed, senderTitle)
+        Player.shared.playSound(senderTitle)
         
         userAnswer = senderTitle
     }

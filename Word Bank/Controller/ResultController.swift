@@ -273,9 +273,8 @@ extension ResultController: UITableViewDelegate {
         let isDefaultTest: Bool = (exerciseType == .test &&  UserDefault.selectedTestType.getInt() == 0)
         let isCard: Bool = exerciseType == .card
         let text = (isDefaultTest || isCard) ? questionArray[indexPath.row] : answerArray[indexPath.row]
-        let soundSpeed = UserDefault.soundSpeed.getDouble()
       
-        Player.shared.playSound(soundSpeed, text)
+        Player.shared.playSound(text)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

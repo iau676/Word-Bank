@@ -111,9 +111,8 @@ class SettingsController: UIViewController {
     
     @objc private func soundSpeedChanged(_ sender: UISegmentedControl) {
         UserDefault.soundSpeed.set(soundSpeedArray[sender.selectedSegmentIndex])
-        soundSpeed = soundSpeedArray[sender.selectedSegmentIndex]
         soundSpeedButton.flash()
-        Player.shared.playSound(soundSpeed, "Word Bank")
+        Player.shared.playSound("Word Bank")
     }
     
     @objc private func testTypeChanged(_ sender: UISegmentedControl) {

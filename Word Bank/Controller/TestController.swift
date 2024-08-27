@@ -210,8 +210,7 @@ class TestController: UIViewController {
     }
     
     private func playSound() {
-        let soundSpeed = UserDefault.soundSpeed.getDouble()
-        Player.shared.playSound(soundSpeed, questionText)
+        Player.shared.playSound(questionText)
     }
     
     private func handleTimer() {

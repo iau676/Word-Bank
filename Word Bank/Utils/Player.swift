@@ -19,7 +19,8 @@ class Player {
      var playerMP3: AVAudioPlayer!
      static let synth = AVSpeechSynthesizer()
     
-    func playSound(_ selectedSpeed: Double, _ word: String){
+    func playSound(_ word: String){
+        let selectedSpeed = UserDefault.soundSpeed.getDouble()
         let u = AVSpeechUtterance(string: word)
         u.voice = AVSpeechSynthesisVoice(language: "en-US")
         u.rate = Float(selectedSpeed)
