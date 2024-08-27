@@ -194,11 +194,9 @@ class ResultController: UIViewController {
         
         let trueCount = Int16(trueAnswerCount)
         let falseCount = Int16(userAnswerArray.count-trueAnswerCount)
-        let hintCount = Int16(UserDefault.hintCount.getInt())
         
         wordBrain.addExercise(type: exerciseType, kind: exerciseKind,
-                              trueCount: trueCount, falseCount: falseCount,
-                              hintCount: hintCount)
+                              trueCount: trueCount, falseCount: falseCount)
     }
     
     private func findTrueAnswerCount() {
@@ -335,7 +333,7 @@ extension ResultController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let isDefaultTest: Bool = (exerciseType == .test &&  UserDefault.selectedTestType.getInt() == 0)
         let isCard: Bool = exerciseType == .card
-        var text = (isDefaultTest || isCard) ? questionArray[indexPath.row] : answerArray[indexPath.row]
+        let text = (isDefaultTest || isCard) ? questionArray[indexPath.row] : answerArray[indexPath.row]
         let soundSpeed = UserDefault.soundSpeed.getDouble()
       
         Player.shared.playSound(soundSpeed, text)

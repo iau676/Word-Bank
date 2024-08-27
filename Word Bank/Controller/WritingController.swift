@@ -83,7 +83,6 @@ class WritingController: UIViewController {
     //hint
     private var hint = ""
     private var skeleton = ""
-    private var hintCount = 0
     private var letterCounter = 0
     private var underscoreArr = [String]()
     private var skeletonArr = [Int]()
@@ -305,7 +304,6 @@ extension WritingController {
                 hint = underscoreArr.joined(separator: " ")
                 //player.playMP3(Sounds.beep)
             }
-            hintCount += 1
             letterCounter += 1
             hintLabel.text = hint
         } else {

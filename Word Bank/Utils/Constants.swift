@@ -168,7 +168,6 @@ enum UserDefault {
     static var userAnswers               = UserDefaultsManager(key: "userAnswers")
 
     static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")
-    static var hintCount                 = UserDefaultsManager(key: "hintCount")
 }
 
 enum DateFormats {

@@ -53,13 +53,12 @@ struct WordBrain {
         saveContext()
     }
     
-    mutating func addExercise(type: ExerciseType, kind: ExerciseKind, trueCount: Int16, falseCount: Int16, hintCount: Int16){
+    mutating func addExercise(type: ExerciseType, kind: ExerciseKind, trueCount: Int16, falseCount: Int16){
         let newExercise = Exercise(context: self.context)
         newExercise.name = type.description //test writing...
         newExercise.type = kind.description //normal hard
         newExercise.trueCount = trueCount
         newExercise.falseCount = falseCount
-        newExercise.hintCount = hintCount
         newExercise.date = Date()
         newExercise.uuid = UUID().uuidString
         self.exerciseArray.append(newExercise)
