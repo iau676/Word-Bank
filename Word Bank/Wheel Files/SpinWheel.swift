@@ -380,43 +380,6 @@ class SpinWheel: SKSpriteNode {
     }
     
     func closeSpinWheel() {
-        if slots[1][1] == "wheel_prize_present"{
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "goHome"), object: nil, userInfo: nil)
-        } else {
-            slots[7][1] = "blueBackground"
-            loadSlotImages()
-            slots[7][1] = "cardExercise"
-            loadSlotImages()
-            backgroundBlocker.removeFromParent()
-            spinWheel()
-        }
-    }
-    
-    func userWillGoExercise(_ winnningIndex: Int){
-        var newIndex = 1
-        
-        switch winnningIndex {
-        case 0:
-            newIndex = 1
-        case 1:
-            newIndex = 2
-        case 2:
-            newIndex = 3
-        case 3:
-            newIndex = 4
-        case 4:
-            newIndex = 1
-        case 5:
-            newIndex = 2
-        case 6:
-            newIndex = 3
-        case 7:
-            newIndex = 4
-        default:
-            break
-        }
-        
-        let index:[String: Int] = ["index": newIndex]
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "presentExercise"), object: nil, userInfo: index)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "goHome"), object: nil, userInfo: nil)
     }
 }
