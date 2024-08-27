@@ -80,12 +80,34 @@ class WordCell: UITableViewCell {
         self.meaningView.layer.cornerRadius = 0
     }
     
-    func configureCornerRadius(index: Int) {
+    func configureResult(question: String, answer: String, userAnswer: String, exerciseType: ExerciseType, index: Int, questionCount: Int) {
+        engLabel.text = question
+        meaningLabel.text = answer
+        numberLabel.text = "\(index+1)"
+        
+        if userAnswer == answer {
+            engView.backgroundColor = Colors.green
+            meaningView.backgroundColor = Colors.lightGreen
+        } else {
+            if exerciseType == .card {
+                engView.backgroundColor = Colors.yellow
+                meaningView.backgroundColor = Colors.lightYellow
+            } else {
+                engView.backgroundColor = Colors.red
+                meaningView.backgroundColor = Colors.lightRed
+                meaningLabel.attributedText = userAnswer.strikeUserAnswerAndGetCorrect(answer)
+            }
+        }
+        
+        configureCornerRadius(index: index, questionCount: questionCount)
+    }
+    
+    private func configureCornerRadius(index: Int, questionCount: Int) {
         if index == 0 {
             updateTopCornerRadius(16)
         }
 
-        if index == totalQuestionNumber-1 {
+        if index == questionCount-1 {
             updateBottomCornerRadius(16)
         }
     }

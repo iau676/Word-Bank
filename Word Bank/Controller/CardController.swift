@@ -87,7 +87,6 @@ class CardController: UIViewController {
             cardLabel.text = wordEnglish
             questionArray.append(wordEnglish)
             answerArray.append(wordMeaning)
-            userAnswerArray.append(wordMeaning)
         }
     }
     
@@ -197,7 +196,7 @@ extension CardController {
                     card.center = CGPoint(x: card.center.x - 200, y: card.center.y + 75)
                     self.updateCard(card)
                     self.addHardWord()
-                    self.userAnswerArrayBool.append(false)
+                    self.userAnswerArray.append("\(self.wordMeaning)x")
                 })
                 return
             } else if card.center.x > (view.frame.width - 75) {
@@ -205,7 +204,7 @@ extension CardController {
                 UIView.animate(withDuration: 0.3, animations: {
                     card.center = CGPoint(x: card.center.x + 200, y: card.center.y + 75)
                     self.updateCard(card)
-                    self.userAnswerArrayBool.append(true)
+                    self.userAnswerArray.append(self.wordMeaning)
                 })
                 return
             }

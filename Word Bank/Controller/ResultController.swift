@@ -234,30 +234,23 @@ class ResultController: UIViewController {
     }
 }
 
-    //MARK: - UITableViewDataSource
+//MARK: - UITableViewDataSource
 
 extension ResultController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userAnswerArray.count
+        return questionArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WordCell
-        
+        let question = questionArray[indexPath.row]
         let answer = answerArray[indexPath.row]
         let userAnswer = userAnswerArray[indexPath.row]
         
-        updateCellLabelText(cell, indexPath.row)
-        cell.configureCornerRadius(index: indexPath.row)
-        
-        if userAnswer == answer {
-            updateCellViewBackgroundForRight(cell)
-        } else {
-            updateCellViewBackgroundForWrong(cell)
-            updateCellLabelTextForWrong(cell, indexPath.row)
-        }
-        
+        cell.configureResult(question: question, answer: answer, userAnswer: userAnswer,
+                             exerciseType: exerciseType, index: indexPath.row, questionCount: questionArray.count)
+     
         return cell
     }
     
@@ -265,64 +258,10 @@ extension ResultController: UITableViewDataSource {
         let answer = answerArray[indexPath.row]
         let userAnswer = userAnswerArray[indexPath.row]
         let questionText = questionArray[indexPath.row]
-        let answerText = userAnswer == answer ? answer : writeAnswerCell(userAnswerArray[indexPath.row].strikeThrough(), answer).string
+        let answerText = userAnswer == answer ? answer : userAnswer.strikeUserAnswerAndGetCorrect(answer).string
         let longestText = questionText.count > answerText.count ? questionText : answerText
         let height = size(forText: longestText, minusWidth: 26+32).height
         return height+24
-    }
-    
-    private func updateCellLabelText(_ cell: WordCell, _ index: Int) {
-        cell.engLabel.text = questionArray[index]
-        cell.meaningLabel.text = answerArray[index]
-        cell.numberLabel.text = String(index+1)
-    }
-    
-    private func updateCellViewBackgroundForRight(_ cell: WordCell){
-        cell.engView.backgroundColor = Colors.green
-        cell.meaningView.backgroundColor = Colors.lightGreen
-    }
-    
-    private func updateCellViewBackgroundForWrong(_ cell: WordCell){
-        if exerciseType == ExerciseType.card {
-            cell.engView.backgroundColor = Colors.yellow
-            cell.meaningView.backgroundColor = Colors.lightYellow
-        } else {
-            cell.engView.backgroundColor = Colors.red
-            cell.meaningView.backgroundColor = Colors.lightRed
-        }
-    }
-    
-    private func updateCellLabelTextForWrong(_ cell: WordCell, _ i: Int){
-        if exerciseType != ExerciseType.card {
-            cell.meaningLabel.attributedText = writeAnswerCell(userAnswerArray[i].strikeThrough(),
-                                                          answerArray[i])
-        }
-    }
-    
-    private func writeAnswerCell(_ userAnswer: NSAttributedString, _ trueAnswer: String) -> NSMutableAttributedString {
-        let boldFontAttributes = [NSAttributedString.Key.font: Fonts.AvenirNextMedium15]
-        
-        let normalFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
-        
-        let partOne = NSMutableAttributedString(string: "Your answer:\n", attributes: normalFontAttributes)
-        
-        let partTwo = userAnswer
-        
-        let partThree = NSMutableAttributedString(string: userAnswer.length == 0 ? "Correct answer: \n" : "\nCorrect answer: \n", attributes: normalFontAttributes)
-        
-        let partFour = NSMutableAttributedString(string: trueAnswer, attributes: boldFontAttributes as [NSAttributedString.Key : Any])
-
-        let combination = NSMutableAttributedString()
-            
-        if userAnswer.length != 0 {
-            combination.append(partOne)
-            combination.append(partTwo)
-        }
-            
-        combination.append(partThree)
-        combination.append(partFour)
-        
-        return combination
     }
 }
 
