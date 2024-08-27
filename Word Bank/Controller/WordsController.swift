@@ -52,7 +52,6 @@ class WordsController: UIViewController {
         
         configureUI()
         addGestureRecognizer()
-        updateSearchBarPlaceholder()
         hideKeyboardWhenTappedAround()
         presentAddControllerIfNeed()
     }
@@ -61,6 +60,10 @@ class WordsController: UIViewController {
     
     @objc private func addBarButtonPressed(_ sender: UIBarButtonItem) {
         presentAddController()
+    }
+    
+    @objc private func infoBarButtonPressed(_ sender: UIBarButtonItem) {
+        showAlert(title: "There are \(hardItemArray.count) words here.", message: "You must answer correctly 5 times to delete the words from here.")
     }
     
     @objc private func testExerciseButtonPressed(_ sender: UIButton) {
@@ -129,8 +132,9 @@ class WordsController: UIViewController {
     private func configureNavigationBar() {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         title = exerciseKind == .normal ? "Words" : "Hard Words"
-        let barButtonItem = UIBarButtonItem(image: Images.add, style: .plain, target: self, action: #selector(addBarButtonPressed))
-        navigationItem.rightBarButtonItem = exerciseKind == .normal ? barButtonItem :  nil
+        let addBarButtonItem = UIBarButtonItem(image: Images.add, style: .plain, target: self, action: #selector(addBarButtonPressed))
+        let inforBarButtonItem = UIBarButtonItem(image: Images.questionmark, style: .plain, target: self, action: #selector(infoBarButtonPressed))
+        navigationItem.rightBarButtonItem = exerciseKind == .normal ? addBarButtonItem : hardItemArray.count > 1 ? inforBarButtonItem : nil
     }
     
     private func configureSearchBar() {
@@ -213,7 +217,7 @@ class WordsController: UIViewController {
     
     private func showAlertIfHardWordsEmpty(){
         if hardItemArray.count <= 0 {
-            showAlert(title: "Nothing to see here yet", message: "When you answer a word incorrectly in the exercises, that word is added to this page. In order to delete that word from here, you should answer correctly 5 times.") { _ in
+            showAlert(title: "Nothing to see here yet", message: "When you answer a word incorrectly in the exercises, that word is added to this page.") { _ in
                 self.navigationController?.popToRootViewController(animated: true)
             }
         }
@@ -266,7 +270,7 @@ extension WordsController: UITableViewDataSource {
     }
 }
 
-    //MARK: - UITableViewDelegate
+//MARK: - UITableViewDelegate
 
 extension WordsController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -333,7 +337,6 @@ extension WordsController: AddControllerDelegate {
     func updateTableView() {
         wordBrain.saveContext()
         wordBrain.loadItemArray()
-        updateSearchBarPlaceholder()
         tableView.reloadData()
     }
 }

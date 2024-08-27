@@ -88,6 +88,8 @@ enum Images {
     static let xmark                     = UIImage(systemName: "xmark")
     static let chevronRight              = UIImage(systemName: "chevron.right")
     static let add                       = UIImage(systemName: "plus")
+    static let questionmark              = UIImage(systemName: "questionmark.app")
+    
     
     static let menu                      = UIImage(named: "menu")
     static let check                     = UIImage(named: "check")
