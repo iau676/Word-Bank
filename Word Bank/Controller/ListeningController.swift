@@ -95,18 +95,9 @@ class ListeningController: UIViewController {
     @objc private func updateUI() {
         bubbleView.isHidden = true
         if questionCounter < totalQuestionNumber {
-            questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseKind)
-            questionLabel.text = questionText
-            questionArray.append(questionText)
-            configureAnswers()
+            prepareNextQuestion()
         } else {
-            questionCounter = 0
-            let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
-            controller.questionArray = questionArray
-            controller.answerArray = answerArray
-            controller.userAnswerArray = userAnswerArray
-            controller.userAnswerArrayBool = userAnswerArrayBool
-            self.navigationController?.pushViewController(controller, animated: true)
+            goToResult()
         }
     }
     
@@ -114,20 +105,14 @@ class ListeningController: UIViewController {
         clearButtons()
         actionButton.bounce()
         if isAnswerSelected {
-            questionCounter += 1
-            exerciseTopView.updateProgress(questionCounter: questionCounter)
-            
-            let lastPoint = UserDefault.lastPoint.getInt()
-            
             isAnswerSelected = false
-            bubbleView.isHidden = false
             questionLabel.text = ""
+            questionCounter += 1
             
             let userGotItRight = userAnswer == trueAnswer
             
             if userGotItRight {
                 Player.shared.playMP3(Sounds.truee)
-                wordBrain.userGotItCorrect()
                 
                 if exerciseKind == .normal {
                     wordBrain.userGotItCorrect()
@@ -136,7 +121,6 @@ class ListeningController: UIViewController {
                 }
             } else {
                 Player.shared.playMP3(Sounds.falsee)
-                wordBrain.userGotItWrong()
                 
                 if exerciseKind == .normal {
                     wordBrain.userGotItWrong()
@@ -145,16 +129,22 @@ class ListeningController: UIViewController {
                 }
             }
             
+            let lastPoint = UserDefault.lastPoint.getInt()
+            exerciseTopView.updateProgress(questionCounter: questionCounter)
             exerciseTopView.updatePoint(lastPoint: lastPoint,
                                         exercisePoint: exercisePoint,
                                         isIncrease: userGotItRight)
+            
             userAnswerArray.append(userAnswer)
             userAnswerArrayBool.append(userGotItRight)
+            
+            bubbleView.isHidden = false
             bubbleView.update(answer: userGotItRight, point: exercisePoint)
             bubbleView.rotate()
+            
             scheduledTimer(timeInterval: 0.7, #selector(updateUI))
         } else {
-            showAlert(title: "Not Selected", message: "")
+            showAlertPopup(title: "Not Selected")
         }
     }
     
@@ -214,7 +204,17 @@ class ListeningController: UIViewController {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
     
-    private func configureAnswers() {
+    private func clearButtons() {
+        buttonOne.backgroundColor = .clear
+        buttonTwo.backgroundColor = .clear
+        buttonThree.backgroundColor = .clear
+    }
+    
+    private func prepareNextQuestion() {
+        questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseKind)
+        questionLabel.text = questionText
+        questionArray.append(questionText)
+        
         let answers = wordBrain.getListeningAnswers(exerciseKind)
         buttonOne.setTitle(answers.0, for: .normal)
         buttonTwo.setTitle(answers.1, for: .normal)
@@ -223,9 +223,12 @@ class ListeningController: UIViewController {
         answerArray.append(trueAnswer)
     }
     
-    private func clearButtons() {
-        buttonOne.backgroundColor = .clear
-        buttonTwo.backgroundColor = .clear
-        buttonThree.backgroundColor = .clear
+    private func goToResult() {
+        let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
+        controller.questionArray = questionArray
+        controller.answerArray = answerArray
+        controller.userAnswerArray = userAnswerArray
+        controller.userAnswerArrayBool = userAnswerArrayBool
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
