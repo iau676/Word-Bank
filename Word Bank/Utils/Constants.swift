@@ -140,6 +140,7 @@ enum Images {
 enum UserDefault {
     
     static var userInterfaceStyle        = ""
+    static var version206                = UserDefaultsManager(key: "version206")
     static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
     static var dailyImageIndex           = UserDefaultsManager(key: "dailyImageIndex")
     static var userGotDailyPrize         = UserDefaultsManager(key: "userGotDailyPrize")

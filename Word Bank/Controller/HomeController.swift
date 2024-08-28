@@ -245,9 +245,7 @@ extension HomeController: MenuViewDelegate {
 //MARK: - First Launch
 
 extension HomeController {
-    
     func setupFirstLaunch() {
-        //version 2.0.1
         if UserDefault.lastPoint.getValue() == nil {
             UserDefault.soundSpeed.set(0.3)
             showOnboarding()
@@ -282,6 +280,12 @@ extension HomeController {
                     UserDefault.trueCount.set(self.wordBrain.user[0].trueCount)
                     UserDefault.falseCount.set(self.wordBrain.user[0].falseCount)
                 }
+            }
+        } else {
+            //remove 2x notification for old users
+            if UserDefault.version206.getValue() == nil {
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                UserDefault.version206.set(true)
             }
         }
     }
