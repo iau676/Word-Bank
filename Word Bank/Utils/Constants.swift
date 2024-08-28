@@ -138,29 +138,15 @@ enum Images {
 }
 
 enum UserDefault {
-    
     static var userInterfaceStyle        = ""
     static var version206                = UserDefaultsManager(key: "version206")
     static var keyboardHeight            = UserDefaultsManager(key: "keyboardHeight")
-    static var dailyImageIndex           = UserDefaultsManager(key: "dailyImageIndex")
     static var userGotDailyPrize         = UserDefaultsManager(key: "userGotDailyPrize")
+    static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")
     
     static var level                     = UserDefaultsManager(key: "level")
     static var lastPoint                 = UserDefaultsManager(key: "lastPoint")
-    
-    static var exerciseCount             = UserDefaultsManager(key: "exerciseCount")
-    static var testCount                 = UserDefaultsManager(key: "testCount")
-    static var writingCount              = UserDefaultsManager(key: "writingCount")
-    static var listeningCount            = UserDefaultsManager(key: "listeningCount")
-    static var cardCount                 = UserDefaultsManager(key: "cardCount")
-    
-    static var allTrueCount              = UserDefaultsManager(key: "allTrueCount")
-    static var trueCount                 = UserDefaultsManager(key: "trueCount")
-    static var falseCount                = UserDefaultsManager(key: "falseCount")
-    
-    static var startPressed              = UserDefaultsManager(key: "startPressed")
-    static var whichButton               = UserDefaultsManager(key: "whichButton")
-    
+        
     static var needPoint                 = UserDefaultsManager(key: "needPoint")
     static var selectedTestType          = UserDefaultsManager(key: "selectedTestType")
     static var selectedPointEffect       = UserDefaultsManager(key: "selectedPointEffect")
@@ -168,9 +154,6 @@ enum UserDefault {
     static var soundSpeed                = UserDefaultsManager(key: "soundSpeed")
     static var playSound                 = UserDefaultsManager(key: "playSound")
     static var playAppSound              = UserDefaultsManager(key: "playAppSound")
-    static var userAnswers               = UserDefaultsManager(key: "userAnswers")
-
-    static var addedHardWordsCount       = UserDefaultsManager(key: "addedHardWordsCount")
 }
 
 enum DateFormats {

@@ -258,31 +258,12 @@ extension HomeController {
                 
                 if self.wordBrain.user.count < 1 {
                     self.wordBrain.createUser()
-                    UserDefault.level.set(0)
-                    UserDefault.lastPoint.set(0)
-                    UserDefault.exerciseCount.set(0)
-                    UserDefault.allTrueCount.set(0)
-                    UserDefault.testCount.set(0)
-                    UserDefault.writingCount.set(0)
-                    UserDefault.listeningCount.set(0)
-                    UserDefault.cardCount.set(0)
-                    UserDefault.trueCount.set(0)
-                    UserDefault.falseCount.set(0)
                 } else {
                     UserDefault.level.set(self.wordBrain.user[0].level)
                     UserDefault.lastPoint.set(self.wordBrain.user[0].lastPoint)
-                    UserDefault.exerciseCount.set(self.wordBrain.user[0].exerciseCount)
-                    UserDefault.allTrueCount.set(self.wordBrain.user[0].allTrueCount)
-                    UserDefault.testCount.set(self.wordBrain.user[0].testCount)
-                    UserDefault.writingCount.set(self.wordBrain.user[0].writingCount)
-                    UserDefault.listeningCount.set(self.wordBrain.user[0].listeningCount)
-                    UserDefault.cardCount.set(self.wordBrain.user[0].cardCount)
-                    UserDefault.trueCount.set(self.wordBrain.user[0].trueCount)
-                    UserDefault.falseCount.set(self.wordBrain.user[0].falseCount)
                 }
             }
         } else {
-            //remove 2x notification for old users
             if UserDefault.version206.getValue() == nil {
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                 UserDefault.version206.set(true)
