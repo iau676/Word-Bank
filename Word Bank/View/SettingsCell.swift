@@ -9,7 +9,7 @@ import UIKit
 
 class SettingsCell: UICollectionViewCell {
     
-    lazy var imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         var imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -33,5 +33,12 @@ class SettingsCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(image: UIImage?, borderColor: CGColor?) {
+        imageView.image = image
+        contentView.layer.borderColor = borderColor
+        imageView.layer.cornerRadius = 8
+        imageView.clipsToBounds = true
     }
 }

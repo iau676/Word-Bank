@@ -231,17 +231,21 @@ extension SettingsController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SettingsCell
+        let index = indexPath.row
+        var image: UIImage?
+        var borderColor: CGColor?
+        
         switch collectionView {
         case pointCV:
-            cell.imageView.image = (indexPath.row == 0) ? Images.greenBubble : Images.greenCircle
-            cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedPointEffect.getInt()) ? Colors.blue.cgColor : Colors.d6d6d6.cgColor
+            image = index == 0 ? Images.greenBubble : Images.greenCircle
+            borderColor = index == UserDefault.selectedPointEffect.getInt() ? Colors.blue.cgColor : Colors.d6d6d6.cgColor
         case typingCV:
-            cell.imageView.image = (indexPath.row == 0) ? Images.customKeyboard : Images.defaultKeyboard
-            cell.imageView.layer.cornerRadius = 8
-            cell.imageView.clipsToBounds = true
-            cell.contentView.layer.borderColor = (indexPath.row == UserDefault.selectedTyping.getInt()) ? Colors.blue.cgColor : Colors.d6d6d6.cgColor
+            image = index == 0 ? Images.customKeyboard : Images.defaultKeyboard
+            borderColor = index == UserDefault.selectedTyping.getInt() ? Colors.blue.cgColor : Colors.d6d6d6.cgColor
         default: break
         }
+        
+        cell.configure(image: image, borderColor: borderColor)
         return cell
     }
 }
