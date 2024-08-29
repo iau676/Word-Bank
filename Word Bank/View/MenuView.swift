@@ -22,11 +22,11 @@ class MenuView: UIView {
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Close", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(Colors.black, for: .normal)
+        button.backgroundColor = Colors.cellRight
         button.setButtonCornerRadius(10)
         button.setHeight(50)
-        button.titleLabel?.font = Fonts.AvenirNextRegular15
+        button.titleLabel?.font = Fonts.AvenirNextRegular17
         button.addTarget(self, action: #selector(closeButtonPressed), for: .touchUpInside)
         return button
     }()

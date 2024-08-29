@@ -7,7 +7,7 @@
 
 import UIKit
 
-let totalQuestionNumber = 2
+let totalQuestionNumber = 10
 
 enum Colors {
     static let darkBackground            = UIColor(white: 0.1, alpha: 0.4)
@@ -164,6 +164,7 @@ enum DateFormats {
 enum Fonts {
     static var AvenirNextRegular13 = UIFont(name: "AvenirNext-Regular", size: 13)
     static var AvenirNextRegular15 = UIFont(name: "AvenirNext-Regular", size: 15)
+    static var AvenirNextRegular17 = UIFont(name: "AvenirNext-Regular", size: 17)
     static var AvenirNextRegular19 = UIFont(name: "AvenirNext-Regular", size: 19)
     
     static var AvenirNextDemiBold9 = UIFont(name: "AvenirNext-DemiBold", size: 9)

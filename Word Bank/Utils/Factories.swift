@@ -11,17 +11,17 @@ import UIKit
 
 func makeMenuButton(title: String, image: UIImage? = nil, imageWidth: CGFloat = 30, imageHeight: CGFloat = 30) -> UIButton {
     let button = UIButton()
-    button.backgroundColor = .white
-    button.tintColor = Colors.black
     button.layer.cornerRadius = 10
     button.setImageWithRenderingMode(image: image, width: imageWidth, height: imageHeight, color: .black)
     button.setDimensions(width: 100, height: 100)
     
-    var config = UIButton.Configuration.bordered()
+    var config = UIButton.Configuration.filled()
     config.titlePadding = 5
     config.imagePadding = 5
     config.imagePlacement = .top
     config.attributedTitle = AttributedString(title, attributes: AttributeContainer([NSAttributedString.Key.font : Fonts.AvenirNextRegular15!]))
+    config.baseForegroundColor = Colors.black
+    config.baseBackgroundColor = Colors.cellRight
     button.configuration = config
     
     return button
