@@ -16,10 +16,9 @@ class ResultController: UIViewController {
 
     private let exerciseKind: ExerciseKind
     private let exerciseType: ExerciseType
-    
-    var questionArray = [String]()
-    var answerArray = [String]()
-    var userAnswerArray = [String]()
+    private let questions: [String]
+    private let answers: [String]
+    private let userAnswers: [String]
     private var trueAnswerCount = 0
     
     private var wordBrain = WordBrain()
@@ -86,9 +85,12 @@ class ResultController: UIViewController {
     
     //MARK: - Life Cycle
     
-    init(exerciseKind: ExerciseKind, exerciseType: ExerciseType) {
+    init(exerciseKind: ExerciseKind, exerciseType: ExerciseType, questions: [String], answers: [String], userAnswers: [String]) {
         self.exerciseKind = exerciseKind
         self.exerciseType = exerciseType
+        self.questions = questions
+        self.answers = answers
+        self.userAnswers = userAnswers
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -160,7 +162,7 @@ class ResultController: UIViewController {
         
         view.addSubview(scoreLabel)
         scoreLabel.centerX(inView: view)
-        let allTrue: Bool = trueAnswerCount == questionArray.count
+        let allTrue: Bool = trueAnswerCount == questions.count
         scoreLabel.anchor(top: allTrue ? view.safeAreaLayoutGuide.topAnchor : confettiButton.bottomAnchor, paddingTop: allTrue ? 45 : 16)
         
         let buttonStack = UIStackView(arrangedSubviews: [homeButton, refreshButton])
@@ -192,23 +194,23 @@ class ResultController: UIViewController {
         wordBrain.user[0].lastPoint  = Int32(UserDefault.lastPoint.getInt())
         
         let trueCount = Int16(trueAnswerCount)
-        let falseCount = Int16(userAnswerArray.count-trueAnswerCount)
+        let falseCount = Int16(userAnswers.count-trueAnswerCount)
         
         wordBrain.addExercise(type: exerciseType, kind: exerciseKind,
                               trueCount: trueCount, falseCount: falseCount)
     }
     
     private func findTrueAnswerCount() {
-        for i in 0..<userAnswerArray.count {
-            if userAnswerArray[i] == answerArray[i] {
+        for i in 0..<userAnswers.count {
+            if userAnswers[i] == answers[i] {
                 trueAnswerCount += 1
             }
         }
-        scoreLabel.text = "\(trueAnswerCount)/\(questionArray.count)"
+        scoreLabel.text = "\(trueAnswerCount)/\(questions.count)"
     }
     
     private func checkAllTrue() {
-        if trueAnswerCount == questionArray.count {
+        if trueAnswerCount == questions.count {
             Player.shared.observeAppEvents()
             Player.shared.setupPlayerIfNeeded(view: view, videoName: Videos.alltrue)
             Player.shared.restartVideo()
@@ -238,25 +240,25 @@ class ResultController: UIViewController {
 extension ResultController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return questionArray.count
+        return questions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WordCell
-        let question = questionArray[indexPath.row]
-        let answer = answerArray[indexPath.row]
-        let userAnswer = userAnswerArray[indexPath.row]
+        let question = questions[indexPath.row]
+        let answer = answers[indexPath.row]
+        let userAnswer = userAnswers[indexPath.row]
         
         cell.configureResult(question: question, answer: answer, userAnswer: userAnswer,
-                             exerciseType: exerciseType, index: indexPath.row, questionCount: questionArray.count)
+                             exerciseType: exerciseType, index: indexPath.row, questionCount: questions.count)
      
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let answer = answerArray[indexPath.row]
-        let userAnswer = userAnswerArray[indexPath.row]
-        let questionText = questionArray[indexPath.row]
+        let answer = answers[indexPath.row]
+        let userAnswer = userAnswers[indexPath.row]
+        let questionText = questions[indexPath.row]
         let answerText = userAnswer == answer ? answer : userAnswer.strikeUserAnswerAndGetCorrect(answer).string
         let longestText = questionText.count > answerText.count ? questionText : answerText
         let height = size(forText: longestText, minusWidth: 26+32).height
@@ -271,7 +273,7 @@ extension ResultController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let isDefaultTest: Bool = (exerciseType == .test &&  UserDefault.selectedTestType.getInt() == 0)
         let isCard: Bool = exerciseType == .card
-        let text = (isDefaultTest || isCard) ? questionArray[indexPath.row] : answerArray[indexPath.row]
+        let text = (isDefaultTest || isCard) ? questions[indexPath.row] : answers[indexPath.row]
       
         Player.shared.playSound(text)
         tableView.deselectRow(at: indexPath, animated: true)

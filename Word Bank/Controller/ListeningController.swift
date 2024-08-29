@@ -26,7 +26,7 @@ class ListeningController: UIViewController {
     private var userAnswerArray = [String]()
     
     private var isAnswerSelected = false
-    private let exercisePoint: Int = 10
+    private let exercisePoint: Int = 30
     
     private lazy var exerciseTopView = ExerciseTopView(exerciseType: exerciseType)
     private var bubbleView = BubbleView()
@@ -221,10 +221,7 @@ class ListeningController: UIViewController {
     }
     
     private func goToResult() {
-        let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
-        controller.questionArray = questionArray
-        controller.answerArray = answerArray
-        controller.userAnswerArray = userAnswerArray
+        let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType, questions: questionArray, answers: answerArray, userAnswers: userAnswerArray)
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }

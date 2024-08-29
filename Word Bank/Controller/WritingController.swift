@@ -21,7 +21,7 @@ class WritingController: UIViewController {
     private var questionCounter = 0
     private var questionText = ""
     private var answerText = ""
-    private let exercisePoint: Int = 10
+    private let exercisePoint: Int = 20
     private var selectedTyping: Int { return UserDefault.selectedTyping.getInt() }
     
     private var shuffledAnswer: Array<Character> = Array("")
@@ -258,10 +258,7 @@ class WritingController: UIViewController {
     }
    
     private func goToResult() {
-        let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
-        controller.questionArray = questionArray
-        controller.answerArray = answerArray
-        controller.userAnswerArray = userAnswerArray
+        let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType, questions: questionArray, answers: answerArray, userAnswers: userAnswerArray)
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }

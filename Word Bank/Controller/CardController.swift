@@ -73,10 +73,7 @@ class CardController: UIViewController {
     
     private func updateWord() {
         if cardCounter == totalQuestionNumber {
-            let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType)
-            controller.questionArray = questionArray
-            controller.answerArray = answerArray
-            controller.userAnswerArray = userAnswerArray
+            let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType, questions: questionArray, answers: answerArray, userAnswers: userAnswerArray)
             self.navigationController?.pushViewController(controller, animated: true)
         } else {
             wordEnglish = wordBrain.getWordEnglish()
