@@ -94,6 +94,7 @@
 		70C7542029523ACE00192DE6 /* true.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7541C29523ACE00192DE6 /* true.mp3 */; };
 		70C7C228295226E6006E65A2 /* AwardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C7C227295226E6006E65A2 /* AwardCell.swift */; };
 		70C7C22A29522704006E65A2 /* LetterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C7C22929522704006E65A2 /* LetterCell.swift */; };
+		70E7DB762C81006C008AA53E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 70E7DB752C81006C008AA53E /* PrivacyInfo.xcprivacy */; };
 		70F0AB3F28C51869002E3EC9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */; };
 		70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */; };
 		70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70FC6A4A27E26DD500C31481 /* CloudKit.framework */; };
@@ -189,6 +190,7 @@
 		70C7541C29523ACE00192DE6 /* true.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = true.mp3; sourceTree = "<group>"; };
 		70C7C227295226E6006E65A2 /* AwardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardCell.swift; sourceTree = "<group>"; };
 		70C7C22929522704006E65A2 /* LetterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCell.swift; sourceTree = "<group>"; };
+		70E7DB752C81006C008AA53E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		70FC6A4A27E26DD500C31481 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -437,6 +439,7 @@
 		70C7C23529522B12006E65A2 /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				70E7DB752C81006C008AA53E /* PrivacyInfo.xcprivacy */,
 				701FA77628DFDC28001ADA07 /* Word Bank.entitlements */,
 				706CBAB227592F8D008B4773 /* AppDelegate.swift */,
 				706CBAB427592F8D008B4773 /* SceneDelegate.swift */,
@@ -541,6 +544,7 @@
 				705D92E428F89625001C4F38 /* bubble_pop.aac in Resources */,
 				705D92E728F89625001C4F38 /* sparkle.png in Resources */,
 				7056C49E27AACA3100D0CA24 /* levelup.mp4 in Resources */,
+				70E7DB762C81006C008AA53E /* PrivacyInfo.xcprivacy in Resources */,
 				705D92EC28F89625001C4F38 /* victory.aac in Resources */,
 				705D92E828F89625001C4F38 /* SparkleBlast.sks in Resources */,
 				706CBABF27592F8E008B4773 /* Assets.xcassets in Resources */,
