@@ -65,7 +65,7 @@ extension UIButton {
         let animation = CABasicAnimation(keyPath: "position")
         animation.fromValue = CGPoint(x: center.x , y: center.y)
         animation.toValue = CGPoint(x: center.x, y: y)
-        animation.duration = 1
+        animation.duration = 0.5
         animation.fillMode = .forwards
         layer.add(animation, forKey: nil)
     }

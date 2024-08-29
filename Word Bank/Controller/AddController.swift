@@ -86,9 +86,10 @@ class AddController: UIViewController {
                     item.eng = eng
                     item.tr = meaning
                     wordBrain.updateHardItem(item, newEng: eng, newMeaning: meaning)
-                    scheduledTimer(timeInterval: 0.8, #selector(dismissView))
+                    scheduledTimer(timeInterval: 0.75, #selector(dismissView))
                 } else {
                     wordBrain.addWord(english: eng, meaning: meaning)
+                    scheduledTimer(timeInterval: 1.0, #selector(dismissView))
                 }
                 cleanTextFields()
                 animateFlipButton()
@@ -199,14 +200,15 @@ extension AddController {
         flipButton.setBackgroundImage(flipButtonImage, for: .normal)
         UIView.transition(with: flipButton, duration: 0.2, options: .transitionFlipFromLeft, animations: nil) { _ in
             UIView.transition(with: self.flipButton, duration: 0.5, options: .transitionFlipFromLeft, animations: nil) { _ in
-                self.flipButton.animateCoinDown(y: self.view.frame.height-UserDefault.keyboardHeight.getCGFloat()-66)
+                self.flipButton.animateCoinDown(y: self.view.frame.height-UserDefault.keyboardHeight.getCGFloat())
             }
         }
-        scheduledTimer(timeInterval: 1.5, #selector(deleteButtonBackgroundImage))
+        scheduledTimer(timeInterval: 0.9, #selector(clearBackgrounds))
     }
-
-    @objc private func deleteButtonBackgroundImage() {
+    
+    @objc private func clearBackgrounds() {
         flipButton.deleteBackgroundImage()
+        self.view.backgroundColor = .clear
     }
 }
 
