@@ -18,17 +18,14 @@ struct WordBrain {
     var hardItemArray = [HardItem]()
     var user = [User]()
     var exerciseArray = [Exercise]()
-    var exerciseDict = [String: Int]()
     
-    var failsDictionary = [Int:Int]()
-    var newWordsDictionary = [Int:Int]()
     var sortedFailsDictionary = Array<(key: Int, value: Int)>()
     var sortedNewWordsDictionary = Array<(key: Int, value: Int)>()
     
     var questionNumber = 0
-    var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
-    var addedHardWordsCount = 0
     var questionCounter = 0
+    var addedHardWordsCount = 0
+    var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     
     mutating func createUser() {
         CoreDataManager.shared.createUser()
@@ -54,11 +51,11 @@ struct WordBrain {
         let item = itemArray[questionNumber]
         CoreDataManager.shared.addWordToHardWords(item)
         addedHardWordsCount = addedHardWordsCount + 1
-        UserDefault.addedHardWordsCount.set(addedHardWordsCount)
     }
     
-    mutating func deleteHardWord(_ item: Item) {
-        CoreDataManager.shared.deleteHardWord(item)
+    mutating func clearAddedHardWordsCount() {
+        addedHardWordsCount = 0
+        UserDefault.addedHardWordsCount.set(0)
     }
     
     func updateHardItem(_ item: Item?, newEng: String, newMeaning: String) {
@@ -102,6 +99,9 @@ struct WordBrain {
     }
     
     mutating func sortWordsForExercise() {
+        var failsDictionary = [Int:Int]()
+        var newWordsDictionary = [Int:Int]()
+        
         for i in 0..<itemArray.count {
             let j = itemArray[i].falseCount - itemArray[i].trueCount
             failsDictionary.updateValue(Int(j), forKey: i)

@@ -35,7 +35,7 @@ class CardController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserDefault.addedHardWordsCount.set(0)
+        brain.clearAddedHardWordsCount()
         brain.loadItemArray()
         style()
         layout()

@@ -79,7 +79,7 @@ class ListeningController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserDefault.addedHardWordsCount.set(0)
+        brain.clearAddedHardWordsCount()
         brain.loadHardItemArray()
         brain.loadItemArray()
         brain.sortWordsForExercise()

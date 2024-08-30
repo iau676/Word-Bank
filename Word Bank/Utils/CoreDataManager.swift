@@ -43,7 +43,8 @@ class CoreDataManager {
         saveContext()
     }
     
-    func removeWord(_ item: Item) { 
+    func removeWord(_ item: Item) {
+        deleteHardWord(item)
         context.delete(item)
         saveContext()
     }
@@ -57,6 +58,9 @@ class CoreDataManager {
         newItem.correctNumber = 5
         
         item.addedHardWords = true
+        
+        let count = UserDefault.addedHardWordsCount.getInt()
+        UserDefault.addedHardWordsCount.set(count+1)
     
         saveContext()
     }
@@ -68,7 +72,6 @@ class CoreDataManager {
                 context.delete(hardItem)
             }
         }
-        saveContext()
     }
     
     func updateHardItem(_ item: Item?, newEng: String, newMeaning: String) {

@@ -280,9 +280,7 @@ extension WordsController: UITableViewDelegate {
             self.showAlertWithCancel(title: "'\(item.eng ?? "Word")' will be deleted",
                                      message: "This action cannot be undone",
                                      actionTitle: "Delete", style: .destructive) { _ in
-                brain.deleteHardWord(item)
                 brain.removeWord(at: indexPath.row)
-                
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                 tableView.reloadData()
             }
