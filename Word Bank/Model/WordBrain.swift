@@ -19,8 +19,6 @@ struct WordBrain {
     
     static var shared = WordBrain()
     
-    var questionNumbers: [Int] = []
-    var questionNumbersCopy: [Int] = []
     var failsDictionary = [Int:Int]()
     var newWordsDictionary = [Int:Int]()
     var sortedFailsDictionary = Array<(key: Int, value: Int)>()
@@ -124,7 +122,6 @@ struct WordBrain {
     }
     
     mutating func getQuestionText(_ counter: Int, _ exerciseKind: ExerciseKind, _ exerciseType: ExerciseType) -> String{
-        questionNumbers.removeAll()
         loadHardItemArray()
         loadItemArray()
 
@@ -154,18 +151,9 @@ struct WordBrain {
             } else {
                 questionNumber = Int.random(in: 0..<itemArray.count)
             }
-            for i in 0..<itemArray.count {
-                questionNumbers.append(i)
-            }
         } else {
             questionNumber = Int.random(in: 0..<hardItemArray.count)
-            for i in 0..<hardItemArray.count {
-                questionNumbers.append(i)
-            }
         }
-        
-        questionNumbersCopy = questionNumbers
-        questionNumbersCopy.remove(at: questionNumber)
         
         switch (exerciseKind, exerciseType) {
         case (.normal, .test):
@@ -182,7 +170,7 @@ struct WordBrain {
             return hardItemArray[questionNumber].eng!
         default: return ""
         }
-    } //getQuestionText
+    }
 
     func getMeaning(exerciseKind: ExerciseKind) -> String {
         return exerciseKind == .normal ? itemArray[questionNumber].tr! : hardItemArray[questionNumber].tr!
@@ -193,6 +181,9 @@ struct WordBrain {
     }
     
     mutating func getTestAnswer(exerciseKind: ExerciseKind) -> (String, String) {
+        var questionNumbersCopy = exerciseKind == .normal ? Array(itemArray.indices) : Array(hardItemArray.indices)
+        questionNumbersCopy.remove(at: questionNumber)
+        
         let temp = questionNumbersCopy.randomElement() ?? 0
         var trueAnswer = ""
         var falseAnswer = ""
@@ -210,18 +201,25 @@ struct WordBrain {
     }
     
     mutating func getListeningAnswers(_ exerciseKind: ExerciseKind) -> (String, String, String, String) {
+        var questionNumbersCopy = exerciseKind == .normal ? Array(itemArray.indices) : Array(hardItemArray.indices)
+        questionNumbersCopy.remove(at: questionNumber)
+        
+        let randomNumber1 = questionNumbersCopy.randomElement() ?? 0
+        let deleteIndex = questionNumbersCopy.firstIndex(where: {$0 == randomNumber1}) ?? 0
+        questionNumbersCopy.remove(at: deleteIndex)
+        
+        let randomNumber2 = questionNumbersCopy.randomElement() ?? 0
+        
         let answer1 = getListeningAnswer(for: questionNumber, exerciseKind)
-        let answer2 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count), exerciseKind)
-        let answer3 = getListeningAnswer(for: Int.random(in: 0..<questionNumbersCopy.count), exerciseKind)
+        let answer2 = getListeningAnswer(for: randomNumber1, exerciseKind)
+        let answer3 = getListeningAnswer(for: randomNumber2, exerciseKind)
         let array = [answer1, answer2, answer3].shuffled()
         
         return (array[0], array[1], array[2], answer1)
     }
     
     private func getListeningAnswer(for number: Int, _ exerciseKind: ExerciseKind) -> String {
-        return exerciseKind == .normal ?
-        itemArray[number].eng! :
-        hardItemArray[number].eng!
+        return exerciseKind == .normal ? itemArray[number].eng! : hardItemArray[number].eng!
     }
     
     mutating func updateCorrectCountHardWord() -> Bool {
