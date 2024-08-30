@@ -20,8 +20,6 @@ class SpinWheel: SKSpriteNode {
     
     //MARK: - Local variables
     
-    var wordBrain = WordBrain()
-    
     var wheel: SKSpriteNode!
     var flapper: SKSpriteNode!
     var pivotPin: SKSpriteNode!

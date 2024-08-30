@@ -16,8 +16,6 @@ class WritingController: UIViewController {
     private let exerciseKind: ExerciseKind
     private let exerciseType: ExerciseType = .writing
     
-    private var wordBrain = WordBrain()
-    
     private var questionCounter = 0
     private var questionText = ""
     private var answerText = ""
@@ -110,9 +108,9 @@ class WritingController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefault.addedHardWordsCount.set(0)
-        wordBrain.loadHardItemArray()
-        wordBrain.loadItemArray()
-        wordBrain.sortWordsForExercise()
+        brain.loadHardItemArray()
+        brain.loadItemArray()
+        brain.sortWordsForExercise()
         configureUI()
     }
     
@@ -234,9 +232,9 @@ class WritingController: UIViewController {
             userAnswerArray.append(userAnswer)
             
             if exerciseKind == .normal {
-                wordBrain.userGotItCorrect()
+                brain.userGotItCorrect()
             } else {
-                if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
+                if brain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
             }
             
             let lastPoint = UserDefault.lastPoint.getInt()
@@ -250,8 +248,8 @@ class WritingController: UIViewController {
     }
     
     private func getNewQuestion() {
-        questionText = wordBrain.getQuestionText(questionCounter, exerciseKind, exerciseType)
-        answerText = wordBrain.getEnglish(exerciseKind: exerciseKind)
+        questionText = brain.getQuestionText(questionCounter, exerciseKind, exerciseType)
+        answerText = brain.getEnglish(exerciseKind: exerciseKind)
         questionLabel.text = questionText
         questionArray.append(questionText)
         answerArray.append(answerText)

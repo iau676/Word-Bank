@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         window?.overrideUserInterfaceStyle = .light
-        WordBrain.shared.context.automaticallyMergesChangesFromParent = true
+        brain.context.automaticallyMergesChangesFromParent = true
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 

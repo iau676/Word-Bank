@@ -10,14 +10,15 @@ import UIKit
 import CoreData
 
 struct WordBrain {
+    
+    static var shared = WordBrain()
+    private init() {}
         
     var itemArray = [Item]()
     var hardItemArray = [HardItem]()
     var user = [User]()
     var exerciseArray = [Exercise]()
     var exerciseDict = [String: Int]()
-    
-    static var shared = WordBrain()
     
     var failsDictionary = [Int:Int]()
     var newWordsDictionary = [Int:Int]()

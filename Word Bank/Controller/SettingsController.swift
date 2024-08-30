@@ -13,7 +13,6 @@ class SettingsController: UIViewController {
     
     //MARK: - Properties
     
-    private var wordBrain = WordBrain()
     private var soundSpeed = 0.0
     private let soundSpeedArray = [0.3, 0.5, 0.7]
     

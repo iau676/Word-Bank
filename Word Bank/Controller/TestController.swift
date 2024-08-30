@@ -13,9 +13,7 @@ class TestController: UIViewController {
     
     private let exerciseKind: ExerciseKind
     private let exerciseType: ExerciseType = .test
-    
-    private var wordBrain = WordBrain()
-    
+        
     private var questionCounter = 0
     private var questionText = ""
     private let exercisePoint: Int = 10
@@ -75,9 +73,9 @@ class TestController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefault.addedHardWordsCount.set(0)
-        wordBrain.loadHardItemArray()
-        wordBrain.loadItemArray()
-        wordBrain.sortWordsForExercise()
+        brain.loadHardItemArray()
+        brain.loadItemArray()
+        brain.sortWordsForExercise()
         configureUI()
         configureNextQuestion()
     }
@@ -149,19 +147,19 @@ class TestController: UIViewController {
     }
     
     private func prepareNextQuestion() {
-        questionText = wordBrain.getQuestionText(questionCounter, exerciseKind, exerciseType)
+        questionText = brain.getQuestionText(questionCounter, exerciseKind, exerciseType)
         questionLabel.text = questionText
         questionArray.append(questionText)
         
-        let answers = wordBrain.getTestAnswer(exerciseKind: exerciseKind)
+        let answers = brain.getTestAnswer(exerciseKind: exerciseKind)
         refreshAnswerButton(answer1Button, title: answers.0)
         refreshAnswerButton(answer2Button, title: answers.1)
 
         if selectedTestType == 0 {
             if wordSoundOpen { Player.shared.playSound(questionText) }
-            answerArray.append(wordBrain.getMeaning(exerciseKind: exerciseKind))
+            answerArray.append(brain.getMeaning(exerciseKind: exerciseKind))
         } else {
-            answerArray.append(wordBrain.getEnglish(exerciseKind: exerciseKind))
+            answerArray.append(brain.getEnglish(exerciseKind: exerciseKind))
         }
     }
     
@@ -176,17 +174,17 @@ class TestController: UIViewController {
             Player.shared.playMP3(Sounds.truee)
             
             if exerciseKind == .normal {
-                wordBrain.userGotItCorrect()
+                brain.userGotItCorrect()
             } else {
-                if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
+                if brain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
             }
         } else {
             Player.shared.playMP3(Sounds.falsee)
             
             if exerciseKind == .normal {
-                wordBrain.userGotItWrong()
+                brain.userGotItWrong()
             } else {
-                wordBrain.updateWrongCountHardWords()
+                brain.updateWrongCountHardWords()
             }
         }
         

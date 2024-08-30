@@ -44,7 +44,7 @@ class ExerciseTopView: UIView {
     init(exerciseType: ExerciseType) {
         super.init(frame: CGRect(x: 0, y: 0, width: 11, height: 11))
         
-        WordBrain.shared.questionCounter = 0
+        brain.questionCounter = 0
         
         switch exerciseType {
         case .test:

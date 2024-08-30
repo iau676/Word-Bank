@@ -63,9 +63,8 @@ class StatsController: UIViewController {
         return label
     }()
     
-    private var wordBrain = WordBrain()
-    private var itemArray: [Item] { return wordBrain.itemArray }
-    private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
+    private var itemArray: [Item] { return brain.itemArray }
+    private var exerciseArray: [Exercise] { return brain.exerciseArray }
     
     private var dayNames: [String] = []
     private var dateArray: [String] = []
@@ -79,8 +78,8 @@ class StatsController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wordBrain.loadItemArray()
-        wordBrain.loadExerciseArray()
+        brain.loadItemArray()
+        brain.loadExerciseArray()
         configureUI()
     }
     

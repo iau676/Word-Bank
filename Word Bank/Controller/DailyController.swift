@@ -11,9 +11,8 @@ class DailyController: UIViewController {
     
     //MARK: - Properties
     
-    private var wordBrain = WordBrain()
-    private var itemArray: [Item] { return wordBrain.itemArray }
-    private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
+    private var itemArray: [Item] { return brain.itemArray }
+    private var exerciseArray: [Exercise] { return brain.exerciseArray }
     private var exerciseDict = [String: Int]()
     
     private lazy var testExerciseCount: Int = 0
@@ -44,8 +43,8 @@ class DailyController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wordBrain.loadItemArray()
-        wordBrain.loadExerciseArray()
+        brain.loadItemArray()
+        brain.loadExerciseArray()
         findExercisesCompletedToday()
 
         configureUI()

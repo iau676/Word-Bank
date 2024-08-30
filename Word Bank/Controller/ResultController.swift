@@ -21,7 +21,6 @@ class ResultController: UIViewController {
     private let userAnswers: [String]
     private var trueAnswerCount = 0
     
-    private var wordBrain = WordBrain()
     private var addedHardWordsCount: Int {return UserDefault.addedHardWordsCount.getInt() }
     
     private let confettiButton: UIButton = {
@@ -79,7 +78,7 @@ class ResultController: UIViewController {
         button.setBackgroundImage(Images.refresh, for: .normal)
         button.tintColor = .white
         button.addTarget(self, action: #selector(refreshButtonPressed(_:)), for: .touchUpInside)
-        button.isHidden = exerciseKind == .hard && wordBrain.hardItemArray.count < 2
+        button.isHidden = exerciseKind == .hard && brain.hardItemArray.count < 2
         return button
     }()
     
@@ -100,9 +99,9 @@ class ResultController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wordBrain.loadHardItemArray()
-        wordBrain.loadItemArray()
-        wordBrain.loadUser()
+        brain.loadHardItemArray()
+        brain.loadItemArray()
+        brain.loadUser()
         
         configureUI()
         
@@ -190,14 +189,13 @@ class ResultController: UIViewController {
     }
     
     private func updateUserData() {
-        wordBrain.user[0].level      = Int16(UserDefault.level.getInt())
-        wordBrain.user[0].lastPoint  = Int32(UserDefault.lastPoint.getInt())
+        brain.user[0].level      = Int16(UserDefault.level.getInt())
+        brain.user[0].lastPoint  = Int32(UserDefault.lastPoint.getInt())
         
         let trueCount = Int16(trueAnswerCount)
         let falseCount = Int16(userAnswers.count-trueAnswerCount)
         
-        wordBrain.addExercise(type: exerciseType, kind: exerciseKind,
-                              trueCount: trueCount, falseCount: falseCount)
+        brain.addExercise(type: exerciseType, kind: exerciseKind, trueCount: trueCount, falseCount: falseCount)
     }
     
     private func findTrueAnswerCount() {

@@ -18,7 +18,6 @@ class AddController: UIViewController {
     
     var item: Item?
     weak var delegate: AddControllerDelegate?
-    private var wordBrain = WordBrain()
     
     private var keyboardHeight: CGFloat { return UserDefault.keyboardHeight.getCGFloat() }
     private let secondViewHeight: CGFloat = 214
@@ -55,8 +54,8 @@ class AddController: UIViewController {
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
-        wordBrain.loadItemArray()
-        wordBrain.loadHardItemArray()
+        brain.loadItemArray()
+        brain.loadHardItemArray()
         
         configureUI()
         addSwipeGesture()
@@ -85,10 +84,10 @@ class AddController: UIViewController {
                 if let item = item {
                     item.eng = eng
                     item.tr = meaning
-                    wordBrain.updateHardItem(item, newEng: eng, newMeaning: meaning)
+                    brain.updateHardItem(item, newEng: eng, newMeaning: meaning)
                     scheduledTimer(timeInterval: 0.75, #selector(dismissView))
                 } else {
-                    wordBrain.addWord(english: eng, meaning: meaning)
+                    brain.addWord(english: eng, meaning: meaning)
                     scheduledTimer(timeInterval: 1.0, #selector(dismissView))
                 }
                 cleanTextFields()

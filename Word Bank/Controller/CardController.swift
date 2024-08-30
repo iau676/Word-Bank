@@ -15,8 +15,7 @@ class CardController: UIViewController {
     private let exerciseKind: ExerciseKind = .normal
     private let exerciseType: ExerciseType = .card
     
-    private var wordBrain = WordBrain()
-    private var itemArray: [Item] { return wordBrain.itemArray }
+    private var itemArray: [Item] { return brain.itemArray }
     private let cardView = UIView()
     private let backgroundCardView = UIView()
     private let cardLabel = UILabel()
@@ -37,7 +36,7 @@ class CardController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefault.addedHardWordsCount.set(0)
-        wordBrain.loadItemArray()
+        brain.loadItemArray()
         style()
         layout()
         updateWord()
@@ -65,9 +64,9 @@ class CardController: UIViewController {
     }
     
     private func addHardWord() {
-        let questionNumber = wordBrain.questionNumber
+        let questionNumber = brain.questionNumber
         if itemArray[questionNumber].addedHardWords == false {
-            wordBrain.addWordToHardWords(questionNumber)
+            brain.addWordToHardWords(questionNumber)
         }
     }
     
@@ -76,9 +75,9 @@ class CardController: UIViewController {
             let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType, questions: questionArray, answers: answerArray, userAnswers: userAnswerArray)
             self.navigationController?.pushViewController(controller, animated: true)
         } else {
-            wordBrain.questionNumber = Int.random(in: 0..<itemArray.count)
-            wordEnglish = wordBrain.getEnglish(exerciseKind: .normal)
-            wordMeaning = wordBrain.getMeaning(exerciseKind: .normal)
+            brain.questionNumber = Int.random(in: 0..<itemArray.count)
+            wordEnglish = brain.getEnglish(exerciseKind: .normal)
+            wordMeaning = brain.getMeaning(exerciseKind: .normal)
             cardCounter += 1
             cardLabel.text = wordEnglish
             questionArray.append(wordEnglish)

@@ -11,7 +11,6 @@ class BubbleView: UIView {
     
     //MARK: - Properties
     
-    private var wordBrain = WordBrain()
     private var button = UIButton()
     private var label = UILabel()
     

@@ -51,8 +51,7 @@ final class HomeController: UIViewController {
     
     private let menuView = MenuView()
     
-    private var wordBrain = WordBrain()
-    private var itemArray: [Item] { return wordBrain.itemArray }
+    private var itemArray: [Item] { return brain.itemArray }
     private var progressValue:Float = 0.0
     
     //MARK: - Life Cycle
@@ -66,7 +65,7 @@ final class HomeController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        wordBrain.loadItemArray()
+        brain.loadItemArray()
         configureLevelProgress()
     }
     
@@ -252,15 +251,15 @@ extension HomeController {
             getKeyboardHeight()
             
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5){
-                self.wordBrain.loadUser()
-                self.wordBrain.loadItemArray()
-                self.wordBrain.loadHardItemArray()
+                brain.loadUser()
+                brain.loadItemArray()
+                brain.loadHardItemArray()
                 
-                if self.wordBrain.user.count < 1 {
-                    self.wordBrain.createUser()
+                if brain.user.count < 1 {
+                    brain.createUser()
                 } else {
-                    UserDefault.level.set(self.wordBrain.user[0].level)
-                    UserDefault.lastPoint.set(self.wordBrain.user[0].lastPoint)
+                    UserDefault.level.set(brain.user[0].level)
+                    UserDefault.lastPoint.set(brain.user[0].lastPoint)
                 }
             }
         } else {

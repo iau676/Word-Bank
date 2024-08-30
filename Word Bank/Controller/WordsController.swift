@@ -30,9 +30,8 @@ class WordsController: UIViewController {
     private let listeningExerciseLabel = makeExerciseLabel(text: "Listening")
     private let cardExerciseLabel = makeExerciseLabel(text: "Card")
     
-    private var wordBrain = WordBrain()
-    private var itemArray: [Item] { return wordBrain.itemArray }
-    private var hardItemArray: [HardItem] { return wordBrain.hardItemArray }
+    private var itemArray: [Item] { return brain.itemArray }
+    private var hardItemArray: [HardItem] { return brain.hardItemArray }
     
     //MARK: - Life Cycle
     
@@ -47,8 +46,8 @@ class WordsController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wordBrain.loadItemArray()
-        wordBrain.loadHardItemArray()
+        brain.loadItemArray()
+        brain.loadHardItemArray()
         
         configureUI()
         addGestureRecognizer()
@@ -236,9 +235,9 @@ extension WordsController: UISearchBarDelegate {
             let secondPredicate = NSPredicate(format: "tr CONTAINS[cd] %@", text)
             request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [firstPredicate,secondPredicate])
             request.sortDescriptors = [NSSortDescriptor(key: "eng", ascending: true)]
-            wordBrain.loadItemArray(with: request)
+            brain.loadItemArray(with: request)
         } else {
-            wordBrain.loadItemArray()
+            brain.loadItemArray()
         }
         tableView.reloadData()
     }
@@ -281,8 +280,8 @@ extension WordsController: UITableViewDelegate {
             self.showAlertWithCancel(title: "'\(item.eng ?? "Word")' will be deleted",
                                      message: "This action cannot be undone",
                                      actionTitle: "Delete", style: .destructive) { _ in
-                self.wordBrain.deleteHardWord(item)
-                self.wordBrain.removeWord(at: indexPath.row)
+                brain.deleteHardWord(item)
+                brain.removeWord(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                 tableView.reloadData()
             }
@@ -295,7 +294,7 @@ extension WordsController: UITableViewDelegate {
         }
         
         let hardAction = makeContextualAction(image: Images.plus, bgColor: Colors.yellow) { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            self.wordBrain.addWordToHardWords(indexPath.row)
+            brain.addWordToHardWords(indexPath.row)
             self.showAlertPopup(title: "Added to Hard Words")
             success(true)
         }
@@ -336,8 +335,8 @@ extension WordsController {
 
 extension WordsController: AddControllerDelegate {
     func updateTableView() {
-        wordBrain.saveContext()
-        wordBrain.loadItemArray()
+        brain.saveContext()
+        brain.loadItemArray()
         tableView.reloadData()
     }
 }

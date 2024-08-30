@@ -7,6 +7,7 @@
 
 import UIKit
 
+var brain = WordBrain.shared
 let totalQuestionNumber = 10
 
 enum Colors {

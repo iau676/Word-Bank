@@ -14,8 +14,6 @@ class ListeningController: UIViewController {
     private let exerciseKind: ExerciseKind
     private let exerciseType: ExerciseType = .listening
     
-    private var wordBrain = WordBrain()
-    
     private var questionCounter = 0
     private var questionText = ""
     private var userAnswer = ""
@@ -82,9 +80,9 @@ class ListeningController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefault.addedHardWordsCount.set(0)
-        wordBrain.loadHardItemArray()
-        wordBrain.loadItemArray()
-        wordBrain.sortWordsForExercise()
+        brain.loadHardItemArray()
+        brain.loadItemArray()
+        brain.sortWordsForExercise()
         configureUI()
         configureNextQuestion()
     }
@@ -116,17 +114,17 @@ class ListeningController: UIViewController {
                 Player.shared.playMP3(Sounds.truee)
                 
                 if exerciseKind == .normal {
-                    wordBrain.userGotItCorrect()
+                    brain.userGotItCorrect()
                 } else {
-                    if wordBrain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
+                    if brain.updateCorrectCountHardWord() { questionCounter = totalQuestionNumber }
                 }
             } else {
                 Player.shared.playMP3(Sounds.falsee)
                 
                 if exerciseKind == .normal {
-                    wordBrain.userGotItWrong()
+                    brain.userGotItWrong()
                 } else {
-                    wordBrain.updateWrongCountHardWords()
+                    brain.updateWrongCountHardWords()
                 }
             }
             
@@ -208,11 +206,11 @@ class ListeningController: UIViewController {
     }
     
     private func prepareNextQuestion() {
-        questionText = wordBrain.getQuestionText(questionCounter, exerciseKind, exerciseType)
+        questionText = brain.getQuestionText(questionCounter, exerciseKind, exerciseType)
         questionLabel.text = questionText
         questionArray.append(questionText)
         
-        let answers = wordBrain.getListeningAnswers(exerciseKind)
+        let answers = brain.getListeningAnswers(exerciseKind)
         buttonOne.setTitle(answers.0, for: .normal)
         buttonTwo.setTitle(answers.1, for: .normal)
         buttonThree.setTitle(answers.2, for: .normal)

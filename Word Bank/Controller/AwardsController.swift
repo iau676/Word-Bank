@@ -11,9 +11,8 @@ private let reuseIdentifier = "AwardCell"
 
 class AwardsController: UIViewController {
     
-    private var wordBrain = WordBrain()
-    private var itemArray: [Item] { return wordBrain.itemArray }
-    private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
+    private var itemArray: [Item] { return brain.itemArray }
+    private var exerciseArray: [Exercise] { return brain.exerciseArray }
     
     private let levelTitleArray: [Int] = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     private let wordsTitleArray: [Int] = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
@@ -56,8 +55,8 @@ class AwardsController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wordBrain.loadItemArray()
-        wordBrain.loadExerciseArray()
+        brain.loadItemArray()
+        brain.loadExerciseArray()
         configureUI()
         updateScoreLabels()
     }
