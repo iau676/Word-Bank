@@ -27,11 +27,9 @@ struct WordBrain {
     var sortedNewWordsDictionary = Array<(key: Int, value: Int)>()
     
     var questionNumber = 0
-    var changedQuestionNumber = 0
     var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     var addedHardWordsCount = 0
     var questionCounter = 0
-    var answer = 0
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -72,7 +70,6 @@ struct WordBrain {
     }
     
     mutating func addWordToHardWords(_ index: Int) {
- 
         loadItemArray()
         
         let newItem = HardItem(context: context)
@@ -126,36 +123,31 @@ struct WordBrain {
        }
     }
     
-    mutating func getQuestionText(_ whichQuestion: Int, _ startPressed:Int, _ exerciseKind: ExerciseKind) -> String{
-        
+    mutating func getQuestionText(_ counter: Int, _ exerciseKind: ExerciseKind, _ exerciseType: ExerciseType) -> String{
         questionNumbers.removeAll()
         loadHardItemArray()
         loadItemArray()
 
-        // these will be return a function
         if exerciseKind == .normal {
-            if itemArray.count > 20 {
-                switch whichQuestion {
-                case 0...4:
-                    questionNumber = sortedNewWordsDictionary[whichQuestion].key
+            if itemArray.count > totalQuestionNumber {
+                switch counter {
+                case 0...3:
+                    questionNumber = sortedNewWordsDictionary[counter].key
                     break
-                case 5...14:
-                    questionNumber = Int.random(in: 0..<itemArray.count)
-                    break
-                case 15:
+                case 4:
                     questionNumber = sortedFailsDictionary[0].key
                     break
-                case 16:
+                case 5:
                     questionNumber = sortedFailsDictionary[1].key
                     break
-                case 17:
+                case 6:
                     questionNumber = sortedFailsDictionary[2].key
                     break
-                case 18:
+                case 7:
                     questionNumber = sortedFailsDictionary[3].key
                     break
-                case 19:
-                    questionNumber = sortedFailsDictionary[4].key
+                case 8...9:
+                    questionNumber = Int.random(in: 0..<itemArray.count)
                     break
                 default: break
                 }
@@ -171,69 +163,50 @@ struct WordBrain {
                 questionNumbers.append(i)
             }
         }
-                
-        changedQuestionNumber = questionNumber + Int.random(in: 0...9)
-     
+        
         questionNumbersCopy = questionNumbers
         questionNumbersCopy.remove(at: questionNumber)
-  
-        if exerciseKind == .normal {
-            if startPressed == 1 {
-                return selectedTestType == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr!
-            } else {
-                return  startPressed == 2 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
-            }
-        } else {
-            if startPressed == 1 {
-                return selectedTestType == 0 ? hardItemArray[questionNumber].eng! : hardItemArray[questionNumber].tr!
-            } else {
-                return  startPressed == 2 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
-            }
+        
+        switch (exerciseKind, exerciseType) {
+        case (.normal, .test):
+            return selectedTestType == 0 ? itemArray[questionNumber].eng! : itemArray[questionNumber].tr!
+        case (.normal, .writing):
+            return itemArray[questionNumber].tr!
+        case (.normal, .listening):
+             return itemArray[questionNumber].eng!
+        case (.hard, .test):
+            return selectedTestType == 0 ? hardItemArray[questionNumber].eng! : hardItemArray[questionNumber].tr!
+        case (.hard, .writing):
+            return  hardItemArray[questionNumber].tr!
+        case (.hard, .listening):
+            return hardItemArray[questionNumber].eng!
+        default: return ""
         }
     } //getQuestionText
 
     func getMeaning(exerciseKind: ExerciseKind) -> String {
-        if exerciseKind == .normal {
-            return itemArray[questionNumber].tr!
-        } else {
-            return hardItemArray[questionNumber].tr!
-        }
+        return exerciseKind == .normal ? itemArray[questionNumber].tr! : hardItemArray[questionNumber].tr!
     }
     
     func getEnglish(exerciseKind: ExerciseKind) -> String {
-        if exerciseKind == .normal {
-            return itemArray[questionNumber].eng!
-        } else {
-            return hardItemArray[questionNumber].eng!
-        }
+        return exerciseKind == .normal ? itemArray[questionNumber].eng! : hardItemArray[questionNumber].eng!
     }
+    
+    mutating func getTestAnswer(exerciseKind: ExerciseKind) -> (String, String) {
+        let temp = questionNumbersCopy.randomElement() ?? 0
+        var trueAnswer = ""
+        var falseAnswer = ""
         
-    mutating func getProgress() -> Float {
-        questionCounter += 1
-        return Float(questionCounter) / Float(10.0)
-    }
-
-    mutating func getAnswer(_ sender: Int, _ exerciseKind: ExerciseKind) -> String {
-        if changedQuestionNumber % 2 == sender {
-            if exerciseKind == .normal {
-                return selectedTestType == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
-            } else {
-                return selectedTestType == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
-            }
+        if exerciseKind == .normal {
+            trueAnswer = selectedTestType == 0 ? itemArray[questionNumber].tr! : itemArray[questionNumber].eng!
+            falseAnswer = selectedTestType == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
         } else {
-            if questionNumbersCopy.count > 0 {
-                answer = Int.random(in: 0..<questionNumbersCopy.count)
-                let temp = questionNumbersCopy[answer]
-                     
-                if exerciseKind == .normal {
-                    return selectedTestType == 0 ? itemArray[temp].tr! : itemArray[temp].eng!
-                } else {
-                    return selectedTestType == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
-                }
-            } else {
-                return ""
-            }
+            trueAnswer = selectedTestType == 0 ? hardItemArray[questionNumber].tr! : hardItemArray[questionNumber].eng!
+            falseAnswer = selectedTestType == 0 ? hardItemArray[temp].tr! : hardItemArray[temp].eng!
         }
+        
+        let array = [trueAnswer, falseAnswer].shuffled()
+        return (array[0], array[1])
     }
     
     mutating func getListeningAnswers(_ exerciseKind: ExerciseKind) -> (String, String, String, String) {

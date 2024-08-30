@@ -250,7 +250,7 @@ class WritingController: UIViewController {
     }
     
     private func getNewQuestion() {
-        questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseKind)
+        questionText = wordBrain.getQuestionText(questionCounter, exerciseKind, exerciseType)
         answerText = wordBrain.getEnglish(exerciseKind: exerciseKind)
         questionLabel.text = questionText
         questionArray.append(questionText)

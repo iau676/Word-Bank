@@ -208,7 +208,7 @@ class ListeningController: UIViewController {
     }
     
     private func prepareNextQuestion() {
-        questionText = wordBrain.getQuestionText(questionCounter, 2, exerciseKind)
+        questionText = wordBrain.getQuestionText(questionCounter, exerciseKind, exerciseType)
         questionLabel.text = questionText
         questionArray.append(questionText)
         

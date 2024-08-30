@@ -149,11 +149,13 @@ class TestController: UIViewController {
     }
     
     private func prepareNextQuestion() {
-        questionText = wordBrain.getQuestionText(questionCounter, 1, exerciseKind)
+        questionText = wordBrain.getQuestionText(questionCounter, exerciseKind, exerciseType)
         questionLabel.text = questionText
         questionArray.append(questionText)
-        refreshAnswerButton(answer1Button, title: wordBrain.getAnswer(0, exerciseKind))
-        refreshAnswerButton(answer2Button, title: wordBrain.getAnswer(1, exerciseKind))
+        
+        let answers = wordBrain.getTestAnswer(exerciseKind: exerciseKind)
+        refreshAnswerButton(answer1Button, title: answers.0)
+        refreshAnswerButton(answer2Button, title: answers.1)
 
         if selectedTestType == 0 {
             if wordSoundOpen { Player.shared.playSound(questionText) }
