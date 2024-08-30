@@ -282,6 +282,7 @@ extension WordsController: UITableViewDelegate {
                                      actionTitle: "Delete", style: .destructive) { _ in
                 brain.deleteHardWord(item)
                 brain.removeWord(at: indexPath.row)
+                
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
                 tableView.reloadData()
             }
@@ -335,8 +336,6 @@ extension WordsController {
 
 extension WordsController: AddControllerDelegate {
     func updateTableView() {
-        brain.saveContext()
-        brain.loadItemArray()
         tableView.reloadData()
     }
 }

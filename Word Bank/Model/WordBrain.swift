@@ -30,81 +30,75 @@ struct WordBrain {
     var addedHardWordsCount = 0
     var questionCounter = 0
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    mutating func createUser(){
-        let newUser = User(context: self.context)
-        newUser.date = Date()
-        newUser.uuid = UUID().uuidString
-        saveContext()
+    mutating func createUser() {
+        CoreDataManager.shared.createUser()
+        loadUser()
     }
 
     mutating func addWord(english: String, meaning: String){
-        let newItem = Item(context: self.context)
-        newItem.eng = english
-        newItem.tr = meaning
-        newItem.date = Date()
-        newItem.uuid = UUID().uuidString
-        newItem.isCreatedFromUser = true
-        self.itemArray.append(newItem)
-        saveContext()
+        CoreDataManager.shared.addWord(english: english, meaning: meaning)
+        loadItemArray()
     }
     
     mutating func addExercise(type: ExerciseType, kind: ExerciseKind, trueCount: Int16, falseCount: Int16){
-        let newExercise = Exercise(context: self.context)
-        newExercise.name = type.description //test writing...
-        newExercise.type = kind.description //normal hard
-        newExercise.trueCount = trueCount
-        newExercise.falseCount = falseCount
-        newExercise.date = Date()
-        newExercise.uuid = UUID().uuidString
-        self.exerciseArray.append(newExercise)
-        saveContext()
+        CoreDataManager.shared.addExercise(type: type, kind: kind, trueCount: trueCount, falseCount: falseCount)
     }
     
-    mutating func removeWord(at index: Int){
-        context.delete(itemArray[index])
-        itemArray.remove(at: index)
-        saveContext()
+    mutating func removeWord(at index: Int) {
+        let item = itemArray[index]
+        CoreDataManager.shared.removeWord(item)
+        loadItemArray()
     }
     
     mutating func addWordToHardWords(_ index: Int) {
-        loadItemArray()
-        
-        let newItem = HardItem(context: context)
-        newItem.eng = itemArray[index].eng
-        newItem.tr = itemArray[index].tr
-        newItem.uuid = itemArray[index].uuid
-        newItem.date = Date()
-        newItem.correctNumber = 5
-        hardItemArray.append(newItem)
-        
+        let item = itemArray[questionNumber]
+        CoreDataManager.shared.addWordToHardWords(item)
         addedHardWordsCount = addedHardWordsCount + 1
         UserDefault.addedHardWordsCount.set(addedHardWordsCount)
-        
-        itemArray[index].addedHardWords = true
-    
-        saveContext()
     }
     
     mutating func deleteHardWord(_ item: Item) {
-        self.hardItemArray.forEach { hardItem in
-            if hardItem.uuid == item.uuid {
-                context.delete(hardItem)
-            }
-        }
-        saveContext()
+        CoreDataManager.shared.deleteHardWord(item)
     }
     
     func updateHardItem(_ item: Item?, newEng: String, newMeaning: String) {
-        guard let itemm = item else { return }
-        self.hardItemArray.forEach { hardItem in
-            if hardItem.uuid == itemm.uuid {
-                hardItem.eng = newEng
-                hardItem.tr = newMeaning
-            }
-        }
-        saveContext()
+        CoreDataManager.shared.updateHardItem(item, newEng: newEng, newMeaning: newMeaning)
+    }
+    
+    mutating func updateCorrectCountHardWord() -> Bool {
+        CoreDataManager.shared.updateCorrectCountHardWord(questionNumber)
+        loadHardItemArray()
+        return hardItemArray.count < 2 ? true : false
+    }
+    
+    func updateWrongCountHardWords() {
+        CoreDataManager.shared.updateWrongCountHardWords(questionNumber)
+    }
+    
+    func userGotItCorrect() {
+        let item = itemArray[questionNumber]
+        CoreDataManager.shared.userGotItCorrect(item)
+    }
+    
+    mutating func userGotItWrong() {
+        let item = itemArray[questionNumber]
+        CoreDataManager.shared.userGotItWrong(item)
+    }
+    
+    mutating func loadHardItemArray() {
+        hardItemArray = CoreDataManager.shared.loadHardItemArray()
+    }
+    
+    mutating func loadItemArray(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+        itemArray = CoreDataManager.shared.loadItemArray(with: request)
+    }
+    
+    mutating func loadUser() {
+        user = CoreDataManager.shared.loadUser()
+    }
+    
+    mutating func loadExerciseArray() {
+        exerciseArray = CoreDataManager.shared.loadExerciseArray()
     }
     
     mutating func sortWordsForExercise() {
@@ -158,14 +152,6 @@ struct WordBrain {
         }
     }
 
-    func getMeaning(exerciseKind: ExerciseKind) -> String {
-        return exerciseKind == .normal ? itemArray[questionNumber].tr! : hardItemArray[questionNumber].tr!
-    }
-    
-    func getEnglish(exerciseKind: ExerciseKind) -> String {
-        return exerciseKind == .normal ? itemArray[questionNumber].eng! : hardItemArray[questionNumber].eng!
-    }
-    
     mutating func getTestAnswer(exerciseKind: ExerciseKind) -> (String, String) {
         var questionNumbersCopy = exerciseKind == .normal ? Array(itemArray.indices) : Array(hardItemArray.indices)
         questionNumbersCopy.remove(at: questionNumber)
@@ -208,86 +194,11 @@ struct WordBrain {
         return exerciseKind == .normal ? itemArray[number].eng! : hardItemArray[number].eng!
     }
     
-    mutating func updateCorrectCountHardWord() -> Bool {
-        hardItemArray[questionNumber].correctNumber -= 1
-        if let itemm = itemArray.first(where: {$0.uuid == hardItemArray[questionNumber].uuid}) {
-            itemm.trueCount += 1
-            if hardItemArray[questionNumber].correctNumber <= 0 {
-                if itemArray.count > questionNumber {
-                    itemm.addedHardWords = false
-                }
-                context.delete(hardItemArray[questionNumber])
-                hardItemArray.remove(at: questionNumber)
-            }
-        } else {
-            context.delete(hardItemArray[questionNumber])
-            hardItemArray.remove(at: questionNumber)
-        }
-        saveContext()
-        return hardItemArray.count < 2 ? true : false
+    func getMeaning(exerciseKind: ExerciseKind) -> String {
+        return exerciseKind == .normal ? itemArray[questionNumber].tr! : hardItemArray[questionNumber].tr!
     }
     
-    func updateWrongCountHardWords(){
-        if let itemm = itemArray.first(where: {$0.uuid == hardItemArray[questionNumber].uuid}) {
-            itemm.falseCount += 1
-        }
-        saveContext()
-    }
-    
-    func userGotItCorrect(){
-        itemArray[questionNumber].trueCount += 1
-        saveContext()
-    }
-    
-    mutating func userGotItWrong() {
-        itemArray[questionNumber].falseCount += 1
-        if itemArray[questionNumber].addedHardWords == false{
-            addWordToHardWords(questionNumber)
-        }
-        saveContext()
-    }
-    
-    mutating func loadHardItemArray(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
-        do {
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-            hardItemArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-    }
-    
-    mutating func loadItemArray(with request: NSFetchRequest<Item> = Item.fetchRequest()){
-        do {
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-            itemArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-    }
-    
-    mutating func loadUser(with request: NSFetchRequest<User> = User.fetchRequest()){
-        do {
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-            user = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-    }
-    
-    mutating func loadExerciseArray(with request: NSFetchRequest<Exercise> = Exercise.fetchRequest()){
-        do {
-            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-            exerciseArray = try context.fetch(request)
-        } catch {
-           print("Error fetching data from context \(error)")
-        }
-    }
-    
-    func saveContext() {
-        do {
-          try context.save()
-        } catch {
-           print("Error saving context \(error)")
-        }
+    func getEnglish(exerciseKind: ExerciseKind) -> String {
+        return exerciseKind == .normal ? itemArray[questionNumber].eng! : hardItemArray[questionNumber].eng!
     }
 }

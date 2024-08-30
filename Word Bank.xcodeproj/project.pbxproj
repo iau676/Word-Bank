@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		700814F428D3909200DF177D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700814F328D3909200DF177D /* UIImage+Extensions.swift */; };
 		7009BDE729112BAA0068E2F6 /* DailyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7009BDE629112BAA0068E2F6 /* DailyController.swift */; };
+		700BE8112C8256E30079C5B5 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 700BE8102C8256E30079C5B5 /* DGCharts */; };
 		700C439927A856FD00D94497 /* LevelInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700C439827A856FD00D94497 /* LevelInfoController.swift */; };
 		7011E3FE28955B0400A42314 /* UIContextualAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FD28955B0400A42314 /* UIContextualAction+Extensions.swift */; };
 		7011E400289571A100A42314 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7011E3FF289571A100A42314 /* UIColor+Extensions.swift */; };
@@ -85,7 +86,6 @@
 		70925E3D2C6EEE1C007CB4E9 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70925E3C2C6EEE1C007CB4E9 /* Level.swift */; };
 		7094D8C4290D25B5007E422F /* AwardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C3290D25B5007E422F /* AwardsController.swift */; };
 		7094D8C6290D694D007E422F /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7094D8C5290D694D007E422F /* BadgeView.swift */; };
-		7097BE252C80C7B400084E76 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 7097BE242C80C7B400084E76 /* DGCharts */; };
 		709ED6A72899312800A34007 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709ED6A62899312800A34007 /* Constants.swift */; };
 		70C357E528882DFC00F3AD86 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E428882DFC00F3AD86 /* Player.swift */; };
 		70C357E82888638300F3AD86 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C357E72888638300F3AD86 /* UIButton+Extensions.swift */; };
@@ -94,6 +94,7 @@
 		70C7542029523ACE00192DE6 /* true.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 70C7541C29523ACE00192DE6 /* true.mp3 */; };
 		70C7C228295226E6006E65A2 /* AwardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C7C227295226E6006E65A2 /* AwardCell.swift */; };
 		70C7C22A29522704006E65A2 /* LetterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C7C22929522704006E65A2 /* LetterCell.swift */; };
+		70DCCECE2C8252DF009E5C71 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DCCECD2C8252DF009E5C71 /* CoreDataManager.swift */; };
 		70E7DB762C81006C008AA53E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 70E7DB752C81006C008AA53E /* PrivacyInfo.xcprivacy */; };
 		70F0AB3F28C51869002E3EC9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */; };
 		70F0AB4128C51885002E3EC9 /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */; };
@@ -190,6 +191,7 @@
 		70C7541C29523ACE00192DE6 /* true.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = true.mp3; sourceTree = "<group>"; };
 		70C7C227295226E6006E65A2 /* AwardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardCell.swift; sourceTree = "<group>"; };
 		70C7C22929522704006E65A2 /* LetterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterCell.swift; sourceTree = "<group>"; };
+		70DCCECD2C8252DF009E5C71 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		70E7DB752C81006C008AA53E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		70F0AB3E28C51869002E3EC9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		70F0AB4028C51885002E3EC9 /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
@@ -201,7 +203,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7097BE252C80C7B400084E76 /* DGCharts in Frameworks */,
+				700BE8112C8256E30079C5B5 /* DGCharts in Frameworks */,
 				70FC6A4B27E26DD500C31481 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +414,7 @@
 				70C357E428882DFC00F3AD86 /* Player.swift */,
 				70925E3C2C6EEE1C007CB4E9 /* Level.swift */,
 				7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */,
+				70DCCECD2C8252DF009E5C71 /* CoreDataManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -485,7 +488,7 @@
 			);
 			name = "Word Bank";
 			packageProductDependencies = (
-				7097BE242C80C7B400084E76 /* DGCharts */,
+				700BE8102C8256E30079C5B5 /* DGCharts */,
 			);
 			productName = 23;
 			productReference = 706CBAAF27592F8D008B4773 /* Word Bank.app */;
@@ -516,7 +519,7 @@
 			);
 			mainGroup = 706CBAA627592F8D008B4773;
 			packageReferences = (
-				7097BE232C80C7B400084E76 /* XCRemoteSwiftPackageReference "Charts" */,
+				700BE80F2C8256E30079C5B5 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 706CBAB027592F8D008B4773 /* Products */;
 			projectDirPath = "";
@@ -566,6 +569,7 @@
 				70134191291D5888001967E1 /* ClassicFireworkController.swift in Sources */,
 				7014743627AAB4EE005E1854 /* LevelUpController.swift in Sources */,
 				70134182291D57FC001967E1 /* SparkTrajectory.swift in Sources */,
+				70DCCECE2C8252DF009E5C71 /* CoreDataManager.swift in Sources */,
 				705B3D0929BE108C005CFEC2 /* TestController.swift in Sources */,
 				7013418F291D5877001967E1 /* ClassicFireworkAnimator.swift in Sources */,
 				7080B23528904B0C00BC8049 /* UserDefaultsManager.swift in Sources */,
@@ -846,7 +850,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7097BE232C80C7B400084E76 /* XCRemoteSwiftPackageReference "Charts" */ = {
+		700BE80F2C8256E30079C5B5 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
 			requirement = {
@@ -857,9 +861,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7097BE242C80C7B400084E76 /* DGCharts */ = {
+		700BE8102C8256E30079C5B5 /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7097BE232C80C7B400084E76 /* XCRemoteSwiftPackageReference "Charts" */;
+			package = 700BE80F2C8256E30079C5B5 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
