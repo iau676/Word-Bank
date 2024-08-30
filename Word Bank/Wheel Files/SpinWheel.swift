@@ -375,7 +375,7 @@ class SpinWheel: SKSpriteNode {
         default:
             break
         }
-        UserDefault.userGotDailyPrize.set(wordBrain.getTodayDate())
+        UserDefault.userGotDailyPrize.set(Date().getTodayDate())
         userGotPrize(prizePoint: Int(newPrizePoint), prizeImage: prizeImage)
     }
     

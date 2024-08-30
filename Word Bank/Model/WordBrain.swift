@@ -290,10 +290,6 @@ struct WordBrain {
         saveContext()
     }
     
-    func getTodayDate() -> String{
-        return Date().getFormattedDate(format: "yyyy-MM-dd")
-    }
-
     mutating func loadHardItemArray(with request: NSFetchRequest<HardItem> = HardItem.fetchRequest()){
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
@@ -365,27 +361,5 @@ extension WordBrain {
     
     func getQuestionNumber() -> Int {
         return questionNumber
-    }
-}
-
-//MARK: - Daily Exercise Info
-
-extension WordBrain {
-    mutating func findExercisesCompletedToday(){
-        loadExerciseArray()
-        exerciseDict.removeAll()
-        let todayDate = getTodayDate()
-        let exerciseArrayCount = (exerciseArray.count > 5760) ? 5760 : exerciseArray.count //24*60*4
-        for i in 0..<exerciseArrayCount {
-            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
-            let exerciseName = exerciseArray[i].name ?? ""
-            if exerciseDate == todayDate {
-                exerciseDict.updateValue((exerciseDict[exerciseName] ?? 0)+1, forKey: exerciseName)
-            }
-        }
-    }
-    
-    func getExerciseCountToday(exerciseType: ExerciseType) -> Int {
-        return exerciseDict[exerciseType.description] ?? 0
     }
 }

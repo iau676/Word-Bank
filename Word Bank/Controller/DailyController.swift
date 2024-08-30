@@ -14,21 +14,11 @@ class DailyController: UIViewController {
     private var wordBrain = WordBrain()
     private var itemArray: [Item] { return wordBrain.itemArray }
     private var exerciseArray: [Exercise] { return wordBrain.exerciseArray }
+    private var exerciseDict = [String: Int]()
     
-    private lazy var testExerciseCount: Int = {
-        let int = wordBrain.getExerciseCountToday(exerciseType: .test)
-        return int > 10 ? 10 : int
-    }()
-    
-    private lazy var writingExerciseCount: Int = {
-        let int = wordBrain.getExerciseCountToday(exerciseType: .writing)
-        return int > 10 ? 10 : int
-    }()
-    
-    private lazy var listeningExerciseCount: Int = {
-        let int = wordBrain.getExerciseCountToday(exerciseType: .listening)
-        return int > 10 ? 10 : int
-    }()
+    private lazy var testExerciseCount: Int = 0
+    private lazy var writingExerciseCount: Int = 0
+    private lazy var listeningExerciseCount: Int = 0
     
     private let secondView: UIView = {
        let view = UIView()
@@ -37,20 +27,9 @@ class DailyController: UIViewController {
         return view
     }()
     
-    private lazy var testTaskView: UIView = {
-       let view = TaskView(title: "Complete 10 Test Exercise", exerciseCount: testExerciseCount)
-        return view
-    }()
-    
-    private lazy var writingTaskView: UIView = {
-       let view = TaskView(title: "Complete 10 Writing Exercise", exerciseCount: writingExerciseCount)
-        return view
-    }()
-    
-    private lazy var listeningTaskView: UIView = {
-       let view = TaskView(title: "Complete 10 Listening Exercise", exerciseCount: listeningExerciseCount)
-        return view
-    }()
+    private lazy var testTaskView = TaskView(title: "Complete 10 Test Exercise", exerciseCount: testExerciseCount)
+    private lazy var writingTaskView = TaskView(title: "Complete 10 Writing Exercise", exerciseCount: writingExerciseCount)
+    private lazy var listeningTaskView = TaskView(title: "Complete 10 Listening Exercise", exerciseCount: listeningExerciseCount)
     
     private lazy var prizeButton: UIButton = {
         let button = UIButton()
@@ -67,7 +46,7 @@ class DailyController: UIViewController {
         super.viewDidLoad()
         wordBrain.loadItemArray()
         wordBrain.loadExerciseArray()
-        wordBrain.findExercisesCompletedToday()
+        findExercisesCompletedToday()
 
         configureUI()
         configurePrizeButton()
@@ -103,6 +82,29 @@ class DailyController: UIViewController {
     
     //MARK: - Helpers
     
+    private func findExercisesCompletedToday() {
+        exerciseDict.removeAll()
+        let todayDate = Date().getTodayDate()
+        for i in 0..<exerciseArray.count {
+            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+            let exerciseName = exerciseArray[i].name ?? ""
+            if exerciseDate == todayDate {
+                exerciseDict.updateValue((exerciseDict[exerciseName] ?? 0)+1, forKey: exerciseName)
+            } else {
+                break
+            }
+        }
+        
+        testExerciseCount = getExerciseCountToday(exerciseType: .test)
+        writingExerciseCount = getExerciseCountToday(exerciseType: .writing)
+        listeningExerciseCount = getExerciseCountToday(exerciseType: .listening)
+    }
+    
+    func getExerciseCountToday(exerciseType: ExerciseType) -> Int {
+        let int = exerciseDict[exerciseType.description] ?? 0
+        return int > 10 ? 10 : int
+    }
+    
     private func configureUI() {
         title = "Daily"
         view.backgroundColor = Colors.cellLeft
@@ -132,7 +134,7 @@ class DailyController: UIViewController {
     
     private func configurePrizeButton() {
         if testExerciseCount >= 10 && writingExerciseCount >= 10 && listeningExerciseCount >= 10 {
-            if UserDefault.userGotDailyPrize.getString() != wordBrain.getTodayDate() {
+            if UserDefault.userGotDailyPrize.getString() != Date().getTodayDate() {
                 prizeButton.isEnabled = true
             }
         }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-let totalQuestionNumber = 10
+let totalQuestionNumber = 2
 
 enum Colors {
     static let darkBackground            = UIColor(white: 0.1, alpha: 0.4)
