@@ -86,7 +86,7 @@ class DailyController: UIViewController {
         exerciseDict.removeAll()
         let todayDate = Date().getTodayDate()
         for i in 0..<exerciseArray.count {
-            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: "yyyy-MM-dd") ?? ""
+            let exerciseDate = exerciseArray[i].date?.getFormattedDate(format: DateFormats.yyyyMMdd) ?? ""
             let exerciseName = exerciseArray[i].name ?? ""
             if exerciseDate == todayDate {
                 exerciseDict.updateValue((exerciseDict[exerciseName] ?? 0)+1, forKey: exerciseName)

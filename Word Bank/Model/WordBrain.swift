@@ -335,18 +335,6 @@ struct WordBrain {
     }
 }
 
-//MARK: - User Defaults
-
-extension WordBrain {
-    func getTruePointImage() -> UIImage? {
-        return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.greenBubble : Images.greenCircle
-    }
-    
-    func getFalsePointImage() -> UIImage? {
-        return (UserDefault.selectedPointEffect.getInt() == 0) ? Images.redBubble : Images.redCircle
-    }
-}
-
 //MARK: - Card Exercise
 
 extension WordBrain {

@@ -15,6 +15,6 @@ extension Date {
     }
     
     func getTodayDate() -> String {
-        self.getFormattedDate(format: "yyyy-MM-dd")
+        self.getFormattedDate(format: DateFormats.yyyyMMdd)
     }
 }

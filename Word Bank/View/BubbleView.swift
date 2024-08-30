@@ -38,7 +38,9 @@ class BubbleView: UIView {
     //MARK: - Helpers
     
     func update(answer isTrue: Bool, point: Int) {
-        let image = isTrue ? wordBrain.getTruePointImage() : wordBrain.getFalsePointImage()
+        let trueImage = (UserDefault.selectedPointEffect.getInt() == 0) ? Images.greenBubble : Images.greenCircle
+        let falseImage = (UserDefault.selectedPointEffect.getInt() == 0) ? Images.redBubble : Images.redCircle
+        let image = isTrue ? trueImage :falseImage
         let textColor = isTrue ? Colors.green : Colors.red
         let text = isTrue ? "+\(point)" : "-\(point)"
         
