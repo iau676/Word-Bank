@@ -65,7 +65,7 @@ class CardController: UIViewController {
     }
     
     private func addHardWord() {
-        let questionNumber = wordBrain.getQuestionNumber()
+        let questionNumber = wordBrain.questionNumber
         if itemArray[questionNumber].addedHardWords == false {
             wordBrain.addWordToHardWords(questionNumber)
         }
@@ -76,8 +76,9 @@ class CardController: UIViewController {
             let controller = ResultController(exerciseKind: exerciseKind, exerciseType: exerciseType, questions: questionArray, answers: answerArray, userAnswers: userAnswerArray)
             self.navigationController?.pushViewController(controller, animated: true)
         } else {
-            wordEnglish = wordBrain.getWordEnglish()
-            wordMeaning = wordBrain.getWordMeaning()
+            wordBrain.questionNumber = Int.random(in: 0..<itemArray.count)
+            wordEnglish = wordBrain.getEnglish(exerciseKind: .normal)
+            wordMeaning = wordBrain.getMeaning(exerciseKind: .normal)
             cardCounter += 1
             cardLabel.text = wordEnglish
             questionArray.append(wordEnglish)

@@ -128,24 +128,9 @@ struct WordBrain {
         if exerciseKind == .normal {
             if itemArray.count > totalQuestionNumber {
                 switch counter {
-                case 0...3:
-                    questionNumber = sortedNewWordsDictionary[counter].key
-                    break
-                case 4:
-                    questionNumber = sortedFailsDictionary[0].key
-                    break
-                case 5:
-                    questionNumber = sortedFailsDictionary[1].key
-                    break
-                case 6:
-                    questionNumber = sortedFailsDictionary[2].key
-                    break
-                case 7:
-                    questionNumber = sortedFailsDictionary[3].key
-                    break
-                case 8...9:
-                    questionNumber = Int.random(in: 0..<itemArray.count)
-                    break
+                case 0...3:  questionNumber = sortedNewWordsDictionary[counter].key
+                case 4...7: questionNumber = sortedFailsDictionary[counter-4].key
+                case 8...9: questionNumber = Int.random(in: 0..<itemArray.count)
                 default: break
                 }
             } else {
@@ -303,22 +288,5 @@ struct WordBrain {
         } catch {
            print("Error saving context \(error)")
         }
-    }
-}
-
-//MARK: - Card Exercise
-
-extension WordBrain {
-    mutating func getWordEnglish() -> String {
-        questionNumber = Int.random(in: 0..<itemArray.count)
-        return itemArray[questionNumber].eng ?? ""
-    }
-    
-    func getWordMeaning() -> String {
-        return itemArray[questionNumber].tr ?? ""
-    }
-    
-    func getQuestionNumber() -> Int {
-        return questionNumber
     }
 }
