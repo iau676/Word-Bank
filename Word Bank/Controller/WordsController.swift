@@ -199,9 +199,10 @@ class WordsController: UIViewController {
     
     private func checkAndNavigate(controller: UIViewController) {
         let wordCount = exerciseKind == .normal ? itemArray.count : hardItemArray.count
+        let needWord = controller as? ListeningController == nil ? 2 : 3
         
-        if wordCount < 2 {
-            showAlert(title: "Minimum two words required", message: "") { _ in
+        if wordCount < needWord {
+            showAlert(title: "Minimum \(needWord) words required", message: "") { _ in
                 if self.exerciseKind == .normal {
                     self.presentAddController()
                 } else {

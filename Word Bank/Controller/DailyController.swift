@@ -153,11 +153,10 @@ class DailyController: UIViewController {
     
     private func checkWordCountAndNavigate(controller: UIViewController) {
         let wordCount = itemArray.count
+        let needWord = controller as? ListeningController == nil ? 2 : 3
         
-        if wordCount < 2 {
-            showAlert(title: "Minimum two words required", message: "") { _ in
-                self.navigationController?.popToRootViewController(animated: true)
-            }
+        if wordCount < needWord {
+            showAlert(title: "Minimum \(needWord) words required", message: "")
         } else {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1){
                 self.navigationController?.pushViewController(controller, animated: true)
