@@ -61,7 +61,6 @@ class ResultController: UIViewController {
         let text = "\(addedHardWordsCount) \((addedHardWordsCount == 1) ? "Word" : "Words") Added to Hard Words"
         button.setTitle(addedHardWordsCount > 0 ? text : "", for: .normal)
         button.isHidden = addedHardWordsCount < 1
-        
         return button
     }()
     
@@ -103,12 +102,16 @@ class ResultController: UIViewController {
         brain.loadItemArray()
         brain.loadUser()
         
+        findTrueAnswerCount()
         configureUI()
         
-        findTrueAnswerCount()
-        checkAllTrue()
         checkLevelUp()
         updateUserData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkAllTrue()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -162,7 +165,7 @@ class ResultController: UIViewController {
         view.addSubview(scoreLabel)
         scoreLabel.centerX(inView: view)
         let allTrue: Bool = trueAnswerCount == questions.count
-        scoreLabel.anchor(top: allTrue ? view.safeAreaLayoutGuide.topAnchor : confettiButton.bottomAnchor, paddingTop: allTrue ? 45 : 16)
+        scoreLabel.anchor(top: allTrue ? view.safeAreaLayoutGuide.topAnchor : confettiButton.bottomAnchor, paddingTop: allTrue ? 0 : 16)
         
         let buttonStack = UIStackView(arrangedSubviews: [homeButton, refreshButton])
         buttonStack.axis = .horizontal
@@ -236,7 +239,6 @@ class ResultController: UIViewController {
 //MARK: - UITableViewDataSource
 
 extension ResultController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return questions.count
     }
