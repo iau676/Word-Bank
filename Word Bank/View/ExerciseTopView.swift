@@ -17,19 +17,15 @@ class ExerciseTopView: UIView {
     
     weak var delegate: ExerciseTopDelegate?
     
+    private var plainHorizontalProgressBar = PlainHorizontalProgressBar()
+    
     lazy var userPointButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(Colors.raven, for: .normal)
-        button.changeBackgroundColor(to: Colors.f6f6f6)
+        button.backgroundColor = .clear
         button.titleLabel?.font =  button.titleLabel?.font.withSize(15)
         button.setTitle(String(UserDefault.lastPoint.getInt().withCommas()), for: .normal)
         return button
-    }()
-    
-    let progressBar: UIProgressView = {
-       let progress = UIProgressView()
-        progress.tintColor = Colors.f6f6f6
-        return progress
     }()
     
     private lazy var soundHintButton: UIButton = {
@@ -53,20 +49,17 @@ class ExerciseTopView: UIView {
         default: break
         }
         
-        addSubview(userPointButton)
-        userPointButton.setHeight(24)
-        userPointButton.setButtonCornerRadius(24 / 2)
-        userPointButton.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
-                               paddingLeft: 32, paddingRight: 32)
+        addSubview(plainHorizontalProgressBar)
+        plainHorizontalProgressBar.setHeight(24)
+        plainHorizontalProgressBar.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: 32, paddingRight: 32)
         
-        addSubview(progressBar)
-        progressBar.anchor(top: userPointButton.bottomAnchor, left: leftAnchor, right: rightAnchor,
-                           paddingTop: 8, paddingLeft: 40, paddingRight: 40)
+        addSubview(userPointButton)
+        userPointButton.centerX(inView: plainHorizontalProgressBar)
+        userPointButton.centerY(inView: plainHorizontalProgressBar)
         
         addSubview(soundHintButton)
         soundHintButton.setDimensions(width: 40, height: 40)
-        soundHintButton.anchor(top: userPointButton.bottomAnchor, right: rightAnchor,
-                               paddingTop: 16, paddingRight: 32)
+        soundHintButton.anchor(top: plainHorizontalProgressBar.bottomAnchor, right: rightAnchor, paddingTop: 16, paddingRight: 32)
         
         setHeight(24+16+40)
     }
@@ -85,7 +78,7 @@ class ExerciseTopView: UIView {
     //MARK: - Helpers
     
     func updateProgress(questionCounter: Int) {
-        progressBar.progress = Float(questionCounter) / Float(totalQuestionNumber)
+        plainHorizontalProgressBar.progress = CGFloat(questionCounter) / CGFloat(totalQuestionNumber)
     }
     
     func updatePoint(lastPoint: Int, exercisePoint: Int, isIncrease: Bool) {

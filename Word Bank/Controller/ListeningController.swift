@@ -186,7 +186,7 @@ class ListeningController: UIViewController {
         
         view.addSubview(questionLabel)
         questionLabel.centerX(inView: view)
-        questionLabel.anchor(top: exerciseTopView.userPointButton.bottomAnchor, left: view.leftAnchor,
+        questionLabel.anchor(top: exerciseTopView.bottomAnchor, left: view.leftAnchor,
                              bottom: stackLeft.topAnchor, right: view.rightAnchor,
                              paddingLeft: 32, paddingRight: 32)
         

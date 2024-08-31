@@ -69,6 +69,7 @@
 		706CBAD627593993008B4773 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CBAD427593993008B4773 /* WordCell.swift */; };
 		706D707D28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */; };
 		7075B371291679B40007EDF7 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7075B370291679B40007EDF7 /* UIViewController+Extensions.swift */; };
+		707ABD872C83181700509658 /* PlainHorizontalProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707ABD862C83181700509658 /* PlainHorizontalProgressBar.swift */; };
 		707EC385288DA9DA00832F35 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC384288DA9DA00832F35 /* String+Extensions.swift */; };
 		707EC387288DA9FB00832F35 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */; };
 		707EC389288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */; };
@@ -166,6 +167,7 @@
 		706CBAD427593993008B4773 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		706D707C28FEDA0500DCCD64 /* UISegmentedControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentedControl+Extensions.swift"; sourceTree = "<group>"; };
 		7075B370291679B40007EDF7 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		707ABD862C83181700509658 /* PlainHorizontalProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainHorizontalProgressBar.swift; sourceTree = "<group>"; };
 		707EC384288DA9DA00832F35 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		707EC386288DA9FB00832F35 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		707EC388288DAA2B00832F35 /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				703747822C70155A002AC4A3 /* TaskView.swift */,
 				705B3D0A29BE12C7005CFEC2 /* ExerciseTopView.swift */,
 				7039B87927A6A04700519D39 /* CircularProgressView.swift */,
+				707ABD862C83181700509658 /* PlainHorizontalProgressBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -588,6 +591,7 @@
 				706CBAB327592F8D008B4773 /* AppDelegate.swift in Sources */,
 				7013418D291D5867001967E1 /* ClassicFirework.swift in Sources */,
 				705D92ED28F89625001C4F38 /* CGFloat+Extensions.swift in Sources */,
+				707ABD872C83181700509658 /* PlainHorizontalProgressBar.swift in Sources */,
 				70134184291D580F001967E1 /* SparkTrajectoryFactory.swift in Sources */,
 				7027F691275B9B84001F6068 /* WordsController.swift in Sources */,
 				707EC38B288DAA4A00832F35 /* Int+Extensions.swift in Sources */,

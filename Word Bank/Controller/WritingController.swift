@@ -51,7 +51,7 @@ class WritingController: UIViewController {
         let tf = UITextField()
         tf.setViewCornerRadius(6)
         tf.setLeftPaddingPoints(10)
-        tf.backgroundColor = .white
+        tf.backgroundColor = Colors.f6f6f6
         return tf
     }()
     
@@ -169,7 +169,7 @@ class WritingController: UIViewController {
         
         view.addSubview(questionLabel)
         questionLabel.centerX(inView: view)
-        questionLabel.anchor(top: exerciseTopView.userPointButton.bottomAnchor, left: view.leftAnchor,
+        questionLabel.anchor(top: exerciseTopView.bottomAnchor, left: view.leftAnchor,
                              bottom: textField.topAnchor, right: view.rightAnchor,
                              paddingLeft: 32, paddingRight: 32)
         
