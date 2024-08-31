@@ -107,7 +107,7 @@ class TestController: UIViewController {
     //MARK: - Helpers
     
     private func configureUI() {
-        configureNavigationBar()
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         view.backgroundColor = Colors.raven
         
         timerView.backgroundColor = Colors.red
@@ -140,10 +140,6 @@ class TestController: UIViewController {
         view.addSubview(bubbleView)
         bubbleView.centerX(inView: questionLabel)
         bubbleView.centerY(inView: questionLabel)
-    }
-    
-    private func configureNavigationBar() {
-        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
     
     private func prepareNextQuestion() {

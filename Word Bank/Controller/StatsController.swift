@@ -89,6 +89,7 @@ class StatsController: UIViewController {
         configureCharts()
         
         title = "Statistic"
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         view.backgroundColor = Colors.cellLeft
         scrollView.backgroundColor = Colors.cellLeft
         

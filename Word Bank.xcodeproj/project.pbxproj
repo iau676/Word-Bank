@@ -409,10 +409,10 @@
 		70925E3B2C6EEE02007CB4E9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				709ED6A62899312800A34007 /* Constants.swift */,
-				70925E392C6E8EB6007CB4E9 /* Factories.swift */,
-				70C357E428882DFC00F3AD86 /* Player.swift */,
 				70925E3C2C6EEE1C007CB4E9 /* Level.swift */,
+				70C357E428882DFC00F3AD86 /* Player.swift */,
+				70925E392C6E8EB6007CB4E9 /* Factories.swift */,
+				709ED6A62899312800A34007 /* Constants.swift */,
 				70DCCECD2C8252DF009E5C71 /* CoreDataManager.swift */,
 				7080B23428904B0C00BC8049 /* UserDefaultsManager.swift */,
 			);

@@ -159,7 +159,7 @@ class ListeningController: UIViewController {
     //MARK: - Helpers
     
     private func configureUI() {
-        configureNavigationBar()
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         view.backgroundColor = Colors.raven
         
         view.addSubview(exerciseTopView)
@@ -193,10 +193,6 @@ class ListeningController: UIViewController {
         view.addSubview(bubbleView)
         bubbleView.centerX(inView: questionLabel)
         bubbleView.centerY(inView: questionLabel)
-    }
-    
-    private func configureNavigationBar() {
-        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
     
     private func clearButtons() {

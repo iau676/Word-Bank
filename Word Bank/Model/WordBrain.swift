@@ -23,7 +23,6 @@ struct WordBrain {
     var sortedNewWordsDictionary = Array<(key: Int, value: Int)>()
     
     var questionNumber = 0
-    var questionCounter = 0
     var addedHardWordsCount = 0
     var selectedTestType: Int { return UserDefault.selectedTestType.getInt() }
     

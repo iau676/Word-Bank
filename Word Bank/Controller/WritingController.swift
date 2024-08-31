@@ -146,7 +146,7 @@ class WritingController: UIViewController {
     //MARK: - Helpers
     
     private func configureUI() {
-        configureNavigationBar()
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         configureTextField()
         configureNextQuestion()
         view.backgroundColor = Colors.raven
@@ -194,10 +194,6 @@ class WritingController: UIViewController {
         textField.isEnabled = !(selectedTyping == 0)
         textField.tintColor = (selectedTyping == 0) ? .clear : Colors.raven
         if selectedTyping == 1 { textField.becomeFirstResponder() }
-    }
-    
-    private func configureNavigationBar() {
-        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
     
     private func updateLetterCV() {

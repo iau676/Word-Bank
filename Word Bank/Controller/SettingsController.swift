@@ -122,6 +122,7 @@ class SettingsController: UIViewController {
     
     private func configureUI() {
         title = "Settings"
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         view.backgroundColor = Colors.cellLeft
         
         view.addSubview(scrollView)

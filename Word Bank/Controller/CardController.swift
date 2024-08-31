@@ -105,7 +105,7 @@ class CardController: UIViewController {
 extension CardController {
     
     private func style() {
-        configureNavigationBar()
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         view.backgroundColor = Colors.ravenShadow
         
         cardView.backgroundColor = Colors.raven
@@ -124,7 +124,6 @@ extension CardController {
     }
     
     private func layout() {
-        
         cardView.addSubview(imageView)
         cardView.addSubview(cardLabel)
         
@@ -147,10 +146,6 @@ extension CardController {
         cardLabel.centerY(inView: cardView)
         cardLabel.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor,
                          paddingLeft: 16, paddingRight: 16)
-    }
-    
-    private func configureNavigationBar() {
-        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
     }
 }
 

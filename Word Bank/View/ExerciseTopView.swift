@@ -44,8 +44,6 @@ class ExerciseTopView: UIView {
     init(exerciseType: ExerciseType) {
         super.init(frame: CGRect(x: 0, y: 0, width: 11, height: 11))
         
-        brain.questionCounter = 0
-        
         switch exerciseType {
         case .test:
             if UserDefault.selectedTestType.getInt() == 0 {

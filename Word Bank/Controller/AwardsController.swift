@@ -65,6 +65,7 @@ class AwardsController: UIViewController {
     
     private func configureUI() {
         title = "Awards"
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         view.backgroundColor = Colors.cellLeft
         
         let cvStack = UIStackView(arrangedSubviews: [levelCV, wordsCV, exercisesCV])

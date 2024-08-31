@@ -106,6 +106,7 @@ class DailyController: UIViewController {
     
     private func configureUI() {
         title = "Daily"
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         view.backgroundColor = Colors.cellLeft
         
         view.addSubview(secondView)
