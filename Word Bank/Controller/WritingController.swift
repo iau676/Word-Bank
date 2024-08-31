@@ -289,7 +289,6 @@ extension WritingController {
                 randomArr = randomArr.filter { $0 != randomElement }
                 underscoreArr[randomElement] = "\(answerText[randomElement])"
                 hint = underscoreArr.joined(separator: " ")
-                //player.playMP3(Sounds.beep)
             }
             letterCounter += 1
             hintLabel.text = hint

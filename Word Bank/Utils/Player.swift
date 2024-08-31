@@ -30,7 +30,7 @@ class Player {
     }
     
     func playMP3(_ soundName: String) {
-        if UserDefaults.standard.integer(forKey: "playAppSound") == 0 {
+        if UserDefault.playAppSound.getInt() == 0 {
             let url = Bundle.main.url(forResource: "\(soundName)", withExtension: "mp3")
             playerMP3 = try! AVAudioPlayer(contentsOf: url!)
             do {

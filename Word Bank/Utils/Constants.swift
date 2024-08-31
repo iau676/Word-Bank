@@ -73,14 +73,12 @@ enum ExerciseKind {
 
 enum Videos {
     static let levelup                   = "levelup"
-    static let newpoint                  = "newpoint"
     static let alltrue                   = "alltrue"
 }
 
 enum Sounds {
     static let falsee                    = "false"
     static let truee                     = "true"
-    static let beep                      = "beep"
 }
 
 enum Images {
