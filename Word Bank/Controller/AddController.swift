@@ -112,7 +112,7 @@ class AddController: UIViewController {
         
         view.addSubview(flipButton)
         flipButton.centerX(inView: view)
-        flipButton.setDimensions(width: 120, height: 120)
+        flipButton.setDimensions(width: 100, height: 100)
         flipButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
         
         stackView.addArrangedSubview(engTxtField)
