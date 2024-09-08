@@ -79,22 +79,28 @@ class AddController: UIViewController {
         guard let eng = engTxtField.text else { return }
         guard let meaning = meaningTxtField.text else { return }
         
-        if eng.count > 0 && meaning.count > 0 {
-           if eng.count <= 20 {
-                if let item = item {
-                    item.eng = eng
-                    item.tr = meaning
-                    brain.updateHardItem(item, newEng: eng, newMeaning: meaning)
-                    scheduledTimer(timeInterval: 0.75, #selector(dismissView))
+        if !Item.exists(context: CoreDataManager.shared.context, eng: eng) {
+            if eng.count > 0 && meaning.count > 0 {
+               if eng.count <= 20 {
+                    if let item = item {
+                        item.eng = eng
+                        item.tr = meaning
+                        brain.updateHardItem(item, newEng: eng, newMeaning: meaning)
+                        scheduledTimer(timeInterval: 0.75, #selector(dismissView))
+                    } else {
+                        brain.addWord(english: eng, meaning: meaning)
+                        scheduledTimer(timeInterval: 1.0, #selector(dismissView))
+                    }
+                    cleanTextFields()
+                    animateFlipButton()
+                    delegate?.updateTableView()
                 } else {
-                    brain.addWord(english: eng, meaning: meaning)
-                    scheduledTimer(timeInterval: 1.0, #selector(dismissView))
+                    showAlert(title: "Max character is 20", message: "")
                 }
-                cleanTextFields()
-                animateFlipButton()
-                delegate?.updateTableView()
-            } else {
-                showAlert(title: "Max character is 20", message: "")
+            }
+        } else {
+            showAlert(title: "Word already exists.", message: "") { _ in
+                
             }
         }
     }
