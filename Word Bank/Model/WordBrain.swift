@@ -140,13 +140,13 @@ struct WordBrain {
         case (.normal, .writing):
             return itemArray[questionNumber].tr!
         case (.normal, .listening):
-             return itemArray[questionNumber].eng!
+             return itemArray[questionNumber].tr!
         case (.hard, .test):
             return selectedTestType == 0 ? hardItemArray[questionNumber].eng! : hardItemArray[questionNumber].tr!
         case (.hard, .writing):
             return  hardItemArray[questionNumber].tr!
         case (.hard, .listening):
-            return hardItemArray[questionNumber].eng!
+            return hardItemArray[questionNumber].tr!
         default: return ""
         }
     }
