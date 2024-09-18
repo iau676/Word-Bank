@@ -19,6 +19,14 @@ class ExerciseTopView: UIView {
     
     private var plainHorizontalProgressBar = PlainHorizontalProgressBar()
     
+    private let emptyView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 12
+        view.setHeight(24)
+        return view
+    }()
+    
     lazy var userPointButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(Colors.raven, for: .normal)
@@ -49,10 +57,13 @@ class ExerciseTopView: UIView {
         default: break
         }
         
-        addSubview(plainHorizontalProgressBar)
-        plainHorizontalProgressBar.setHeight(24)
-        plainHorizontalProgressBar.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: 32, paddingRight: 32)
+        addSubview(emptyView)
+        emptyView.setHeight(24)
+        emptyView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: 32, paddingRight: 32)
         
+        emptyView.addSubview(plainHorizontalProgressBar)
+        plainHorizontalProgressBar.fillSuperview()
+
         addSubview(userPointButton)
         userPointButton.centerX(inView: plainHorizontalProgressBar)
         userPointButton.centerY(inView: plainHorizontalProgressBar)
