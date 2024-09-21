@@ -46,8 +46,7 @@ struct WordBrain {
         loadItemArray()
     }
     
-    mutating func addWordToHardWords(_ index: Int) {
-        let item = itemArray[questionNumber]
+    mutating func addWordToHardWords(_ item: Item) {
         CoreDataManager.shared.addWordToHardWords(item)
         addedHardWordsCount = addedHardWordsCount + 1
     }

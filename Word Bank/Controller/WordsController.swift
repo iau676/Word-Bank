@@ -293,7 +293,7 @@ extension WordsController: UITableViewDelegate {
         }
         
         let hardAction = makeContextualAction(image: Images.plus, bgColor: Colors.yellow) { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            brain.addWordToHardWords(indexPath.row)
+            brain.addWordToHardWords(item)
             self.showAlertPopup(title: "Added to Hard Words")
             success(true)
         }

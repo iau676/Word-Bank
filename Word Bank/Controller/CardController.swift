@@ -65,8 +65,9 @@ class CardController: UIViewController {
     
     private func addHardWord() {
         let questionNumber = brain.questionNumber
-        if itemArray[questionNumber].addedHardWords == false {
-            brain.addWordToHardWords(questionNumber)
+        let item = itemArray[questionNumber]
+        if item.addedHardWords == false {
+            brain.addWordToHardWords(item)
         }
     }
     
