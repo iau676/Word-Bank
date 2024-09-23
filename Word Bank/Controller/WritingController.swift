@@ -277,6 +277,7 @@ extension WritingController {
             }
         }
         skeleton = underscoreArr.joined(separator: " ")
+        exerciseTopView.setHintIcon()
     }
     
     private func getLetter() {
@@ -293,7 +294,8 @@ extension WritingController {
             letterCounter += 1
             hintLabel.text = hint
         } else {
-            hintLabel.flash(withColor: Colors.green, originalColor: Colors.f6f6f6)
+            exerciseTopView.setSoundIcon()
+            Player.shared.playSound(answerText)
         }
     }
 }

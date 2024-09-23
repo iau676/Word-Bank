@@ -7,6 +7,11 @@
 
 import UIKit
 
+private enum currentIcon {
+    case sound
+    case hint
+}
+
 protocol ExerciseTopDelegate: AnyObject {
     func soundHintButtonPressed()
 }
@@ -17,7 +22,9 @@ class ExerciseTopView: UIView {
     
     weak var delegate: ExerciseTopDelegate?
     
+    private var timer: Timer?
     private var plainHorizontalProgressBar = PlainHorizontalProgressBar()
+    private var currentIcon: currentIcon = .hint
     
     private let emptyView: UIView = {
         let view = UIView()
@@ -39,7 +46,8 @@ class ExerciseTopView: UIView {
     private lazy var soundHintButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = Colors.f6f6f6
-        button.addTarget(self, action: #selector(soundHintButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(soundHintButtonPressed), for: .touchDown)
+        button.addTarget(self, action: #selector(soundHintButtonReleased), for: [.touchUpInside, .touchUpOutside])
         return button
     }()
     
@@ -51,9 +59,11 @@ class ExerciseTopView: UIView {
         switch exerciseType {
         case .test:
             if UserDefault.selectedTestType.getInt() == 0 {
-                soundHintButton.setImage(image: Images.soundLeft, width: 40, height: 40)
+                setSoundIcon()
+            } else {
+                soundHintButton.isHidden = true
             }
-        case .writing: soundHintButton.setImage(image: Images.magic, width: 32, height: 32)
+        case .writing: setHintIcon()
         default: break
         }
         
@@ -84,6 +94,17 @@ class ExerciseTopView: UIView {
     @objc func soundHintButtonPressed() {
         soundHintButton.bounce()
         delegate?.soundHintButtonPressed()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
+            if self?.currentIcon == .hint {
+                self?.delegate?.soundHintButtonPressed()
+            }
+        }
+    }
+    
+    @objc func soundHintButtonReleased() {
+        timer?.invalidate()
+        timer = nil
     }
     
     //MARK: - Helpers
@@ -100,5 +121,15 @@ class ExerciseTopView: UIView {
             userPointButton.setTitleWithAnimation(title: (lastPoint-exercisePoint).withCommas())
             UserDefault.lastPoint.set(lastPoint-exercisePoint)
         }
+    }
+    
+    func setSoundIcon() {
+        currentIcon = .sound
+        soundHintButton.setImage(image: Images.soundLeft, width: 40, height: 40)
+    }
+    
+    func setHintIcon() {
+        currentIcon = .hint
+        soundHintButton.setImage(image: Images.magic, width: 32, height: 32)
     }
 }
