@@ -442,22 +442,14 @@ struct Level {
     
     func getPrizePoint() -> Int {
         switch UserDefault.level.getInt() {
-        case 0..<5:
-            return 125
-        case 5..<10:
-            return 250
-        case 10..<15:
-            return 500
-        case 15..<20:
-            return 1_000
-        case 20..<25:
-            return 2_000
+        case 0..<25:
+            return 6_000
         case 25..<30:
-            return 5_000
+            return 8_000
         case 30..<35:
-            return 7_500
+            return 16_000
         case 35..<40:
-            return 15_000
+            return 20_000
         case 40..<45:
             return 25_000
         case 45..<50:
