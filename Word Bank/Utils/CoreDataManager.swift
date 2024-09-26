@@ -22,6 +22,12 @@ class CoreDataManager {
         saveContext()
     }
     
+    func updateUserData(user: User) {
+        user.level = Int16(UserDefault.level.getInt())
+        user.lastPoint = Int32(UserDefault.lastPoint.getInt())
+        saveContext()
+    }
+    
     func addWord(english: String, meaning: String) {
         let newItem = Item(context: self.context)
         newItem.eng = english

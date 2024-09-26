@@ -30,6 +30,11 @@ struct WordBrain {
         CoreDataManager.shared.createUser()
         loadUser()
     }
+    
+    mutating func updateUserData() {
+        CoreDataManager.shared.updateUserData(user: user[0])
+        loadUser()
+    }
 
     mutating func addWord(english: String, meaning: String){
         CoreDataManager.shared.addWord(english: english, meaning: meaning)

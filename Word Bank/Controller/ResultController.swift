@@ -192,12 +192,9 @@ class ResultController: UIViewController {
     }
     
     private func updateUserData() {
-        brain.user[0].level      = Int16(UserDefault.level.getInt())
-        brain.user[0].lastPoint  = Int32(UserDefault.lastPoint.getInt())
-        
         let trueCount = Int16(trueAnswerCount)
         let falseCount = Int16(userAnswers.count-trueAnswerCount)
-        
+        brain.updateUserData()
         brain.addExercise(type: exerciseType, kind: exerciseKind, trueCount: trueCount, falseCount: falseCount)
     }
     
